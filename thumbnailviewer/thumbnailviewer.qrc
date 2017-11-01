@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/thumbnailviewer">
+        <file>Images/Btn_Gray.png</file>
+        <file>Images/Btn_Gray_Pressed.png</file>
+        <file>Images/Btn_Green.png</file>
+        <file>Images/close.png</file>
+        <file>Images/Fit.tif</file>
+        <file>Images/Turn.tif</file>
+        <file>Images/ZoomIn.tif</file>
+        <file>Images/ZoomOut.tif</file>
+        <file>ImagePreviewDialog.qml</file>
+        <file>JKButton.qml</file>
+        <file>ThumbnailDelegate.qml</file>
+        <file>ThumbnailViewer.qml</file>
+        <file>CloseDialog.qml</file>
+        <file>ImagePreviewDialog2.qml</file>
+    </qresource>
+</RCC>
