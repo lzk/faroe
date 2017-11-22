@@ -5,6 +5,9 @@
 #include <QDebug>
 #include "jkinterface.h"
 #include "../lld/device.h"
+#include "../lld/scanner.h"
+#include "../lld/setter.h"
+using namespace JK;
 #define TEST 0
 DeviceManager::DeviceManager(QObject *parent)
     : jkInterface(static_cast<JKInterface*>(parent))
@@ -94,4 +97,91 @@ void DeviceManager::scan()
     }
 #endif
     emit scanResult(result);
+}
+
+void DeviceManager::deviceCmd(int cmd)
+{
+    int err;
+    void* data = NULL;
+    switch (cmd) {
+    case CMD_SCAN:
+    {
+        *device->getScanner()->getSetting() = jkInterface->parseUiScannerSetting();
+//        data = (void*)device->getScanner()->getSetting();
+        err = device->deviceCmd(cmd ,data);
+        break;
+    }
+    case CMD_setWifi:
+    {
+        Setter::struct_wifiSetting para = jkInterface->parseUiWifiSetting();
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        break;
+    }
+    case CMD_setPassword:
+    case CMD_confirmPassword:
+    {
+        QString para = jkInterface->parseUiPassword();
+        data = (void*)para.toLatin1().data();
+        err = device->deviceCmd(cmd ,data);
+        break;
+    }
+    case CMD_setSaveTime:
+    {
+        int para = jkInterface->parseUiSaveTime();
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        break;
+    }
+    case CMD_getSaveTime:
+    {
+        int para;
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        jkInterface->uiParseSaveTime(para);
+        break;
+    }
+    case CMD_getWifiInfo:
+    {
+        Setter::struct_wifiInfo para;
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        jkInterface->uiParseWifiInfo(para);
+        break;
+    }
+    case CMD_getIpv4:
+    {
+        Setter::struct_ipv4 para;
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        jkInterface->uiParseIpv4(para);
+        break;
+    }
+    case CMD_setIpv4:
+    {
+        Setter::struct_ipv4 para = jkInterface->parseUiIpv4();
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        break;
+    }
+    case CMD_setSoftap:
+    {
+        Setter::struct_softAp para = jkInterface->parseUiSoftap();
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        break;
+    }
+    case CMD_getSoftap:
+    {
+        Setter::struct_softAp para;
+        data = (void*)&para;
+        err = device->deviceCmd(cmd ,data);
+        jkInterface->uiParseSoftap(para);
+        break;
+    }
+    default:
+        break;
+    }
+    emit cmdResult(cmd ,err);
+
 }

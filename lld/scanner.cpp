@@ -1,6 +1,7 @@
 #include "scanner.h"
 #include <unistd.h>
 #include "platformapp.h"
+#include "scannerapi.h"
 using namespace JK;
 
 #define _SCANMODE_1BIT_BLACKWHITE 1
@@ -26,15 +27,22 @@ const Scanner::Setting defaultSetting = {
 
 Scanner::Scanner():
     pPlatformApp(NULL)
+    ,scannerApi(new ScannerAPI)
     ,m_cancel(false)
 {
     memset(&parameters ,0 ,sizeof(parameters));
     parameters.setting = defaultSetting;
 }
 
+
+Scanner::~Scanner()
+{
+    delete scannerApi;
+}
+
 void Scanner::install(DeviceIO* dio ,PlatformApp* platformApp)
 {
-    scannerApi.install(dio);
+    scannerApi->install(dio);
     pPlatformApp = platformApp;
 }
 
@@ -77,7 +85,7 @@ int Scanner::receiveData()
     m_cancel = false;
     int page[2] = {0,0};
     while (!m_cancel) {
-        if (scannerApi.getInfo(sc_infodata)){
+        if (scannerApi->getInfo(sc_infodata)){
             usleep(100 * 1000);
             continue;
         }
@@ -106,7 +114,7 @@ int Scanner::receiveData()
                 while (readTotalBytes < toReadBytes) {
                     if(m_cancel)
                         break;
-                    result = scannerApi.readScan(dup ,&readBytes ,(char*)parameters.imgBuffer + offset[dup]
+                    result = scannerApi->readScan(dup ,&readBytes ,(char*)parameters.imgBuffer + offset[dup]
                                                  ,toReadBytes - readTotalBytes);
                     if(!result){
                         readTotalBytes += readBytes;
@@ -144,7 +152,7 @@ int Scanner::receiveData()
 int Scanner::ADFScan()
 {
     int result;
-    result = scannerApi.jobCreate();
+    result = scannerApi->jobCreate();
     if(result){
         int errorcode = RETSCAN_CREATE_JOB_FAIL;
         switch (result) {
@@ -158,7 +166,7 @@ int Scanner::ADFScan()
         result = errorcode;
     }else{
         result = _scan();
-        scannerApi.jobEnd();
+        scannerApi->jobEnd();
     }
     if(parameters.imgBuffer){
         delete parameters.imgBuffer;
@@ -171,13 +179,14 @@ int Scanner::_scan()
 {
     int result;
     Setting* setting = getSetting();
-    SC_PAR_DATA_T para = getScanParameters(*setting);
-    result = scannerApi.setParameters(para);
+    SC_PAR_DATA_T para;
+    getScanParameters(*setting ,&para);
+    result = scannerApi->setParameters(para);
     if(result){
         return RETSCAN_ERRORPARAMETER;
     }
 
-    result = scannerApi.startScan();
+    result = scannerApi->startScan();
     if(result){
         return RETSCAN_ERROR;
     }
@@ -186,13 +195,13 @@ int Scanner::_scan()
     result = receiveData();
     if(result){
         if(m_cancel){
-            scannerApi.cancelScan();
+            scannerApi->cancelScan();
             return RETSCAN_CANCEL;
         }
         return RETSCAN_ERROR;
     }
 
-    scannerApi.stopScan();
+    scannerApi->stopScan();
     waitJobFinish(0);
     return RETSCAN_OK;
 }
@@ -202,7 +211,7 @@ int Scanner::waitJobFinish(int wait_motor_stop)
 {
     SC_INFO_DATA_T sc_infodata;
     for(int i = 0 ;i < 100 ;i++){
-        if (scannerApi.getInfo(sc_infodata))
+        if (scannerApi->getInfo(sc_infodata))
             break;
         if (!(sc_infodata.JobState & 1) && (!wait_motor_stop || !sc_infodata.MotorMove))
             return 0;
@@ -251,12 +260,11 @@ void Scanner::calculateParameters(const Setting& setting)
     parameters.imgBuffer = new unsigned char[parameters.imgBufferSize];
 }
 
-SC_PAR_DATA_T Scanner::getScanParameters(const Setting& setting)
+void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
 {
     calculateParameters(setting);
 
-    SC_PAR_DATA_T para;
-    memset(&para ,0 ,sizeof(para));
+    memset(para ,0 ,sizeof(*para));
 //    para			    = { SCAN_SOURCE, SCAN_ACQUIRE, SCAN_OPTION, SCAN_DUPLEX, SCAN_PAGE,
 //                            { IMG_FORMAT, IMG_OPTION, IMG_BIT, IMG_MONO,
 //                            { IMG_DPI_X, IMG_DPI_Y },{ IMG_ORG_X, IMG_ORG_Y }, IMG_WIDTH, IMG_HEIGHT },
@@ -266,88 +274,87 @@ SC_PAR_DATA_T Scanner::getScanParameters(const Setting& setting)
 //                            { 0 } }
 //                            };
 
-    para.acquire = ((setting.MultiFeed ? 1 : 0) * ACQ_Ultra_Sonic) | ((setting.AutoCrop ? 1 : 0) * ACQ_CROP_DESKEW) | ACQ_PICK_SS;
+    para->acquire = ((setting.MultiFeed ? 1 : 0) * ACQ_Ultra_Sonic) | ((setting.AutoCrop ? 1 : 0) * ACQ_CROP_DESKEW) | ACQ_PICK_SS;
 
-    para.source =IMG_FMT_ADF;
-    para.duplex = setting.ADFMode;
-    para.page = setting.onepage ? 1 : 0;
-    para.img.format = IMG_FMT_JPG;
-    para.img.bit = setting.BitsPerPixel;
-    para.img.dpi.x = setting.resolution;
-    para.img.dpi.y = setting.resolution;
-    para.img.org.x = setting.x;
-    para.img.org.y = setting.y;
+    para->source =IMG_FMT_ADF;
+    para->duplex = setting.ADFMode;
+    para->page = setting.onepage ? 1 : 0;
+    para->img.format = IMG_FMT_JPG;
+    para->img.bit = setting.BitsPerPixel;
+    para->img.dpi.x = setting.resolution;
+    para->img.dpi.y = setting.resolution;
+    para->img.org.x = setting.x;
+    para->img.org.y = setting.y;
 
-    para.img.width = parameters.nLinePixelNumOrig;
-    para.img.height = parameters.nColPixelNumOrig;
-    para.img.mono = setting.BitsPerPixel == IMG_24_BIT ? IMG_COLOR : IMG_3CH_TRUE_MONO;
+    para->img.width = parameters.nLinePixelNumOrig;
+    para->img.height = parameters.nColPixelNumOrig;
+    para->img.mono = setting.BitsPerPixel == IMG_24_BIT ? IMG_COLOR : IMG_3CH_TRUE_MONO;
 
-    if (para.img.format == IMG_FMT_JPG) {
-        para.img.option = IMG_OPT_JPG_FMT444;
+    if (para->img.format == IMG_FMT_JPG) {
+        para->img.option = IMG_OPT_JPG_FMT444;
     }
 
     //Advanced
-    if (para.acquire & ACQ_SET_MTR) {
+    if (para->acquire & ACQ_SET_MTR) {
 
             /*ADF scan*/
-        para.mtr[1].pick_ss_step = 600;//GetPrivateProfileInt("PICK_SS_STEP", "STEP", 0, IniFile);
+        para->mtr[1].pick_ss_step = 600;//GetPrivateProfileInt("PICK_SS_STEP", "STEP", 0, IniFile);
 
             //par->mtr[0].drive_target = CMT_PH;
             //par->mtr[0].state_mechine = SCAN_STATE_MECHINE;
             //par->mtr[1].drive_target = BMT_PH;
             //par->mtr[1].state_mechine = STATE_MECHINE_1;
-        if (para.img.bit < 24) {
+        if (para->img.bit < 24) {
             /*Mono scan*/
-            para.mtr[1].speed_pps = 3456;// GetPrivateProfileInt("ADFgray", "PICK_PPS", 0, IniFile);
-            para.mtr[1].direction = 1;// GetPrivateProfileInt("ADFgray", "PICK_DIR", 0, IniFile);
-            para.mtr[1].micro_step = 2;// GetPrivateProfileInt("ADFgray", "PICK_MS", 0, IniFile);
-            para.mtr[1].currentLV = 4;// GetPrivateProfileInt("ADFgray", "PICK_CLV", 0, IniFile);
+            para->mtr[1].speed_pps = 3456;// GetPrivateProfileInt("ADFgray", "PICK_PPS", 0, IniFile);
+            para->mtr[1].direction = 1;// GetPrivateProfileInt("ADFgray", "PICK_DIR", 0, IniFile);
+            para->mtr[1].micro_step = 2;// GetPrivateProfileInt("ADFgray", "PICK_MS", 0, IniFile);
+            para->mtr[1].currentLV = 4;// GetPrivateProfileInt("ADFgray", "PICK_CLV", 0, IniFile);
 
-            para.mtr[0].speed_pps = 4577;// GetPrivateProfileInt("ADFgray", "FEED_PPS", 0, IniFile);
-            para.mtr[0].direction = 0;// GetPrivateProfileInt("ADFgray", "FEED_DIR", 0, IniFile);
-            para.mtr[0].micro_step = 4;// GetPrivateProfileInt("ADFgray", "FEED_MS", 0, IniFile);
-            para.mtr[0].currentLV = 4;// GetPrivateProfileInt("ADFgray", "FEED_CLV", 0, IniFile);
+            para->mtr[0].speed_pps = 4577;// GetPrivateProfileInt("ADFgray", "FEED_PPS", 0, IniFile);
+            para->mtr[0].direction = 0;// GetPrivateProfileInt("ADFgray", "FEED_DIR", 0, IniFile);
+            para->mtr[0].micro_step = 4;// GetPrivateProfileInt("ADFgray", "FEED_MS", 0, IniFile);
+            para->mtr[0].currentLV = 4;// GetPrivateProfileInt("ADFgray", "FEED_CLV", 0, IniFile);
         }
         else {
             /*Color scan*/
-            if ((para.img.dpi.x == 300) && (para.img.dpi.y == 300)) {
+            if ((para->img.dpi.x == 300) && (para->img.dpi.y == 300)) {
                 /*300x300DPI scan*/
-                para.mtr[1].speed_pps = 2602;// GetPrivateProfileInt("ADF300x300color", "PICK_PPS", 0, IniFile);
-                para.mtr[1].direction = 1;// GetPrivateProfileInt("ADF300x300color", "PICK_DIR", 0, IniFile);
-                para.mtr[1].micro_step = 2;// GetPrivateProfileInt("ADF300x300color", "PICK_MS", 0, IniFile);
-                para.mtr[1].currentLV = 4;// GetPrivateProfileInt("ADF300x300color", "PICK_CLV", 0, IniFile);
+                para->mtr[1].speed_pps = 2602;// GetPrivateProfileInt("ADF300x300color", "PICK_PPS", 0, IniFile);
+                para->mtr[1].direction = 1;// GetPrivateProfileInt("ADF300x300color", "PICK_DIR", 0, IniFile);
+                para->mtr[1].micro_step = 2;// GetPrivateProfileInt("ADF300x300color", "PICK_MS", 0, IniFile);
+                para->mtr[1].currentLV = 4;// GetPrivateProfileInt("ADF300x300color", "PICK_CLV", 0, IniFile);
 
-                para.mtr[0].speed_pps = 350;// GetPrivateProfileInt("ADF300x300color", "FEED_PPS", 0, IniFile);
-                para.mtr[0].direction = 0;// GetPrivateProfileInt("ADF300x300color", "FEED_DIR", 0, IniFile);
-                para.mtr[0].micro_step = 4;// GetPrivateProfileInt("ADF300x300color", "FEED_MS", 0, IniFile);
-                para.mtr[0].currentLV = 4;// GetPrivateProfileInt("ADF300x300color", "FEED_CLV", 0, IniFile);
+                para->mtr[0].speed_pps = 350;// GetPrivateProfileInt("ADF300x300color", "FEED_PPS", 0, IniFile);
+                para->mtr[0].direction = 0;// GetPrivateProfileInt("ADF300x300color", "FEED_DIR", 0, IniFile);
+                para->mtr[0].micro_step = 4;// GetPrivateProfileInt("ADF300x300color", "FEED_MS", 0, IniFile);
+                para->mtr[0].currentLV = 4;// GetPrivateProfileInt("ADF300x300color", "FEED_CLV", 0, IniFile);
             }
-            else if ((para.img.dpi.x == 300) && (para.img.dpi.y == 600)) {
+            else if ((para->img.dpi.x == 300) && (para->img.dpi.y == 600)) {
                 /*300x600DPI scan*/
-                para.mtr[1].speed_pps = 2317;// GetPrivateProfileInt("ADF300x600color", "PICK_PPS", 0, IniFile);
-                para.mtr[1].direction = 1;// GetPrivateProfileInt("ADF300x600color", "PICK_DIR", 0, IniFile);
-                para.mtr[1].micro_step = 4;// GetPrivateProfileInt("ADF300x600color", "PICK_MS", 0, IniFile);
-                para.mtr[1].currentLV = 4;// GetPrivateProfileInt("ADF300x600color", "PICK_CLV", 0, IniFile);
+                para->mtr[1].speed_pps = 2317;// GetPrivateProfileInt("ADF300x600color", "PICK_PPS", 0, IniFile);
+                para->mtr[1].direction = 1;// GetPrivateProfileInt("ADF300x600color", "PICK_DIR", 0, IniFile);
+                para->mtr[1].micro_step = 4;// GetPrivateProfileInt("ADF300x600color", "PICK_MS", 0, IniFile);
+                para->mtr[1].currentLV = 4;// GetPrivateProfileInt("ADF300x600color", "PICK_CLV", 0, IniFile);
 
-                para.mtr[0].speed_pps = 2612;// GetPrivateProfileInt("ADF300x600color", "FEED_PPS", 0, IniFile);
-                para.mtr[0].direction = 0;// GetPrivateProfileInt("ADF300x600color", "FEED_DIR", 0, IniFile);
-                para.mtr[0].micro_step = 4;// GetPrivateProfileInt("ADF300x600color", "FEED_MS", 0, IniFile);
-                para.mtr[0].currentLV = 4;// GetPrivateProfileInt("ADF300x600color", "FEED_CLV", 0, IniFile);
+                para->mtr[0].speed_pps = 2612;// GetPrivateProfileInt("ADF300x600color", "FEED_PPS", 0, IniFile);
+                para->mtr[0].direction = 0;// GetPrivateProfileInt("ADF300x600color", "FEED_DIR", 0, IniFile);
+                para->mtr[0].micro_step = 4;// GetPrivateProfileInt("ADF300x600color", "FEED_MS", 0, IniFile);
+                para->mtr[0].currentLV = 4;// GetPrivateProfileInt("ADF300x600color", "FEED_CLV", 0, IniFile);
             }
             else {
                 /*600DPI scan*/
-                para.mtr[1].speed_pps = 1293;// GetPrivateProfileInt("ADF600x600color", "PICK_PPS", 0, IniFile);
-                para.mtr[1].direction = 1;// GetPrivateProfileInt("ADF600x600color", "PICK_DIR", 0, IniFile);
-                para.mtr[1].micro_step = 4;// GetPrivateProfileInt("ADF600x600color", "PICK_MS", 0, IniFile);
-                para.mtr[1].currentLV = 4;// GetPrivateProfileInt("ADF600x600color", "PICK_CLV", 0, IniFile);
+                para->mtr[1].speed_pps = 1293;// GetPrivateProfileInt("ADF600x600color", "PICK_PPS", 0, IniFile);
+                para->mtr[1].direction = 1;// GetPrivateProfileInt("ADF600x600color", "PICK_DIR", 0, IniFile);
+                para->mtr[1].micro_step = 4;// GetPrivateProfileInt("ADF600x600color", "PICK_MS", 0, IniFile);
+                para->mtr[1].currentLV = 4;// GetPrivateProfileInt("ADF600x600color", "PICK_CLV", 0, IniFile);
 
-                para.mtr[0].speed_pps = 1557;// GetPrivateProfileInt("ADF600x600color", "FEED_PPS", 0, IniFile);
-                para.mtr[0].direction = 0;// GetPrivateProfileInt("ADF600x600color", "FEED_DIR", 0, IniFile);
-                para.mtr[0].micro_step = 4;// GetPrivateProfileInt("ADF600x600color", "FEED_MS", 0, IniFile);
-                para.mtr[0].currentLV = 4;// GetPrivateProfileInt("ADF600x600color", "FEED_CLV", 0, IniFile);
+                para->mtr[0].speed_pps = 1557;// GetPrivateProfileInt("ADF600x600color", "FEED_PPS", 0, IniFile);
+                para->mtr[0].direction = 0;// GetPrivateProfileInt("ADF600x600color", "FEED_DIR", 0, IniFile);
+                para->mtr[0].micro_step = 4;// GetPrivateProfileInt("ADF600x600color", "FEED_MS", 0, IniFile);
+                para->mtr[0].currentLV = 4;// GetPrivateProfileInt("ADF600x600color", "FEED_CLV", 0, IniFile);
             }
 
         }
     }
-    return para;
 }

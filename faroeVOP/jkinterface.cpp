@@ -1,4 +1,6 @@
 #include "jkinterface.h"
+#include "../lld/device.h"
+using namespace JK;
 #include <QDebug>
 const UI_Scanner_Settings defaultScannerSetting = {
     .ADFMode=true,
@@ -47,7 +49,6 @@ void JKInterface::addImage(QString filename ,QSize sourceSize)
     model.addImage(ImageItem(filename ,sourceSize));
 }
 
-
 Scanner::Setting JKInterface::parseUiScannerSetting()
 {
     Scanner::Setting setting;
@@ -93,6 +94,50 @@ Scanner::Setting JKInterface::parseUiScannerSetting()
     setting.source = SCAN_SOURCE;
     setting.format = IMG_FORMAT;
     return setting;
+}
+Setter::struct_wifiSetting JKInterface::parseUiWifiSetting()
+{
+    QMutexLocker locker(&mutex);
+}
+
+QString JKInterface::parseUiPassword()
+{
+    QMutexLocker locker(&mutex);
+}
+
+int JKInterface::parseUiSaveTime()
+{
+    QMutexLocker locker(&mutex);
+}
+
+void JKInterface::uiParseSaveTime(int)
+{
+    QMutexLocker locker(&mutex);
+}
+
+void JKInterface::uiParseWifiInfo(Setter::struct_wifiInfo)
+{
+    QMutexLocker locker(&mutex);
+}
+
+void JKInterface::uiParseIpv4(Setter::struct_ipv4)
+{
+    QMutexLocker locker(&mutex);
+}
+
+Setter::struct_ipv4 JKInterface::parseUiIpv4()
+{
+    QMutexLocker locker(&mutex);
+}
+
+void JKInterface::uiParseSoftap(Setter::struct_softAp)
+{
+    QMutexLocker locker(&mutex);
+}
+
+Setter::struct_softAp JKInterface::parseUiSoftap()
+{
+    QMutexLocker locker(&mutex);
 }
 
 ImageModel* JKInterface::getImageModel()

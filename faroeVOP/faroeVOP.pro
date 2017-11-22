@@ -17,7 +17,9 @@ SOURCES += \
     ../lld/ImgFile/Tiff.cpp \
     ../lld/platformapp.cpp \
     netio.cpp \
-    appqt.cpp
+    appqt.cpp \
+    ../lld/setter.cpp \
+    ../lld/setterapi.cpp
 
 #lupdate_only{
 #SOURCES += *.qml \
@@ -37,7 +39,10 @@ HEADERS += \
     ../lld/ImgFile/ImgFile.h \
     ../lld/platformapp.h \
     netio.h \
-    appqt.h
+    appqt.h \
+    ../lld/setter.h \
+    ../lld/setterapi.h \
+    ../lld/setterstruct.h
 
 RESOURCES += qml.qrc \
     ../thumbnailviewer/thumbnailviewer.qrc \

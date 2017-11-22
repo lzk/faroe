@@ -1,7 +1,5 @@
 #ifndef SCANNER_H
 #define SCANNER_H
-#include "scannerstruct.h"
-#include "scannerapi.h"
 namespace JK {
 
 enum Scan_RET
@@ -26,6 +24,8 @@ enum Scan_RET
 
 class DeviceIO;
 class PlatformApp;
+class ScannerAPI;
+struct SC_PAR_DATA_STRUCT;
 class Scanner
 {
 public:
@@ -60,6 +60,7 @@ public:
 
 public:
     Scanner();
+    ~Scanner();
     void install(DeviceIO* dio ,PlatformApp* platformApp);
     int ADFScan();
     void cancel();
@@ -67,13 +68,13 @@ public:
     Setting* getSetting();
 private:
     PlatformApp* pPlatformApp;
+    ScannerAPI* scannerApi;
     bool m_cancel;
-    ScannerAPI scannerApi;
     Parameters parameters;
     int waitJobFinish(int wait_motor_stop);
     int receiveData();
     Parameters getParameters();
-    SC_PAR_DATA_T getScanParameters(const Setting& setting);
+    void getScanParameters(const Setting& setting ,struct SC_PAR_DATA_STRUCT* para);
     void calculateParameters(const Setting& setting);
     int _scan();
 };

@@ -1,10 +1,16 @@
 #include "device.h"
+#include "scanner.h"
+#include "deviceio.h"
+#include "setter.h"
 using namespace JK;
 
 Device::Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp)
     :deviceIO(dio)
+    ,scanner(new Scanner)
+    ,setter(new Setter)
 {
-    scanner.install(dio ,platformApp);
+    scanner->install(dio ,platformApp);
+    setter->install(dio ,platformApp);
     if(deviceIO){
         deviceIO->resolveUrl(url);
     }
@@ -12,11 +18,13 @@ Device::Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp)
 
 Device::~Device()
 {
+    delete scanner;
+    delete setter;
 }
 
 Scanner* Device::getScanner()
 {
-    return &scanner;
+    return scanner;
 }
 
 int Device::open(const char* url)
@@ -68,7 +76,7 @@ int Device::scan()
             result = deviceIO->read(&status ,1);
         }
         if(status == 1){
-            result = scanner.ADFScan();
+            result = scanner->ADFScan();
         }
         deviceIO->close();
     }
@@ -78,4 +86,109 @@ int Device::scan()
 bool Device::checkConnection()
 {
     return deviceIO->isConnected();
+}
+
+int Device::deviceCmd(int cmd ,void* data)
+{
+    int err = ERR_cmd_cannot_support;
+    switch (cmd) {
+    case CMD_SCAN:
+        err = scan();
+        if(err)
+            err += ERR_SCAN;
+        break;
+    case CMD_setWifi:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->setWifi(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_setPassword:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->setPassword(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_confirmPassword:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->confirmPassword(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_setSaveTime:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->setSaveTime(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_getSaveTime:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->getSaveTime(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_getWifiInfo:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->getWifi(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_getIpv4:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->getIpV4(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_setIpv4:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->setIpV4(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_setSoftap:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->setSoftAp(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    case CMD_getSoftap:
+    {
+        err =deviceIO->open();
+        if(!err){
+            err = setter->getSoftAp(data);
+            deviceIO->close();
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    return err;
 }

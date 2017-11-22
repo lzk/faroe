@@ -3,10 +3,9 @@
 
 #include <QObject>
 #include <QSize>
-#include "../lld/device.h"
 #include "netio.h"
 #include "appqt.h"
-using JK::Device;
+#include "../lld/device.h"
 
 enum{
     DEVICE_NODEVICE,
@@ -36,11 +35,13 @@ signals:
     void progressChanged(qreal);
     void addImage(QString  ,QSize);
     void scanResult(int);
+    void cmdResult(int cmd ,int err);
 
 public slots:
     void scan();
     void cancelScan();
     void resolveUrl(const QString& url);
+    void deviceCmd(int cmd);
 
 private:
     JKInterface* jkInterface;
