@@ -8,6 +8,8 @@
 #include "../thumbnailviewer/imagemodel.h"
 #include "../platform/devicemanager.h"
 #include "stringmodel.h"
+#include "../lld/scanner.h"
+#include "../lld/setter.h"
 typedef struct{
     bool ADFMode;
     int dpi;
@@ -23,6 +25,7 @@ typedef struct {
     UI_Scanner_Settings scannerSettings;
 }
     UI_Settings;
+struct Setting;
 class JKInterface : public QObject
 {
     Q_OBJECT
@@ -72,6 +75,15 @@ public:
 
 public:
     Scanner::Setting parseUiScannerSetting();
+    Setter::struct_wifiSetting parseUiWifiSetting();
+    QString parseUiPassword();
+    int parseUiSaveTime();
+    void uiParseSaveTime(int);
+    void uiParseWifiInfo(Setter::struct_wifiInfo);
+    void uiParseIpv4(Setter::struct_ipv4);
+    Setter::struct_ipv4 parseUiIpv4();
+    void uiParseSoftap(Setter::struct_softAp);
+    Setter::struct_softAp parseUiSoftap();
 
 signals:
     void progressChanged();

@@ -20,7 +20,9 @@ SOURCES += \
     ../platform/netio.cpp \
     ../platform/appqt.cpp \
     ../platform/netsnmp.cpp \
-    ../platform/log.cpp
+    ../platform/log.cpp \
+    ../lld/setter.cpp \
+    ../lld/setterapi.cpp
 
 mac{
 SOURCES += \
@@ -53,7 +55,10 @@ HEADERS += \
     ../platform/netio.h \
     ../platform/appqt.h \
     ../platform/log.h \
-    ../platform/version.h
+    ../platform/version.h \
+    ../lld/setter.h \
+    ../lld/setterapi.h \
+    ../lld/setterstruct.h
 
 RESOURCES += qml.qrc \
     ../thumbnailviewer/thumbnailviewer.qrc \

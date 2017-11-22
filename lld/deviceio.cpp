@@ -13,4 +13,3 @@ DeviceIO::DeviceIO()
 DeviceIO::~DeviceIO()
 {
 }
-
