@@ -83,6 +83,11 @@ bool Device::checkConnection()
     return deviceIO->isConnected();
 }
 
+#ifdef OS_WIN
+void Device::searchDevices(addDeviceHandler handler,void* pData)
+{
+}
+#else
 void snmpSearchDevices(addDeviceHandler handler,void* pData);
 void usbSearchDevices(addDeviceHandler handler,void* pData);
 void Device::searchDevices(addDeviceHandler handler,void* pData)
@@ -90,7 +95,7 @@ void Device::searchDevices(addDeviceHandler handler,void* pData)
     usbSearchDevices(handler ,pData);
     snmpSearchDevices(handler ,pData);
 }
-
+#endif
 int Device::deviceCmd(int cmd ,void* data)
 {
     int err = ERR_cmd_cannot_support;

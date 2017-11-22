@@ -92,8 +92,15 @@ DISTFILES += \
         ../component/*.qml \
 
 #QMAKE_CXXFLAGS += -Wmissing-field-initializers
-
+windows{
+#LIBS += -LC:/usr/lib/ -lnetsnmp
+#INCLUDEPATH += C:/usr/include
+SOURCES -= ../platform/netsnmp.cpp
+DEFINES += OS_WIN
+}else{
 LIBS += `net-snmp-config --cflags` -lnetsnmp
+}
 
 mac: LIBS += -framework IOKit
 mac: LIBS += -framework CoreFoundation
+

@@ -34,7 +34,9 @@ void DeviceManager::connectDevice(int index)
         QString url;
         if(deviceList.at(index).type == DeviceInfo::Type_usb){
             url = QString("usb://") + deviceList.at(index).name + "?address=" + deviceList.at(index).address;
+#ifdef Q_OS_MAC
             device = new Device(url.toLatin1().data() ,&usbIO ,(PlatformApp*)&platformApp);
+#endif
         }else{
             url = QString("socket://") + QString(deviceList.at(index).address);
             device = new Device(url.toLatin1().data() ,&netIO ,(PlatformApp*)&platformApp);

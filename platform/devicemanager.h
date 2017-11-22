@@ -6,8 +6,11 @@
 #include <QList>
 #include "../lld/device.h"
 #include "netio.h"
-#include "mac/usbio.h"
 #include "appqt.h"
+
+#ifdef Q_OS_MAC
+#include "mac/usbio.h"
+#endif
 using JK::Device;
 using JK::DeviceInfo;
 
@@ -50,7 +53,9 @@ private:
     int cancelSearch;
     QList<DeviceInfo> deviceList;
     NetIO netIO;
+#ifdef Q_OS_MAC
     UsbIO usbIO;
+#endif
     AppQt platformApp;
     void saveImage(const QImage& image);
 };
