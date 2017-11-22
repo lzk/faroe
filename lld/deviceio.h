@@ -12,7 +12,6 @@ public:
     DeviceIO();
     virtual ~DeviceIO();
     virtual int type() = 0;
-    virtual int open(const char*) = 0;
     virtual int open() = 0;
     virtual int close(void) = 0;
     virtual int write(char *buffer, int bufsize) = 0;

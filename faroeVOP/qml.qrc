@@ -202,5 +202,6 @@
         <file>fonts/digital-7.ttf</file>
         <file>ImageViewer.qml</file>
         <file>ScanSettings.qml</file>
+        <file>DeviceList.qml</file>
     </qresource>
 </RCC>

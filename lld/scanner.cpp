@@ -1,5 +1,6 @@
 #include "scanner.h"
 #include <unistd.h>
+#include <string.h>
 #include "platformapp.h"
 using namespace JK;
 

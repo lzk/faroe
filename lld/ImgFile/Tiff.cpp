@@ -31,7 +31,7 @@ TH th = {
 	{0x0fe, 4, 1, 0},			// NewSubFileType
 	{0x100, 3, 1, 640},			// ImageWidth
 	{0x101, 3, 1, 480},			// ImageLength
-	{0x102, 3, 3, (U32)&((TH*)0)->pBitsPerSample}, // BitsPerSample
+    {0x102, 3, 3, (U32)(size_t)&((TH*)0)->pBitsPerSample}, // BitsPerSample
 	{0x103, 3, 1, 1},			// Compression
 	{0x106, 3, 0, 2},			// PhotoMetric (RGB)
 	{0x111, 3, 1, sizeof(TH)},	// StripOffset
@@ -39,8 +39,8 @@ TH th = {
 	{0x115, 3, 1, 3},			// SamplesPerPixel
 	{0x116, 3, 1, 480},			// RowsPerStrip
 	{0x117, 4, 1, 3*640*480},	// StripByteCounts
-	{0x11a, 5, 1, (U32)&((TH*)0)->pXResolution}, // XResolution
-	{0x11b, 5, 1, (U32)&((TH*)0)->pYResolution}, // YResolution
+    {0x11a, 5, 1, (U32)(size_t)&((TH*)0)->pXResolution}, // XResolution
+    {0x11b, 5, 1, (U32)(size_t)&((TH*)0)->pYResolution}, // YResolution
 	{0x11c, 3, 1, 1},			// PlanarConfig
 	{0x128, 3, 1, 2},			// ResolutionUnit (inch)
 	0,							// NextIFD
@@ -62,7 +62,7 @@ int PrepareTiffHeader(IMAGE_T *img)
 	}
 	else {
 		th.BitsPerSample.n = 3;
-		th.BitsPerSample.pBits = (U32)&((TH*)0)->pBitsPerSample;
+        th.BitsPerSample.pBits = (U32)(size_t)&((TH*)0)->pBitsPerSample;
 		if(img->bit <= 24)
 			th.pBitsPerSample.r = th.pBitsPerSample.g = th.pBitsPerSample.b = 8;
 		else
@@ -135,11 +135,11 @@ int Raw_WriteFile(IMG_FILE_T *imgfile, void *data, int size)
 int Tiff_CloseFile(IMG_FILE_T *imgfile)
 {
     if(imgfile->row != imgfile->img.height) {
-		fseek(imgfile->stream, (U32)&((TH*)0)->ImageLength.length, SEEK_SET);
+        fseek(imgfile->stream, (U32)(size_t)&((TH*)0)->ImageLength.length, SEEK_SET);
 		fwrite(&imgfile->row, 1, sizeof(U32), imgfile->stream);
-		fseek(imgfile->stream, (U32)&((TH*)0)->RowsPerStrip.rows, SEEK_SET);
+        fseek(imgfile->stream, (U32)(size_t)&((TH*)0)->RowsPerStrip.rows, SEEK_SET);
 		fwrite(&imgfile->row, 1, sizeof(U32), imgfile->stream);
-		fseek(imgfile->stream, (U32)&((TH*)0)->StripByteCounts.bytes, SEEK_SET);
+        fseek(imgfile->stream, (U32)(size_t)&((TH*)0)->StripByteCounts.bytes, SEEK_SET);
 		fwrite(&imgfile->size, 1, sizeof(U32), imgfile->stream);
 	}
 	fclose(imgfile->stream);

@@ -9,8 +9,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
+
     qmlRegisterType<JKInterface>("com.liteon.JKInterface",1,0,"JKInterface");
     qmlRegisterType<ImageModel>("com.liteon.JKInterface",1,0,"ImageModel");
+//    qmlRegisterType<StringModel>("com.liteon.JKInterface",1,0,"StringModel");
 
     JKInterface jki;
 

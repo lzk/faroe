@@ -176,4 +176,9 @@ Item {
         onScanResult:scanResult(result)
     }
 
+    Connections {
+        target: button_searchDevice
+        onClicked: stackView.push("DeviceList.qml")
+    }
+
 }

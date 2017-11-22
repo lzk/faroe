@@ -1,5 +1,6 @@
 #include "jkinterface.h"
 #include <QDebug>
+#include "../platform/log.h"
 const UI_Scanner_Settings defaultScannerSetting = {
     .ADFMode=true,
     .dpi = 1,
@@ -13,6 +14,7 @@ const UI_Scanner_Settings defaultScannerSetting = {
 JKInterface::JKInterface(QObject *parent) : QObject(parent)
   ,m_progress(0.0)
 {
+    init_log();
     memset(&uiSettings ,0 ,sizeof(uiSettings));
     uiSettings.scannerSettings = defaultScannerSetting;
     scannerSettings = defaultScannerSetting;
@@ -22,12 +24,14 @@ JKInterface::JKInterface(QObject *parent) : QObject(parent)
     connect(&thread ,SIGNAL(finished()) ,deviceManager ,SLOT(deleteLater()));
     connect(deviceManager ,SIGNAL(progressChanged(qreal)) ,this , SLOT(setProgress(qreal)));
     connect(deviceManager ,SIGNAL(addImage(QString,QSize)) ,this ,SLOT(addImage(QString,QSize)));
+    connect(deviceManager ,SIGNAL(addDeviceInfo(QString)) ,this ,SLOT(addDeviceInfo(QString)));
     connect(deviceManager ,SIGNAL(scanResult(int)) ,this , SIGNAL(scanResult(int)));
+    connect(this ,SIGNAL(connectDevice(int)) ,deviceManager ,SLOT(connectDevice(int)));
+    connect(this ,SIGNAL(searchDeviceList()) ,deviceManager ,SLOT(searchDeviceList()));
+    connect(this ,SIGNAL(cancelSearch()) ,deviceManager ,SLOT(cancelSearchDeviceList()));
     connect(this ,SIGNAL(scan()) ,deviceManager ,SLOT(scan()));
-    connect(this ,SIGNAL(deviceChanged(QString)) ,deviceManager ,SLOT(resolveUrl(QString)));
     thread.start();
 }
-
 
 JKInterface::~JKInterface()
 {
@@ -35,6 +39,10 @@ JKInterface::~JKInterface()
     thread.wait();
 }
 
+void JKInterface::log(const QString& msg)
+{
+    logout(msg);
+}
 
 void JKInterface::cancelScan()
 {
@@ -208,3 +216,8 @@ void JKInterface::setAutoCropAndDeskew(bool value)
      uiSettings.scannerSettings = scannerSettings;
  }
 
+ void JKInterface::addDeviceInfo(QString str)
+ {
+     m_deviceList.addString( str);
+//     m_deviceList << str;
+ }

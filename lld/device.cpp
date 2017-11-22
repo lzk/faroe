@@ -1,4 +1,5 @@
 #include "device.h"
+#include "../platform/devicemanager.h"
 using namespace JK;
 
 Device::Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp)
@@ -17,11 +18,6 @@ Device::~Device()
 Scanner* Device::getScanner()
 {
     return &scanner;
-}
-
-int Device::open(const char* url)
-{
-    return deviceIO->open(url);
 }
 
 int Device::open()
@@ -78,4 +74,12 @@ int Device::scan()
 bool Device::checkConnection()
 {
     return deviceIO->isConnected();
+}
+
+void snmpSearchDevices(addDeviceHandler handler,void* pData);
+void usbSearchDevices(addDeviceHandler handler,void* pData);
+void Device::searchDevices(addDeviceHandler handler,void* pData)
+{
+    usbSearchDevices(handler ,pData);
+    snmpSearchDevices(handler ,pData);
 }

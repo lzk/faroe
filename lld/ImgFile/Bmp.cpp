@@ -166,11 +166,11 @@ int Bmp_CloseFile(IMG_FILE_T *imgfile)
 		int row = -imgfile->row;
 		if(img->bit <= 8)
 			FileSize += (4 << img->bit);
-		fseek(imgfile->stream, (U32)&((BH*)0)->FileSize, SEEK_SET);
+        fseek(imgfile->stream, (U32)(size_t)&((BH*)0)->FileSize, SEEK_SET);
 		fwrite(&FileSize, 1, sizeof(U32), imgfile->stream);
-		fseek(imgfile->stream, (U32)&((BH*)0)->Height, SEEK_SET);
+        fseek(imgfile->stream, (U32)(size_t)&((BH*)0)->Height, SEEK_SET);
 		fwrite(&row, 1, sizeof(U32), imgfile->stream);
-		fseek(imgfile->stream, (U32)&((BH*)0)->BitmapDataSize, SEEK_SET);
+        fseek(imgfile->stream, (U32)(size_t)&((BH*)0)->BitmapDataSize, SEEK_SET);
 		fwrite(&imgfile->size, 1, sizeof(U32), imgfile->stream);
 	}
 	fclose(imgfile->stream);

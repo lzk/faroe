@@ -6,7 +6,8 @@
 #include <QThread>
 #include <QImage>
 #include "../thumbnailviewer/imagemodel.h"
-#include "devicemanager.h"
+#include "../platform/devicemanager.h"
+#include "stringmodel.h"
 typedef struct{
     bool ADFMode;
     int dpi;
@@ -29,6 +30,8 @@ public:
     explicit JKInterface(QObject *parent = nullptr);
     ~JKInterface();
 
+    Q_PROPERTY(StringModel* deviceList READ getDeviceList CONSTANT)
+//    Q_PROPERTY(QStringList deviceList READ getDeviceList CONSTANT)
     Q_PROPERTY(ImageModel* model READ getImageModel CONSTANT)
     Q_PROPERTY(qreal progress READ getProgress NOTIFY progressChanged)
     Q_PROPERTY(bool ADFMode READ ADFMode WRITE setADFMode NOTIFY ADFModeChanged)
@@ -40,6 +43,8 @@ public:
     Q_PROPERTY(int brightness READ brightness WRITE setBrightness NOTIFY brightnessChanged)
     Q_PROPERTY(bool AutoCropAndDeskew READ AutoCropAndDeskew WRITE setAutoCropAndDeskew NOTIFY AutoCropAndDeskewChanged)
 
+    StringModel* getDeviceList(){return &m_deviceList;}
+//    QStringList getDeviceList(){return m_deviceList;}
     ImageModel* getImageModel();
     qreal getProgress();
     bool ADFMode();
@@ -63,6 +68,7 @@ public:
     Q_INVOKABLE void loadScannerSettings();
     Q_INVOKABLE void setDefault();
     Q_INVOKABLE void setOK();
+    Q_INVOKABLE void log(const QString&);
 
 public:
     Scanner::Setting parseUiScannerSetting();
@@ -79,19 +85,24 @@ signals:
     void AutoCropAndDeskewChanged();
 
     void scan();
-    void deviceChanged(const QString&);
     void scanResult(int result);
+    void searchDeviceList();
+    void cancelSearch();
 
+    void connectDevice(int);
 public slots:
     void setProgress(qreal prgrs);
     void cancelScan();
     void addImage(QString ,QSize);
+    void addDeviceInfo(QString);
 
 private:
     qreal m_progress;
     DeviceManager* deviceManager;
     QMutex mutex;
     QThread thread;
+    StringModel m_deviceList;
+//    QStringList m_deviceList;
     ImageModel model;
     UI_Settings uiSettings;
     UI_Scanner_Settings scannerSettings;

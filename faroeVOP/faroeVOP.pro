@@ -4,9 +4,9 @@ CONFIG += c++11
 
 SOURCES += \
             main.cpp \
-            ../thumbnailviewer/imagemodel.cpp \
             jkinterface.cpp \
-    devicemanager.cpp \
+    stringmodel.cpp \
+            ../thumbnailviewer/imagemodel.cpp \
     ../lld/device.cpp \
     ../lld/scannerapi.cpp \
     ../lld/scanner.cpp \
@@ -16,8 +16,21 @@ SOURCES += \
     ../lld/ImgFile/Jpeg.cpp \
     ../lld/ImgFile/Tiff.cpp \
     ../lld/platformapp.cpp \
-    netio.cpp \
-    appqt.cpp
+    ../platform/devicemanager.cpp \
+    ../platform/netio.cpp \
+    ../platform/appqt.cpp \
+    ../platform/netsnmp.cpp \
+    ../platform/log.cpp
+
+mac{
+SOURCES += \
+    ../platform/mac/mac_usb.cpp \
+    ../platform/mac/usbio.cpp
+
+HEADERS += \
+    ../platform/mac/mac_usb.h \
+    ../platform/mac/usbio.h
+}
 
 #lupdate_only{
 #SOURCES += *.qml \
@@ -25,9 +38,9 @@ SOURCES += \
 #}
 
 HEADERS += \
-    ../thumbnailviewer/imagemodel.h \
+    stringmodel.h \
     jkinterface.h \
-    devicemanager.h \
+    ../thumbnailviewer/imagemodel.h \
     ../lld/device.h \
     ../lld/type.h \
     ../lld/scannerstruct.h \
@@ -36,8 +49,11 @@ HEADERS += \
     ../lld/deviceio.h \
     ../lld/ImgFile/ImgFile.h \
     ../lld/platformapp.h \
-    netio.h \
-    appqt.h
+    ../platform/devicemanager.h \
+    ../platform/netio.h \
+    ../platform/appqt.h \
+    ../platform/log.h \
+    ../platform/version.h
 
 RESOURCES += qml.qrc \
     ../thumbnailviewer/thumbnailviewer.qrc \
@@ -71,3 +87,8 @@ DISTFILES += \
         ../component/*.qml \
 
 #QMAKE_CXXFLAGS += -Wmissing-field-initializers
+
+LIBS += `net-snmp-config --cflags` -lnetsnmp
+
+mac: LIBS += -framework IOKit
+mac: LIBS += -framework CoreFoundation
