@@ -31,11 +31,9 @@ class Scanner
 public:
     typedef struct{
         int BitsPerPixel;
-        int resolution;
-        int width;
-        int height;
-        int x;
-        int y;
+        int dpi_x;
+        int dpi_y;
+        int scan_doc_size;
         int contrast;
         int brightness;
         int ADFMode;
@@ -50,11 +48,13 @@ public:
 
     typedef struct{
         Setting setting;
+//        int width;
+//        int height;
+        int x;
+        int y;
         int nColPixelNumOrig;
         int nLinePixelNumOrig;
-        int imgBufferSize;
         int bytesPerLine;
-        unsigned char* imgBuffer;
     }
         Parameters;
 

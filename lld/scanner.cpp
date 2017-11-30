@@ -3,6 +3,8 @@
 #include <string.h>
 #include "platformapp.h"
 #include "scannerapi.h"
+#include "../platform/log.h"
+#include "device.h"
 using namespace JK;
 
 #define _SCANMODE_1BIT_BLACKWHITE 1
@@ -11,19 +13,16 @@ using namespace JK;
 
 const Scanner::Setting defaultSetting = {
     .BitsPerPixel = IMG_BIT,
-    .resolution = IMG_DPI_X,
-    .width=IMG_WIDTH,
-    .height=IMG_HEIGHT,
-    .x=0,
-    .y=0,
+    .dpi_x=300,
+    .dpi_y=300,
     .contrast=50,
     .brightness=50,
     .ADFMode=SCAN_DUPLEX,
     .MultiFeed=true,
     .AutoCrop=true,
     .onepage=SCAN_PAGE,
-    .source=SCAN_SOURCE,
-    .format=IMG_FORMAT,
+    .source=CODE_ADF,
+    .format=CODE_JPG,
 };
 
 Scanner::Scanner():
@@ -57,103 +56,107 @@ int Scanner::receiveData()
     SC_INFO_DATA_T sc_infodata;
     int dup;
     int duplex;
-    int readBytes ,readTotalBytes ,toReadBytes;
+    int readBytes ,readTotalBytes[2] ,toReadBytes;
     int offset[2] = {0,0};
     int result;
-    int progress = 0;
-
-    char fileName[256];
-    Setting* setting = &parameters.setting;
-    char suffix[5];
-    char colorType = 'C';
-    switch (setting->BitsPerPixel) {
-    case _SCANMODE_1BIT_BLACKWHITE:        colorType = 'B';        break;
-    case _SCANMODE_8BIT_GRAYSCALE:        colorType = 'G';        break;
-    case _SCANMODE_24BIT_COLOR:        colorType = 'C';        break;
-    default:
-        break;
-    }
-    if(setting->format == IMG_FMT_JPG){
-        strcpy(suffix ,".jpg");
-    }else if(setting->format == IMG_FMT_BMP){
-        strcpy(suffix ,".bmp");
-    }else if(setting->format == IMG_FMT_RAW){
-        strcpy(suffix ,".raw");
-    }else if(setting->format == IMG_FMT_TIF){
-        strcpy(suffix ,".tif");
-    }
-    duplex = setting->ADFMode;
-    m_cancel = false;
+    int progress;
     int page[2] = {0,0};
-    while (!m_cancel) {
+    char* imgBuffer = new char[MAX_SCAN_LENGTH];
+
+    Setting* setting = &parameters.setting;
+    duplex = setting->ADFMode;
+
+    FILE* file[2];
+    bool fileIsOpened[2] = {false ,false};
+
+    m_cancel = false;
+    while (!m_cancel){
         if (scannerApi->getInfo(sc_infodata)){
             usleep(100 * 1000);
             continue;
         }
         if(sc_infodata.CoverOpen){
-
+            result = RETSCAN_COVER_OPEN;
+            LOG_NOPARA("cover open.");
             break;
         }
         if(sc_infodata.PaperJam){
             if(sc_infodata.AdfSensor){
-
+            //There is "scan jam" let scan flow finish for save image
             }else{
+                LOG_NOPARA("paper jam.");
+                result = RETSCAN_PAPER_JAM;
                 break;
             }
         }
         if ((!(duplex & 1) || sc_infodata.EndScan[0])
-                && (!(duplex & 2) || sc_infodata.EndScan[1]))
+                && (!(duplex & 2) || sc_infodata.EndScan[1])){
+            LOG_NOPARA("end scan.");
             break;
-
+        }
 
         for (dup = 0; dup < 2; dup++){
-            if (duplex & (1 << dup)){
-                readTotalBytes = 0;
+            if (duplex & (1 << dup) && sc_infodata.ValidPageSize[dup]){
+                if(!fileIsOpened[dup]){
+                    file[dup] = fopen(pPlatformApp->getTempFilename(dup) ,"wb");
+                    fileIsOpened[dup] = true;
+//                    LOG_PARA("side %c page %d begin." ,dup?'B':'A' ,page[dup]);
+                }
                 toReadBytes = sc_infodata.ValidPageSize[dup];
-                if(toReadBytes + offset[dup] > parameters.imgBufferSize)
-                    toReadBytes = parameters.imgBufferSize - offset[dup];
-                while (readTotalBytes < toReadBytes) {
-                    if(m_cancel)
-                        break;
-                    result = scannerApi->readScan(dup ,&readBytes ,(char*)parameters.imgBuffer + offset[dup]
-                                                 ,toReadBytes - readTotalBytes);
+                LOG_PARA("receive %c side %d bytes:" ,dup ? 'B' :'A' ,toReadBytes);
+                readTotalBytes[dup] = 0;
+                while (readTotalBytes[dup] < toReadBytes) {
+                    if(m_cancel){
+                        goto EXIT;
+//                        break;
+                    }
+                    result = scannerApi->readScan(dup ,&readBytes ,imgBuffer
+                                                 ,toReadBytes - readTotalBytes[dup]);
                     if(!result){
-                        readTotalBytes += readBytes;
+                        readTotalBytes[dup] += readBytes;
                         offset[dup] += readBytes;
+                        if(readBytes && fileIsOpened[dup])
+                            fwrite(imgBuffer ,1 ,readBytes ,file[dup]);
+                        LOG_PARA("receive %c side %d bytes:%d ----- read once:%d"
+                                 ,dup ? 'B' :'A' ,toReadBytes ,readTotalBytes[dup] ,readBytes);
                     }else{
-                        break;
+                        goto EXIT;
+//                        break;
                     }
                     usleep(100 * 1000);
                 }
-                if(m_cancel)
-                    break;
-
                 if(offset[dup] > progress)
                     progress = offset[dup];
-                if(offset[dup] == parameters.imgBufferSize &&  sc_infodata.EndPage[dup]){
+
+                if(sc_infodata.EndPage[dup]
+                        &&  readTotalBytes[dup] >= sc_infodata.ValidPageSize[dup]
+                        ){
+                    LOG_PARA("end page %c." ,dup ?'B' :'A');
                     offset[dup] = 0;
-                    sprintf(fileName, "_%c%d_%c%02d.%s"
-                            , colorType
-                            , parameters.setting.resolution,
-                            dup == 0 ?'A':'B', page[dup]++, suffix);
-                    pPlatformApp->saveImage(fileName ,parameters.imgBuffer ,setting->width ,setting->height ,setting->BitsPerPixel);
+                    if(fileIsOpened[dup]){
+                        fclose(file[dup]);
+                        fileIsOpened[dup] = false;
+                        pPlatformApp->saveScanImage(setting ,dup ,page[dup]++ ,sc_infodata.ImageHeight[dup]);
+                    }
                 }
-                //any bytes?
-//                toReadBytes = sc_infodata.ValidPageSize[dup] - toReadBytes;
             }
         }
-        if(m_cancel){
-            break;
-        }
-        pPlatformApp->updateProgress(progress*1.0 / parameters.imgBufferSize);
+        pPlatformApp->updateProgress(progress * 1.0 / (parameters.bytesPerLine * parameters.nColPixelNumOrig));
     }
-    return m_cancel || result;
+    EXIT:
+    for(int i = 0 ;i < 2 ;i++){
+        if(fileIsOpened[i]){
+            fclose(file[i]);
+        }
+    }
+    delete [] imgBuffer;
+    return result;
 }
 
 int Scanner::ADFScan()
 {
     int result;
-    result = scannerApi->jobCreate();
+    result = scannerApi->jobCreate(CODE_ADF);
     if(result){
         int errorcode = RETSCAN_CREATE_JOB_FAIL;
         switch (result) {
@@ -165,13 +168,11 @@ int Scanner::ADFScan()
         default:break;
         }
         result = errorcode;
+        LOG_PARA("job create err:%d" ,result);
     }else{
         result = _scan();
         scannerApi->jobEnd();
-    }
-    if(parameters.imgBuffer){
-        delete parameters.imgBuffer;
-        parameters.imgBuffer = NULL;
+        LOG_PARA("scan err:%d" ,result);
     }
     return result;
 }
@@ -194,17 +195,15 @@ int Scanner::_scan()
 
     //receive data loop
     result = receiveData();
-    if(result){
-        if(m_cancel){
-            scannerApi->cancelScan();
-            return RETSCAN_CANCEL;
-        }
-        return RETSCAN_ERROR;
+    if(m_cancel){
+        scannerApi->cancelScan();
+        waitJobFinish(0);
+        return RETSCAN_CANCEL;
     }
 
     scannerApi->stopScan();
     waitJobFinish(0);
-    return RETSCAN_OK;
+    return result;
 }
 
 #define JOB_WAIT_TIMEOUT  5000
@@ -250,15 +249,33 @@ static int GetByteNumPerLineWidthPad(int scanMode, int nPixels)
 
 void Scanner::calculateParameters(const Setting& setting)
 {
-    parameters.nLinePixelNumOrig = setting.width * setting.resolution / 300;//1000;
-    parameters.nLinePixelNumOrig = parameters.nLinePixelNumOrig - parameters.nLinePixelNumOrig % 8;
-    parameters.nColPixelNumOrig = setting.height * setting.resolution / 300;//1000;
+    int width ,height;
+    switch (setting.scan_doc_size) {
+    case SETTING_DOC_SIZE_A4:
+        width = 2480;
+        height = 3512;
+//        parameters.x = (2592 - 2480) / 2;
+        break;
+    case SETTING_DOC_SIZE_LT:
+        width = 2552;
+        height = 3296;
+//        parameters.x = (2592 - 2552) / 2;
+        break;
+    case SETTING_DOC_SIZE_FULL:
+    default:
+        width = 2592 ;
+        height = 118*300 ;
+//        parameters.x = 0;
+        break;
+    }
+    parameters.x = ((2592 - width) / 2) * setting.dpi_x / 300;
+    parameters.y = 0;
+    parameters.nLinePixelNumOrig = width * setting.dpi_x / 300;//1000;
+    parameters.nLinePixelNumOrig -= parameters.nLinePixelNumOrig % 8;
+    parameters.nColPixelNumOrig = height * setting.dpi_y / 300;//1000;
+    parameters.nColPixelNumOrig -= parameters.nColPixelNumOrig % 8;
     parameters.bytesPerLine = GetByteNumPerLineWidthPad(setting.BitsPerPixel, parameters.nLinePixelNumOrig);
-    parameters.imgBufferSize = parameters.bytesPerLine * setting.height;
 
-    if(parameters.imgBuffer != NULL)
-        delete parameters.imgBuffer;
-    parameters.imgBuffer = new unsigned char[parameters.imgBufferSize];
 }
 
 void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
@@ -277,21 +294,26 @@ void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
 
     para->acquire = ((setting.MultiFeed ? 1 : 0) * ACQ_Ultra_Sonic) | ((setting.AutoCrop ? 1 : 0) * ACQ_CROP_DESKEW) | ACQ_PICK_SS;
 
-    para->source =IMG_FMT_ADF;
-    para->duplex = setting.ADFMode;
+    if(SETTING_SCAN_ADF == setting.source){
+        para->source = CODE_ADF;
+        para->duplex = setting.ADFMode;
+    }else{
+        para->source = CODE_FLB;
+        para->duplex = SCAN_A_SIDE;
+    }
     para->page = setting.onepage ? 1 : 0;
-    para->img.format = IMG_FMT_JPG;
+    para->img.format = SETTING_IMG_FORMAT_JPG == setting.format ?CODE_JPG :CODE_RAW;
     para->img.bit = setting.BitsPerPixel;
-    para->img.dpi.x = setting.resolution;
-    para->img.dpi.y = setting.resolution;
-    para->img.org.x = setting.x;
-    para->img.org.y = setting.y;
+    para->img.dpi.x = setting.dpi_x;
+    para->img.dpi.y = setting.dpi_y;
+    para->img.org.x = parameters.x;
+    para->img.org.y = parameters.y;
 
     para->img.width = parameters.nLinePixelNumOrig;
     para->img.height = parameters.nColPixelNumOrig;
-    para->img.mono = setting.BitsPerPixel == IMG_24_BIT ? IMG_COLOR : IMG_3CH_TRUE_MONO;
+    para->img.mono = setting.BitsPerPixel == SETTING_IMG_24_BIT ? IMG_COLOR : IMG_3CH_TRUE_MONO;
 
-    if (para->img.format == IMG_FMT_JPG) {
+    if (para->img.format == CODE_JPG) {
         para->img.option = IMG_OPT_JPG_FMT444;
     }
 
@@ -357,5 +379,21 @@ void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
             }
 
         }
+//        switch (para->mtr[0].currentLV) {
+//        case 1:            para->mtr[0].currentLV = 0;            break;
+//        case 2:            para->mtr[0].currentLV = 2;            break;
+//        case 3:            para->mtr[0].currentLV = 1;            break;
+//        case 4:            para->mtr[0].currentLV = 3;            break;
+//        default:
+//            break;
+//        }
+//        switch (para->mtr[1].currentLV) {
+//        case 1:            para->mtr[1].currentLV = 0;            break;
+//        case 2:            para->mtr[1].currentLV = 2;            break;
+//        case 3:            para->mtr[1].currentLV = 1;            break;
+//        case 4:            para->mtr[1].currentLV = 3;            break;
+//        default:
+//            break;
+//        }
     }
 }

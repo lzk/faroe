@@ -2,6 +2,8 @@
 #include "scanner.h"
 #include "deviceio.h"
 #include "setter.h"
+#include "../platform/devicestruct.h"
+#include "../platform/log.h"
 using namespace JK;
 
 Device::Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp)
@@ -43,7 +45,7 @@ int Device::scan()
     int result = 0;
     if(deviceIO->type() == DeviceIO::Type_net){
 //        result = deviceIO->read(&status ,1);
-        result = ((NetDeviceIO*)deviceIO)->open(23011);
+        result = ((NetDeviceIO*)deviceIO)->openPort(23011);
         if(!result){
             char cmd[4] = { 'J','D','G','S' };
             char status[8] = { 0 };
@@ -92,20 +94,21 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData);
 void usbSearchDevices(addDeviceHandler handler,void* pData);
 void Device::searchDevices(addDeviceHandler handler,void* pData)
 {
+    qDebug()<<"searching ...";
     usbSearchDevices(handler ,pData);
     snmpSearchDevices(handler ,pData);
 }
 #endif
 int Device::deviceCmd(int cmd ,void* data)
 {
-    int err = ERR_cmd_cannot_support;
+    int err = DeviceStruct::ERR_cmd_cannot_support;
     switch (cmd) {
-    case CMD_SCAN:
+    case DeviceStruct::CMD_SCAN:
         err = scan();
         if(err)
-            err += ERR_SCAN;
+            err += DeviceStruct::ERR_SCAN;
         break;
-    case CMD_setWifi:
+    case DeviceStruct::CMD_setWifi:
     {
         err =deviceIO->open();
         if(!err){
@@ -114,7 +117,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_setPassword:
+    case DeviceStruct::CMD_setPassword:
     {
         err =deviceIO->open();
         if(!err){
@@ -123,7 +126,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_confirmPassword:
+    case DeviceStruct::CMD_confirmPassword:
     {
         err =deviceIO->open();
         if(!err){
@@ -132,7 +135,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_setSaveTime:
+    case DeviceStruct::CMD_setSaveTime:
     {
         err =deviceIO->open();
         if(!err){
@@ -141,7 +144,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_getSaveTime:
+    case DeviceStruct::CMD_getSaveTime:
     {
         err =deviceIO->open();
         if(!err){
@@ -150,7 +153,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_getWifiInfo:
+    case DeviceStruct::CMD_getWifiInfo:
     {
         err =deviceIO->open();
         if(!err){
@@ -159,7 +162,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_getIpv4:
+    case DeviceStruct::CMD_getIpv4:
     {
         err =deviceIO->open();
         if(!err){
@@ -168,7 +171,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_setIpv4:
+    case DeviceStruct::CMD_setIpv4:
     {
         err =deviceIO->open();
         if(!err){
@@ -177,7 +180,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_setSoftap:
+    case DeviceStruct::CMD_setSoftap:
     {
         err =deviceIO->open();
         if(!err){
@@ -186,7 +189,7 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_getSoftap:
+    case DeviceStruct::CMD_getSoftap:
     {
         err =deviceIO->open();
         if(!err){

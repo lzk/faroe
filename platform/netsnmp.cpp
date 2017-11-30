@@ -6,13 +6,24 @@
 #include "../lld/device.h"
 #include "devicemanager.h"
 using namespace JK;
-
-void findAgent(addDeviceHandler ,void*);
+#include <QNetworkInterface>
+void findAgent(addDeviceHandler handler,void* pData ,char* broadcast);
 void findAgentV6(addDeviceHandler ,void*);
 void snmpSearchDevices(addDeviceHandler handler,void* pData)
 {
-    qDebug()<<"begin searching";
-    findAgent(handler ,pData);
+    QList<QNetworkInterface> ilist = QNetworkInterface::allInterfaces();
+    foreach (QNetworkInterface interface, ilist) {
+        QList<QNetworkAddressEntry> entrylist = interface.addressEntries();
+        foreach (QNetworkAddressEntry entry, entrylist) {
+            QHostAddress address = entry.ip();
+            if(address.protocol() == QAbstractSocket::IPv4Protocol){
+                if(!address.isLoopback() && entry.netmask().isEqual(QHostAddress("255.255.255.0"))){
+                    findAgent(handler ,pData ,entry.broadcast().toString().toLatin1().data());
+                }
+            }
+        }
+    }
+
     findAgentV6(handler ,pData);
 }
 
@@ -208,7 +219,7 @@ int netsnmpBroadcast(netsnmp_session& session ,void* magic)
 
 }
 
-void findAgent(addDeviceHandler handler,void* pData)
+void findAgent(addDeviceHandler handler,void* pData ,char* broadcast)
 {
     netsnmp_session session;
     init_snmp ("snmp");
@@ -216,8 +227,7 @@ void findAgent(addDeviceHandler handler,void* pData)
     session.version = SNMP_VERSION_2c;
     session.community = (u_char*)"public";
     session.community_len = strlen ((const char*)session.community);
-//    session.peername = (char*)"255.255.255.255";//被监控主机的IP地址
-    session.peername = (char*)"192.168.6.255";//被监控主机的IP地址
+    session.peername = (char*)broadcast;//被监控主机的IP地址
     session.flags |= SNMP_FLAGS_UDP_BROADCAST;
     session.timeout =  5 *1000 * 1000;
 

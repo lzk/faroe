@@ -9,8 +9,8 @@ public:
         Type_usb,
         Type_net,
     };
-    DeviceIO();
-    virtual ~DeviceIO();
+    DeviceIO(){}
+    virtual ~DeviceIO(){}
     virtual int type() = 0;
     virtual int open() = 0;
     virtual int close(void) = 0;
@@ -23,7 +23,7 @@ public:
 class NetDeviceIO:public DeviceIO
 {
 public:
-    virtual int open(int port) = 0;
+    virtual int openPort(int port) = 0;
 };
 
 }

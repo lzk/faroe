@@ -38,9 +38,9 @@ signals:
     void addDeviceInfo(QString);
     void scanResult(int);
     void cmdResult(int cmd ,int err);
+    void searchComplete();
 
 public slots:
-    void scan();
     void cancelScan();
     void searchDeviceList();
     void cancelSearchDeviceList();

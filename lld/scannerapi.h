@@ -1,6 +1,7 @@
 #ifndef SCANNERAPI_H
 #define SCANNERAPI_H
 #include "scannerstruct.h"
+#define MAX_SCAN_LENGTH 0x100000
 namespace JK {
 class DeviceIO;
 class ScannerAPI
@@ -9,7 +10,7 @@ public:
     ScannerAPI();
     void install(DeviceIO* dio);
 
-    int jobCreate();
+    int jobCreate(int source);
     int jobEnd();
     int startScan();
     int stopScan();

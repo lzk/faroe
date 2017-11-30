@@ -73,6 +73,8 @@ public:
     Q_INVOKABLE void setOK();
     Q_INVOKABLE void log(const QString&);
 
+    Q_INVOKABLE void test();
+
 public:
     Scanner::Setting parseUiScannerSetting();
     Setter::struct_wifiSetting parseUiWifiSetting();
@@ -96,10 +98,11 @@ signals:
     void brightnessChanged();
     void AutoCropAndDeskewChanged();
 
-    void scan();
-    void scanResult(int result);
+    void deviceCmd(int cmd);
+    void cmdResult(int cmd,int result);
     void searchDeviceList();
     void cancelSearch();
+    void searchComplete();
 
     void connectDevice(int);
 public slots:

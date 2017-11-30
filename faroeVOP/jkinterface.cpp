@@ -27,11 +27,12 @@ JKInterface::JKInterface(QObject *parent) : QObject(parent)
     connect(deviceManager ,SIGNAL(progressChanged(qreal)) ,this , SLOT(setProgress(qreal)));
     connect(deviceManager ,SIGNAL(addImage(QString,QSize)) ,this ,SLOT(addImage(QString,QSize)));
     connect(deviceManager ,SIGNAL(addDeviceInfo(QString)) ,this ,SLOT(addDeviceInfo(QString)));
-    connect(deviceManager ,SIGNAL(scanResult(int)) ,this , SIGNAL(scanResult(int)));
+    connect(deviceManager ,SIGNAL(cmdResult(int,int)) ,this , SIGNAL(cmdResult(int,int)));
+    connect(deviceManager ,SIGNAL(searchComplete()) ,this , SIGNAL(searchComplete()));
     connect(this ,SIGNAL(connectDevice(int)) ,deviceManager ,SLOT(connectDevice(int)));
     connect(this ,SIGNAL(searchDeviceList()) ,deviceManager ,SLOT(searchDeviceList()));
     connect(this ,SIGNAL(cancelSearch()) ,deviceManager ,SLOT(cancelSearchDeviceList()));
-    connect(this ,SIGNAL(scan()) ,deviceManager ,SLOT(scan()));
+    connect(this ,SIGNAL(deviceCmd(int)) ,deviceManager ,SLOT(deviceCmd(int)));
     thread.start();
 }
 
@@ -60,47 +61,35 @@ void JKInterface::addImage(QString filename ,QSize sourceSize)
 Scanner::Setting JKInterface::parseUiScannerSetting()
 {
     Scanner::Setting setting;
-    int dpi,width,height,x;
+    QMutexLocker locker(&mutex);
+    setting.BitsPerPixel = scannerSettings.colorMode == 0 ?SETTING_IMG_24_BIT :SETTING_IMG_8_BIT;
     switch(scannerSettings.dpi){
-    case 0:dpi = 200;break;
-    case 1:dpi = 300;break;
-    case 2:dpi = 600;break;
-    default:dpi=300;break;
+    case 0:setting.dpi_x = setting.dpi_y = 200;break;
+    case 1:setting.dpi_x = setting.dpi_y = 300;break;
+    case 2:setting.dpi_x = setting.dpi_y = 600;break;
+    default:setting.dpi_x = setting.dpi_y = 300;break;
     }
     switch (scannerSettings.scanAreaSize) {
     case 1://A4
-        width=(2480*dpi/300 + 7)/8;
-        height=3512*dpi/300;
-        x=35*dpi/300;
+        setting.scan_doc_size = SETTING_DOC_SIZE_A4;
         break;
     case 2://Letter
-        width=(2536*dpi/300+7)/8;
-        height=3296*dpi/300;
-        x=9*dpi/300;
+        setting.scan_doc_size = SETTING_DOC_SIZE_LT;
         break;
     case 0://auto
     default:
-        width=(2592*dpi/300+7)/8;
-        height=32400*dpi/300;
-        x=0;
+        setting.scan_doc_size = SETTING_DOC_SIZE_FULL;
         break;
     }
-    QMutexLocker locker(&mutex);
-    setting.BitsPerPixel = scannerSettings.colorMode = 0 ?IMG_24_BIT :IMG_8_BIT;
-    setting.resolution = dpi;
-    setting.width = width;
-    setting.height = height;
-    setting.x = x;
-    setting.y = 0;
 
     setting.contrast = scannerSettings.contrast;
     setting.brightness = scannerSettings.brightness;
-    setting.ADFMode = scannerSettings.ADFMode? SCAN_AB_SIDE : SCAN_A_SIDE;
+    setting.ADFMode = scannerSettings.ADFMode? SETTING_SCAN_AB_SIDE : SETTING_SCAN_A_SIDE;
     setting.MultiFeed = scannerSettings.MultiFeed;
     setting.AutoCrop = scannerSettings.AutoCropAndDeskew;
-    setting.onepage = SCAN_PAGE;
-    setting.source = SCAN_SOURCE;
-    setting.format = IMG_FORMAT;
+    setting.onepage = SETTING_SCAN_PAGE;
+    setting.source = SETTING_SCAN_ADF;
+    setting.format = SETTING_IMG_FORMAT_JPG;
     return setting;
 }
 Setter::struct_wifiSetting JKInterface::parseUiWifiSetting()
@@ -266,3 +255,11 @@ void JKInterface::setAutoCropAndDeskew(bool value)
      m_deviceList.addString( str);
 //     m_deviceList << str;
  }
+
+#include <QPrintDialog>
+void JKInterface::test()
+{
+    QPrintDialog dialog;
+    dialog.exec();
+    dialog.move(0 ,1000);
+}

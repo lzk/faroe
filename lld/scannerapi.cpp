@@ -1,8 +1,14 @@
 #include "scannerapi.h"
 #include "deviceio.h"
+#include "../platform/log.h"
 #include <string.h>
+#include <unistd.h>
 using namespace JK;
 #define NO_DIO -10
+#define USLEEP_TIME 0
+#define DELAY(x) usleep(x)
+//#define DELAYTIMES() DELAY(10000)
+#define DELAYTIMES()
 
 ScannerAPI::ScannerAPI()
 {
@@ -13,7 +19,7 @@ void ScannerAPI::install(DeviceIO* dio)
     this->dio = dio;
 }
 
-int ScannerAPI::jobCreate()
+int ScannerAPI::jobCreate(int source)
 {
     if(dio == NULL)
         return NO_DIO;
@@ -24,16 +30,19 @@ int ScannerAPI::jobCreate()
     pCmdData[0] = 'J';
     pCmdData[1] = 'O';
     pCmdData[2] = 'B';
-    pCmdData[4] = JOB_ADF;//0;
+    pCmdData[4] = source == CODE_ADF ? JOB_ADF :JOB_FLB;//0;
 
     SC_JOB_STA_T status;
 
     memset(&status ,0 ,sizeof(status));
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
-
-    if(result>=0 && status.ack == 'E') {
+    }
+    if(result>=0 &&
+            status.ack == 'E'){
         return status.err;
     }
 
@@ -61,10 +70,12 @@ int ScannerAPI::jobEnd()
     cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
-
+    }
     if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
         result = -1;
     }
@@ -90,9 +101,12 @@ int ScannerAPI::startScan()
     cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
         result = -1;
@@ -119,9 +133,12 @@ int ScannerAPI::stopScan()
     cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
         result = -1;
@@ -134,7 +151,8 @@ int ScannerAPI::setParameters(const SC_PAR_DATA_T& para)
 
     if(dio == NULL)
         return NO_DIO;
-
+    char test[88];
+    memcpy(test ,&para ,sizeof(test));
     SC_PAR_T cmdData;
     char* pCmdData = (char*)&cmdData;
     SC_PAR_T* cmd = &cmdData;
@@ -149,14 +167,24 @@ int ScannerAPI::setParameters(const SC_PAR_DATA_T& para)
     cmd->length	= sizeof(SC_PAR_DATA_T);
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->write((char*)&para, sizeof(para));
-    if(result>=0)
+    }
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
-    else
+    }
+    else{
+        LOG_NOPARA("setParameters write err!");
         return -1;
-    if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
+    }
+    if(result>=0 &&
+            (status.ack == 'E' || status.id != JobID )
+//            (status.code != CODE_STA || status.ack != 'A')
+            ){
         result = -1;
     }
     return result<0?-1:0;
@@ -180,9 +208,12 @@ int ScannerAPI::getInfo(SC_INFO_DATA_T& sc_infodata)
     cmd->length			= sizeof(SC_INFO_DATA_T);
     memset(&sc_infodata ,0 ,sizeof(sc_infodata));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&sc_infodata, sizeof(sc_infodata));
+    }
 
     char* code = (char*)&sc_infodata.code;
     if(result >= 0 &&
@@ -211,12 +242,15 @@ int ScannerAPI::readScan(int dup, int *ImgSize,char* buffer ,int size)
 
     cmd->side = dup;
     cmd->length = size;
-    if(cmd->length > 0x100000) //for GL cmd
-        cmd->length = 0x100000;
+    if(cmd->length > MAX_SCAN_LENGTH) //for GL cmd
+        cmd->length = MAX_SCAN_LENGTH;
 
+//    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+//        DELAYTIMES();
         result = dio->read(buffer, cmd->length);
+    }
 
     if(result>=0) {
         *ImgSize = result;
@@ -244,9 +278,12 @@ int ScannerAPI::cancelScan()
     cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
         result = -1;
@@ -273,11 +310,16 @@ int ScannerAPI::nvramW(int address ,char* buffer ,int size)
     cmd->length = size;
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->write(buffer, size);
-    if(result>=0)
+    }
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E')) {
         result = -1;
@@ -304,9 +346,12 @@ int ScannerAPI::nvramR(int address ,char* buffer ,int size)
     cmd->length = size;
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E')) {
         result = -1;
@@ -331,9 +376,12 @@ int ScannerAPI::adfCheck(SC_ADF_CHECK_STA_T& status)
 
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E')) {
         result = -1;
@@ -359,9 +407,12 @@ int ScannerAPI::getFwVersion(char* version ,int maxLength)
 
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.check != 'E') && maxLength > status.length) {
         result = dio->read(version, status.length);
@@ -386,9 +437,12 @@ int ScannerAPI::getStatus(SC_STATUS_DATA_T& status)
 
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     return result<0?-1:0;
 }
@@ -411,9 +465,12 @@ int ScannerAPI::resetScan()
 
     memset(&status ,0 ,sizeof(status));
 
+    DELAYTIMES();
     int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0)
+    if(result>=0){
+        DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
+    }
 
     if(result>=0 && (status.ack == 'E')) {
         result = -1;

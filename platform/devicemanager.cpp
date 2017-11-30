@@ -7,6 +7,7 @@
 #include "../lld/device.h"
 #include "../lld/scanner.h"
 #include "../lld/setter.h"
+#include "devicestruct.h"
 #define TEST 0
 DeviceManager::DeviceManager(QObject *parent)
     : jkInterface(static_cast<JKInterface*>(parent))
@@ -44,19 +45,12 @@ void DeviceManager::connectDevice(int index)
     }
 }
 
-#if TEST
-static bool mcancel = false;
-#endif
 void DeviceManager::cancelScan()
 {
-#if TEST
-    mcancel = true;
-#else
     if(device == NULL)
         return;
     Scanner* scanner = device->getScanner();
     scanner->cancel();
-#endif
 }
 
 void DeviceManager::saveImage(const QImage& image)
@@ -73,34 +67,6 @@ void DeviceManager::saveImage(const QImage& image)
     sourceSize = image.size();
     image.scaled(100 ,100).save(thumFile);
     emit addImage(tmpFile ,sourceSize);
-}
-
-#define NO_DEVICE -10
-void DeviceManager::scan()
-{
-    int result = 0;
-#if TEST
-    mcancel = false;
-    QString sourceFile;
-    for(int i = 1 ;i < 16 ;i++){
-        if(mcancel){
-            result = 30;
-            break;
-        }
-        sourceFile = QString::asprintf("E:/tmp/pic/%d.jpg" ,i);
-        saveImage(QImage(sourceFile));
-        emit progressChanged(i / 15.0);
-        QThread::sleep(1);
-    }
-#else
-    if(device == NULL){
-        result = NO_DEVICE;
-    }else{
-        *device->getScanner()->getSetting() = jkInterface->parseUiScannerSetting();
-        result = device->scan();
-    }
-#endif
-    emit scanResult(result);
 }
 
 void DeviceManager::addDevice(DeviceInfo* deviceInfo ,void* pData)
@@ -122,6 +88,7 @@ void DeviceManager::searchDeviceList()
     cancelSearch = 0;
     deviceList.clear();
     Device::searchDevices(addDevice ,this);
+    emit searchComplete();
 }
 
 void DeviceManager::cancelSearchDeviceList()
@@ -136,39 +103,55 @@ int DeviceManager::isCancelSearch()
 
 void DeviceManager::deviceCmd(int cmd)
 {
-    int err;
+    int err = 0;
+#if TEST
+    if(cmd == DeviceStruct::CMD_SCAN){
+        QString sourceFile;
+        for(int i = 1 ;i < 16 ;i++){
+            sourceFile = QString::asprintf("E:/tmp/pic/%d.jpg" ,i);
+            saveImage(QImage(sourceFile));
+            emit progressChanged(i / 15.0);
+            QThread::sleep(1);
+        }
+    }
+#else
+    if(device == NULL){
+        err = DeviceStruct::ERR_no_device;
+        emit cmdResult(cmd ,err);
+        return;
+    }
     void* data = NULL;
     switch (cmd) {
-    case CMD_SCAN:
+    case DeviceStruct::CMD_SCAN:
     {
         *device->getScanner()->getSetting() = jkInterface->parseUiScannerSetting();
 //        data = (void*)device->getScanner()->getSetting();
         err = device->deviceCmd(cmd ,data);
         break;
     }
-    case CMD_setWifi:
+    case DeviceStruct::CMD_setWifi:
     {
         Setter::struct_wifiSetting para = jkInterface->parseUiWifiSetting();
         data = (void*)&para;
         err = device->deviceCmd(cmd ,data);
         break;
     }
-    case CMD_setPassword:
-    case CMD_confirmPassword:
+    case DeviceStruct::CMD_setPassword:
+    case DeviceStruct::CMD_confirmPassword:
     {
         QString para = jkInterface->parseUiPassword();
         data = (void*)para.toLatin1().data();
         err = device->deviceCmd(cmd ,data);
         break;
     }
-    case CMD_setSaveTime:
+    case DeviceStruct::CMD_setSaveTime:
     {
         int para = jkInterface->parseUiSaveTime();
         data = (void*)&para;
         err = device->deviceCmd(cmd ,data);
         break;
     }
-    case CMD_getSaveTime:
+    case DeviceStruct::CMD_getSaveTime:
     {
         int para;
         data = (void*)&para;
@@ -176,7 +159,7 @@ void DeviceManager::deviceCmd(int cmd)
         jkInterface->uiParseSaveTime(para);
         break;
     }
-    case CMD_getWifiInfo:
+    case DeviceStruct::CMD_getWifiInfo:
     {
         Setter::struct_wifiInfo para;
         data = (void*)&para;
@@ -184,7 +167,7 @@ void DeviceManager::deviceCmd(int cmd)
         jkInterface->uiParseWifiInfo(para);
         break;
     }
-    case CMD_getIpv4:
+    case DeviceStruct::CMD_getIpv4:
     {
         Setter::struct_ipv4 para;
         data = (void*)&para;
@@ -192,21 +175,21 @@ void DeviceManager::deviceCmd(int cmd)
         jkInterface->uiParseIpv4(para);
         break;
     }
-    case CMD_setIpv4:
+    case DeviceStruct::CMD_setIpv4:
     {
         Setter::struct_ipv4 para = jkInterface->parseUiIpv4();
         data = (void*)&para;
         err = device->deviceCmd(cmd ,data);
         break;
     }
-    case CMD_setSoftap:
+    case DeviceStruct::CMD_setSoftap:
     {
         Setter::struct_softAp para = jkInterface->parseUiSoftap();
         data = (void*)&para;
         err = device->deviceCmd(cmd ,data);
         break;
     }
-    case CMD_getSoftap:
+    case DeviceStruct::CMD_getSoftap:
     {
         Setter::struct_softAp para;
         data = (void*)&para;
@@ -215,8 +198,10 @@ void DeviceManager::deviceCmd(int cmd)
         break;
     }
     default:
+        err = DeviceStruct::ERR_cmd_cannot_support;
         break;
     }
+#endif
     emit cmdResult(cmd ,err);
 
 }

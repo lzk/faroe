@@ -141,10 +141,12 @@ Item {
         switch(index){
         case 0://qrcode
         case 1://barcode
+            jkInterface.test()
+            break
         case 2://scanto
             progressDialog.open()
             jkInterface.model.removeAll()
-            jkInterface.scan()
+            jkInterface.deviceCmd(DeviceStruct.CMD_SCAN)
             break;
         case 3://settings
 //            stackView.push("ImageViewer.qml")
@@ -173,7 +175,11 @@ Item {
 
     Connections {
         target: jkInterface
-        onScanResult:scanResult(result)
+        onCmdResult:{
+            if(cmd === DeviceStruct.CMD_SCAN)
+                scanResult(result)
+        }
+//        onScanResult:scanResult(result)
     }
 
     Connections {

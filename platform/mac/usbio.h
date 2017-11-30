@@ -23,6 +23,7 @@ public:
 private:
     int inPipeRef;
     int outPipeRef;
+    int address;
     IOUSBInterfaceInterface_version **intf;
     IOUSBDeviceInterface_version** dev;
 };

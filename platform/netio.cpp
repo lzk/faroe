@@ -53,10 +53,10 @@ int NetIO::type()
 
 int NetIO::open()
 {
-    return open(23010);
+    return openPort(23010);
 }
 
-int NetIO::open(int port)
+int NetIO::openPort(int port)
 {    
     if(!tcpSocket)
         tcpSocket = new QTcpSocket;
@@ -148,7 +148,7 @@ int NetIO::read(char *buffer, int bufsize)
 
 bool NetIO::isConnected()
 {
-    if(open(23011) >= 0){
+    if(openPort(23011) >= 0){
         close();
         return true;
     }

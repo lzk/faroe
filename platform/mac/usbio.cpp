@@ -33,6 +33,7 @@ void usbSearchDevices(addDeviceHandler handler,void* pData)
 UsbIO::UsbIO() :
     inPipeRef(0)
   ,outPipeRef(0)
+  ,address(-1)
   ,intf(NULL)
   ,dev(NULL)
 {
@@ -57,6 +58,7 @@ int devHandler(IOUSBDeviceInterface_version** dev,void* pData)
 
 int UsbIO::open()
 {
+    usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
     if(!dev){
         return -2;
     }
@@ -91,13 +93,9 @@ int UsbIO::read(char *buffer, int bufsize)
 int UsbIO::resolveUrl(const char* url)
 {
     bool ok;
-    int address = QUrlQuery(url).queryItemValue("address").toInt(&ok);
+    address = QUrlQuery(QUrl(url)).queryItemValue("address").toInt(&ok);
     if(!ok){
         return -1;
-    }
-    usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
-    if(!dev){
-        return -2;
     }
     return 0;
 }

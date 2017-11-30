@@ -1,8 +1,9 @@
 #include "setterapi.h"
 #include "setterstruct.h"
 #include "deviceio.h"
-#include "device.h"
+//#include "device.h"
 #include "../platform/log.h"
+#include "../platform/devicestruct.h"
 using namespace JK;
 #include <string.h>
 #include <unistd.h>
@@ -79,13 +80,13 @@ static int cmdParser(int& cmd ,int& direct ,int& data_buffer_size)
 int SetterApi::cmd(int cmd ,void* data ,int data_size)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
 
     int device_cmd = cmd;
     int direct=0 ,data_buffer_size=0;
     int err = cmdParser(device_cmd ,direct ,data_buffer_size);
     if(err)
-        return ERR_cmd_cannot_support;//not support
+        return DeviceStruct::ERR_cmd_cannot_support;//not support
 
     int main_cmd ,sub_cmd;
     main_cmd = GET_CMDCODE(device_cmd);
@@ -120,7 +121,7 @@ int SetterApi::cmd(int cmd ,void* data ,int data_size)
             memcpy(data ,buffer + sizeof(COMM_HEADER) ,data_size);
         }else{//set
             if(cmd == CMD_CODE_setWifiInfo_noRead)
-                err = ERR_WIFI_SET_SSID;
+                err = DeviceStruct::ERR_WIFI_SET_SSID;
             else
                 err = ppkg->subcmd;
         }
@@ -132,7 +133,7 @@ int SetterApi::cmd(int cmd ,void* data ,int data_size)
 
 int SetterApi::write(char* wrBuffer ,int wrSize)
 {
-    int err = ERR_communication;
+    int err = DeviceStruct::ERR_communication;
     int _write_size = 0;
     int i;
     char writeBuffer[wrSize];
@@ -159,10 +160,10 @@ int SetterApi::write(char* wrBuffer ,int wrSize)
             delay100ms (1 ,true);
             LOG_PARA("write size:%d......%d" ,wrSize ,_write_size);
     //        if(_write_size == wrSize){
-                err = ERR_ACK;
+                err = DeviceStruct::ERR_ACK;
                 break;
     //        }else{
-    //            err = ERR_communication;
+    //            err = DeviceStruct::ERR_communication;
     //        }
         }
     //    if(err)
@@ -174,7 +175,7 @@ int SetterApi::write(char* wrBuffer ,int wrSize)
             _write_size = write(writeBuffer ,wrSize);
             LOG_PARA("write size:%d......%d" ,wrSize ,_write_size);
             if(_write_size == wrSize){
-                err = ERR_ACK;
+                err = DeviceStruct::ERR_ACK;
                 break;
             }
         }
@@ -225,10 +226,10 @@ int SetterApi::writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdS
 
         LOG_PARA("try %d times" ,j);
         if(_read_size == rdSize -2){
-            err = ERR_ACK;
+            err = DeviceStruct::ERR_ACK;
         }else{
             LOG_NOPARA("read wrong");
-            err = ERR_communication;
+            err = DeviceStruct::ERR_communication;
         }
     }
     return err;

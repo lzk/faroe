@@ -1,12 +1,13 @@
 #include "setter.h"
 #include "setterapi.h"
 #include "deviceio.h"
-#include "device.h"
+//#include "device.h"
 #include "type.h"
 #include "setterstruct.h"
 #include "../platform/log.h"
 #include <string.h>
 #include <stdlib.h>
+#include "../platform/devicestruct.h"
 using namespace JK;
 static int _base64_char_value(char base64char)
  {
@@ -161,7 +162,7 @@ int Setter::getDeviceStatus(void*)
 int Setter::confirmPassword(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     const char* password =(const char*)data;
     int err;
     if(!isLogined){
@@ -178,11 +179,11 @@ int Setter::confirmPassword(void* data)
 int Setter::setPassword(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     const char* password =(const char*)data;
     int err;
     if(!isLogined)
-        return ERR_no_logined;
+        return DeviceStruct::ERR_no_logined;
     cmdst_passwd para;
     memset(&para ,0 ,sizeof(para));
     memcpy(para.passwd ,password ,32);
@@ -192,11 +193,11 @@ int Setter::setPassword(void* data)
 int Setter::setWifi(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     struct_wifiSetting* wifiSetting = (struct_wifiSetting*)data;
     int err;
     if(!isLogined)
-        return ERR_no_logined;
+        return DeviceStruct::ERR_no_logined;
 
     cmdst_wifi_get para;
     memset(&para ,0 ,sizeof(para));
@@ -224,7 +225,7 @@ int Setter::setWifi(void* data)
 int Setter::getWifi(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     struct_wifiInfo* wifiInfo = (struct_wifiInfo*)data;
     int err;
     {
@@ -246,7 +247,7 @@ int Setter::getWifi(void* data)
         err = setterApi->cmd(CMD_CODE_getWifiStatus ,&para ,sizeof(para));
         if(!err){
             if(1 != para){
-                return ERR_wifi_have_not_been_inited;
+                return DeviceStruct::ERR_wifi_have_not_been_inited;
             }
         }else
             return err;
@@ -267,11 +268,11 @@ int Setter::getWifi(void* data)
 int Setter::setSoftAp(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     struct_softAp* softap = (struct_softAp*)data;
     int err;
     if(!isLogined)
-        return ERR_no_logined;
+        return DeviceStruct::ERR_no_logined;
 
     cmdst_softap para;
     memset(&para ,0 ,sizeof(para));
@@ -285,7 +286,7 @@ int Setter::setSoftAp(void* data)
 int Setter::getSoftAp(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     struct_softAp* softap = (struct_softAp*)data;
     int err;
     cmdst_softap para;
@@ -301,11 +302,11 @@ int Setter::getSoftAp(void* data)
 int Setter::setIpV4(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     struct_ipv4* ip = (struct_ipv4*)data;
     int err;
     if(!isLogined)
-        return ERR_no_logined;
+        return DeviceStruct::ERR_no_logined;
 
     net_info_st para;
     memset(&para ,0 ,sizeof(para));
@@ -323,7 +324,7 @@ int Setter::setIpV4(void* data)
 int Setter::getIpV4(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     struct_ipv4* ip = (struct_ipv4*)data;
     int err;
     net_info_st para;
@@ -343,11 +344,11 @@ int Setter::getIpV4(void* data)
 int Setter::setSaveTime(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     int* st = (int*)data;
     int err;
     if(!isLogined)
-        return ERR_no_logined;
+        return DeviceStruct::ERR_no_logined;
 
     cmdst_PSave_time para;
     para = (UINT8)*st;
@@ -358,7 +359,7 @@ int Setter::setSaveTime(void* data)
 int Setter::getSaveTime(void* data)
 {
     if(!data)
-        return ERR_invalid_data;
+        return DeviceStruct::ERR_invalid_data;
     int* st = (int*)data;
     int err;
     cmdst_PSave_time para;

@@ -1,17 +1,19 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 //#include "../thumbnailviewer/imageresponseprovider.h"
 #include "jkinterface.h"
-#include <QQuickView>
+#include "../platform/devicestruct.h"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
 
     qmlRegisterType<JKInterface>("com.liteon.JKInterface",1,0,"JKInterface");
     qmlRegisterType<ImageModel>("com.liteon.JKInterface",1,0,"ImageModel");
+    qmlRegisterType<DeviceStruct>("com.liteon.JKInterface",1,0,"DeviceStruct");
 //    qmlRegisterType<StringModel>("com.liteon.JKInterface",1,0,"StringModel");
 
     JKInterface jki;
@@ -22,6 +24,8 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/faroeVOP/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
+
 
     return app.exec();
 }

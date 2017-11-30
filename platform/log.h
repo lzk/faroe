@@ -1,6 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <QDebug>
 #include <QString>
 #define LOG_NOPARA(x) logout(x)
 #define LOG_PARA(format, ...) logout(QString().sprintf(format ,##__VA_ARGS__))

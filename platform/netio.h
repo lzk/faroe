@@ -12,7 +12,7 @@ public:
     ~NetIO();
 
     int type();
-    int open(int port);
+    int openPort(int port);
     int open();
     int close(void);
     int write(char *buffer, int bufsize);

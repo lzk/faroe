@@ -1,4 +1,4 @@
-QT += qml quick
+QT += qml quick printsupport widgets
 
 CONFIG += c++11
 
@@ -10,19 +10,18 @@ SOURCES += \
     ../lld/device.cpp \
     ../lld/scannerapi.cpp \
     ../lld/scanner.cpp \
-    ../lld/deviceio.cpp \
     ../lld/ImgFile/Bmp.cpp \
     ../lld/ImgFile/ImgFile.cpp \
     ../lld/ImgFile/Jpeg.cpp \
     ../lld/ImgFile/Tiff.cpp \
-    ../lld/platformapp.cpp \
     ../platform/devicemanager.cpp \
     ../platform/netio.cpp \
     ../platform/appqt.cpp \
     ../platform/netsnmp.cpp \
     ../platform/log.cpp \
     ../lld/setter.cpp \
-    ../lld/setterapi.cpp
+    ../lld/setterapi.cpp \
+    mainwindow.cpp
 
 mac{
 SOURCES += \
@@ -44,7 +43,6 @@ HEADERS += \
     jkinterface.h \
     ../thumbnailviewer/imagemodel.h \
     ../lld/device.h \
-    ../lld/type.h \
     ../lld/scannerstruct.h \
     ../lld/scannerapi.h \
     ../lld/scanner.h \
@@ -58,7 +56,9 @@ HEADERS += \
     ../platform/version.h \
     ../lld/setter.h \
     ../lld/setterapi.h \
-    ../lld/setterstruct.h
+    ../lld/setterstruct.h \
+    ../platform/devicestruct.h \
+    mainwindow.h
 
 RESOURCES += qml.qrc \
     ../thumbnailviewer/thumbnailviewer.qrc \
@@ -103,4 +103,7 @@ LIBS += `net-snmp-config --cflags` -lnetsnmp
 
 mac: LIBS += -framework IOKit
 mac: LIBS += -framework CoreFoundation
+
+FORMS += \
+    mainwindow.ui
 

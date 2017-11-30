@@ -2,7 +2,7 @@
 #include <IOKit/IOCFPlugIn.h>
 #include "mac_usb.h"
 #include "../log.h"
-#define VERBOSE 0
+#define VERBOSE 1
 static Boolean foundOnce  = false;
 
 
@@ -185,11 +185,11 @@ static UInt32 openUSBInterface(IOUSBInterfaceInterface_version **intf ,struct_de
 
 static IOUSBInterfaceInterface_version **getUSBInterfaceInterface(io_service_t usbInterface)
 {
-IOReturn err;
-IOCFPlugInInterface **plugInInterface=NULL;
-IOUSBInterfaceInterface_version **intf=NULL;
-SInt32 score;
-HRESULT res;
+    IOReturn err;
+    IOCFPlugInInterface **plugInInterface=NULL;
+    IOUSBInterfaceInterface_version **intf=NULL;
+    SInt32 score;
+    HRESULT res;
 
     // There is no documentation for IOCreatePlugInInterfaceForService or QueryInterface, you have to use sample code.
 
@@ -228,11 +228,12 @@ Boolean isThisTheInterfaceYoureLookingFor(IOUSBInterfaceInterface_version **intf
         LOG_PARA( "Subsequent interface found, we're only intersted in 1 of them\n");
         return(false);
     }
+    UInt8 interface;
+    (*intf)->GetInterfaceNumber(intf ,&interface);
+    LOG_PARA("usb interface is:%d" ,interface);
     if(pDeviceInterface->interface < 0){
         foundOnce = true;
     }else{
-        UInt8 interface;
-        (*intf)->GetInterfaceNumber(intf ,&interface);
         if(interface == pDeviceInterface->interface){
             foundOnce = true;
         }
@@ -242,10 +243,10 @@ Boolean isThisTheInterfaceYoureLookingFor(IOUSBInterfaceInterface_version **intf
 
 static int iterateinterfaces(io_iterator_t interfaceIterator  ,struct_deviceInterface* pDeviceInterface)
 {
-io_service_t usbInterface;
-int err = 0;
-//IOReturn ret;
-IOUSBInterfaceInterface_version **intf=NULL;
+    io_service_t usbInterface;
+    int err = 0;
+    //IOReturn ret;
+    IOUSBInterfaceInterface_version **intf=NULL;
 
     usbInterface = IOIteratorNext(interfaceIterator);
     if(usbInterface == IO_OBJECT_NULL)
@@ -286,7 +287,7 @@ IOUSBInterfaceInterface_version **intf=NULL;
 
 
 
-static void useUSBDevice(IOUSBDeviceInterface_version **dev, UInt32 configuration ,struct_deviceInterface* pDeviceInterface)
+static IOReturn useUSBDevice(IOUSBDeviceInterface_version **dev, UInt32 configuration ,struct_deviceInterface* pDeviceInterface)
 {
     io_iterator_t interfaceIterator;
     IOUSBFindInterfaceRequest req;
@@ -296,7 +297,7 @@ static void useUSBDevice(IOUSBDeviceInterface_version **dev, UInt32 configuratio
     if(err != kIOReturnSuccess)
     {
         printInterpretedError("Could not set configuration on device", err);
-        return;
+        return err;
     }
 
     req.bInterfaceClass = kIOUSBFindInterfaceDontCare;
@@ -308,7 +309,7 @@ static void useUSBDevice(IOUSBDeviceInterface_version **dev, UInt32 configuratio
     if(err != kIOReturnSuccess)
     {
         printInterpretedError("Could not create interface iterator", err);
-        return;
+        return err;
     }
 
 
@@ -316,14 +317,14 @@ static void useUSBDevice(IOUSBDeviceInterface_version **dev, UInt32 configuratio
 
     IOObjectRelease(interfaceIterator);
 
-
+    return err;
 }
 
 static SInt32 openUSBDevice(IOUSBDeviceInterface_version **dev)
 {
-UInt8 numConfig;
-IOReturn err;
-IOUSBConfigurationDescriptorPtr desc;
+    UInt8 numConfig;
+    IOReturn err;
+    IOUSBConfigurationDescriptorPtr desc;
 
     err = (*dev)->GetNumberOfConfigurations(dev, &numConfig);
     if(err != kIOReturnSuccess)
@@ -641,7 +642,7 @@ bool usb_isConnected(IOUSBDeviceInterface_version** dev)
 
 int usb_open(IOUSBDeviceInterface_version **dev ,struct_deviceInterface* pDeviceInterface)
 {
-    if(dev)
+    if(!dev)
         return -2;
     SInt32 config = 0;
     int exclusiveErrs, attempts;
@@ -657,8 +658,7 @@ int usb_open(IOUSBDeviceInterface_version **dev ,struct_deviceInterface* pDevice
             // Device sucessfully opened
 
             if(config > 0){
-                useUSBDevice(dev, config ,pDeviceInterface);
-                return(0);
+                return useUSBDevice(dev, config ,pDeviceInterface);
             }else{
                 LOG_NOPARA("What use is a device with a zero configuration????\n");
                 (*dev)->USBDeviceClose(dev);
@@ -721,7 +721,7 @@ int usb_readPipe(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *bu
         return (-2);//
     IOReturn err;
     UInt32 size = bufsize;
-    err = (*intf)->ReadPipeTO(intf , inPipeRef, buffer, &size,5000,5000);
+    err = (*intf)->ReadPipeTO(intf , inPipeRef, buffer, &size,10000,5000);
 
     switch (err) {
     case kIOReturnNoDevice:
