@@ -2,7 +2,6 @@
 #include "setterapi.h"
 #include "deviceio.h"
 //#include "device.h"
-#include "type.h"
 #include "setterstruct.h"
 #include "../platform/log.h"
 #include <string.h>

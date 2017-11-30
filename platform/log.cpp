@@ -6,15 +6,16 @@
 #define VERSION_DEFINE
 #include "version.h"
 #include <QDebug>
+#include <QDir>
 QString log_file;
 
 void init_log()
 {
-    int ret;
-    log_file = "/tmp/VOP.log";
-    QString realLogFile = "/tmp/VOP-" + QDateTime::currentDateTime().toString("yyMMdd-HHmmsszzz") + ".log";
+#ifdef Q_OS_WIN
+    QString tmpdir = QDir::tempPath() + "/scanimage";
+    QString realLogFile = tmpdir + "/VOP-" + QDateTime::currentDateTime().toString("yyMMdd-HHmmsszzz") + ".log";
     QString str;
-#if 0
+    log_file = realLogFile;
     str = "touch " + realLogFile;
     QFile file(realLogFile);
     if(file.exists())
@@ -26,10 +27,15 @@ void init_log()
         file.close();
     }
 #else
+    QString tmpdir = "/tmp";
+    QString realLogFile = tmpdir + "/VOP-" + QDateTime::currentDateTime().toString("yyMMdd-HHmmsszzz") + ".log";
+    QString str;
+    log_file = tmpdir + "/VOP.log";
+    int ret;
     str = str.sprintf("echo \"----------------VOP %s------------------\" > " ,vop_version);
     str += realLogFile;
     ret = system(str.toLatin1());
-#endif
+
 //    str = "";
     str = "chmod 666 " + realLogFile + " 2>>" + realLogFile;
     ret = system(str.toLatin1());
@@ -43,7 +49,7 @@ void init_log()
     str = "cat /etc/issue >> " +realLogFile;
     ret = system(str.toLatin1());
 #endif
-    if(ret){;}
+#endif
 }
 
 static QMutex mutex_write_log_file;

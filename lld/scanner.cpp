@@ -15,6 +15,7 @@ const Scanner::Setting defaultSetting = {
     .BitsPerPixel = IMG_BIT,
     .dpi_x=300,
     .dpi_y=300,
+    .scan_doc_size=SETTING_DOC_SIZE_FULL,
     .contrast=50,
     .brightness=50,
     .ADFMode=SCAN_DUPLEX,

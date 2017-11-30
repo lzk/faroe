@@ -2,8 +2,12 @@
 #define _ImgFile_h_
 
 #include <stdio.h>
-#include "../type.h"
-using namespace JK;
+#define U32	unsigned int
+#define U16	unsigned short
+#define U8	unsigned char
+#define S32 int
+#define S16 short
+#define	S8  char
 
 // image format ------------
 //#define IMG_FMT_RAW I3('RAW')
