@@ -4,6 +4,8 @@
 //#include "../thumbnailviewer/imageresponseprovider.h"
 #include "jkinterface.h"
 #include "../platform/devicestruct.h"
+#include <QQuickView>
+#include <QMainWindow>
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +27,15 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-
+//    QQuickView* view = new QQuickView;
+//    view->engine()->rootContext()->setContextProperty("jkInterface" ,&jki);
+//    view->setResizeMode(QQuickView::SizeRootObjectToView);
+//    view->setSource(QUrl(QLatin1String("qrc:/faroeVOP/MainWindow.qml")));
+//    view->connect(view->engine() ,&QQmlEngine::quit ,&app ,&QCoreApplication::quit);
+//    QMainWindow window;
+//    window.resize(1024 ,768);
+//    window.setCentralWidget(QWidget::createWindowContainer(view));
+//    window.show();
 
     return app.exec();
 }

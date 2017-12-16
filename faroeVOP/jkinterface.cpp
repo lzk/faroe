@@ -260,6 +260,7 @@ void JKInterface::setAutoCropAndDeskew(bool value)
 void JKInterface::test()
 {
     QPrintDialog dialog;
-    dialog.exec();
-    dialog.move(0 ,1000);
+    dialog.show();
+    dialog.move(500 ,1000);
+//    dialog.exec();
 }

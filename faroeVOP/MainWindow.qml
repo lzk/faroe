@@ -97,10 +97,10 @@ Item {
         closePolicy:Popup.NoAutoClose
 //        property real value: 0.0
 
-        x:Math.round((window.width - width) / 2)
-        y: Math.round(window.height / 6)//Math.round((window.height - height) / 2)
-        width:Math.round(window.width / 3 * 2)
-        height: Math.round(window.height / 3 )
+        x:Math.round((ApplicationWindow.window.width - width) / 2)
+        y: Math.round(ApplicationWindow.window.height / 6)//Math.round((window.height - height) / 2)
+        width:Math.round(ApplicationWindow.window.width / 3 * 2)
+        height: Math.round(ApplicationWindow.window.height / 3 )
 
         contentItem: ProgressDialog{
             progress: jkInterface.progress
@@ -129,8 +129,8 @@ Item {
     JKDialog{
         id:scanSettings
         toolbar.text: qsTr("Scan Settings")
-        width:Math.round(window.width / 3 * 2)
-        height: Math.round(window.height - 40 )
+        width:Math.round(ApplicationWindow.window.width / 3 * 2)
+        height: Math.round(ApplicationWindow.window.height - 40 )
         ScanSettings{
             parent: scanSettings.container
             onOk: scanSettings.close()
