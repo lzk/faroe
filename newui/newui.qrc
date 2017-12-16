@@ -1,0 +1,116 @@
+<RCC>
+    <qresource prefix="/newui">
+        <file>main.qml</file>
+        <file>MainView.qml</file>
+        <file>MainWindow.qml</file>
+        <file>ScanPage.qml</file>
+        <file>ScanPage/ScanPageLayout.qml</file>
+        <file>ScanPage/QuickScanButton.qml</file>
+        <file>ScanPage/QuickScanModel.qml</file>
+        <file>ScanPage/ScanningDialog.qml</file>
+        <file>SearchDevice.qml</file>
+        <file>ScanToPage.qml</file>
+        <file>ScanToPage/ScanToPageLayout.qml</file>
+        <file>component/JKPathToolButton.qml</file>
+        <file>component/JKImageButton.qml</file>
+        <file>component/JKDashRectange.qml</file>
+        <file>component/JKFunctionButton.qml</file>
+        <file>component/JKText.qml</file>
+        <file>component/JKButton.qml</file>
+        <file>component/JKAbstractButton.qml</file>
+        <file>component/JKTextButton.qml</file>
+        <file>component/JKDialog.qml</file>
+        <file>component/JKToolbar.qml</file>
+        <file>component/JKMessageBox_information.qml</file>
+        <file>component/JKScrollView.qml</file>
+        <file>component/JKToolButton.qml</file>
+        <file>component/path/JKPath_minimize.qml</file>
+        <file>component/path/JKPath_close.qml</file>
+        <file>component/path/JKPath_pre.qml</file>
+        <file>component/path/JKPath_next.qml</file>
+        <file>ImageViewer/ImageViewer.qml</file>
+        <file>ImageViewer/ImageDelegateModel.qml</file>
+        <file>ImageViewer/ImageDelegate.qml</file>
+        <file>ImageViewer/ImagePreviewDialog.qml</file>
+        <file>ImageViewer/PreviewFunctionButton.qml</file>
+        <file>ImageViewer/ImagePreivewLayout.qml</file>
+        <file>ImageViewer/ImageScrollView.qml</file>
+        <file>component/JKMessageBoxLayout.qml</file>
+        <file>component/JKBusyIndicator.qml</file>
+        <file>component/JKMessageBox_refresh.qml</file>
+        <file>component/JKMessageBox_warning.qml</file>
+        <file>Settings.qml</file>
+        <file>Settings/SettingsLayout.qml</file>
+        <file>Settings/QuickScanSettings.qml</file>
+        <file>Settings/DeviceView.qml</file>
+        <file>Settings/QRCodeBarcodeView.qml</file>
+        <file>Settings/ScanParameterView.qml</file>
+        <file>Settings/SoftapView.qml</file>
+        <file>Settings/TcpipView.qml</file>
+        <file>Settings/WifiView.qml</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Images/background3.png</file>
+        <file>Images/VOPicon.png</file>
+        <file>Images/screenbg_normal.png</file>
+        <file>Images/main_img_search device panel.png</file>
+        <file>Images/left_disable.png</file>
+        <file>Images/left_normal.png</file>
+        <file>Images/left_press.png</file>
+        <file>Images/right_disable.png</file>
+        <file>Images/right_normal.png</file>
+        <file>Images/right_press.png</file>
+        <file>Images/Main_btn_decode.png</file>
+        <file>Images/main_btn_scanto.png</file>
+        <file>Images/main_btn_separation.png</file>
+        <file>Images/main_btn_settings.png</file>
+        <file>Images/device_normal.png</file>
+        <file>Images/device_normal_blue.png</file>
+        <file>Images/device_press.png</file>
+        <file>Images/device_press_blue.png</file>
+        <file>Images/screen_normal.png</file>
+        <file>Images/screen_over.png</file>
+        <file>Images/screen_press.png</file>
+        <file>Images/quick scan_shadow_top.png</file>
+        <file>Images/quick scan_shadow_below.png</file>
+        <file>Images/main_img_print.png</file>
+        <file>Images/back_normal.png</file>
+        <file>Images/back_press.png</file>
+        <file>Images/back_disable.png</file>
+        <file>Images/clockwise-arrow.png</file>
+        <file>Images/clockwise-arrow_press.png</file>
+        <file>Images/down_disable.png</file>
+        <file>Images/down_normal.png</file>
+        <file>Images/down_press.png</file>
+        <file>Images/up_disable.png</file>
+        <file>Images/up_normal.png</file>
+        <file>Images/up_press.png</file>
+        <file>Images/ScanToCloud.png</file>
+        <file>Images/ScanToEmail.png</file>
+        <file>Images/ScanToFile.png</file>
+        <file>Images/ScanToFtp.png</file>
+        <file>Images/ScanToPrint.png</file>
+        <file>Images/ScanToProgram.png</file>
+        <file>Images/close.png</file>
+        <file>Images/Btn_Gray.png</file>
+        <file>Images/popup_gnd_Image Preview.png</file>
+        <file>Images/fit.png</file>
+        <file>Images/turn.png</file>
+        <file>Images/zoomin.png</file>
+        <file>Images/zoomout.png</file>
+        <file>Images/busyRefresh.tif</file>
+        <file>Images/warning.png</file>
+        <file>Images/warning_2.png</file>
+        <file>Images/cancelDisable.png</file>
+        <file>Images/cancelIcon.png</file>
+        <file>Images/cancelPress.png</file>
+        <file>Images/setting_img_device setting.png</file>
+        <file>Images/setting_img_disable.png</file>
+        <file>Images/setting_img_IPv4.png</file>
+        <file>Images/setting_img_qrcode barcode.png</file>
+        <file>Images/setting_img_quick scan.png</file>
+        <file>Images/setting_img_scan to.png</file>
+        <file>Images/setting_img_softap.png</file>
+        <file>Images/setting_img_wifi.png</file>
+    </qresource>
+</RCC>
