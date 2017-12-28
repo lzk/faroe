@@ -77,6 +77,10 @@ Item {
         }
     }
 
+    ScanData{
+        id:scanData
+    }
+
     MouseArea{
         id:mouseArea
         z:-1

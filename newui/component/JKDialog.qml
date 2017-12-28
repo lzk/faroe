@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 
 Window {
+    id:window
     property alias container: container
     flags: Qt.Dialog | Qt.FramelessWindowHint
     color: "transparent"
@@ -12,6 +13,7 @@ Window {
         id:container
         anchors.fill: parent
         anchors.margins: 10
+        visible: window.visible
 
         RectangularGlow{
             anchors.fill: parent

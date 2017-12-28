@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
-import "Settings"
+import "SettingsPage"
 import "component"
 
 SettingsLayout {
@@ -43,42 +43,41 @@ SettingsLayout {
         model: ListModel {
             ListElement {
                 name: qsTr("Quick Scan Settings")
-                colorCode: "red"
                 imageSource:"qrc:/Images/setting_img_quick scan.png"
-                url:"Settings/QRCodeBarcodeView.qml"
+                url:"SettingsPage/QuickScanSettings.qml"
             }
 
             ListElement {
                 name: qsTr("Decode/Separation...")
                 imageSource:"qrc:/Images/setting_img_qrcode barcode.png"
-                url:"Settings/QuickScanSettings.qml"
+                url:"SettingsPage/QRCodeBarcodeView.qml"
             }
 
             ListElement {
                 name: qsTr("Scan To Setting")
                 imageSource:"qrc:/Images/setting_img_scan to.png"
-                url:"Settings/ScanParameterView.qml"
+                url:"SettingsPage/ScanParameterView.qml"
             }
 
             ListElement {
                 name: qsTr("Wi-Fi")
                 imageSource:"qrc:/Images/setting_img_wifi.png"
-                url:"Settings/WifiView.qml"
+                url:"SettingsPage/WifiView.qml"
             }
             ListElement {
                 name: qsTr("Tcp/IPv4")
                 imageSource:"qrc:/Images/setting_img_IPv4.png"
-                url:"Settings/TcpipView.qml"
+                url:"SettingsPage/TcpipView.qml"
             }
             ListElement {
                 name: qsTr("Soft AP")
                 imageSource:"qrc:/Images/setting_img_softap.png"
-                url:"Settings/SoftapView.qml"
+                url:"SettingsPage/SoftapView.qml"
             }
             ListElement {
                 name: qsTr("Device Setting")
                 imageSource:"qrc:/Images/setting_img_device setting.png"
-                url:"Settings/DeviceView.qml"
+                url:"SettingsPage/DeviceView.qml"
             }
         }
     }
@@ -92,6 +91,7 @@ SettingsLayout {
     Connections{
         target: button_back
         onClicked:{
+            loader.source = ""
             root.StackView.view.pop()
         }
     }

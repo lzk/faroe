@@ -8,7 +8,7 @@
         <file>ScanPage/QuickScanButton.qml</file>
         <file>ScanPage/QuickScanModel.qml</file>
         <file>ScanPage/ScanningDialog.qml</file>
-        <file>SearchDevice.qml</file>
+        <file>SearchDevicePage.qml</file>
         <file>ScanToPage.qml</file>
         <file>ScanToPage/ScanToPageLayout.qml</file>
         <file>component/JKPathToolButton.qml</file>
@@ -39,15 +39,30 @@
         <file>component/JKBusyIndicator.qml</file>
         <file>component/JKMessageBox_refresh.qml</file>
         <file>component/JKMessageBox_warning.qml</file>
-        <file>Settings.qml</file>
-        <file>Settings/SettingsLayout.qml</file>
-        <file>Settings/QuickScanSettings.qml</file>
-        <file>Settings/DeviceView.qml</file>
-        <file>Settings/QRCodeBarcodeView.qml</file>
-        <file>Settings/ScanParameterView.qml</file>
-        <file>Settings/SoftapView.qml</file>
-        <file>Settings/TcpipView.qml</file>
-        <file>Settings/WifiView.qml</file>
+        <file>SettingsPage.qml</file>
+        <file>SettingsPage/SettingsLayout.qml</file>
+        <file>SettingsPage/QuickScanSettings.qml</file>
+        <file>SettingsPage/DeviceView.qml</file>
+        <file>SettingsPage/QRCodeBarcodeView.qml</file>
+        <file>SettingsPage/ScanParameterView.qml</file>
+        <file>SettingsPage/SoftapView.qml</file>
+        <file>SettingsPage/TcpipView.qml</file>
+        <file>SettingsPage/WifiView.qml</file>
+        <file>SettingsPage/ScanToDialog.qml</file>
+        <file>Settings/ScanSetting.qml</file>
+        <file>Settings/ScanToSetting.qml</file>
+        <file>ScanData.qml</file>
+        <file>SettingsPage/ScanToPrintView.qml</file>
+        <file>SettingsPage/ScanToApplicationView.qml</file>
+        <file>SettingsPage/ScanToCloudView.qml</file>
+        <file>SettingsPage/ScanToEmailView.qml</file>
+        <file>SettingsPage/ScanToFileView.qml</file>
+        <file>SettingsPage/ScanToFTPView.qml</file>
+        <file>component/JKTextInput.qml</file>
+        <file>component/JKComboBox.qml</file>
+        <file>SettingsPage/NewQuickScanView.qml</file>
+        <file>SettingsPage/QuickScanDialog.qml</file>
+        <file>SettingsPage/QuickScanSettingView.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/background3.png</file>
@@ -112,5 +127,24 @@
         <file>Images/setting_img_scan to.png</file>
         <file>Images/setting_img_softap.png</file>
         <file>Images/setting_img_wifi.png</file>
+        <file>Images/SettingViewBackground.png</file>
+        <file>Images/quick scan_btn_move up.png</file>
+        <file>Images/quick scan_btnf_move up.png</file>
+        <file>Images/move up_disable.png</file>
+        <file>Images/quick scan_btn_move down.png</file>
+        <file>Images/quick scan_btnf_move down.png</file>
+        <file>Images/move down_disable.png</file>
+        <file>Images/quick scan_btn_new.png</file>
+        <file>Images/quick scan_btnf_new.png</file>
+        <file>Images/quick scan_btn_new_disable.png</file>
+        <file>Images/quick scan_btn_edit.png</file>
+        <file>Images/quick scan_btnf_edit.png</file>
+        <file>Images/edit_disable.png</file>
+        <file>Images/quick scan_btn_delete.png</file>
+        <file>Images/quick scan_btnf_delete.png</file>
+        <file>Images/delete_disable.png</file>
+        <file>Images/quick scan_btn_setting.png</file>
+        <file>Images/quick scan_btnf_setting.png</file>
+        <file>Images/popup_gnd_quick scan.png</file>
     </qresource>
 </RCC>

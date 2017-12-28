@@ -120,6 +120,6 @@ ScanPageLayout {
 
     Connections{
         target: button_settings
-        onClicked: root.StackView.view.push("Settings.qml")
+        onClicked: root.StackView.view.push("SettingsPage.qml")
     }
 }

@@ -1,13 +1,15 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick printsupport
 CONFIG += c++11
 
 SOURCES += main.cpp \
+            jkinterface.cpp \
     ImageViewer/imagemodel.cpp
 
 HEADERS += \
     jkenums.h \
+    jkinterface.h \
     ImageViewer/imagemodel.h
 
 RESOURCES += newui.qrc \
@@ -40,6 +42,8 @@ DISTFILES += \
     component/*.qml \
     component/path/*.qml \
     ImageViewer/*.qml \
-    ScanToPage/*.qml
+    ScanToPage/*.qml \
+    Settings/*.qml \
+    SettingsPage/*.qml
 
 

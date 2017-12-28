@@ -35,10 +35,11 @@ Item {
 
         }
 
-        Item {
+        Image {
             id: item_view
             Layout.fillHeight: true
             Layout.fillWidth: true
+            source: "qrc:/Images/SettingViewBackground.png"
         }
     }
 
