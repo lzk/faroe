@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import "component"
 import "ScanPage"
+import "ScanData.js" as JSData
 
 ScanPageLayout {
     id: root
@@ -21,7 +22,7 @@ ScanPageLayout {
             width: 38
             height: 38
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: root.StackView.view.push("SearchDevice.qml")
+            onClicked: root.StackView.view.push("SearchDevicePage.qml")
         }
         Text {
             text: qsTr("Disconnected")
@@ -29,15 +30,50 @@ ScanPageLayout {
         }
     }
 
+//    ListView{
+//        id:listview
+//        parent: item_quickscan
+//        anchors.fill: parent
+//        model: scanData.quickScanSettings
+//        clip: true
+//        orientation:Qt.Horizontal
+//        snapMode: ListView.SnapOneItem
+//        delegate:
+//            QuickScanButton{
+//            width: ListView.view.width
+//            height: ListView.view.height
+//                id:button_quickScan
+//                mode: model.modelData.scanSetting.colorMode === 0 ?qsTr("Color") :qsTr("Black")
+//                dpi: model.modelData.scanSetting.dpi === 0 ?qsTr("300DPI") :qsTr("200DPI")
+//                adf: model.modelData.scanSetting.adfMode === 0 ?qsTr("Two Side") :qsTr("One Side")
+//                name: model.modelData.name
+//                source: scanData.getCurrentQuickScanSource(model.modelData.sid)
+//            }
+//    }
+    property int currentIndex: 0
+    property var currentQuickScanSetting:scanData.getQuickScanSetting(currentIndex)
     QuickScanButton{
         id:button_quickScan
         parent: item_quickscan
         anchors.fill: parent
-        mode: qsTr("Color")
-        dpi: qsTr("300dpi")
-        adf: qsTr("Two Side")
-        name: "1.Scan to Print"
-        source: "qrc:/Images/main_img_print.png"
+        mode: JSData.constColorMode()[currentQuickScanSetting.scanSetting.colorMode ?0 :1]
+        dpi: JSData.constDPIName()[currentQuickScanSetting.scanSetting.dpi]
+        adf: JSData.constAdfMode()[currentQuickScanSetting.scanSetting.adfMode ?0 :1]
+        name: (currentIndex+1)+". " + currentQuickScanSetting.name
+        source: "qrc:/Images/" + scanData.getQuickScanSource(currentQuickScanSetting.sid)
+    }
+
+    onVisibleChanged: {
+        if(visible){
+            //just update
+            if(currentIndex > 0){
+                currentIndex --
+                currentIndex ++
+            }else{
+                currentIndex ++
+                currentIndex --
+            }
+        }
     }
 
     JKImageButton{
@@ -47,6 +83,10 @@ ScanPageLayout {
         source_disable: "qrc:/Images/left_disable.png"
         source_normal: "qrc:/Images/left_normal.png"
         source_press: "qrc:/Images/left_press.png"
+        enabled: currentIndex > 0
+        onClicked: {
+            currentIndex --
+        }
     }
     JKImageButton{
         id:button_right
@@ -55,6 +95,10 @@ ScanPageLayout {
         source_disable: "qrc:/Images/right_disable.png"
         source_normal: "qrc:/Images/right_normal.png"
         source_press: "qrc:/Images/right_press.png"
+        enabled: currentIndex < scanData.quickScanSettings.length - 1
+        onClicked: {
+            currentIndex ++
+        }
     }
     JKFunctionButton{
         id:button_decode
@@ -120,6 +164,6 @@ ScanPageLayout {
 
     Connections{
         target: button_settings
-        onClicked: root.StackView.view.push("Settings.qml")
+        onClicked: root.StackView.view.push("SettingsPage.qml")
     }
 }

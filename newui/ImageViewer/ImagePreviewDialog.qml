@@ -15,24 +15,18 @@ JKDialog{
     property int index:-1
     width: 648+20
     height: 700+20
+    toolbar{
+        text.text:qsTr("Scan To Preview")
+        text.font.pixelSize: 15
+        text.color: "black"
+        text.font.bold: true
+    }
 
     ImagePreivewLayout{
     id:ip
     parent: container
     anchors.fill: parent
 
-    JKToolbar{
-        id:toolbar
-        parent: ip.item_title
-        text.text:qsTr("Scan To Preview")
-        text.font.pixelSize: 15
-        text.color: "black"
-        text.font.bold: true
-        anchors.fill: parent
-        onClose: root.close()
-        onMovedXChanged: root.x += movedX
-        onMovedYChanged: root.y += movedY
-    }
     ImageScrollView {
         id: scrollView
         parent:  ip.item_view

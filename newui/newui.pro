@@ -1,13 +1,15 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick printsupport
 CONFIG += c++11
 
 SOURCES += main.cpp \
+            jkinterface.cpp \
     ImageViewer/imagemodel.cpp
 
 HEADERS += \
     jkenums.h \
+    jkinterface.h \
     ImageViewer/imagemodel.h
 
 RESOURCES += newui.qrc \
@@ -34,12 +36,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    *.qml \
-    ScanPage/*.qml \
-    component/*.qml \
-    component/path/*.qml \
-    ImageViewer/*.qml \
-    ScanToPage/*.qml
 
 

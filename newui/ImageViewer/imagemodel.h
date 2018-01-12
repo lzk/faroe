@@ -2,6 +2,7 @@
 #define IMAGEMODEL_H
 #include <QAbstractListModel>
 #include <QSize>
+#include <QJSValue>
 
 class ImageItem{
 public:
@@ -19,6 +20,7 @@ private:
     int m_sn;
 };
 
+class QJSValue;
 class ImageModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -44,6 +46,13 @@ public:
     Q_INVOKABLE void saveRotatoedImage(int row ,int angle);
     Q_INVOKABLE void removeAll();
     Q_INVOKABLE static QString getThumbnailFilename(const QString&);
+
+    Q_INVOKABLE void toPrint(QList<int>);
+    Q_INVOKABLE void toEmail(QList<int> ,int);
+    Q_INVOKABLE void toFile(QList<int> ,const QString&);
+    Q_INVOKABLE void toFTP(QList<int> ,QJSValue);
+    Q_INVOKABLE void toApplication(QList<int> ,const QString&);
+    Q_INVOKABLE void toCloud(QList<int> ,QJSValue);
 protected:
     QHash<int,QByteArray> roleNames() const;
 

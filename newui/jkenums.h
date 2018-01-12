@@ -7,6 +7,7 @@ class JKEnums : public QObject{
     Q_OBJECT
 
     Q_ENUMS(QuickScanMode)
+    Q_ENUMS(EmailFileType)
 
 public:
     enum QuickScanMode{
@@ -16,6 +17,10 @@ public:
         ScanToEmail,
         ScanToFTP,
         ScanToCloud,
+    };
+    enum EmailFileType{
+        EmailFileType_PDF,
+        EmailFileType_JPG,
     };
 };
 

@@ -4,28 +4,24 @@ JKDialog {
     id:root
     width: 490 + 20
     height: 188 + 20
+    toolbar{
+        color: "#FF67A1CF"
+        enableClose: false
+    }
     JKMessageBoxLayout{
         id:messagebox
         parent: container
         anchors.fill: parent
         item_button.visible: false
         message.text: qsTr("Searching,please wait...")
+        item_image.width: 100
+        item_image.height: 100
 
         showImage: true
         JKBusyIndicator{
             parent:messagebox.item_image
             anchors.fill: parent
             anchors.margins: 15
-        }
-
-        JKToolbar {
-            id: jKToolbar
-            parent: messagebox.item_title
-            anchors.fill: parent
-            color: "#FF67A1CF"
-            enableClose: false
-            onMovedXChanged: root.x += movedX
-            onMovedYChanged: root.y += movedY
         }
     }
 

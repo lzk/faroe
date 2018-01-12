@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -19,7 +19,7 @@ public slots:
     void mmove(qreal x ,qreal y);
 
 private:
-    Ui::MainWindow *ui;
+//    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

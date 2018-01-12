@@ -5,9 +5,14 @@ JKDialog {
     width: 548 + 20
     height: 228 + 20
     signal accepted
-    property alias title: jKToolbar.text
     property alias message: messagebox.message
     property alias showImage: messagebox.showImage
+
+    toolbar{
+        text.text: qsTr("Infomation")
+        text.color: "black"
+        color: "#FF67A1CF"
+    }
     JKMessageBoxLayout{
         id:messagebox
         parent: container
@@ -20,17 +25,6 @@ JKDialog {
             anchors.margins: 5
         }
 
-        JKToolbar {
-            id: jKToolbar
-            parent: messagebox.item_title
-            anchors.fill: parent
-            text.text: qsTr("Infomation")
-            text.color: "black"
-            color: "#FF67A1CF"
-            onClose: root.close()
-            onMovedXChanged: root.x += movedX
-            onMovedYChanged: root.y += movedY
-        }
         message.text: qsTr("Do you want to delete the selected image?")
 
         Row {
@@ -64,4 +58,8 @@ JKDialog {
         }
     }
 
+    function openWithMessage(message){
+        messagebox.message.text = message
+        open()
+    }
 }

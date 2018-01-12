@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui quick
+QT       += core gui quick printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,15 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    ../qml/ImageViewer/imagemodel.cpp
+        ../newui/jkinterface.cpp \
+        ../newui/ImageViewer/imagemodel.cpp
 
 HEADERS += \
         mainwindow.h \
-    ../qml/jkenums.h \
-    ../qml/ImageViewer/imagemodel.h
+        ../newui/jkinterface.h \
+        ../newui/jkenums.h \
+        ../newui/ImageViewer/imagemodel.h
 
 FORMS += \
         mainwindow.ui
 
 RESOURCES += \
-    ../qml/newui.qrc
+    ../newui/newui.qrc
