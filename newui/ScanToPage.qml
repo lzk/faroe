@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import "ScanToPage"
 import "component"
 import "ImageViewer"
+import "ScanData.js" as JSData
 
 ScanToPageLayout {
     id: root
@@ -88,6 +89,7 @@ ScanToPageLayout {
         source_normal: "qrc:/Images/ScanToFile.png"
         source_press: "qrc:/Images/ScanToFile.png"
     }
+
     JKFunctionButton{
         id:button_toFTP
         parent: item_toFTP
@@ -132,30 +134,59 @@ ScanToPageLayout {
     }
 
     Connections{
+        target: button_toPrint
+        onClicked: imageViewer.toPrint()
+    }
+    Connections{
+        target: button_toFile
+        onClicked: dialog = openDialog("component/JKFileDialog.qml" ,{} ,function(dialog){
+            dialog.accepted.connect(saveFile)
+        })
+    }
+    Connections{
+        target: button_toEmail
+        onClicked: imageViewer.toEmail(scanData.scanParameter.emailAttachmentFileType)
+    }
+    Connections{
+        target: button_toApplication
+//        onClicked: dialog = openDialog("component/JKFileDialog.qml" ,{} ,function(dialog){
+//            dialog.accepted.connect(saveFile)
+//        })
+    }
+    Connections{
+        target: button_toFTP
+        onClicked: dialog = openDialog("ScanToPage/FTPDialog.qml" ,{"setting":ftpSetting} ,function(dialog){
+            dialog.accepted.connect(toFTP)
+        })
+    }
+    property var ftpSetting: JSData.defaultFTPSettings()
+    function toFTP(){
+        imageViewer.toFTP(ftpSetting)
+    }
+    Connections{
+        target: button_toCloud
+        onClicked: imageViewer.toCloud(scanData.scanParameter)
+    }
+    function saveFile(){
+        imageViewer.toFile(dialog.fileUrl)
+    }
+
+    Connections{
         target: checkbox_selectall
         onCheckedChanged:imageViewer.selectAll(checkbox_selectall.checked)
     }
 
-    Loader{
-        id:dialogs
-    }
 
     Connections{
         target: button_back
         onClicked:{
-            var dialog
-            dialogs.source = "component/JKMessageBox_information.qml"
-            dialog = dialogs.item
-            dialog.message.text = qsTr("Do you want leave this page ,if you exit ,all the images will be deleted?")
-            dialog.title.text = qsTr("Infomation")
-            dialog.accepted.connect(back)
-            dialog.open()
+            information(qsTr("Do you want leave this page ,if you exit ,all the images will be deleted?") ,back)
         }
     }
 
+    property var dialog
     function back(){
-        imageViewer.removeAllImages()
+//        imageViewer.removeAllImages()
         root.StackView.view.pop()
-        dialogs.source = ""
     }
 }

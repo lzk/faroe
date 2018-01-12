@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import "../component"
+import "../../component"
 Item {
     width: 477
     height: 309
@@ -13,20 +13,20 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Server Address:")
+                text: qsTr("Save File Type:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
 
-            JKTextInput {
-                id: textInput1
+            JKComboBox {
+                id: comboBox
                 width: 250
-                height: 30
+                height: 35
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                model: ["PDF" ,"TIFF" ,"JPG" ,"BMP"]
             }
         }
         Item {
@@ -36,10 +36,9 @@ Item {
 
             JKText {
                 id: text2
-                text: qsTr("User Name:")
+                text: qsTr("File Name:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
@@ -60,10 +59,9 @@ Item {
 
             JKText {
                 id: text3
-                text: qsTr("Password:")
+                text: qsTr("File Path:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
@@ -81,19 +79,10 @@ Item {
             width: parent.width
             height: 60
 
-            JKText {
-                id: text4
-                text: qsTr("Target Path:")
-                font.bold: true
-                anchors.left: parent.left
-                anchors.leftMargin: 30
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 12
-            }
-
-            JKTextInput {
-                id: textInput4
-                width: 250
+            JKTextButton {
+                id: button_browse
+                text.text: qsTr("Browser...")
+                width: 100
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
@@ -108,17 +97,13 @@ Item {
     }
 
     function init(){
-        if(visible){
-            textInput1.text = setting.serverAddress
-            textInput2.text = setting.userName
-            textInput3.text = setting.password
-            textInput4.text = setting.targetPath
-        }
+        comboBox.currentIndex = setting.fileType
+        textInput2.text = setting.fileName
+        textInput3.text = setting.filePath
     }
     function ok(){
-        setting.serverAddress = textInput1.text
-        setting.userName = textInput2.text
-        setting.password = textInput3.text
-        setting.targetPath = textInput4.text
+        setting.fileType = comboBox.currentIndex
+        setting.fileName = textInput2.text
+        setting.filePath = textInput3.text
     }
 }

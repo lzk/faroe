@@ -36,6 +36,30 @@ Item {
     }
 
     function removeAllImages(){
-        jkImageModel.removeAll()
+        model.removeAll()
+    }
+
+    function toPrint(){
+        model.toPrint()
+    }
+
+    function toEmail(fileType){
+        model.toEmail(fileType)
+    }
+
+    function toFile(filename){
+        model.toFile(filename)
+    }
+
+    function toApplication(filename){
+        model.toApplication(filename)
+    }
+
+    function toFTP(jsobject){
+        model.toFTP(jsobject)
+    }
+
+    function toCloud(jsobject){
+        model.toCloud(jsobject)
     }
 }

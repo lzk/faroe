@@ -2,15 +2,15 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QWidget(parent)
+//    ,ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+//    ui->setupUi(this);
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+//    delete ui;
 }
 
 void MainWindow::mmove(qreal x ,qreal y)

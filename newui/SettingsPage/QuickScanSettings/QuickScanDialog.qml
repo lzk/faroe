@@ -1,37 +1,44 @@
 import QtQuick 2.0
-import "../component"
+import "../../component"
 import QtQuick.Layouts 1.3
 
-JKDialog{
+JKParaDialog{
     id: root
     width: 537 + 20
     height: 545 + 20
-    property var setting
     property int mode: 0
-    signal ok
+    signal accepted
+
+    toolbar{
+        text.font.pixelSize: 15
+        text.color: "black"
+        text.font.bold: true
+        text.text:
+        switch(mode){
+        case 0:
+            return setting !== undefined && setting !== null ?setting.sid :"";
+        case 1:
+            return qsTr("Add Quick Scan Setting");
+        case 2:
+            return qsTr("Edit Quick Scan Setting");
+        }
+    }
+    Image{
+        parent: background
+        anchors.fill: parent
+        source: "qrc:/Images/popup_gnd_quick scan.png"
+    }
 
     Item {
         parent: container
         anchors.fill: parent
 
-        Image{
-            anchors.fill: parent
-            source: "qrc:/Images/popup_gnd_quick scan.png"
-        }
-
-        Item {
-            id: item_title
-            anchors.bottom: parent.top
-            anchors.right: parent.right
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.bottomMargin: -30
-        }
-
         Item {
             id: item1
             anchors.fill: parent
-            anchors.margins: 30
+            anchors.rightMargin: 30
+            anchors.leftMargin: 30
+            anchors.bottomMargin: 30
 
             ColumnLayout {
                 id: columnLayout
@@ -60,27 +67,20 @@ JKDialog{
         }
     }
 
-    JKToolbar{
-        id:toolbar
-        parent: item_title
-        text.text:mode === 0 && setting !== undefined?setting.sid :qsTr("Add Quick Scan Setting")
-        text.font.pixelSize: 15
-        text.color: "black"
-        text.font.bold: true
-        anchors.fill: parent
-        onClose: root.close()
-        onMovedXChanged: root.x += movedX
-        onMovedYChanged: root.y += movedY
-    }
-
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
         text.text: qsTr("OK")
         onClicked: {
-            settingLoader.item.ok()
-            root.close()
-            root.ok()
+            if(settingLoader.item.ok()){
+                if(mode === 1){
+                    scanData.addQuickScanSetting(setting)
+                }else{
+                    root.ok()
+                }
+                root.accepted()
+                root.close()
+            }
         }
     }
 
@@ -105,9 +105,20 @@ JKDialog{
         switch(mode){
         case 0:   source = "QuickScanSettingView.qml";  break
         case 1:   source = "NewQuickScanView.qml";  break
+        case 2:   source = "NewQuickScanView.qml";  break
         default:
             break
         }
-        settingLoader.setSource(source ,{"setting":setting})
+        settingLoader.source = source
+//        settingLoader.setSource(source ,{"setting":setting})
     }
+
+    function initWithPara(setting ,mode){
+        root.mode = mode
+        if(mode === 1 && setting === undefined)
+            ;
+        else
+            initWithSetting(setting)
+    }
+
 }

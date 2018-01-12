@@ -1,11 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
+import "../../component"
 import "../component"
-
 Item {
+    id:root
     width: 477
     height: 425
-//    property var setting
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -15,7 +15,7 @@ Item {
             height: 60
             Layout.fillWidth: true
 
-            Text {
+            JKText {
                 id: text1
                 text: qsTr("Scan Setting:")
                 font.bold: true
@@ -32,32 +32,9 @@ Item {
             }
         }
 
-        Item {
-            id: item4
+        DividingLine{
             height: 6
             Layout.fillWidth: true
-            Canvas{
-                anchors.fill: parent
-                antialiasing: true
-                property color strokeColor: "lightgray"
-                property real lineWidth: 2
-
-                onPaint: {
-                    var ctx = getContext('2d')
-                    ctx.save()
-                    ctx.clearRect(0 ,0 ,width ,height)
-
-                    ctx.strokeStyle = strokeColor
-                    ctx.lineWidth = lineWidth
-                    ctx.beginPath()
-                    ctx.moveTo(0 ,4)
-                    ctx.lineTo(width ,2)
-                    ctx.stroke()
-                    ctx.closePath()
-                    ctx.restore()
-                }
-
-            }
         }
 
         Item {
@@ -68,16 +45,17 @@ Item {
                 anchors.fill: parent
                 anchors.bottomMargin: parent.height - 50
                 JKText{
+                    id:text_title
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 14
                     font.bold: true
-                    text: setting !== undefined ?setting.title :""
                 }
             }
             Loader{
                 id:settingLoader
                 anchors.fill: parent
                 anchors.topMargin: 50
+                anchors.leftMargin: 30
             }
         }
     }
@@ -86,12 +64,18 @@ Item {
         parent: item_btnSettings
         anchors.fill: parent
         text.text: qsTr("Settings...")
+        onClicked: {
+            openScanSettingDialog(setting.scanSetting)
+        }
     }
+
 
     onVisibleChanged: {
 //    Component.onCompleted: {
         if(!visible)
             return
+
+        text_title.text = scanData.getQuickScanSettingTitle(setting)
         var source = ""
         switch(setting.sid){
         case "Scan To Print":   source = "ScanToPrintView.qml";  break
@@ -108,5 +92,13 @@ Item {
 
     function ok(){
         settingLoader.item.ok()
+        return true
+    }
+
+    property var dialog
+    function openScanSettingDialog(setting){
+        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{} ,function(dialog){
+            dialog.initWithSetting(setting)
+            })
     }
 }

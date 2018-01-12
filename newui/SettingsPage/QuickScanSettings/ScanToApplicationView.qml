@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
-import "../component"
+import "../../component"
 Item {
     width: 477
     height: 309
@@ -17,7 +17,6 @@ Item {
                 text: qsTr("Programs:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
@@ -55,19 +54,17 @@ Item {
     }
 
     function init(){
-        if(visible){
-            var index = -1
-            if(comboBox.count > 0)
-                index = 0
-            for (var i=0; i<comboBox.count; i++){
-                if(comboBox.textAt(i) === setting.fileName){
-                    index = i
-                }
+        var index = -1
+        if(comboBox.count > 0)
+            index = 0
+        for (var i=0; i<comboBox.count; i++){
+            if(comboBox.textAt(i) === setting.fileName){
+                index = i
             }
-            comboBox.currentIndex = index
-            textInput2.text = setting.filePath
-//            textInput3.text = setting.filePath
         }
+        comboBox.currentIndex = index
+        textInput2.text = setting.filePath
+//            textInput3.text = setting.filePath
     }
     function ok(){
         setting.fileName = comboBox.currentText

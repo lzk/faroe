@@ -1,5 +1,6 @@
 import QtQuick 2.0
-import "../component"
+import "../../component"
+import "../../ScanData.js" as JSData
 Item {
     width: 477
     height: 309
@@ -16,7 +17,6 @@ Item {
                 text: qsTr("Attachment File Type:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
@@ -27,7 +27,7 @@ Item {
                 height: 35
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                model: ["PDF" ,"JPG"]
+                model: JSData.constEmailAttachmentFileType()
             }
         }
         Item {
@@ -40,7 +40,6 @@ Item {
                 text: qsTr("Recipient:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
@@ -64,7 +63,6 @@ Item {
                 text: qsTr("Subject:")
                 font.bold: true
                 anchors.left: parent.left
-                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
             }
@@ -86,11 +84,9 @@ Item {
     }
 
     function init(){
-        if(visible){
-            comboBox.currentIndex = setting.fileType
-            textInput2.text = setting.recipient
-            textInput3.text = setting.subject
-        }
+        comboBox.currentIndex = setting.fileType
+        textInput2.text = setting.recipient
+        textInput3.text = setting.subject
     }
     function ok(){
         setting.fileType = comboBox.currentIndex

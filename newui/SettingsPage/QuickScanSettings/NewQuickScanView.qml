@@ -1,12 +1,12 @@
 import QtQuick 2.0
-import "../component"
+import "../../component"
 import QtQuick.Layouts 1.3
-
+import "../../JSApi.js" as JSApi
 Item {
     id:item
     width: 477
     height: 425
-    property var setting:undefined
+    property var settings : [undefined ,undefined ,undefined ,undefined ,undefined ,undefined]
     Column {
         id: column
         anchors.fill: parent
@@ -86,9 +86,7 @@ Item {
         anchors.fill: parent
         text.text: qsTr("Settings...")
         onClicked: {
-            dialog.setting = setting
-            dialog.mode = 0
-            dialog.open()
+            openModifyQuickScanSettingDialog(settings[comboBox.currentIndex])
         }
     }
 
@@ -96,26 +94,57 @@ Item {
         id:comboBox
         parent: item_comboxBox
         anchors.fill: parent
-        model:scanData.supportSid
+        model:scanData.constQuickScanSids
         onActivated:{
-            console.log("activate")
-            setting = scanData.create(currentText)
+            if(settings[index] === undefined){
+                settings[index] = scanData.createQuickScanSetting(currentText)
+            }
         }
-    }
-
-    QuickScanDialog{
-        id:dialog
     }
 
     Component.onCompleted: {
-        setting = scanData.create(comboBox.currentText)
+        if(mode === 1){
+            settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
+        }else{
+            textInput.text = setting.name
+            comboBox.currentIndex = scanData.constQuickScanSids.indexOf(setting.sid)
+            settings[comboBox.currentIndex] = JSApi.deepCopy(setting)
+        }
     }
 
     function ok(){
-        if(setting == undefined)
-            setting = scanData.create(comboBox.currentText)
-        if(setting.name !== ""){
-            scanData.add(setting)
+        if(textInput.text === ""){
+            warning({"message.text":qsTr("The Name cannot be empty!")
+                    ,"showImage": true
+                    ,"width": 520
+                    ,"height": 200})
+            return false
         }
+        if(settings[comboBox.currentIndex] === undefined){
+            settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
+        }
+        settings[comboBox.currentIndex].name = textInput.text
+        var verify = true
+        if(mode !== 1 && settings[comboBox.currentIndex].name === setting.name){
+            //edit do not change name
+            verify = false
+        }
+        if(verify){
+            if(!scanData.verifyQuickScanSettingName(settings[comboBox.currentIndex].name)){
+                warning({"message.text":qsTr("Quick Scan item name already exists.change to another name!")
+                        ,"showImage": true
+                        ,"width": 520
+                        ,"height": 200})
+                return false
+            }
+        }
+        setting = settings[comboBox.currentIndex]
+        return true
+    }
+    property var dialog
+    function openModifyQuickScanSettingDialog(setting){
+        dialog = openDialog("SettingsPage/QuickScanSettings/QuickScanDialog.qml" ,{} ,function(dialog){
+            dialog.initWithPara(setting ,0)
+            })
     }
 }

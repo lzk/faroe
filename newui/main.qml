@@ -3,7 +3,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 
 ApplicationWindow {
-    id:window
+    id:root
     visible: true
     width: 850
     height: 638
@@ -13,14 +13,18 @@ ApplicationWindow {
     MainView{
         id:mainview
         anchors.fill: parent
+        centerx: window.x + window.width / 2
+        centery: window.y + window.height / 2
+        window: root
     }
     Connections{
         target: mainview
         onClosed: close()
-        onMinimized: showMinimized()//window.visibility = ApplicationWindow.Minimized
+        onMinimized: showMinimized()//root.visibility = ApplicationWindow.Minimized
         onMove: {
-            window.x += dx
-            window.y += dy
+            root.x += dx
+            root.y += dy
         }
     }
+
 }

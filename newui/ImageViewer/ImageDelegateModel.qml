@@ -6,6 +6,7 @@ import com.liteon.JKInterface 1.0
 
 DelegateModel{
     id: visualModel
+    property int currentIndex //for delete dialog
     property bool selectedAll:visualModel.items.count === selectionGroup.count
     property var selectList:[]
     property var lastSelectList:[]
@@ -19,7 +20,6 @@ DelegateModel{
             if(selectionGroup.count === visualModel.items.count)
                 selectionGroup.remove(0 ,selectionGroup.count)
         }
-
     }
 
     function deleteImage(index){
@@ -34,14 +34,7 @@ DelegateModel{
             else
                 break
         }
-
-//        console.log("index:" ,index)
-//        console.log("selectList:" ,selectList)
-//        console.log("lastSelectList:" ,lastSelectList)
-
-//        DelegateModel.model.model.remove(index ,1);
         visualModel.model.remove(index ,1);
-        console.log("index:" ,index)
     }
 
     groups: [
@@ -55,7 +48,7 @@ DelegateModel{
                 var itemIndex
                 var obj
                 var value
-//                    console.log("before remove value")
+                //remove removed value
                 for(j = 0 ;j < removed.length ;j++){
                     obj = removed[j]
                     for(i = 0 ;i < obj.count ;i++){
@@ -65,11 +58,10 @@ DelegateModel{
                             if(itemIndex !== -1){
                                 selectList.splice(itemIndex ,1)
                             }
-//                            console.log("remove value:" ,value)
                         }
                     }
                 }
-//                    console.log("before add value")
+                //add inserted value
                 for(j = 0 ;j < inserted.length ;j++){
                     obj = inserted[j]
                     for(i = 0 ;i < obj.count ;i++){
@@ -79,28 +71,23 @@ DelegateModel{
                             selectList.splice(itemIndex ,1)
                         }
                         selectList.push(value)
-//                            console.log("add value to the end:" ,value)
                     }
                 }
-
-//                    console.log("before set value")
+                //update sn
                 for(i = 0 ;i <visualModel.model.count ;i++){
-                        visualModel.model.get(i).sn = selectList.indexOf(i) + 1
-//                        console.log("before set value i" ,i)
-//                    visualModel.model.setData(visualModel.modelIndex(i) ,selectList.indexOf(i) + 1 ,ImageModel.SnRole)
-//                        console.log("end set value i" ,i)
+//                    visualModel.model.get(i).sn = selectList.indexOf(i) + 1
+                    visualModel.model.setData(visualModel.modelIndex(i) ,selectList.indexOf(i) + 1 ,ImageModel.SnRole)
+//                    console.log("index:" ,i ,"sn" ,selectList.indexOf(i) + 1)
                 }
-
-//                    console.log("before update value")
+                //update last select list
                 if(lastSelectList.length > 0)
                     lastSelectList.splice(0 ,lastSelectList.length)
                 for(i = 0 ;i < count ;i++){
                     lastSelectList.push(get(i).itemsIndex)
                 }
 
-//                    console.log("end")
-//                    console.log("selectList:" ,selectList)
-//                    console.log("lastSelectList:" ,lastSelectList)
+//                console.log("selectList:" ,selectList)
+//                console.log("lastSelectList:" ,lastSelectList)
             }
         }
     ]
@@ -113,59 +100,58 @@ DelegateModel{
 //            image.source: "image://async/" + getThumbnailFilename(url)
         image.source: "file:///" +  url//getThumbnailFilename(url)
         onClose:{
-//            var dialog = deleteDialog
-            var dialog = getDialog("delete")
-            dialogs.index = index
-            dialog.open()
-
+            visualModel.currentIndex = index
+            information(qsTr("Do you want to delete the selected image?") ,deleteDialogClose)
         }
         onDoubleClick: {
-//            var dialog = previewDialog
-            var dialog = getDialog("preview")
             if(image.status === Image.Ready){
-                dialog.image.source = "file:///" + url
-                dialog.sourceSize = sourceSize
-                dialog.index = index
-                dialog.requestImage(0 ,0)
-                dialog.open()
-//                dialog.x = dialogs.centerx - dialog.width / 2
-//                dialog.y = dialogs.centery - dialog.height / 2
+
+                openPreviewDialog(function(dialog){
+                    dialog.image.source = "file:///" + url
+                    dialog.sourceSize = sourceSize
+                    dialog.index = index
+                    dialog.requestImage(0 ,0)
+                })
             }
         }
         onClick: {
             DelegateModel.inSelected = !DelegateModel.inSelected
         }
 
-        Loader{
-            id:dialogs
-            property int index
-//            property int centerx: ApplicationWindow.window.x + ApplicationWindow.window.width / 2
-//            property int centery: ApplicationWindow.window.y + ApplicationWindow.window.height / 2
-        }
+    }
+    function deleteDialogClose(){
+        deleteImage(visualModel.currentIndex)
+    }
+    property var dialog
+    function openPreviewDialog(init){
+        dialog = openDialog("ImageViewer/ImagePreviewDialog.qml" ,{} ,init)
+    }
 
-        function deleteDialogClose(){
-            deleteImage(dialogs.index)
-            dialogs.source = ""
-        }
+    function removeAllImages(){
+        jkImageModel.removeAll()
+    }
 
-        function getDialog(dialogname){
-            var dialog = undefined
-            dialogs.source = ""
-            switch(dialogname){
-            case "delete":
-                dialogs.source = "../component/JKMessageBox_information.qml"
-                dialog = dialogs.item
-                dialog.message.text = qsTr("Do you want to delete the selected image?")
-                dialog.accepted.connect(deleteDialogClose)
-                break
-            case "preview":
-                dialogs.source = "ImagePreviewDialog.qml"
-                dialog = dialogs.item
-                break
-            default:
-                break
-            }
-            return dialog
-        }
+    function toPrint(){
+        jkImageModel.toPrint(selectList)
+    }
+
+    function toEmail(fileType){
+        jkImageModel.toEmail(selectList ,fileType)
+    }
+
+    function toFile(filename){
+        jkImageModel.toFile(selectList ,filename)
+    }
+
+    function toFTP(jsobject){
+        jkImageModel.toFTP(selectList ,jsobject)
+    }
+
+    function toApplication(filename){
+        jkImageModel.toApplication(selectList ,filename)
+    }
+
+    function toCloud(jsobject){
+        jkImageModel.toCloud(selectList ,jsobject)
     }
 }

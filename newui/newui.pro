@@ -36,14 +36,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    *.qml \
-    ScanPage/*.qml \
-    component/*.qml \
-    component/path/*.qml \
-    ImageViewer/*.qml \
-    ScanToPage/*.qml \
-    Settings/*.qml \
-    SettingsPage/*.qml
 
 

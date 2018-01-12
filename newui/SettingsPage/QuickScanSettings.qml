@@ -130,6 +130,13 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_move up.png"
         source_press: "qrc:/Images/quick scan_btnf_move up.png"
         source_disable: "qrc:/Images/move up_disable.png"
+        enabled: listview.currentIndex > 0
+        onClicked: {
+            var index = listview.currentIndex
+            scanData.upQuickScanSetting(index)
+            listview.model = settings
+            listview.currentIndex = index - 1
+        }
     }
 
     JKImageButton{
@@ -139,6 +146,13 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_move down.png"
         source_press: "qrc:/Images/quick scan_btnf_move down.png"
         source_disable: "qrc:/Images/move down_disable.png"
+        enabled: listview.currentIndex < listview.model.length - 1
+        onClicked: {
+            var index = listview.currentIndex
+            scanData.downQuickScanSetting(listview.currentIndex)
+            listview.model = settings
+            listview.currentIndex = index + 1
+        }
     }
 
     JKImageButton{
@@ -148,7 +162,8 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_new.png"
         source_press: "qrc:/Images/quick scan_btnf_new.png"
         source_disable: "qrc:/Images/quick scan_btn_new_disable.png"
-        onClicked: openDialog(1 ,undefined)
+        onClicked: openQuickScanDialogWithPara(undefined ,1)
+        enabled: listview.model.length < 10
     }
     JKImageButton{
         id:button_edit
@@ -157,7 +172,8 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_edit.png"
         source_press: "qrc:/Images/quick scan_btnf_edit.png"
         source_disable: "qrc:/Images/edit_disable.png"
-        enabled: listview.currentIndex >= 0 ?root.settings[listview.currentIndex].canEdit :false
+        enabled: listview.currentIndex >= 0 ?!scanData.checkQuickScanSettingreadOnly(root.settings[listview.currentIndex]) :false
+        onClicked: openQuickScanDialogWithPara(root.settings[listview.currentIndex] ,2)
     }
     JKImageButton{
         id:button_delete
@@ -166,7 +182,10 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_delete.png"
         source_press: "qrc:/Images/quick scan_btnf_delete.png"
         source_disable: "qrc:/Images/delete_disable.png"
-        enabled: listview.currentIndex >= 0 ?root.settings[listview.currentIndex].canEdit :false
+        enabled: listview.currentIndex >= 0 ?!scanData.checkQuickScanSettingreadOnly(root.settings[listview.currentIndex]) :false
+        onClicked: {
+            information(qsTr("Are you sure to delete the Quick Scan Setting") ,del)
+        }
     }
     JKImageButton{
         id:button_settings
@@ -175,7 +194,7 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_setting.png"
         source_press: "qrc:/Images/quick scan_btnf_setting.png"
         source_disable: "qrc:/Images/quick scan_btn_setting.png"
-        onClicked: openDialog(0 ,root.settings[listview.currentIndex])
+        onClicked: openQuickScanDialogWithPara(root.settings[listview.currentIndex] ,0)
     }
 
     ListView{
@@ -205,28 +224,36 @@ Item {
         }
         model:settings
     }
-    QuickScanDialog{
-        id:dialog
-        onOk: listview.model = settings
-//        setting: listview.currentIndex > 0 ?settings[listview.currentIndex] :undefined
-    }
-//    Loader{
-//        id:loader
-//    }
-
-    property var settings:scanData.settings
+    property var settings:scanData.quickScanSettings
+    property int mode: 0
 
     Component.onCompleted: {
-//        for(var i=0 ;i < settings.length ;i++){
-//            model.append({"name":settings[i].name})
-//        }
+    }
+    function del(){
+        scanData.deleteQuickScanSetting(listview.currentIndex)
+        var index
+        if(listview.currentIndex > 0)
+            index = listview.currentIndex - 1
+        listview.model = settings
+        listview.currentIndex = index
     }
 
-    function openDialog(mode ,setting){
-//        loader.source = "ScanToPrintDialog.qml"
-//        var dialog = loader.item
-        dialog.setting = setting
-        dialog.mode = mode
-        dialog.open()
+    function updateModel(){
+        var index
+        if(mode !== 1)
+            index = listview.currentIndex
+        else
+            index = listview.count
+        listview.model = settings
+        listview.currentIndex = index
+    }
+
+    property var dialog
+    function openQuickScanDialogWithPara(setting ,mode){
+        root.mode = mode
+        dialog = openDialog("SettingsPage/QuickScanSettings/QuickScanDialog.qml" ,{} ,function(dialog){
+            dialog.accepted.connect(updateModel)
+            dialog.initWithPara(setting ,mode)
+            })
     }
 }
