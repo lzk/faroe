@@ -228,7 +228,9 @@ Item {
     property int mode: 0
 
     Component.onCompleted: {
+
     }
+
     function del(){
         scanData.deleteQuickScanSetting(listview.currentIndex)
         var index

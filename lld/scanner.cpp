@@ -154,7 +154,7 @@ int Scanner::receiveData()
     return result;
 }
 
-int Scanner::ADFScan()
+int Scanner::ADFScan(Setting* setting)
 {
     int result;
     result = scannerApi->jobCreate(CODE_ADF);
@@ -171,17 +171,16 @@ int Scanner::ADFScan()
         result = errorcode;
         LOG_PARA("job create err:%d" ,result);
     }else{
-        result = _scan();
+        result = _scan(setting);
         scannerApi->jobEnd();
         LOG_PARA("scan err:%d" ,result);
     }
     return result;
 }
 
-int Scanner::_scan()
+int Scanner::_scan(Setting* setting)
 {
     int result;
-    Setting* setting = getSetting();
     SC_PAR_DATA_T para;
     getScanParameters(*setting ,&para);
     result = scannerApi->setParameters(para);

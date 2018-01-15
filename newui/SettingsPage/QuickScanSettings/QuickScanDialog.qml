@@ -88,19 +88,16 @@ JKParaDialog{
         id:settingLoader
         parent: item_view
         anchors.fill: parent
-//        source:{
-//            switch(mode){
-//            case 0:   "QuickScanSettingView.qml";  break
-//            case 1:   "NewQuickScanView.qml";  break
-//            default: "";break
-//            }
-//        }
     }
 
-    onVisibleChanged: {
-//    Component.onCompleted: {
-        if(!visible)
-            return
+
+    function initWithPara(setting ,mode){
+        root.mode = mode
+        if(mode === 1 && setting === undefined)
+            ;
+        else
+            initWithSetting(setting)
+
         var source = ""
         switch(mode){
         case 0:   source = "QuickScanSettingView.qml";  break
@@ -110,15 +107,8 @@ JKParaDialog{
             break
         }
         settingLoader.source = source
-//        settingLoader.setSource(source ,{"setting":setting})
-    }
-
-    function initWithPara(setting ,mode){
-        root.mode = mode
-        if(mode === 1 && setting === undefined)
-            ;
-        else
-            initWithSetting(setting)
+        if(settingLoader.item)
+            settingLoader.item.init()
     }
 
 }

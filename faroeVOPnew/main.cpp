@@ -7,6 +7,7 @@
 #include "../newui/jkenums.h"
 #include "../newui/ImageViewer/imagemodel.h"
 #include "../newui/jkinterface.h"
+#include "../platform/devicestruct.h"
 #include <QHBoxLayout>
 int main(int argc, char *argv[])
 {
@@ -19,20 +20,16 @@ int main(int argc, char *argv[])
     qmlRegisterType<ImageModel>("com.liteon.JKInterface" ,1,0,"ImageModel");
     qmlRegisterType<JKEnums>("com.liteon.JKInterface" ,1,0,"JKEnums");
     qmlRegisterType<JKInterface>("com.liteon.JKInterface",1,0,"JKInterface");
+    qmlRegisterType<DeviceStruct>("com.liteon.JKInterface",1,0,"DeviceStruct");
 
     ImageModel imageModel;
-    imageModel.addImage(ImageItem("E:/tmp/pic/1.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/2.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/3.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/4.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/5.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/6.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/7.jpg" ,QSize(3200 ,2000)));
-    imageModel.addImage(ImageItem("E:/tmp/pic/8.jpg" ,QSize(3200 ,2000)));
+    JKInterface jki;
+    jki.installImageModel(&imageModel);
 
     QQuickView* view = new QQuickView;
     QQmlContext* ctxt = view->engine()->rootContext();
     ctxt->setContextProperty("jkImageModel" ,&imageModel);
+    ctxt->setContextProperty("jkInterface" ,&jki);
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->setSource(QUrl(QLatin1String("qrc:/newui/MainView.qml")));
     view->connect(view->engine() ,&QQmlEngine::quit ,&a ,&QCoreApplication::quit);
@@ -54,5 +51,8 @@ int main(int argc, char *argv[])
     rootObject->setProperty("originCenterX", w.x() + w.width()/2);
     rootObject->setProperty("originCenterY", w.y() + w.height()/2);
 
+    QObject* scanData = rootObject->findChild<QObject*>("scanData");
+    if(scanData)
+        jki.setScanDataHandle(scanData);
     return a.exec();
 }

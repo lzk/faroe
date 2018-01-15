@@ -98,7 +98,7 @@ DelegateModel{
         text.text: sn//selected ?sn :""
         selected: DelegateModel.inSelected
 //            image.source: "image://async/" + getThumbnailFilename(url)
-        image.source: "file:///" +  url//getThumbnailFilename(url)
+        image.source: "file:///" +  getThumbnailFilename(url)
         onClose:{
             visualModel.currentIndex = index
             information(qsTr("Do you want to delete the selected image?") ,deleteDialogClose)
@@ -129,29 +129,5 @@ DelegateModel{
 
     function removeAllImages(){
         jkImageModel.removeAll()
-    }
-
-    function toPrint(){
-        jkImageModel.toPrint(selectList)
-    }
-
-    function toEmail(fileType){
-        jkImageModel.toEmail(selectList ,fileType)
-    }
-
-    function toFile(filename){
-        jkImageModel.toFile(selectList ,filename)
-    }
-
-    function toFTP(jsobject){
-        jkImageModel.toFTP(selectList ,jsobject)
-    }
-
-    function toApplication(filename){
-        jkImageModel.toApplication(selectList ,filename)
-    }
-
-    function toCloud(jsobject){
-        jkImageModel.toCloud(selectList ,jsobject)
     }
 }

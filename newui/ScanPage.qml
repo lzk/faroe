@@ -4,6 +4,7 @@ import QtQuick.Controls 2.1
 import "component"
 import "ScanPage"
 import "ScanData.js" as JSData
+import com.liteon.JKInterface 1.0
 
 ScanPageLayout {
     id: root
@@ -17,15 +18,15 @@ ScanPageLayout {
         spacing: 5
         JKImageButton{
             id:button_search
-            source_normal: "qrc:/Images/device_normal.png"
-            source_press: "qrc:/Images/device_press.png"
+            source_normal: scanData.deviceStatus ?"qrc:/Images/device_normal_blue.png" :"qrc:/Images/device_normal.png"
+            source_press: scanData.deviceStatus ?"qrc:/Images/device_normal_blue.png" :"qrc:/Images/device_press.png"
             width: 38
             height: 38
             anchors.verticalCenter: parent.verticalCenter
             onClicked: root.StackView.view.push("SearchDevicePage.qml")
         }
         Text {
-            text: qsTr("Disconnected")
+            text: scanData.deviceStatus ?scanData.currentDevice.match("USB") ?"USB" :scanData.currentDevice :qsTr("Disconnected")
             anchors.verticalCenter: parent.verticalCenter
         }
     }
@@ -149,21 +150,49 @@ ScanPageLayout {
         jktext.text:qsTr("Settings")
     }
 
-    ScanningDialog{
-        id:scanningDialog
-        onCancel: close()
-    }
-
     Connections{
         target: button_scanto
-        onClicked: {
-//            scanningDialog.show()
-            root.StackView.view.push("ScanToPage.qml")
-            }
+        onClicked: scanTo()
     }
 
     Connections{
         target: button_settings
         onClicked: root.StackView.view.push("SettingsPage.qml")
+    }
+
+    Connections{
+        target: jkInterface
+        onCmdResult:{
+            if(cmd === DeviceStruct.CMD_SCAN){
+                dialog.close()
+                switch(result){
+                case DeviceStruct.ERR_ACK:
+                    root.StackView.view.push("ScanToPage.qml")
+                    break;
+                case DeviceStruct.ERR_SCAN_CANCEL:
+                    jkImageModel.removeAll()
+                    break;
+                default:
+                    break;
+                }
+
+            }
+        }
+    }
+
+    function scanTo(){
+        jkImageModel.removeAll()
+        jkInterface.cmdToDevice(DeviceStruct.CMD_SCAN ,JSON.stringify(scanData.scanParameter.scanSetting));
+        openScanningDialog()
+    }
+    function cancelScan(){
+        jkInterface.cancelScan()
+    }
+
+    property var dialog
+    function openScanningDialog(){
+        dialog = openDialog("ScanPage/ScanningDialog.qml" ,{} ,function(dialog){
+            dialog.cancel.connect(cancelScan)
+        })
     }
 }

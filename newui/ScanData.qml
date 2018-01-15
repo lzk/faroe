@@ -12,6 +12,10 @@ QtObject {
     property var scanParameter
     property var qrcodeSetting
 
+    property var model_deviceList
+    property string currentDevice:""
+    property bool deviceStatus:false
+
     property var storageSettings:
     Settings{
         property string settings
@@ -32,6 +36,8 @@ QtObject {
             scanParameter = tmp.scanParameter
         if(tmp.qrcodeSetting)
             qrcodeSetting = tmp.qrcodeSetting
+        if(tmp.currentDevice)
+            currentDevice = tmp.currentDevice
     }
 
     Component.onDestruction: {
@@ -39,6 +45,7 @@ QtObject {
         settings.quickScanSettings = quickScanSettings
         settings.scanParameter = scanParameter
         settings.qrcodeSetting = qrcodeSetting
+        settings.currentDevice = currentDevice
         storageSettings.settings = JSON.stringify(settings)
     }
 

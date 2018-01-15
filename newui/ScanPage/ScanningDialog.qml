@@ -11,6 +11,7 @@ Window {
     width: 850
     height: 560
     signal cancel
+    property var dialog
 
     Rectangle{
         anchors.fill: parent
@@ -100,5 +101,8 @@ Window {
         }
         onClicked: cancel()
 
+    }
+    function open(){
+        show()
     }
 }

@@ -69,12 +69,7 @@ Item {
         }
     }
 
-
-    onVisibleChanged: {
-//    Component.onCompleted: {
-        if(!visible)
-            return
-
+    function init(){
         text_title.text = scanData.getQuickScanSettingTitle(setting)
         var source = ""
         switch(setting.sid){

@@ -91,8 +91,11 @@ SettingsLayout {
     Connections{
         target: button_back
         onClicked:{
-            loader.source = ""
             root.StackView.view.pop()
         }
+    }
+
+    Component.onDestruction: {
+        loader.source = ""
     }
 }

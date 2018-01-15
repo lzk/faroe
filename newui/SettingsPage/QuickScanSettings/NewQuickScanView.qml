@@ -102,7 +102,7 @@ Item {
         }
     }
 
-    Component.onCompleted: {
+    function init(){
         if(mode === 1){
             settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
         }else{

@@ -5,6 +5,7 @@ import com.liteon.JKInterface 1.0
 Item {
     id:root
     property alias allSelected: model.selectedAll
+    property alias model: gridView.model
 
     ScrollView{
         anchors.fill: parent
@@ -36,30 +37,6 @@ Item {
     }
 
     function removeAllImages(){
-        model.removeAll()
-    }
-
-    function toPrint(){
-        model.toPrint()
-    }
-
-    function toEmail(fileType){
-        model.toEmail(fileType)
-    }
-
-    function toFile(filename){
-        model.toFile(filename)
-    }
-
-    function toApplication(filename){
-        model.toApplication(filename)
-    }
-
-    function toFTP(jsobject){
-        model.toFTP(jsobject)
-    }
-
-    function toCloud(jsobject){
-        model.toCloud(jsobject)
+        model.removeAllImages()
     }
 }

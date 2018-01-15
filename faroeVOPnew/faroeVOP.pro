@@ -27,16 +27,73 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         ../newui/jkinterface.cpp \
-        ../newui/ImageViewer/imagemodel.cpp
+        ../newui/ImageViewer/imagemodel.cpp \
+    ../lld/device.cpp \
+    ../lld/scannerapi.cpp \
+    ../lld/scanner.cpp \
+    ../lld/ImgFile/Bmp.cpp \
+    ../lld/ImgFile/ImgFile.cpp \
+    ../lld/ImgFile/Jpeg.cpp \
+    ../lld/ImgFile/Tiff.cpp \
+    ../platform/devicemanager.cpp \
+    ../platform/netio.cpp \
+    ../platform/appqt.cpp \
+    ../platform/netsnmp.cpp \
+    ../platform/log.cpp \
+    ../lld/setter.cpp \
+    ../lld/setterapi.cpp \
+    ../imageManager/imagemanager.cpp
 
 HEADERS += \
         mainwindow.h \
         ../newui/jkinterface.h \
         ../newui/jkenums.h \
-        ../newui/ImageViewer/imagemodel.h
+        ../newui/ImageViewer/imagemodel.h \
+    ../lld/device.h \
+    ../lld/scannerstruct.h \
+    ../lld/scannerapi.h \
+    ../lld/scanner.h \
+    ../lld/deviceio.h \
+    ../lld/ImgFile/ImgFile.h \
+    ../lld/platformapp.h \
+    ../platform/devicemanager.h \
+    ../platform/netio.h \
+    ../platform/appqt.h \
+    ../platform/log.h \
+    ../platform/version.h \
+    ../lld/setter.h \
+    ../lld/setterapi.h \
+    ../lld/setterstruct.h \
+    ../platform/devicestruct.h \
+    ../imageManager/imagemanager.h
+
+mac{
+SOURCES += \
+    ../platform/mac/mac_usb.cpp \
+    ../platform/mac/usbio.cpp
+
+HEADERS += \
+    ../platform/mac/mac_usb.h \
+    ../platform/mac/usbio.h
+}
 
 FORMS += \
         mainwindow.ui
 
 RESOURCES += \
     ../newui/newui.qrc
+
+DEFINES += TEST
+
+windows{
+#LIBS += -LC:/usr/lib/ -lnetsnmp
+#INCLUDEPATH += C:/usr/include
+SOURCES -= ../platform/netsnmp.cpp
+DEFINES += OS_WIN
+}else{
+LIBS += `net-snmp-config --cflags` -lnetsnmp
+}
+
+mac: LIBS += -framework IOKit
+mac: LIBS += -framework CoreFoundation
+

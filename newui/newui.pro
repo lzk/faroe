@@ -5,12 +5,52 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
             jkinterface.cpp \
-    ImageViewer/imagemodel.cpp
+    ImageViewer/imagemodel.cpp \
+    ../lld/device.cpp \
+    ../lld/scannerapi.cpp \
+    ../lld/scanner.cpp \
+    ../lld/ImgFile/Bmp.cpp \
+    ../lld/ImgFile/ImgFile.cpp \
+    ../lld/ImgFile/Jpeg.cpp \
+    ../lld/ImgFile/Tiff.cpp \
+    ../platform/devicemanager.cpp \
+    ../platform/netio.cpp \
+    ../platform/appqt.cpp \
+    ../platform/netsnmp.cpp \
+    ../platform/log.cpp \
+    ../lld/setter.cpp \
+    ../lld/setterapi.cpp \
 
 HEADERS += \
     jkenums.h \
     jkinterface.h \
-    ImageViewer/imagemodel.h
+    ImageViewer/imagemodel.h \
+    ../lld/device.h \
+    ../lld/scannerstruct.h \
+    ../lld/scannerapi.h \
+    ../lld/scanner.h \
+    ../lld/deviceio.h \
+    ../lld/ImgFile/ImgFile.h \
+    ../lld/platformapp.h \
+    ../platform/devicemanager.h \
+    ../platform/netio.h \
+    ../platform/appqt.h \
+    ../platform/log.h \
+    ../platform/version.h \
+    ../lld/setter.h \
+    ../lld/setterapi.h \
+    ../lld/setterstruct.h \
+    ../platform/devicestruct.h \
+
+mac{
+SOURCES += \
+    ../platform/mac/mac_usb.cpp \
+    ../platform/mac/usbio.cpp
+
+HEADERS += \
+    ../platform/mac/mac_usb.h \
+    ../platform/mac/usbio.h
+}
 
 RESOURCES += newui.qrc \
 
@@ -36,5 +76,17 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+DEFINES += TEST
 
+windows{
+#LIBS += -LC:/usr/lib/ -lnetsnmp
+#INCLUDEPATH += C:/usr/include
+SOURCES -= ../platform/netsnmp.cpp
+DEFINES += OS_WIN
+}else{
+LIBS += `net-snmp-config --cflags` -lnetsnmp
+}
+
+mac: LIBS += -framework IOKit
+mac: LIBS += -framework CoreFoundation
 

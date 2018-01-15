@@ -135,7 +135,7 @@ ScanToPageLayout {
 
     Connections{
         target: button_toPrint
-        onClicked: imageViewer.toPrint()
+        onClicked: jkInterface.toPrint(imageViewer.model.selectList)
     }
     Connections{
         target: button_toFile
@@ -145,7 +145,7 @@ ScanToPageLayout {
     }
     Connections{
         target: button_toEmail
-        onClicked: imageViewer.toEmail(scanData.scanParameter.emailAttachmentFileType)
+        onClicked: jkInterface.toEmail(imageViewer.model.selectList ,scanData.scanParameter.emailAttachmentFileType)
     }
     Connections{
         target: button_toApplication
@@ -161,14 +161,14 @@ ScanToPageLayout {
     }
     property var ftpSetting: JSData.defaultFTPSettings()
     function toFTP(){
-        imageViewer.toFTP(ftpSetting)
+        jkInterface.toFTP(imageViewer.model.selectList , JSON.stringify(ftpSetting))
     }
     Connections{
         target: button_toCloud
-        onClicked: imageViewer.toCloud(scanData.scanParameter)
+        onClicked: jkInterface.toCloud(imageViewer.model.selectList , JSON.stringify(scanData.scanParameter))
     }
     function saveFile(){
-        imageViewer.toFile(dialog.fileUrl)
+        jkInterface.toFile(imageViewer.model.selectList , dialog.fileUrl)
     }
 
     Connections{
@@ -186,7 +186,7 @@ ScanToPageLayout {
 
     property var dialog
     function back(){
-//        imageViewer.removeAllImages()
+        imageViewer.removeAllImages()
         root.StackView.view.pop()
     }
 }

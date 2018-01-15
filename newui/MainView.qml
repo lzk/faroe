@@ -79,6 +79,7 @@ Item {
 
     ScanData{
         id:scanData
+        objectName: "scanData"
     }
 
     property int originCenterX

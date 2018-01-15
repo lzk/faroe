@@ -7,18 +7,6 @@ Item {
     width: 750
     height: 533
 
-    ListModel{
-        id:deviceList
-        ListElement{name:"USBDEVICE0" ;status:false}
-        ListElement{name:"USBDEVICE0" ;status:false}
-        ListElement{name:"USBDEVICE0" ;status:true}
-        ListElement{name:"123.456.789.123" ;status:false}
-        ListElement{name:"USBDEVICE0" ;status:false}
-        ListElement{name:"USBDEVICE0" ;status:false}
-        ListElement{name:"123.456.789.123" ;status:false}
-        ListElement{name:"USBDEVICE0" ;status:false}
-    }
-
     JKImageButton {
         id: button_back
         width: 55
@@ -55,9 +43,9 @@ Item {
                 id:listview
                 anchors.fill: parent
                 anchors.margins: 2
-                model: deviceList
+                model: scanData.model_deviceList
                 clip: true
-                enabled: listview.model.count > 0
+                enabled: count > 0
                 spacing:2
                 header:Rectangle{
                     height: 2
@@ -82,7 +70,7 @@ Item {
                                                        : "LightSteelBlue"
 
                         Text {
-                            text: name
+                            text: modelData
                             x:50
                             font.bold: true
                             font.pixelSize: 16
@@ -93,7 +81,7 @@ Item {
                         Text {
                             text:qsTr("Connected")
                             x:200
-                            visible: status
+                            visible: modelData === scanData.currentDevice
                             color:"green"
                             font.pixelSize: 14
                             anchors.verticalCenter: parent.verticalCenter
@@ -117,7 +105,8 @@ Item {
             height: 35
             anchors.horizontalCenter: parent.horizontalCenter
             text.text: qsTr("Connect")
-            enabled: listview.model.count > 0
+            enabled: listview.count > 0
+            onClicked: jkInterface.connectDevice(listview.currentIndex)
         }
     }
 
@@ -131,30 +120,30 @@ Item {
         source_press: "qrc:/Images/clockwise-arrow_press.png"
     }
 
-    Loader{
-        id:dialogs
+    Connections{
+        target: button_refresh
+        onClicked:refresh()
     }
 
     Connections{
-        target: button_refresh
-        onClicked:{
-            openRefreshDialog()
-        }
+        target: jkInterface
+        onSearchComplete:closeRefreshDialog()
     }
 
+    Component.onCompleted: refresh()
+
+    property var dialog
     function openRefreshDialog(){
-        var dialog
-        dialogs.source = "component/JKMessageBox_refresh.qml"
-//        dialogs.source = "component/JKMessageBox_warning.qml"
-        dialog = dialogs.item
-//        dialog.message.text = qsTr("haha")
-//        dialog.showImage = true
-        dialog.open()
+        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{})
     }
 
     function closeRefreshDialog(){
-        dialogs.item.close()
-        dialogs.source = ""
+        dialog.close()
     }
     
+    function refresh(){
+        scanData.model_deviceList = null
+        jkInterface.searchDeviceList()
+        openRefreshDialog()
+    }
 }

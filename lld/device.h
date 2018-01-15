@@ -50,7 +50,7 @@ class Device
 public:
     Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp);
     virtual ~Device();
-    int scan();
+    int scan(void* setting);
     bool checkConnection();
     int deviceCmd(int cmd ,void* data);
 

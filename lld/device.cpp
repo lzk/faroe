@@ -40,8 +40,11 @@ int Device::close()
     return deviceIO->close();
 }
 
-int Device::scan()
+int Device::scan(void* data)
 {
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    Scanner::Setting* setting = (Scanner::Setting*)data;
     int result = 0;
     if(deviceIO->type() == DeviceIO::Type_net){
 //        result = deviceIO->read(&status ,1);
@@ -73,7 +76,7 @@ int Device::scan()
             result = deviceIO->read(&status ,1);
         }
         if(status == 1){
-            result = scanner->ADFScan();
+            result = scanner->ADFScan(setting);
         }
         deviceIO->close();
     }
@@ -104,7 +107,7 @@ int Device::deviceCmd(int cmd ,void* data)
     int err = DeviceStruct::ERR_cmd_cannot_support;
     switch (cmd) {
     case DeviceStruct::CMD_SCAN:
-        err = scan();
+        err = scan(data);
         if(err)
             err += DeviceStruct::ERR_SCAN;
         break;

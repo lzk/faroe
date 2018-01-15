@@ -62,7 +62,7 @@ public:
     Scanner();
     ~Scanner();
     void install(DeviceIO* dio ,PlatformApp* platformApp);
-    int ADFScan();
+    int ADFScan(Setting* setting);
     void cancel();
 
     Setting* getSetting();
@@ -76,7 +76,7 @@ private:
     Parameters getParameters();
     void getScanParameters(const Setting& setting ,struct SC_PAR_DATA_STRUCT* para);
     void calculateParameters(const Setting& setting);
-    int _scan();
+    int _scan(Setting* setting);
 };
 
 }
