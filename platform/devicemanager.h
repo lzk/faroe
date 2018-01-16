@@ -29,7 +29,6 @@ class DeviceManager : public QObject
 public:
     explicit DeviceManager(QObject *parent = nullptr);
     ~DeviceManager();
-    void initAfterMoveToThread();
     int isCancelSearch();
     void addDeviceInfo(DeviceInfo* ,int);
     static void addDevice(DeviceInfo* ,void*);

@@ -131,7 +131,10 @@ Item {
     }
     Connections{
         target: button_close
-        onClicked: closed()
+        onClicked:{
+            closed()
+            jkImageModel.removeAll()
+        }
     }
     Connections{
         target: mouseArea

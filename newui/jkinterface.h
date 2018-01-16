@@ -54,6 +54,7 @@ signals:
     void imagesToFTP(QStringList ,QString);
     void imagesToApplication(QStringList ,QString);
     void imagesToCloud(QStringList ,QString);
+    void ftpUploadComplete();
 
 
 public slots:

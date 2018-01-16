@@ -35,9 +35,9 @@ JKInterface::JKInterface(QObject *parent)
     connect(this ,&JKInterface::imagesToApplication ,imageManager ,&ImageManager::imagesToApplication);
     connect(this ,&JKInterface::imagesToFTP ,imageManager ,&ImageManager::imagesToFTP);
     connect(this ,&JKInterface::imagesToCloud ,imageManager ,&ImageManager::imagesToCloud);
+    connect(imageManager ,&ImageManager::ftpUploadComplete ,this ,&JKInterface::ftpUploadComplete);
 
     thread.start();
-    deviceManager->initAfterMoveToThread();
 }
 
 JKInterface::~JKInterface()

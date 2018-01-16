@@ -162,6 +162,10 @@ ScanToPageLayout {
     property var ftpSetting: JSData.defaultFTPSettings()
     function toFTP(){
         jkInterface.toFTP(imageViewer.model.selectList , JSON.stringify(ftpSetting))
+        dialog.close()
+        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{} ,function(dialog){
+            jkInterface.ftpUploadComplete.connect(dialog.close)
+        })
     }
     Connections{
         target: button_toCloud

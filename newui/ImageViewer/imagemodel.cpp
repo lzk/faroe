@@ -182,7 +182,7 @@ QStringList ImageModel::getFileList(QList<int> selectedList)
 {
     QStringList fileList;
     foreach (int i, selectedList) {
-        fileList << m_list.at(selectedList[i]).url();
+        fileList << m_list.at(i).url();
     }
     return fileList;
 }

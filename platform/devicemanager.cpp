@@ -17,6 +17,9 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(&platformApp ,SIGNAL(addImage(QString ,QSize)) ,this ,SIGNAL(addImage(QString ,QSize)));
     connect(&platformApp ,SIGNAL(progressChanged(qreal)) ,this ,SIGNAL(progressChanged(qreal)));
 
+    timerForDeviceWatcher = new QTimer(this);
+    connect(timerForDeviceWatcher ,&QTimer::timeout ,this ,&DeviceManager::watchDevice);
+    timerForDeviceWatcher->start(5000);
 }
 
 DeviceManager::~DeviceManager()
@@ -25,13 +28,6 @@ DeviceManager::~DeviceManager()
         delete device;
         device = NULL;
     }
-}
-
-void DeviceManager::initAfterMoveToThread()
-{
-    timerForDeviceWatcher = new QTimer(this);
-    connect(timerForDeviceWatcher ,&QTimer::timeout ,this ,&DeviceManager::watchDevice);
-    timerForDeviceWatcher->start(5000);
 }
 
 void DeviceManager::watchDevice()
@@ -174,14 +170,15 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
     g_cancelScan = false;
     if(cmd == DeviceStruct::CMD_SCAN){
         QString sourceFile;
-        for(int i = 1 ;i < 16 ;i++){
+        for(int i = 1 ;i < 7 ;i++){
             if(g_cancelScan){
                 err = DeviceStruct::ERR_SCAN_CANCEL;
                 break;
             }
 #ifdef Q_OS_MAC
             sourceFile = QString::asprintf("/Volumes/work/share/images/NatGeo%02d.jpg" ,i);
-#elif Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
             sourceFile = QString::asprintf("E:/tmp/pic/%d.jpg" ,i);
 #endif
             saveImage(QImage(sourceFile));
