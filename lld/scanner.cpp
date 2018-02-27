@@ -5,17 +5,23 @@
 #include "scannerapi.h"
 #include "../platform/log.h"
 #include "device.h"
+#include "deviceio.h"
+#include "../platform/devicestruct.h"
 using namespace JK;
 
 #define _SCANMODE_1BIT_BLACKWHITE 1
 #define _SCANMODE_8BIT_GRAYSCALE  8
 #define _SCANMODE_24BIT_COLOR     24
 
+#define START_STAGE					0x1
+#define SCANNING_STAGE				0x2
+#define PUSH_TRANSFER_STAGE		0x3
+
 const Scanner::Setting defaultSetting = {
     .BitsPerPixel = IMG_BIT,
-    .dpi_x=300,
-    .dpi_y=300,
-    .scan_doc_size=SETTING_DOC_SIZE_FULL,
+    .dpi_x=200,
+    .dpi_y=200,
+    .scan_doc_size=SETTING_papersize_auto,
     .contrast=50,
     .brightness=50,
     .ADFMode=SCAN_DUPLEX,
@@ -43,8 +49,112 @@ Scanner::~Scanner()
 
 void Scanner::install(DeviceIO* dio ,PlatformApp* platformApp)
 {
+    deviceIO = dio;
     scannerApi->install(dio);
     pPlatformApp = platformApp;
+}
+
+int Scanner::open()
+{
+    if(deviceIO->type() == DeviceIO::Type_usb)
+        return deviceIO->open();
+
+    int result = 0;
+//        result = deviceIO->read(&status ,1);
+    result = ((NetDeviceIO*)deviceIO)->openPort(23011);
+    if(!result){
+        result = scannerApi->lock();
+        if(!result){
+            deviceIO->close();
+            result = deviceIO->open();
+        }else{
+            scannerApi->unlock();
+            deviceIO->close();
+        }
+    }
+    return result;
+}
+
+int Scanner::close()
+{
+    int result = deviceIO->close();
+    if(deviceIO->type() == DeviceIO::Type_usb)
+        return result;
+    if(!result){
+        result = ((NetDeviceIO*)deviceIO)->openPort(23011);
+        if(!result){
+            result = scannerApi->unlock();
+        }
+        deviceIO->close();
+    }
+    return result;
+}
+
+int Scanner::ADFScan(void* data)
+{
+    if(!data)
+        return -1;
+    Scanner::Setting* setting = (Scanner::Setting*)data;
+    int result = 0;
+    if(deviceIO->type() == DeviceIO::Type_net){
+//        result = deviceIO->read(&status ,1);
+        result = ((NetDeviceIO*)deviceIO)->openPort(23011);
+        if(!result){
+            char cmd[4] = { 'J','D','G','S' };
+            char status[8] = { 0 };
+            if(4 == deviceIO->write(cmd ,4)){
+                if(8==deviceIO->read(status ,8)){
+                    if (   status[0] == 'J'
+                        && status[1] == 'D'
+                        && status[2] == 'A'
+                           && status[3] == 'T'
+                        && status[4] == 0x00){
+                        result = RETSCAN_OK;
+                    }else{
+                        result = RETSCAN_BUSY;
+                    }
+                }
+            }
+            deviceIO->close();
+        }
+    }
+    if(result != RETSCAN_OK)
+        return result;
+    result = open();
+    if(!result){
+        result = scannerApi->ready() ?0 :-1;
+    }
+    if(!result){
+        SC_INFO_DATA_T sc_infodata;
+        result = checkStatus(START_STAGE ,&sc_infodata);
+    }
+    if(!result){
+        calculateParameters(*setting);
+        SC_POWER_INFO_T sc_powerData;
+        result = scannerApi->getPowerSupply(sc_powerData);
+        switch (sc_powerData.mode) {
+        case 2:
+            if(setting->AutoCrop || setting->type > 0 ||parameters.nColPixelNumOrig > 14000)
+                result = RETSCAN_ERROR_POWER1;
+            break;
+        case 3:
+            if(setting->AutoCrop
+                    || setting->type > 0 //mediaType
+                    ||parameters.nColPixelNumOrig > 14000
+                    ||setting->ADFMode == SETTING_SCAN_AB_SIDE
+                    ||setting->MultiFeed
+                    || deviceIO->type() == DeviceIO::Type_net)
+                result = RETSCAN_ERROR_POWER2;
+            break;
+        default:
+            break;
+        }
+    }
+    if(!result)
+        result = _ADFScan(setting);
+    close();
+    return result;
+
 }
 
 void Scanner::cancel()
@@ -55,13 +165,11 @@ void Scanner::cancel()
 int Scanner::receiveData()
 {
     SC_INFO_DATA_T sc_infodata;
-    int dup;
     int duplex;
     int readBytes ,readTotalBytes[2] ,toReadBytes;
     int offset[2] = {0,0};
     int result;
     int progress;
-    int page[2] = {0,0};
     char* imgBuffer = new char[MAX_SCAN_LENGTH];
 
     Setting* setting = &parameters.setting;
@@ -70,79 +178,93 @@ int Scanner::receiveData()
     FILE* file[2];
     bool fileIsOpened[2] = {false ,false};
 
+    Para_Extra para;
+    memset(&para ,0 ,sizeof(para));
+
     m_cancel = false;
     while (!m_cancel){
-        if (scannerApi->getInfo(sc_infodata)){
+        result = checkStatus(SCANNING_STAGE ,&sc_infodata);
+        if(result == RETSCAN_GETINFO_FAIL){
             usleep(100 * 1000);
             continue;
         }
-        if(sc_infodata.CoverOpen){
-            result = RETSCAN_COVER_OPEN;
-            LOG_NOPARA("cover open.");
+        if(result)
             break;
-        }
-        if(sc_infodata.PaperJam){
-            if(sc_infodata.AdfSensor){
-            //There is "scan jam" let scan flow finish for save image
-            }else{
-                LOG_NOPARA("paper jam.");
-                result = RETSCAN_PAPER_JAM;
-                break;
-            }
-        }
-        if ((!(duplex & 1) || sc_infodata.EndScan[0])
-                && (!(duplex & 2) || sc_infodata.EndScan[1])){
+        if ((!(duplex & 1) || sc_infodata.ImgStatus[0].EndScan)
+                && (!(duplex & 2) || sc_infodata.ImgStatus[1].EndScan)){
             LOG_NOPARA("end scan.");
             break;
         }
 
-        for (dup = 0; dup < 2; dup++){
-            if (duplex & (1 << dup) && sc_infodata.ValidPageSize[dup]){
-                if(!fileIsOpened[dup]){
-                    file[dup] = fopen(pPlatformApp->getTempFilename(dup) ,"wb");
-                    fileIsOpened[dup] = true;
-//                    LOG_PARA("side %c page %d begin." ,dup?'B':'A' ,page[dup]);
+        for (para.dup = 0; para.dup < 2; para.dup++){
+            if (duplex & (1 << para.dup) && sc_infodata.ValidPageSize[para.dup]){
+                if(!fileIsOpened[para.dup]){
+                    file[para.dup] = fopen(pPlatformApp->getTempFilename(para.dup) ,"wb");
+                    fileIsOpened[para.dup] = true;
+//                    LOG_PARA("side %c page %d begin." ,para.dup?'B':'A' ,para.page[para.dup]);
+                    if(duplex == SETTING_SCAN_AB_SIDE){
+                        if(para.dup == 0)
+                            pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Upload ,para.page[para.dup]);
+                    }else{
+                        pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Upload ,para.page[para.dup]);
+                    }
                 }
-                toReadBytes = sc_infodata.ValidPageSize[dup];
-                LOG_PARA("receive %c side %d bytes:" ,dup ? 'B' :'A' ,toReadBytes);
-                readTotalBytes[dup] = 0;
-                while (readTotalBytes[dup] < toReadBytes) {
+                toReadBytes = sc_infodata.ValidPageSize[para.dup];
+                LOG_PARA("receive %c side %d bytes:" ,para.dup ? 'B' :'A' ,toReadBytes);
+                readTotalBytes[para.dup] = 0;
+                while (readTotalBytes[para.dup] < toReadBytes) {
                     if(m_cancel){
                         goto EXIT;
 //                        break;
                     }
-                    result = scannerApi->readScan(dup ,&readBytes ,imgBuffer
-                                                 ,toReadBytes - readTotalBytes[dup]);
+                    result = scannerApi->readScan(para.dup ,&readBytes ,imgBuffer
+                                                 ,toReadBytes - readTotalBytes[para.dup]);
                     if(!result){
-                        readTotalBytes[dup] += readBytes;
-                        offset[dup] += readBytes;
-                        if(readBytes && fileIsOpened[dup])
-                            fwrite(imgBuffer ,1 ,readBytes ,file[dup]);
+                        readTotalBytes[para.dup] += readBytes;
+                        offset[para.dup] += readBytes;
+                        if(readBytes && fileIsOpened[para.dup])
+                            fwrite(imgBuffer ,1 ,readBytes ,file[para.dup]);
                         LOG_PARA("receive %c side %d bytes:%d ----- read once:%d"
-                                 ,dup ? 'B' :'A' ,toReadBytes ,readTotalBytes[dup] ,readBytes);
+                                 ,para.dup ? 'B' :'A' ,toReadBytes ,readTotalBytes[para.dup] ,readBytes);
                     }else{
                         goto EXIT;
 //                        break;
                     }
                     usleep(100 * 1000);
                 }
-                if(offset[dup] > progress)
-                    progress = offset[dup];
+                if(offset[para.dup] > progress)
+                    progress = offset[para.dup];
 
-                if(sc_infodata.EndPage[dup]
-                        &&  readTotalBytes[dup] >= sc_infodata.ValidPageSize[dup]
+                if(sc_infodata.ImgStatus[para.dup].EndPage
+                        &&  readTotalBytes[para.dup] >= sc_infodata.ValidPageSize[para.dup]
                         ){
-                    LOG_PARA("end page %c." ,dup ?'B' :'A');
-                    offset[dup] = 0;
-                    if(fileIsOpened[dup]){
-                        fclose(file[dup]);
-                        fileIsOpened[dup] = false;
-                        pPlatformApp->saveScanImage(setting ,dup ,page[dup]++ ,sc_infodata.ImageHeight[dup]);
+                    LOG_PARA("end page %c." ,para.dup ?'B' :'A');
+                    offset[para.dup] = 0;
+                    if(fileIsOpened[para.dup]){
+                        fclose(file[para.dup]);
+                        fileIsOpened[para.dup] = false;
+
+                        para.dpi_x = setting->dpi_x;
+                        para.dpi_y = setting->dpi_y;
+                        if(setting->bColorDetect)
+                            para.isColor = sc_infodata.ImgStatus[para.dup].IsColor;
+                        else
+                            para.isColor = setting->BitsPerPixel >= 24;
+                        para.isBlank = sc_infodata.ImgStatus[para.dup].IsBlank;
+
+                        para.lines = sc_infodata.ImageHeight[para.dup];
+                        pPlatformApp->saveScanImage(setting ,&para);
+                        if(duplex == SETTING_SCAN_AB_SIDE){
+                            if(para.dup == 0)
+                                pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Completed ,para.page[para.dup]);
+                        }else{
+                            pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Completed ,para.page[para.dup]);
+                        }
+                        para.page[para.dup]++;
                     }
                 }
             }
         }
-        pPlatformApp->updateProgress(progress * 1.0 / (parameters.bytesPerLine * parameters.nColPixelNumOrig));
     }
     EXIT:
     for(int i = 0 ;i < 2 ;i++){
@@ -154,28 +276,100 @@ int Scanner::receiveData()
     return result;
 }
 
-int Scanner::ADFScan(Setting* setting)
+int Scanner::_ADFScan(Setting* setting)
 {
     int result;
-    result = scannerApi->jobCreate(CODE_ADF);
+    result = scannerApi->jobCreate(JOB_ADF);
     if(result){
         int errorcode = RETSCAN_CREATE_JOB_FAIL;
-        switch (result) {
-        case ADF_NOT_READY_ERR:            errorcode = RETSCAN_ADF_NOT_READY;            break;
-        case DOC_NOT_READY_ERR:            errorcode = RETSCAN_PAPER_NOT_READY;            break;
-        case HOME_NOT_READY_ERR:            errorcode = RETSCAN_HOME_NOT_READY;            break;
-        case SCAN_JAM_ERR:            errorcode = RETSCAN_PAPER_JAM;            break;
-        case COVER_OPEN_ERR:            errorcode = RETSCAN_COVER_OPEN;            break;
-        default:break;
-        }
+//        switch (result) {
+//        case ADF_NOT_READY_ERR:            errorcode = RETSCAN_ADF_NOT_READY;            break;
+//        case DOC_NOT_READY_ERR:            errorcode = RETSCAN_PAPER_NOT_READY;            break;
+//        case HOME_NOT_READY_ERR:            errorcode = RETSCAN_HOME_NOT_READY;            break;
+//        case SCAN_JAM_ERR:            errorcode = RETSCAN_PAPER_JAM;            break;
+//        case COVER_OPEN_ERR:            errorcode = RETSCAN_COVER_OPEN;            break;
+//        default:break;
+//        }
         result = errorcode;
-        LOG_PARA("job create err:%d" ,result);
+//        LOG_PARA("job create err:%d" ,result);
     }else{
         result = _scan(setting);
         scannerApi->jobEnd();
         LOG_PARA("scan err:%d" ,result);
     }
     return result;
+}
+
+#include <math.h>
+bool isLittleEndian()
+{
+    int i = 1;
+    return (((char*)(&i))[0] == 1);
+}
+void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
+{
+    bool littleEndian = isLittleEndian();
+    qDebug()<<"gamma:"<<gamma <<"litten?"<<littleEndian;
+    if(gamma < 0.1)
+        gamma = 0.1;
+//    unsigned int Red[65536];
+//    unsigned int Green[65536];
+//    unsigned int Blue[65536];
+    unsigned int* Red = new unsigned int [65536];
+//    unsigned int* Green =  new unsigned int [65536];
+//    unsigned int* Blue =  new unsigned int [65536];
+    unsigned int *pbyRed = Red;
+//    unsigned int *pbyGreen = Green;
+//    unsigned int *pbyBlue = Blue;
+    unsigned int Temp;
+    int i;
+    for (i = 0; i<65536; i++)
+    {
+        Temp = (long)ceil(65535 * pow((double)(i) / 65535, 1.0 / gamma));
+        if (Temp>65535){
+            Temp = 65535;
+        }else{
+            if (Temp<=0){
+                Temp = 0;
+            }
+        }
+        Red[i] = Temp;
+//        Green[i] = Temp;
+//        Blue[i] = Temp;
+    }
+    for (i = 0; i<256; i++)
+    {
+        if (i<255) {
+            if(littleEndian){
+                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
+                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
+//                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
+//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
+//                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
+            }else{
+                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | (pbyRed[(i+1)*256] & 0x0000ffff << 16);
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | (pbyGreen[(i+1)*256] & 0x0000ffff << 16);
+//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | (pbyBlue[(i+1)*256] & 0x0000ffff << 16);
+            }
+        }
+        else {
+            if(littleEndian){
+                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
+//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
+            }else{
+                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
+//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
+            }
+        }
+        GLGamma[i + 256] = GLGamma[i];
+        GLGamma[i + 512] = GLGamma[i];
+    }
+    delete [] Red;
+//    delete [] Green;
+//    delete [] Blue;
 }
 
 int Scanner::_scan(Setting* setting)
@@ -187,6 +381,15 @@ int Scanner::_scan(Setting* setting)
     if(result){
         return RETSCAN_ERRORPARAMETER;
     }
+
+    unsigned int gGammaData[768];
+    getGammaTable(setting->gammaValue / 10.0 ,gGammaData);
+    result = scannerApi->setGamma(gGammaData ,768);
+    if(result){
+        return RETSCAN_ERRORPARAMETER;
+    }
+
+    pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Start ,0);
 
     result = scannerApi->startScan();
     if(result){
@@ -206,18 +409,66 @@ int Scanner::_scan(Setting* setting)
     return result;
 }
 
+int Scanner::checkStatus(int stage ,SC_INFO_DATA_T* sc_infodata)
+{
+    int result = 0;
+    result = scannerApi->getInfo(*sc_infodata);
+    if (!result){
+        switch (stage) {
+        case START_STAGE:
+            if(sc_infodata->JobID)
+                result = RETSCAN_JOB_GOGING;
+            break;
+        case SCANNING_STAGE:
+            if(!sc_infodata->JobID)
+                result = RETSCAN_JOB_MISSING;
+            break;
+        case PUSH_TRANSFER_STAGE:
+            if(sc_infodata->ErrorStatus.cover_open_err)
+                result = RETSCAN_COVER_OPEN;
+            break;
+        default:
+            break;
+        }
+        if(sc_infodata->ErrorStatus.scan_jam_err)
+            result = RETSCAN_PAPER_JAM;
+        if(sc_infodata->ErrorStatus.scan_canceled_err)
+            result = RETSCAN_CANCEL;
+        if(sc_infodata->ErrorStatus.scan_timeout_err)
+            result = RETSCAN_TIME_OUT;
+        if(sc_infodata->ErrorStatus.multi_feed_err)
+            result = RETSCAN_ULTRA_SONIC;
+        if(sc_infodata->ErrorStatus.usb_transfer_err)
+            result = RETSCAN_USB_TRANSFERERROR;
+        if(sc_infodata->ErrorStatus.wifi_transfer_err)
+            result = RETSCAN_WIFI_TRANSFERERROR;
+        if(stage == START_STAGE){
+            if(sc_infodata->SensorStatus.adf_document_sensor)
+                result = RETSCAN_ADFDOC_NOT_READY;
+            if(sc_infodata->SensorStatus.adf_paper_sensor)
+                result = RETSCAN_ADFPATH_NOT_READY;
+            if(sc_infodata->SensorStatus.cover_sensor)
+                result = RETSCAN_ADFCOVER_NOT_READY;
+        }
+    }else{
+        result = RETSCAN_GETINFO_FAIL;
+    }
+    return result;
+}
+
 #define JOB_WAIT_TIMEOUT  5000
 int Scanner::waitJobFinish(int wait_motor_stop)
 {
-    SC_INFO_DATA_T sc_infodata;
-    for(int i = 0 ;i < 100 ;i++){
-        if (scannerApi->getInfo(sc_infodata))
-            break;
-        if (!(sc_infodata.JobState & 1) && (!wait_motor_stop || !sc_infodata.MotorMove))
-            return 0;
-        sleep(100);
-    }
-    return -1;
+    return 0;
+//    SC_INFO_DATA_T sc_infodata;
+//    for(int i = 0 ;i < 100 ;i++){
+//        if (scannerApi->getInfo(sc_infodata))
+//            break;
+//        if (!(sc_infodata.JobState & 1) && (!wait_motor_stop || !sc_infodata.MotorMove))
+//            return 0;
+//        sleep(100);
+//    }
+//    return -1;
 }
 
 Scanner::Setting* Scanner::getSetting()
@@ -251,37 +502,75 @@ void Scanner::calculateParameters(const Setting& setting)
 {
     int width ,height;
     switch (setting.scan_doc_size) {
-    case SETTING_DOC_SIZE_A4:
-        width = 2480;
-        height = 3512;
-//        parameters.x = (2592 - 2480) / 2;
+    case SETTING_papersize_auto:
+    case SETTING_papersize_autoNoMultiFeed:
+        width = 8500 ;
+        height = 14000 ;
         break;
-    case SETTING_DOC_SIZE_LT:
-        width = 2552;
-        height = 3296;
-//        parameters.x = (2592 - 2552) / 2;
+    case SETTING_papersize_A4:
+        width = 8268 ;
+        height = 11693 ;
         break;
-    case SETTING_DOC_SIZE_FULL:
+    case SETTING_papersize_A5:
+        width = 5827 ;
+        height = 8268 ;
+        break;
+    case SETTING_papersize_B5:
+        width = 7165 ;
+        height = 10118 ;
+        break;
+    case SETTING_papersize_A6:
+        width = 4134 ;
+        height = 5827 ;
+        break;
+    case SETTING_papersize_letter:
+        width = 8500 ;
+        height = 11000 ;
+        break;
+    case SETTING_papersize_legal:
+        width = 8500 ;
+        height = 14000 ;
+        break;
+    case SETTING_papersize_long:
+        width = 8500 ;
+        height = 118110 ;
+        break;
     default:
-        width = 2592 ;
-        height = 118*300 ;
-//        parameters.x = 0;
+        width = 8268 ;
+        height = 11693 ;
         break;
-    }
-    parameters.x = ((2592 - width) / 2) * setting.dpi_x / 300;
-    parameters.y = 0;
-    parameters.nLinePixelNumOrig = width * setting.dpi_x / 300;//1000;
-    parameters.nLinePixelNumOrig -= parameters.nLinePixelNumOrig % 8;
-    parameters.nColPixelNumOrig = height * setting.dpi_y / 300;//1000;
-    parameters.nColPixelNumOrig -= parameters.nColPixelNumOrig % 8;
-    parameters.bytesPerLine = GetByteNumPerLineWidthPad(setting.BitsPerPixel, parameters.nLinePixelNumOrig);
 
+//    case SETTING_DOC_SIZE_A4:
+//        width = 2480;
+//        height = 3512;
+////        parameters.x = (2592 - 2480) / 2;
+//        break;
+//    case SETTING_DOC_SIZE_LT:
+//        width = 2552;
+//        height = 3296;
+////        parameters.x = (2592 - 2552) / 2;
+//        break;
+//    case SETTING_DOC_SIZE_FULL:
+//    default:
+//        width = 2592 ;
+//        height = 118*300 ;
+////        parameters.x = 0;
+//        break;
+    }
+//    parameters.x = ((2592 - width) / 2) * setting.dpi_x / 300;
+//    parameters.y = 0;
+    parameters.nLinePixelNumOrig = width * setting.dpi_x / 1000;
+    parameters.nLinePixelNumOrig -= parameters.nLinePixelNumOrig % 8;
+    parameters.x = (8.5 * setting.dpi_x - parameters.nLinePixelNumOrig) / 2;
+    parameters.nColPixelNumOrig = height * setting.dpi_y / 1000;
+    parameters.nColPixelNumOrig -= parameters.nColPixelNumOrig % 8;
+    parameters.y = (14 * setting.dpi_y - parameters.nColPixelNumOrig) / 2;
+    parameters.bytesPerLine = GetByteNumPerLineWidthPad(setting.BitsPerPixel, parameters.nLinePixelNumOrig);
+    parameters.setting = setting;
 }
 
 void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
 {
-    calculateParameters(setting);
-
     memset(para ,0 ,sizeof(*para));
 //    para			    = { SCAN_SOURCE, SCAN_ACQUIRE, SCAN_OPTION, SCAN_DUPLEX, SCAN_PAGE,
 //                            { IMG_FORMAT, IMG_OPTION, IMG_BIT, IMG_MONO,
@@ -292,7 +581,11 @@ void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
 //                            { 0 } }
 //                            };
 
-    para->acquire = ((setting.MultiFeed ? 1 : 0) * ACQ_Ultra_Sonic) | ((setting.AutoCrop ? 1 : 0) * ACQ_CROP_DESKEW) | ACQ_PICK_SS;
+    para->acquire = ((setting.MultiFeed ? 1 : 0) * ACQ_ULTRA_SONIC)
+            | ((setting.AutoCrop ? 1 : 0) * ACQ_CROP_DESKEW)
+            | ACQ_PICK_SS
+            |(setting.bColorDetect ?1 :0) * ACQ_DETECT_COLOR
+            |(setting.bSkipBlankPage ?1 :0) * ACQ_SKIP_BLANKPAGE;
 
     if(SETTING_SCAN_ADF == setting.source){
         para->source = CODE_ADF;

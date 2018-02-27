@@ -8,21 +8,44 @@ class DeviceStruct : public QObject {
     Q_OBJECT
     Q_ENUMS(CmdType)
     Q_ENUMS(StatusType)
+    Q_ENUMS(ScanningProgress)
 
 public:
     enum CmdType{
         CMD_PRINT,
         CMD_SCAN,
         CMD_setWifi,
+        CMD_getWifiInfo,
         CMD_setPassword,
         CMD_confirmPassword,
         CMD_setSaveTime,
         CMD_getSaveTime,
-        CMD_getWifiInfo,
+        CMD_setOffTime,
+        CMD_getOffTime,
         CMD_getIpv4,
         CMD_setIpv4,
-        CMD_setSoftap,
         CMD_getSoftap,
+        CMD_setSoftap,
+        CMD_getDeviceSetting,
+        CMD_setDeviceSetting,
+
+        CMD_MAX,
+        CMD_ScanTo,
+        CMD_ScanTo_ToPrint,
+        CMD_ScanTo_ToFile,
+        CMD_ScanTo_ToApplication,
+        CMD_ScanTo_ToEmail,
+        CMD_ScanTo_ToFTP,
+        CMD_ScanTo_ToCloud,
+        CMD_QuickScan,
+        CMD_QuickScan_ToPrint,
+        CMD_QuickScan_ToFile,
+        CMD_QuickScan_ToApplication,
+        CMD_QuickScan_ToEmail,
+        CMD_QuickScan_ToFTP,
+        CMD_QuickScan_ToCloud,
+        CMD_DecodeScan,
+        CMD_SeperationScan,
     };
 
     enum StatusType{
@@ -56,21 +79,32 @@ public:
 
         //err scan
         ERR_SCAN = 100,
-        ERR_SCAN_ERRORDLL,
-        ERR_SCAN_OPENFAIL,
-        ERR_SCAN_ERRORPARAMETER,
-        ERR_SCAN_NO_ENOUGH_SPACE,
-        ERR_SCAN_ERROR_PORT,
-        ERR_SCAN_CANCEL,
-        ERR_SCAN_BUSY,
-        ERR_SCAN_ERROR,
-        ERR_SCAN_OPENFAIL_NET,
-        ERR_SCAN_PAPER_JAM,
-        ERR_SCAN_COVER_OPEN,
-        ERR_SCAN_PAPER_NOT_READY,
-        ERR_SCAN_CREATE_JOB_FAIL,
-        ERR_SCAN_ADF_NOT_READY,
-        ERR_SCAN_HOME_NOT_READY,
+        ERR_RETSCAN_ERRORDLL = ERR_SCAN + 1,
+        ERR_RETSCAN_OPENFAIL = ERR_SCAN + 2,
+        ERR_RETSCAN_ERRORPARAMETER = ERR_SCAN + 3,
+        ERR_RETSCAN_NO_ENOUGH_SPACE = ERR_SCAN + 5,
+        ERR_RETSCAN_ERROR_PORT = ERR_SCAN + 6,
+        ERR_RETSCAN_CANCEL = ERR_SCAN + 7,
+        ERR_RETSCAN_BUSY = ERR_SCAN + 8,
+        ERR_RETSCAN_ERROR = ERR_SCAN + 9,
+        ERR_RETSCAN_OPENFAIL_NET = ERR_SCAN + 10,
+        ERR_RETSCAN_PAPER_JAM = ERR_SCAN + 11,
+        ERR_RETSCAN_COVER_OPEN = ERR_SCAN + 12,
+        ERR_RETSCAN_PAPER_NOT_READY = ERR_SCAN + 13,
+        ERR_RETSCAN_CREATE_JOB_FAIL = ERR_SCAN + 14,
+        ERR_RETSCAN_ADFCOVER_NOT_READY = ERR_SCAN + 15,
+        ERR_RETSCAN_HOME_NOT_READY = ERR_SCAN + 16,
+        ERR_RETSCAN_ULTRA_SONIC = ERR_SCAN + 17,
+        ERR_RETSCAN_ERROR_POWER1 = ERR_SCAN + 18,
+        ERR_RETSCAN_ERROR_POWER2 = ERR_SCAN + 19,
+        ERR_RETSCAN_JOB_MISSING = ERR_SCAN + 20,
+        ERR_RETSCAN_JOB_GOGING = ERR_SCAN + 21,
+        ERR_RETSCAN_TIME_OUT = ERR_SCAN + 22,
+        ERR_RETSCAN_USB_TRANSFERERROR = ERR_SCAN + 23,
+        ERR_RETSCAN_WIFI_TRANSFERERROR = ERR_SCAN + 24,
+        ERR_RETSCAN_ADFPATH_NOT_READY = ERR_SCAN + 25,
+        ERR_RETSCAN_ADFDOC_NOT_READY = ERR_SCAN + 26,
+        ERR_RETSCAN_GETINFO_FAIL = ERR_SCAN + 27,
 
         //status self defined
         STATUS = 1000,
@@ -139,6 +173,12 @@ public:
     //    STATUS_busy_scanningOrCoping,
     //    STATUS_jam,
         STATUS_other,
+    };
+
+    enum ScanningProgress{
+        ScanningProgress_Start,
+        ScanningProgress_Upload,
+        ScanningProgress_Completed,
     };
 };
 

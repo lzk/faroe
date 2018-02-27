@@ -7,9 +7,9 @@ class PlatformApp
 {
 public:
     PlatformApp(){}
-    virtual void updateProgress(float progrress) = 0;
+    virtual void updateProgress(int progress ,int page) = 0;
     virtual const char* getTempFilename(int side) = 0;
-    virtual bool saveScanImage(Scanner::Setting* setting ,int side ,int page ,int lines) = 0;
+    virtual bool saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para) = 0;
 private:
 };
 

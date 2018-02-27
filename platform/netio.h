@@ -13,10 +13,12 @@ public:
 
     int type();
     int openPort(int port);
-    int open();
+    int open(int para = 0);
     int close(void);
     int write(char *buffer, int bufsize);
     int read(char *buffer, int bufsize);
+    int writeCommand(char *buffer, int bufsize);
+    int readCommand(char *buffer, int bufsize);
     int resolveUrl(const char* url);
     bool isConnected();
 

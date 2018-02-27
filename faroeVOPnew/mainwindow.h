@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-
+#include <QEvent>
 namespace Ui {
 class MainWindow;
 }
@@ -18,6 +18,8 @@ public:
 public slots:
     void mmove(qreal x ,qreal y);
 
+protected:
+    bool event(QEvent *event);
 private:
 //    Ui::MainWindow *ui;
 };

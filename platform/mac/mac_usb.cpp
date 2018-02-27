@@ -120,15 +120,15 @@ static UInt32 openUSBInterface(IOUSBInterfaceInterface_version **intf ,struct_de
     UInt8 transferType;
     UInt16 maxPacketSize;
     UInt8 interval;
-//    static char *types[]={
-//            "Control",
-//            "Isochronous",
-//            "Bulk",
-//            "Interrupt"};
-//    static char *directionStr[]={
-//            "Out",
-//            "In",
-//            "Control"};
+    static const char *types[]={
+            "Control",
+            "Isochronous",
+            "Bulk",
+            "Interrupt"};
+    static const char *directionStr[]={
+            "Out",
+            "In",
+            "Control"};
 //    #endif
 
         ret = (*intf)->USBInterfaceOpen(intf);
@@ -159,9 +159,9 @@ static UInt32 openUSBInterface(IOUSBInterfaceInterface_version **intf ,struct_de
                 printInterpretedError("Could not get endpoint properties", ret);
                 return(0);
             }
-//            LOG_PARA("Endpoint %d: %s %s %d, max packet %d, interval %d\n", i, types[transferType], directionStr[direction], number, maxPacketSize, interval);
+            LOG_PARA("Endpoint %d: %s %s %d, max packet %d, interval %d\n", i, types[transferType], directionStr[direction], number, maxPacketSize, interval);
 
-            if (transferType == kUSBBulk && direction == kUSBIn)
+            if (transferType == kUSBBulk && direction == kUSBIn && number == 1)
             {
                 // grabbing BULK IN pipe index i
                 pDeviceInterface->inPipeRef = i;
@@ -169,7 +169,7 @@ static UInt32 openUSBInterface(IOUSBInterfaceInterface_version **intf ,struct_de
                 continue;
             }
 
-            if (transferType == kUSBBulk && direction == kUSBOut)
+            if (transferType == kUSBBulk && direction == kUSBOut && number == 2)
             {
                 // grabbing BULK OUT pipe index i
                 pDeviceInterface->outPipeRef = i;
@@ -232,6 +232,7 @@ Boolean isThisTheInterfaceYoureLookingFor(IOUSBInterfaceInterface_version **intf
     (*intf)->GetInterfaceNumber(intf ,&interface);
     LOG_PARA("usb interface is:%d" ,interface);
     if(pDeviceInterface->interface < 0){
+        pDeviceInterface->interface = interface;
         foundOnce = true;
     }else{
         if(interface == pDeviceInterface->interface){
@@ -630,16 +631,6 @@ int usb_getDeviceWithAddress(int vid ,int pid ,int address ,usbDeviceHandler han
     return ret;
 }
 
-bool usb_isConnected(IOUSBDeviceInterface_version** dev)
-{
-    if(!dev)
-        return false;
-    IOReturn ior;
-    USBDeviceAddress address = -1;
-    ior = (*dev)->GetDeviceAddress(dev ,&address);
-    return (ior == kIOReturnSuccess);
-}
-
 int usb_open(IOUSBDeviceInterface_version **dev ,struct_deviceInterface* pDeviceInterface)
 {
     if(!dev)
@@ -697,6 +688,7 @@ int usb_writePipe(IOUSBInterfaceInterface_version **intf ,int outPipeRef ,char *
     IOReturn err;
     err = (*intf)->WritePipeTO(intf , outPipeRef, buffer, bufsize,5000,5000);
 
+//    err = (*intf)->WritePipe(intf , outPipeRef, buffer, bufsize);
     switch (err) {
     case kIOReturnNoDevice:
         LOG_NOPARA("kIOReturnNoDevice if there is no connection to an IOService");
@@ -709,6 +701,60 @@ int usb_writePipe(IOUSBInterfaceInterface_version **intf ,int outPipeRef ,char *
         break;
     case kIOReturnSuccess:
         return bufsize;
+    default:
+        break;
+    }
+    return (-1);
+}
+
+struct private_refcon{
+    bool over;
+    IOReturn err;
+};
+
+static void callback1(void *refcon, IOReturn result, void *arg0)
+{
+    struct private_refcon* ref = (struct private_refcon*)refcon;
+    ref->err = result;
+    ref->over = true;
+}
+
+int usb_readPipeAsync(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *buffer, size_t bufsize)
+{
+    if(!intf || !inPipeRef)
+        return (-2);//
+    IOReturn err;
+    UInt32 size = bufsize;
+    struct private_refcon refcon;
+    refcon.over = false;
+    err = (*intf)->ReadPipeAsync(intf , inPipeRef, buffer, size ,callback1 ,(void*)&refcon);
+    if(err != kIOReturnSuccess)
+        return -1;
+    int times = 0;
+    while (!refcon.over) {
+        usleep(10*1000);
+        if(times++ > 1000){
+            break;
+        }
+    }
+    err = refcon.err;
+
+    switch (err) {
+    case kIOReturnNoDevice:
+        LOG_NOPARA("kIOReturnNoDevice if there is no connection to an IOService");
+        break;
+    case kIOReturnAborted:
+        LOG_NOPARA("kIOReturnAborted if the thread is interrupted before the call completes");
+        break;
+    case kIOReturnNotOpen:
+        LOG_NOPARA("kIOReturnNotOpen if the interface is not open for exclusive access");
+        break;
+    case kIOReturnBadArgument:
+        LOG_NOPARA("timeout values are specified for an interrupt pipe.");
+        break;
+    case kIOReturnSuccess:
+        return bufsize;
+//        return size;
     default:
         break;
     }
@@ -741,6 +787,161 @@ int usb_readPipe(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *bu
         return size;
     default:
         break;
+    }
+    return (-1);
+}
+
+//#define TO 1
+int usb_intf_write(IOUSBInterfaceInterface_version **intf ,int interface ,char *buffer, size_t bufsize)
+{
+    if(!intf)
+        return (-2);//
+#if TO
+    IOUSBDevRequestTO req;
+#else
+    IOUSBDevRequest req;
+#endif
+    IOReturn err;
+
+    req.bmRequestType = USBmakebmRequestType(kUSBOut, kUSBVendor, kUSBInterface);
+    req.bRequest = 0x4d; //
+    req.wValue = 0x3c2b;	//
+    req.wIndex = (interface == 1) ?0x0100 :0; //
+    req.wLength = bufsize; //
+    req.pData = buffer;
+#if TO
+    req.completionTimeout = 5000;
+    req.noDataTimeout = 5000;
+    err = (*intf)->ControlRequestTO(intf, 0, &req);
+#else
+    err = (*intf)->ControlRequest(intf ,0 ,&req);
+#endif
+
+    LOG_PARA("req.wLenDone:%d,IOReturn:%x" ,req.wLenDone ,err);
+    switch (err) {
+    case kIOReturnNoDevice:
+        LOG_NOPARA("kIOReturnNoDevice if there is no connection to an IOService");
+        break;
+    case kIOReturnAborted:
+        LOG_NOPARA("kIOReturnAborted if the thread is interrupted before the call completes");
+        break;
+    case kIOReturnNotOpen:
+        LOG_NOPARA("kIOReturnNotOpen if the interface is not open for exclusive access");
+        break;
+    case kIOReturnSuccess:
+        return bufsize;
+//        return req.wLenDone;
+    default:
+        break;
+    }
+    return (-1);
+}
+
+int usb_dev_write(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer, size_t bufsize)
+{
+    if(!dev)
+        return -2;
+#if TO
+    IOUSBDevRequestTO req;
+#else
+    IOUSBDevRequest req;
+#endif
+    IOReturn err;
+
+    req.bmRequestType = USBmakebmRequestType(kUSBOut, kUSBVendor, kUSBInterface);
+    req.bRequest = 0x4d; //
+    req.wValue = 0x3c2b;	//
+    req.wIndex = (interface == 1) ?0x0100 :0; //
+    req.wLength = bufsize; //
+    req.pData = buffer;
+#if TO
+    req.completionTimeout = 5000;
+    req.noDataTimeout = 5000;
+    err = (*dev)->DeviceRequestTO(dev, &req);
+#else
+    err = (*dev)->DeviceRequest(dev ,&req);
+#endif
+
+    LOG_PARA("req.wLenDone:%d,IOReturn:%x" ,req.wLenDone ,err);
+    switch (err) {
+    case kIOReturnNoDevice:
+        LOG_NOPARA("kIOReturnNoDevice if there is no connection to an IOService");
+        break;
+    case kIOReturnAborted:
+        LOG_NOPARA("kIOReturnAborted if the thread is interrupted before the call completes");
+        break;
+    case kIOReturnNotOpen:
+        LOG_NOPARA("kIOReturnNotOpen if the interface is not open for exclusive access");
+        break;
+    case kIOReturnSuccess:
+        return bufsize;
+//        return req.wLenDone;
+    default:
+        break;
+    }
+    return -1;
+}
+
+int usb_intf_read(IOUSBInterfaceInterface_version **intf ,int interface ,char *buffer, size_t bufsize)
+{
+    if(!intf)
+        return (-2);//
+#if TO
+    IOUSBDevRequestTO req;
+#else
+    IOUSBDevRequest req;
+#endif
+    IOReturn err;
+
+    req.bmRequestType = USBmakebmRequestType(kUSBIn, kUSBVendor, kUSBInterface);
+    req.bRequest = 0; //
+    req.wValue = 0;	//
+    req.wIndex = (interface == 1) ?0x0100 :0; //
+    req.wLength = bufsize; //
+    req.pData = buffer;
+#if TO
+    req.completionTimeout = 5000;
+    req.noDataTimeout = 5000;
+    err = (*intf)->ControlRequestTO(intf, 0, &req);
+#else
+    err = (*intf)->ControlRequest(intf ,0 ,&req);
+#endif
+    if (kIOReturnSuccess == err)
+    {
+//        return bufsize;
+        return req.wLenDone;
+    }
+    return (-1);
+}
+
+int usb_dev_read(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer, size_t bufsize)
+{
+    if(!dev)
+        return (-2);//
+#if TO
+    IOUSBDevRequestTO req;
+#else
+    IOUSBDevRequest req;
+#endif
+    IOReturn err;
+
+    req.bmRequestType = USBmakebmRequestType(kUSBIn, kUSBVendor, kUSBInterface);
+    req.bRequest = 0; //
+    req.wValue = 0;	//
+    req.wIndex = (interface == 1) ?0x0100 :0; //
+    req.wLength = bufsize; //
+    req.pData = buffer;
+#if TO
+    req.completionTimeout = 5000;
+    req.noDataTimeout = 5000;
+    err = (*dev)->DeviceRequestTO(dev, &req);
+#else
+    err = (*dev)->DeviceRequest(dev ,&req);
+#endif
+    if (kIOReturnSuccess == err)
+    {
+//        return bufsize;
+        return req.wLenDone;
     }
     return (-1);
 }

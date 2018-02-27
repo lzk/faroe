@@ -136,7 +136,7 @@ int getDESfromDeviceID(char* device_id ,char* str)
 
 Setter::Setter():
     setterApi(new SetterApi)
-  ,isLogined(false)
+  ,isLogined(true)
 {
 
 }
@@ -247,6 +247,7 @@ int Setter::getWifi(void* data)
         if(!err){
             if(1 != para){
                 return DeviceStruct::ERR_wifi_have_not_been_inited;
+//                return err;
             }
         }else
             return err;
@@ -289,7 +290,7 @@ int Setter::getSoftAp(void* data)
     struct_softAp* softap = (struct_softAp*)data;
     int err;
     cmdst_softap para;
-    err = setterApi->cmd(CMD_CODE_getApList ,&para ,sizeof(para));
+    err = setterApi->cmd(CMD_CODE_get_softAp ,&para ,sizeof(para));
     if(!err){
         softap->enable = para.wifiEnable;
         memcpy(softap->ssid ,para.ssid ,32);
@@ -316,7 +317,7 @@ int Setter::setIpV4(void* data)
         para.GatewayAddress[i] = ip->gatewayAddress[i];
         para.SubnetMask[i] = ip->subnetMask[i];
     }
-    err = setterApi->cmd(CMD_CODE_set_softAp ,&para ,sizeof(para));
+    err = setterApi->cmd(CMD_CODE_setv4 ,&para ,sizeof(para));
     return err;
 }
 
@@ -327,7 +328,7 @@ int Setter::getIpV4(void* data)
     struct_ipv4* ip = (struct_ipv4*)data;
     int err;
     net_info_st para;
-    err = setterApi->cmd(CMD_CODE_get_softAp ,&para ,sizeof(para));
+    err = setterApi->cmd(CMD_CODE_getv4 ,&para ,sizeof(para));
     if(!err){
         ip->mode = para.IPMode;
         ip->addressMode = para.IPAddressMode;
@@ -351,7 +352,7 @@ int Setter::setSaveTime(void* data)
 
     cmdst_PSave_time para;
     para = (UINT8)*st;
-    err = setterApi->cmd(CMD_CODE_set_softAp ,&para ,sizeof(para));
+    err = setterApi->cmd(CMD_CODE_setPsaveTime ,&para ,sizeof(para));
     return err;
 }
 
@@ -362,9 +363,88 @@ int Setter::getSaveTime(void* data)
     int* st = (int*)data;
     int err;
     cmdst_PSave_time para;
-    err = setterApi->cmd(CMD_CODE_get_softAp ,&para ,sizeof(para));
+    err = setterApi->cmd(CMD_CODE_getPsaveTime ,&para ,sizeof(para));
     if(!err){
         *st = para;
+    }
+    return err;
+}
+
+int Setter::setOffTime(void* data)
+{
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    int* st = (int*)data;
+    int err;
+    if(!isLogined)
+        return DeviceStruct::ERR_no_logined;
+
+    cmdst_powerOff_time para;
+    para = (UINT8)*st;
+    err = setterApi->cmd(CMD_CODE_setPowerOff ,&para ,sizeof(para));
+    return err;
+}
+
+int Setter::getOffTime(void* data)
+{
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    int* st = (int*)data;
+    int err;
+    cmdst_powerOff_time para;
+    err = setterApi->cmd(CMD_CODE_getPowerOff ,&para ,sizeof(para));
+    if(!err){
+        *st = para;
+    }
+    return err;
+}
+
+int Setter::setDeviceSetting(void* data)
+{
+
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    struct_deviceSetting* pData = (struct_deviceSetting*)data;
+    int err;
+    {
+        cmdst_PSave_time para = pData->saveTime;
+        err = setterApi->cmd(CMD_CODE_setPsaveTime ,&para ,sizeof(para));
+        if(!err){
+        }else
+            return err;
+    }
+    {
+        cmdst_powerOff_time para = pData->offTime;
+        err = setterApi->cmd(CMD_CODE_setPowerOff ,&para ,sizeof(para));
+        if(!err){
+        }else
+            return err;
+    }
+    return err;
+}
+
+int Setter::getDeviceSetting(void* data)
+{
+
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    struct_deviceSetting* pData = (struct_deviceSetting*)data;
+    int err;
+    {
+        cmdst_PSave_time para;
+        err = setterApi->cmd(CMD_CODE_getPsaveTime ,&para ,sizeof(para));
+        if(!err){
+            pData->saveTime = para;
+        }else
+            return err;
+    }
+    {
+        cmdst_powerOff_time para;
+        err = setterApi->cmd(CMD_CODE_getPowerOff ,&para ,sizeof(para));
+        if(!err){
+            pData->offTime = para;
+        }else
+            return err;
     }
     return err;
 }

@@ -35,12 +35,16 @@ Item {
 
         }
 
-        Image {
+        Item{
             id: item_view
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: "qrc:/Images/SettingViewBackground.png"
+            Image {
+                anchors.fill: parent
+                source: "qrc:/Images/SettingViewBackground.png"
+            }
         }
+
     }
 
 }

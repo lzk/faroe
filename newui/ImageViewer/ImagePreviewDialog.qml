@@ -97,6 +97,7 @@ JKDialog{
     }
 
     JKPath_pre{
+        visible: false
         parent: ip.item_pre
         anchors.fill: parent
         onClicked: console.log("pre")
@@ -104,6 +105,7 @@ JKDialog{
     }
 
     JKPath_next{
+        visible: false
         parent: ip.item_next
         anchors.fill: parent
         onClicked: console.log("next")

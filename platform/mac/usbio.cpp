@@ -3,6 +3,7 @@
 #include "../../lld/device.h"
 #include <string.h>
 #include <QUrlQuery>
+#include "../log.h"
 #define USB_VID 0x05e3
 #define USB_PID 0x0118
 typedef struct struct_searchData{
@@ -56,8 +57,9 @@ int devHandler(IOUSBDeviceInterface_version** dev,void* pData)
     io->setDev(dev);
 }
 
-int UsbIO::open()
+int UsbIO::open(int)
 {
+    dev = NULL;
     usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
     if(!dev){
         return -2;
@@ -68,6 +70,8 @@ int UsbIO::open()
         intf = di.intf;
         inPipeRef = di.inPipeRef;
         outPipeRef = di.outPipeRef;
+        interface = di.interface;
+        LOG_PARA("in pipe:%d ,out pipe:%d" ,inPipeRef ,outPipeRef);
         return 0;
     }
     return -1;
@@ -77,7 +81,10 @@ int UsbIO::close(void)
 {
     inPipeRef = 0;
     outPipeRef = 0;
-    return usb_close(dev ,intf);
+    int ret = usb_close(dev ,intf);
+    dev = NULL;
+    intf = NULL;
+    return ret;
 }
 
 int UsbIO::write(char *buffer, int bufsize)
@@ -87,7 +94,22 @@ int UsbIO::write(char *buffer, int bufsize)
 
 int UsbIO::read(char *buffer, int bufsize)
 {
+//    return usb_readPipeAsync(intf ,inPipeRef ,buffer ,bufsize);
     return usb_readPipe(intf ,inPipeRef ,buffer ,bufsize);
+}
+
+int UsbIO::writeCommand(char *buffer, int bufsize)
+{
+    return write(buffer ,bufsize);
+//    return usb_dev_write(dev ,interface ,buffer ,bufsize);
+//    return usb_intf_write(intf ,interface ,buffer ,bufsize);
+}
+
+int UsbIO::readCommand(char *buffer, int bufsize)
+{
+    return read(buffer ,bufsize);
+//    return usb_dev_read(dev ,interface ,buffer ,bufsize);
+//    return usb_intf_read(intf ,interface ,buffer ,bufsize);
 }
 
 int UsbIO::resolveUrl(const char* url)
@@ -102,5 +124,11 @@ int UsbIO::resolveUrl(const char* url)
 
 bool UsbIO::isConnected()
 {
-    return usb_isConnected(dev);
+    bool connected = true;
+    dev = NULL;
+    usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
+    if(!dev){
+        connected = false;
+    }
+    return connected;
 }

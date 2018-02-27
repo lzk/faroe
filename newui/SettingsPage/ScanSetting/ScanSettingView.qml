@@ -27,6 +27,11 @@ Item {
     property alias radioButton_twoSide: radioButton_twoSide
     property alias radioButton_oneSide: radioButton_oneSide
 
+    property alias item_multiFeedDetection: item_multiFeedDetection
+    property alias item_autoCropDeskew: item_autoCropDeskew
+    property alias item_skipBlankPage: item_skipBlankPage
+    property alias item_autoColorDetection: item_autoColorDetection
+
     Item {
         id: item1
         anchors.rightMargin: 30
@@ -51,30 +56,25 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    RadioButton {
-                        id: radioButton_twoSide
-                        x: 65
-                        y: 35
-                        width: 90
-                        height: 20
-                        text: qsTr("Two Side")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: - parent.width / 4
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
+                    Row{
+                        anchors.centerIn: parent
+                        spacing: 10
+                        JKRadioButton {
+                            id: radioButton_twoSide
+                            width: 90
+                            height: 20
+                            text: qsTr("Two Side")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
 
-                    RadioButton {
-                        id: radioButton_oneSide
-                        x: 65
-                        y: 35
-                        width: 90
-                        height: 20
-                        text: qsTr("One Side")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: parent.width / 4
-                        anchors.verticalCenter: parent.verticalCenter
+                        JKRadioButton {
+                            id: radioButton_oneSide
+                            width: 90
+                            height: 20
+                            text: qsTr("One Side")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
-
                 }
             }
 
@@ -89,29 +89,46 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    RadioButton {
-                        id: radioButton_color
-                        x: 65
-                        y: 35
-                        width: 90
-                        height: 20
-                        text: qsTr("color")
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenterOffset: - parent.width / 4
-                        anchors.horizontalCenter: parent.horizontalCenter
+                    Row{
+                        anchors.centerIn: parent
+                        spacing: 10
+                        JKRadioButton {
+                            id: radioButton_color
+                            width: 90
+                            height: 20
+                            indicator.x:10
+                            contentItem:  Item{
+                                anchors.fill: parent
+                                Image{
+                                    x:50
+                                    width: 30
+                                    height: 30
+                                    source: "qrc:/Images/Color.png"
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        JKRadioButton {
+                            id: radioButton_gray
+                            width: 90
+                            height: 20
+                            indicator.x:10
+                            contentItem:  Item{
+                                anchors.fill: parent
+                                Image{
+                                    x:50
+                                    width: 30
+                                    height: 30
+                                    source: "qrc:/Images/Grayscale.png"
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
 
-                    RadioButton {
-                        id: radioButton_gray
-                        x: 66
-                        y: 36
-                        width: 90
-                        height: 20
-                        text: qsTr("gray")
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenterOffset: parent.width / 4
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
                 }
             }
 
@@ -191,6 +208,7 @@ Item {
                 Column {
                     id: column1
                     spacing: 4
+                    anchors.fill: parent
                     ScanSettingBackground {
                         width: 220
                         height: 110
@@ -247,140 +265,125 @@ Item {
                     }
 
                     ScanSettingBackground {
+                        id:item_skipBlankPage
                         width: 220
                         height: 75
                         text: qsTr("Skip Blank Page")
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        RadioButton {
-                            id: radioButton_skipBlankPage_on
-                            x: 65
-                            y: 35
-                            width: 90
-                            height: 20
-                            text: qsTr("On")
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenterOffset: - parent.width / 4
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
+                        Row{
+                            anchors.centerIn: parent
+                            spacing: 10
+                            JKRadioButton {
+                                id: radioButton_skipBlankPage_on
+                                width: 90
+                                height: 20
+                                text: qsTr("On")
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
 
-                        RadioButton {
-                            id: radioButton_skipBlankPage_off
-                            x: 66
-                            y: 36
-                            width: 90
-                            height: 20
-                            text: qsTr("Off")
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenterOffset: parent.width / 4
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            JKRadioButton {
+                                id: radioButton_skipBlankPage_off
+                                width: 90
+                                height: 20
+                                text: qsTr("Off")
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
                         }
                     }
 
                     ScanSettingBackground {
+                        id: item_autoColorDetection
                         width: 220
                         height: 75
                         text: qsTr("Auto Color Detection")
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        RadioButton {
-                            id: radioButton_autoColorDetection_on
-                            x: 65
-                            y: 35
-                            width: 90
-                            height: 20
-                            text: qsTr("On")
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenterOffset: - parent.width / 4
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
+                        Row{
+                            anchors.centerIn: parent
+                            spacing: 10
+                            JKRadioButton {
+                                id: radioButton_autoColorDetection_on
+                                width: 90
+                                height: 20
+                                text: qsTr("On")
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
 
-                        RadioButton {
-                            id: radioButton_autoColorDetection_off
-                            x: 66
-                            y: 36
-                            width: 90
-                            height: 20
-                            text: qsTr("Off")
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenterOffset: parent.width / 4
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            JKRadioButton {
+                                id: radioButton_autoColorDetection_off
+                                width: 90
+                                height: 20
+                                text: qsTr("Off")
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
                         }
                     }
-                    anchors.fill: parent
                 }
             }
 
             Item {
-                id: item6
                 width: 240
                 height: 90
                 ScanSettingBackground {
+                    id: item_multiFeedDetection
                     width: 220
                     height: 75
                     text: qsTr("Multi Feed Detection")
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    RadioButton {
-                        id: radioButton_multiFeedDetection_on
-                        x: 65
-                        y: 35
-                        width: 90
-                        height: 20
-                        text: qsTr("On")
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenterOffset: - parent.width / 4
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
+                    Row{
+                        anchors.centerIn: parent
+                        spacing: 10
+                        JKRadioButton {
+                            id: radioButton_multiFeedDetection_on
+                            width: 90
+                            height: 20
+                            text: qsTr("On")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
 
-                    RadioButton {
-                        id: radioButton_multiFeedDetection_off
-                        x: 66
-                        y: 36
-                        width: 90
-                        height: 20
-                        text: qsTr("Off")
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenterOffset: parent.width / 4
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        JKRadioButton {
+                            id: radioButton_multiFeedDetection_off
+                            width: 90
+                            height: 20
+                            text: qsTr("Off")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
                 }
             }
 
             Item {
-                id: item7
                 width: 240
                 height: 90
                 ScanSettingBackground {
+                    id: item_autoCropDeskew
                     width: 220
                     height: 75
                     text: qsTr("Auto Crop&Deskew")
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    RadioButton {
-                        id: radioButton_autoCropDeskew_on
-                        x: 65
-                        y: 35
-                        width: 90
-                        height: 20
-                        text: qsTr("On")
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenterOffset: - parent.width / 4
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
+                    Row{
+                        anchors.centerIn: parent
+                        spacing: 10
+                        JKRadioButton {
+                            id: radioButton_autoCropDeskew_on
+                            width: 90
+                            height: 20
+                            text: qsTr("On")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
 
-                    RadioButton {
-                        id: radioButton_autoCropDeskew_off
-                        x: 66
-                        y: 36
-                        width: 90
-                        height: 20
-                        text: qsTr("Off")
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenterOffset: parent.width / 4
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        JKRadioButton {
+                            id: radioButton_autoCropDeskew_off
+                            width: 90
+                            height: 20
+                            text: qsTr("Off")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
                 }
             }

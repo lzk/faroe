@@ -41,9 +41,13 @@ int usb_getDeviceList(int vid ,int pid ,addUsbDevice addDevice ,void*);
 int usb_getDeviceWithLocationID(int vid ,int pid ,int locationID ,usbDeviceHandler handler ,void*);
 int usb_getDeviceWithSerial(int vid ,int pid ,const char* serial ,usbDeviceHandler handler ,void*);
 int usb_getDeviceWithAddress(int vid ,int pid ,int address ,usbDeviceHandler handler ,void* pData);
-bool usb_isConnected(IOUSBDeviceInterface_version** dev);
 int usb_open(IOUSBDeviceInterface_version **dev ,struct_deviceInterface* pDeviceInterface);
 int usb_close(IOUSBDeviceInterface_version **dev ,IOUSBInterfaceInterface_version **intf);
 int usb_writePipe(IOUSBInterfaceInterface_version **intf ,int outPipeRef ,char *buffer, size_t bufsize);
 int usb_readPipe(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *buffer, size_t bufsize);
+int usb_readPipeAsync(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *buffer, size_t bufsize);
+int usb_intf_write(IOUSBInterfaceInterface_version **intf ,int interface ,char *buffer, size_t bufsize);
+int usb_dev_write(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer, size_t bufsize);
+int usb_intf_read(IOUSBInterfaceInterface_version **intf ,int interface ,char *buffer, size_t bufsize);
+int usb_dev_read(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer, size_t bufsize);
 #endif // MAC_USB_H

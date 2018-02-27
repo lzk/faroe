@@ -4,6 +4,8 @@ import "ScanToPage"
 import "component"
 import "ImageViewer"
 import "ScanData.js" as JSData
+import com.liteon.JKInterface 1.0
+import QtQuick.Dialogs 1.2
 
 ScanToPageLayout {
     id: root
@@ -134,52 +136,125 @@ ScanToPageLayout {
     }
 
     Connections{
-        target: button_toPrint
-        onClicked: jkInterface.toPrint(imageViewer.model.selectList)
+        target: button_up
+        onClicked: imageViewer.moveup()
     }
+
+    Connections{
+        target: button_down
+        onClicked: imageViewer.moveDown()
+    }
+
+    Connections{
+        target: button_toPrint
+        onClicked: {
+            if(imageViewer.selectList.length < 1){
+                warning_noSelectedFiles()
+            }else{
+                setScanToCmd(DeviceStruct.CMD_ScanTo_ToPrint ,imageViewer.selectList)
+            }
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Save As")
+        folder: shortcuts.pictures
+        nameFilters: JSData.constFileDialogSaveFileType()
+        selectExisting:false
+        onAccepted: {
+            var setting = fileUrl.toString().replace("file:///" ,"/")
+            setScanToCmd(DeviceStruct.CMD_ScanTo_ToFile ,imageViewer.selectList ,setting)
+        }
+    }
+//    function saveFile(fileUrl){
+//        jkInterface.setScanToCmd(DeviceStruct.CMD_ScanTo_ToFile ,imageViewer.selectList ,fileUrl.toString().replace("file:///" ,"/"))
+//    }
+
     Connections{
         target: button_toFile
-        onClicked: dialog = openDialog("component/JKFileDialog.qml" ,{} ,function(dialog){
-            dialog.accepted.connect(saveFile)
-        })
+        onClicked:{
+            if(imageViewer.selectList.length < 1){
+                warning_noSelectedFiles()
+            }else{
+                fileDialog.open()
+            }
+        }
     }
+
     Connections{
         target: button_toEmail
-        onClicked: jkInterface.toEmail(imageViewer.model.selectList ,scanData.scanParameter.emailAttachmentFileType)
+        onClicked: {
+            if(imageViewer.selectList.length < 1){
+                warning_noSelectedFiles()
+            }else{
+                var setting = JSData.defaultEmailSettings()
+                setting.fileType = scanData.scanToParameter.emailAttachmentFileType
+                setScanToCmd(DeviceStruct.CMD_ScanTo_ToEmail ,imageViewer.selectList ,setting)
+            }
+        }
     }
+
     Connections{
         target: button_toApplication
-//        onClicked: dialog = openDialog("component/JKFileDialog.qml" ,{} ,function(dialog){
-//            dialog.accepted.connect(saveFile)
-//        })
+        onClicked: {
+            if(imageViewer.selectList.length < 1){
+                warning_noSelectedFiles()
+            }else{
+                var setting =scanData.applicationSetting
+                dialog = openDialog("ScanToPage/ApplicationDialog.qml" ,{} ,function(dialog){
+                                dialog.initWithSetting(setting)
+                                dialog.accepted.connect(toApplication)
+                            })
+            }
+        }
     }
+    function toApplication(){
+        var setting = scanData.applicationSetting
+        setScanToCmd(DeviceStruct.CMD_ScanTo_ToApplication ,imageViewer.selectList ,setting)
+    }
+
     Connections{
         target: button_toFTP
-        onClicked: dialog = openDialog("ScanToPage/FTPDialog.qml" ,{"setting":ftpSetting} ,function(dialog){
-            dialog.accepted.connect(toFTP)
-        })
+        onClicked: {
+            if(imageViewer.selectList.length < 1){
+                warning_noSelectedFiles()
+            }else{
+                var setting = scanData.ftpSetting
+                dialog = openDialog("ScanToPage/FTPDialog.qml" ,{"setting":setting} ,function(dialog){
+                                dialog.accepted.connect(toFTP)
+                            })
+            }
+        }
     }
-    property var ftpSetting: JSData.defaultFTPSettings()
+
     function toFTP(){
-        jkInterface.toFTP(imageViewer.model.selectList , JSON.stringify(ftpSetting))
-        dialog.close()
-        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{} ,function(dialog){
-            jkInterface.ftpUploadComplete.connect(dialog.close)
-        })
+        var setting = scanData.ftpSetting
+        setScanToCmd(DeviceStruct.CMD_ScanTo_ToFTP ,imageViewer.selectList ,setting)
     }
     Connections{
         target: button_toCloud
-        onClicked: jkInterface.toCloud(imageViewer.model.selectList , JSON.stringify(scanData.scanParameter))
-    }
-    function saveFile(){
-        jkInterface.toFile(imageViewer.model.selectList , dialog.fileUrl)
+        onClicked: {
+            if(imageViewer.selectList.length < 1){
+                warning_noSelectedFiles()
+            }else{
+                var setting = JSData.defaultCloudSettings()
+                setting.cloudTypeText = scanData.scanToParameter.cloudTypeText
+                var cloudTypes = JSData.supportCloudType()
+                switch(setting.cloudTypeText){
+                case cloudTypes.icloud:
+                    setScanToCmd(DeviceStruct.CMD_ScanTo_ToCloud ,imageViewer.selectList ,setting)
+                    break
+                }
+
+            }
+        }
     }
 
     Connections{
         target: checkbox_selectall
         onCheckedChanged:imageViewer.selectAll(checkbox_selectall.checked)
     }
-
 
     Connections{
         target: button_back
@@ -188,9 +263,46 @@ ScanToPageLayout {
         }
     }
 
+//    Connections{
+//        target: jkInterface
+//        onCmdResult:{
+//            switch(cmd){
+//            case DeviceStruct.CMD_ScanTo_ToFTP:
+//                dialog.close()
+//                ftpResult(result)
+//                break
+//            default:
+//                break
+//            }
+//        }
+//    }
+
+//    function ftpResult(result){
+//        switch(result){
+//        case JKEnums.ImageCommandResult_NoError:
+//            information_1button(qsTr("Upload complete"))
+//            break
+//        case JKEnums.ImageCommandResult_error_ftpConnect:
+//            warningWithImage(qsTr("Upload failed.Unable to connet to the remote server."))
+//            break
+//        case JKEnums.ImageCommandResult_error_ftpLogin:
+//            warningWithImage(qsTr("Upload failed.The remote server returned an error:(530) Not logged in."))
+//            break
+//        case JKEnums.ImageCommandResult_error_ftpCd:
+//        case JKEnums.ImageCommandResult_error_ftpPut:
+//            warningWithImage(qsTr("Upload failed.The remote server returned an error:(553) File name not allowed."))
+//            break
+//        }
+//    }
+
+    function warning_noSelectedFiles(){
+        information_1button(qsTr("please select one or more pictures to process!"))
+    }
+
     property var dialog
     function back(){
         imageViewer.removeAllImages()
         root.StackView.view.pop()
+
     }
 }

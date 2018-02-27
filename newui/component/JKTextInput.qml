@@ -1,8 +1,22 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.2
+import QtQuick 2.7
+Rectangle{
 
-TextInput {
-
-    font.family: "Verdana"
-    font.pixelSize: 14
+    color: "white"
+    border.color: "gray"
+    property alias input: input
+    property alias text: input.text
+    clip: true
+    TextInput {
+        id:input
+        anchors.fill: parent
+        anchors.margins: 8
+        width: parent.width
+//        focus: true
+        font.family: "Verdana"
+        font.pixelSize: 14
+        onFocusChanged: {
+            if(focus){
+            }
+        }
+    }
 }

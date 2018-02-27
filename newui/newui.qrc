@@ -70,6 +70,15 @@
         <file>SettingsPage/component/SpinView.qml</file>
         <file>component/JKFileDialog.qml</file>
         <file>ScanToPage/FTPDialog.qml</file>
+        <file>component/BrightnessAndContrast.qml</file>
+        <file>mail</file>
+        <file>ScanToPage/AppSelectDialog.qml</file>
+        <file>ScanToPage/ApplicationDialog.qml</file>
+        <file>SettingsPage/component/JKCheckBox.qml</file>
+        <file>component/JKRefresh.qml</file>
+        <file>SettingsPage/component/JKRadioButton.qml</file>
+        <file>SettingsPage/component/WiFiManualSettingView.qml</file>
+        <file>SettingsPage/ScanSetting/MediaTypePrompt.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/background3.png</file>
@@ -164,5 +173,22 @@
         <file>Images/GreenLine.png</file>
         <file>Images/Refresh_Disable.png</file>
         <file>Images/Status_RefreshEnable.tif</file>
+        <file>translations/vop.en.qm</file>
+        <file>translations/vop.zh_CN.qm</file>
+        <file>Images/ai.icns</file>
+        <file>Images/others.png</file>
+        <file>SettingsPage/component/JKCheckBox.qml</file>
+        <file>Images/checkbox_ disable.png</file>
+        <file>Images/CheckBox_Close.png</file>
+        <file>Images/CheckBox_Disable.png</file>
+        <file>Images/CheckBox_Open.png</file>
+        <file>Images/Line.png</file>
+        <file>Images/Color.png</file>
+        <file>Images/Grayscale.png</file>
+        <file>Images/Signal_Connect.png</file>
+        <file>Images/Signal_Enable.png</file>
+        <file>Images/Wifi.png</file>
+        <file>Images/setting_wifilist panel.png</file>
+        <file>Images/switch.png</file>
     </qresource>
 </RCC>

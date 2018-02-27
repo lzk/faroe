@@ -1,13 +1,15 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
-import "component"
+import "component" as Local
 import "../component"
+import com.liteon.JKInterface 1.0
 
 Item {
-    id: item1
+    id: root
     width: 495
     height: 460
+    enabled: scanData.deviceStatus
 
     ColumnLayout {
         anchors.fill: parent
@@ -32,7 +34,7 @@ Item {
             }
         }
 
-        DividingLine{
+        Local.DividingLine{
             height: 6
             width: parent.width
         }
@@ -64,7 +66,8 @@ Item {
                         id: item4
                         width: parent.width
                         height: 45
-                        SpinView{
+                        Local.SpinView{
+                            id:spin_saveTime
                             anchors.centerIn: parent
                             slider{
                                 visible: false
@@ -110,7 +113,8 @@ Item {
                         id: item6
                         width: parent.width
                         height: 45
-                        SpinView{
+                        Local.SpinView{
+                            id:spin_offTime
                             anchors.centerIn: parent
                             slider{
                                 visible: false
@@ -146,10 +150,6 @@ Item {
 
     }
 
-    property var qrcodeSetting
-    Component.onCompleted: {
-    }
-
     JKTextButton{
         parent: item_btnCalibration
         anchors.fill: parent
@@ -160,7 +160,35 @@ Item {
     Connections{
         target: button_apply
         onClicked: {
+            setting.saveTime = Math.floor(spin_saveTime.value)
+            setting.offTime = Math.floor(spin_offTime.value)
+//            setSetterCmd(DeviceStruct.CMD_setDeviceSetting ,setting)
         }
     }
 
+    property var setting:{
+        "saveTime":0
+        ,"offTime":0
+    }
+    Component.onCompleted: {
+        setSetterCmd(DeviceStruct.CMD_getDeviceSetting ,setting)
+    }
+    Connections{
+        target: jkInterface
+        onCmdResult:{
+            switch(cmd){
+            case DeviceStruct.CMD_getDeviceSetting:
+                if(!result){
+                    setting = JSON.parse(data)
+                    console.log(data)
+                    spin_saveTime.value = setting.saveTime
+                    spin_offTime.value = setting.offTime
+                }
+
+                break;
+            case DeviceStruct.CMD_setDeviceSetting:
+                break
+            }
+        }
+    }
 }

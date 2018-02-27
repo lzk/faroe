@@ -16,24 +16,49 @@ function constDPI() {
             ]
 }
 
+function constMediaTypeMap(){
+    return {
+        "normal":qsTr("Normal"),
+        "depositBook":qsTr("Deposit Book"),
+        "card":qsTr("Card"),
+    }
+}
+
 function constMediaType(){
+    var map = constMediaTypeMap()
     return [
-            qsTr("Normal"),
-            qsTr("Deposit Book"),
-            qsTr("Card"),
+                map.normal,
+                map.depositBook,
+                map.card,
             ]
 }
 
+function constPaperSizeMap(){
+    return {
+        "auto":"Auto",
+        "autoNoMultiFeed":"Auto(No Multi-Feed)",
+        "A4":"A4(210 x 297mm)",
+        "A5":"A5(148 x 210mm)",
+        "B5":"B5(182 x 257mm)",
+        "A6":"A6(105 x 148mm)",
+        "Letter":"Letter(8.5 x 11\")",
+        "Legal":"Legal(8.5 x 14\")",
+        "longPage":"Long Page",
+    }
+}
+
 function constPaperSize(){
+    var map = constPaperSizeMap()
     return [
-            "Auto",
-                "A4",
-                "A5",
-                "B5",
-                "A6",
-                "Letter",
-                "Legal",
-                "Long Page",
+                map.auto,
+                map.autoNoMultiFeed,
+                map.A4,
+                map.A5,
+                map.B5,
+                map.A6,
+                map.Letter,
+                map.Legal,
+                map.longPage,
             ]
 }
 
@@ -46,7 +71,19 @@ function constAdfMode(){
 }
 
 function constCloudType(){
-    return ["DropBox" ,"EverNote" ,"OneDrive"]
+    var cloudTypes = supportCloudType()
+    return [
+                cloudTypes.icloud,
+            ]
+}
+
+function supportCloudType(){
+    return {
+        "icloud":"iCloud",
+        "dropbox":"DropBox",
+        "evernote":"EverNote" ,
+        "onedrive":"OneDrive"
+    }
 }
 
 function constEmailAttachmentFileType(){
@@ -64,18 +101,18 @@ function defaultScanSetting(){
         "contrast" : 50 ,
         "brightness" : 50 ,
         "autoCropAndDeskew" : true ,
-        "autoColorDetection" : true ,
-        "skipBlankPage" : true ,
+        "autoColorDetection" : false ,
+        "skipBlankPage" : false ,
         "gamma" : 18 ,
     }
     return ob
 }
 
-function defaultScanParameterSetting(){
+function defaultScanToSetting(){
     return {
-        "scanSetting" : defaultScanSetting(),
-        "cloudType" : 0,
-        "emailAttachmentFileType" : 0,
+        "scanSetting" :defaultScanSetting() ,
+        "cloudTypeText" :supportCloudType().icloud ,
+        "emailAttachmentFileType" :constEmailAttachmentFileType()[0]
     }
 }
 
@@ -152,12 +189,31 @@ function newQuickScanToFileObject() {
     return ob
 }
 
+function defaultApplicationSettings(){
+    var ob = {}
+    ob.fileType = 0
+    ob.fileName = "Preview.app"
+    ob.filePath = "/Applications"
+    ob.fullFileName = "/Applications/Preview.app"
+    return ob
+}
+
 function newQuickScanToApplicationObject() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Application"
     ob.name = "Scan To Application"
-    ob.fileName = ""
-    ob.filePath = ""
+    ob.fileType = 0
+    ob.fileName = "Preview.app"
+    ob.filePath = "/Application"
+    ob.fullFileName = "/Applications/Preview.app"
+    return ob
+}
+
+function defaultEmailSettings(){
+    var ob = {}
+    ob.fileType = 0
+    ob.recipient = ""
+    ob.subject = ""
     return ob
 }
 
@@ -188,11 +244,17 @@ function newQuickScanToFTPObject() {
     return ob
 }
 
+function defaultCloudSettings(){
+    var ob = {}
+    ob.cloudTypeText = supportCloudType().icloud
+    return ob
+}
+
 function newQuickScanToCloudObject() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Cloud"
     ob.name = "Scan To Cloud"
-    ob.cloudType = 0
+    ob.cloudTypeText = supportCloudType().icloud
     ob.dropboxAccessToken = ""
     ob.dropboxFilePath = ""
     ob.oneDriveAccessToken = ""

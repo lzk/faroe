@@ -24,7 +24,8 @@ typedef struct _COMM_HEADER
     UINT8 subcmd;
 }COMM_HEADER;
 
-#define     MAGIC_NUM           0x1A2B3C4D
+//#define MAGIC_NUM 0x4d3c2b1a
+#define MAGIC_NUM 0x1A2B3C4D
 #define change_32bit_edian(x) (((x) << 24 & 0xff000000) | (((x) << 8) & 0x00ff0000) | (((x) >> 8) & 0x0000ff00) | (((x) >> 24) & 0xff))
 #define change_16bit_edian(x) (((x) << 8) & 0xff00 | ((x) >> 8) & 0x00ff)
 static const unsigned char INIT_VALUE = 0xfe;
@@ -43,34 +44,34 @@ static int cmdParser(int& cmd ,int& direct ,int& data_buffer_size)
 {
     int ret = 0;
     switch(cmd){
-    case CMD_CODE_copy_get:             direct = 0; data_buffer_size = sizeof(copycmdset); break;//128
-    case CMD_CODE_copy:                 direct = 1; data_buffer_size = sizeof(copycmdset); break;//128
+    case CMD_CODE_copy_get:             direct = 0; data_buffer_size = 128; break;//128
+    case CMD_CODE_copy:                 direct = 1; data_buffer_size = 128; break;//128
 
-    case CMD_CODE_getWifiInfo:          direct = 0; data_buffer_size = sizeof(cmdst_wifi_get); break;//180
+    case CMD_CODE_getWifiInfo:          direct = 0; data_buffer_size = 180; break;//180
     case CMD_CODE_setWifiInfo_noRead:   cmd = CMD_CODE_setWifiInfo;
-    case CMD_CODE_setWifiInfo:          direct = 1; data_buffer_size = sizeof(cmdst_wifi_get); break;//180
-    case CMD_CODE_getApList:            direct = 0; data_buffer_size = sizeof(cmdst_aplist_get); break;//340
-    case CMD_CODE_getWifiStatus:        direct = 0; data_buffer_size = sizeof(cmdst_wifi_status); break;//1
-    case CMD_CODE_get_softAp:           direct = 0; data_buffer_size = sizeof(cmdst_softap); break;//180
-    case CMD_CODE_set_softAp:           direct = 1; data_buffer_size = sizeof(cmdst_softap); break;//180
+    case CMD_CODE_setWifiInfo:          direct = 1; data_buffer_size = 180; break;//180
+    case CMD_CODE_getApList:            direct = 0; data_buffer_size = 340; break;//340
+    case CMD_CODE_getWifiStatus:        direct = 0; data_buffer_size = 1; break;//1
+    case CMD_CODE_get_softAp:           direct = 0; data_buffer_size = 180; break;//180
+    case CMD_CODE_set_softAp:           direct = 1; data_buffer_size = 180; break;//180
 
-    case CMD_CODE_getPsaveTime:         direct = 0; data_buffer_size = sizeof(cmdst_PSave_time);  break;//1
-    case CMD_CODE_setPsaveTime:         direct = 1; data_buffer_size = sizeof(cmdst_PSave_time);  break;//1
-    case CMD_CODE_get_userConfig:       direct = 0; data_buffer_size = sizeof(cmdst_userconfig);  break;//16
-    case CMD_CODE_set_userConfig:       direct = 1; data_buffer_size = sizeof(cmdst_userconfig);  break;//16
-    case CMD_CODE_setPasswd:            direct = 1; data_buffer_size = sizeof(cmdst_passwd);  break;//32
-    case CMD_CODE_getPasswd:            direct = 0; data_buffer_size = sizeof(cmdst_passwd);  break;//32
-    case CMD_CODE_confirmPasswd:        direct = 1; data_buffer_size = sizeof(cmdst_passwd);  break;//32
-    case CMD_CODE_getPowerOff:          direct = 0; data_buffer_size = sizeof(cmdst_powerOff_time); break;//1
-    case CMD_CODE_setPowerOff:          direct = 1; data_buffer_size = sizeof(cmdst_powerOff_time); break;//1
-    case CMD_CODE_fusingScReset:        direct = 1; data_buffer_size = sizeof(cmdst_fusingScReset); break;//1
-    case CMD_CODE_getTonerEnd:          direct = 0; data_buffer_size = sizeof(cmdst_tonerEnd); break;//1
-    case CMD_CODE_setTonerEnd:          direct = 1; data_buffer_size = sizeof(cmdst_tonerEnd); break;//1
+    case CMD_CODE_getPsaveTime:         direct = 0; data_buffer_size = 1;  break;//1
+    case CMD_CODE_setPsaveTime:         direct = 1; data_buffer_size = 1;  break;//1
+    case CMD_CODE_get_userConfig:       direct = 0; data_buffer_size = 16;  break;//16
+    case CMD_CODE_set_userConfig:       direct = 1; data_buffer_size = 16;  break;//16
+    case CMD_CODE_setPasswd:            direct = 1; data_buffer_size = 32;  break;//32
+    case CMD_CODE_getPasswd:            direct = 0; data_buffer_size = 32;  break;//32
+    case CMD_CODE_confirmPasswd:        direct = 1; data_buffer_size = 32;  break;//32
+    case CMD_CODE_getPowerOff:          direct = 0; data_buffer_size = 1; break;//1
+    case CMD_CODE_setPowerOff:          direct = 1; data_buffer_size = 1; break;//1
+    case CMD_CODE_fusingScReset:        direct = 1; data_buffer_size = 1; break;//1
+    case CMD_CODE_getTonerEnd:          direct = 0; data_buffer_size = 1; break;//1
+    case CMD_CODE_setTonerEnd:          direct = 1; data_buffer_size = 1; break;//1
 
-    case CMD_CODE_getv4:                direct = 0; data_buffer_size = sizeof(net_info_st);  break;//128
-    case CMD_CODE_setv4:                direct = 1; data_buffer_size = sizeof(net_info_st);  break;//128
-    case CMD_CODE_getv6:                direct = 0; data_buffer_size = sizeof(net_ipv6_st);  break;//360
-    case CMD_CODE_setv6:                direct = 1; data_buffer_size = sizeof(net_ipv6_st);  break;//360
+    case CMD_CODE_getv4:                direct = 0; data_buffer_size = 128;  break;//128
+    case CMD_CODE_setv4:                direct = 1; data_buffer_size = 128;  break;//128
+    case CMD_CODE_getv6:                direct = 0; data_buffer_size = 360;  break;//360
+    case CMD_CODE_setv6:                direct = 1; data_buffer_size = 360;  break;//360
 
     default:        ret = -1;        break;
     }
@@ -116,7 +117,9 @@ int SetterApi::cmd(int cmd ,void* data ,int data_size)
                                                ,buffer ,sizeof(COMM_HEADER)+data_buffer_size * (1 - direct));
     }
     //check result
-    if(!err && MAGIC_NUM == ppkg->magic){//ACK
+//    if(!err){//ACK 0x1A2B3C4D
+    if(!err && 0x1A2B3C4D == ppkg->magic){//ACK 0x1A2B3C4D
+//    if(!err && MAGIC_NUM == ppkg->magic){//ACK 0x1A2B3C4D
         if(!direct){//get
             memcpy(data ,buffer + sizeof(COMM_HEADER) ,data_size);
         }else{//set
@@ -130,6 +133,44 @@ int SetterApi::cmd(int cmd ,void* data ,int data_size)
     delete [] buffer;
     return err;
 }
+
+#if 1
+
+int SetterApi::write(char* wrBuffer ,int wrSize)
+{
+    int err = DeviceStruct::ERR_communication;
+    int result;
+    if(wrSize > 8){
+        result = dio->writeCommand(wrBuffer ,8);
+        if(result > 0){
+            result = dio->writeCommand(wrBuffer + 8 ,wrSize - 8);
+        }
+    }
+    char* writeBuffer = wrBuffer;
+    LOG_PARA("write command:%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x"
+              ,writeBuffer[0] ,writeBuffer[1] ,writeBuffer[2] ,writeBuffer[3] ,writeBuffer[4]
+             ,writeBuffer[5] ,writeBuffer[6] ,writeBuffer[7] ,writeBuffer[8] ,writeBuffer[9]
+             ,writeBuffer[10]);
+    if(result > 0){
+        err = DeviceStruct::ERR_ACK;
+    }
+    return err;
+}
+
+int SetterApi::writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdSize)
+{
+    int err = write(wrBuffer ,wrSize);
+    int result;
+    if(!err){
+        delay100ms(1 ,true);
+        result = dio->readCommand(rdBuffer ,rdSize);
+        if(result != rdSize){
+            err = DeviceStruct::ERR_communication;
+        }
+    }
+    return err;
+}
+#else
 
 int SetterApi::write(char* wrBuffer ,int wrSize)
 {
@@ -145,23 +186,39 @@ int SetterApi::write(char* wrBuffer ,int wrSize)
     //    else
     //        delay100ms (10 ,true);
 
-        int _read_size = 0;
-        char readBuffer[0x3ff];
+//        int _read_size = 0;
+//        char readBuffer[0x3ff];
 
     //    bool delay = false;
+
         for(i = 0 ;i < 1 ;i++){
     //    for(i = 0 ;i < 5 ;i++){
-            _read_size = dio->read(readBuffer ,0x3ff);
-            LOG_PARA("before write clear read buffer :%d" ,_read_size);
+//            _read_size = dio->readCommand(readBuffer ,0x3ff);
+//            LOG_PARA("before write clear read buffer :%d" ,_read_size);
 
     //        delay100ms (0.3 ,delay);
+            if(wrSize > 8){
 
-            _write_size = dio->write(writeBuffer ,wrSize);
+                char cmd[8] = { 0x1a,0x2b,0x3c,0x4d, 6, 1, 3, 0 };
+                _write_size = dio->write(cmd ,8);
+                if(_write_size >= 0){
+                    cmd[0] = 0x13;
+                    cmd[1] = 1;
+                    cmd[2] = 0;
+                    _write_size = dio->write(cmd ,3);
+                }
+
+//                _write_size = dio->writeCommand(writeBuffer ,8);
+//                LOG_PARA("write size:%d......%d" ,8 ,_write_size);
+//                _write_size = dio->writeCommand(writeBuffer + 8 ,wrSize - 8);
+//                LOG_PARA("write size:%d......%d" ,wrSize - 8 ,_write_size);
+            }
+//            _write_size = dio->writeCommand(writeBuffer ,wrSize);
+//            LOG_PARA("write size:%d......%d" ,wrSize ,_write_size);
             delay100ms (1 ,true);
-            LOG_PARA("write size:%d......%d" ,wrSize ,_write_size);
+            err = DeviceStruct::ERR_ACK;
+            break;
     //        if(_write_size == wrSize){
-                err = DeviceStruct::ERR_ACK;
-                break;
     //        }else{
     //            err = DeviceStruct::ERR_communication;
     //        }
@@ -169,10 +226,9 @@ int SetterApi::write(char* wrBuffer ,int wrSize)
     //    if(err)
     //        LOG_NOPARA("write wrong");
     }else{
-
         for(i = 0 ;i < 1 ;i++){
     //    for(i = 0 ;i < 3 ;i++){
-            _write_size = write(writeBuffer ,wrSize);
+            _write_size = dio->writeCommand(writeBuffer ,wrSize);
             LOG_PARA("write size:%d......%d" ,wrSize ,_write_size);
             if(_write_size == wrSize){
                 err = DeviceStruct::ERR_ACK;
@@ -180,6 +236,10 @@ int SetterApi::write(char* wrBuffer ,int wrSize)
             }
         }
     }
+    LOG_PARA("write command:%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x,%02x"
+              ,writeBuffer[0] ,writeBuffer[1] ,writeBuffer[2] ,writeBuffer[3] ,writeBuffer[4]
+             ,writeBuffer[5] ,writeBuffer[6] ,writeBuffer[7] ,writeBuffer[8] ,writeBuffer[9]
+             ,writeBuffer[10]);
     return err;
 }
 
@@ -194,9 +254,9 @@ int SetterApi::writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdS
         int nocheck=0;
 
         delay100ms(9 ,ifdelay);
-        for(j = 0 ;j < 50 ;j++){
+        for(j = 0 ;j < 1 ;j++){
             if(!nocheck){
-                if(1 == dio->read(rdBuffer,1)){
+                if(1 == dio->readCommand(rdBuffer,1)){
                     if(0x4d != rdBuffer[0]){
                         LOG_PARA("waiting for 0x4d:%#.2x" ,rdBuffer[0]);
                         delay100ms (1 ,ifdelay);
@@ -210,10 +270,10 @@ int SetterApi::writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdS
             }
             nocheck = 0;
             delay100ms (1 ,ifdelay);
-            if(1 == dio->read(rdBuffer+1,1)){
+            if(1 == dio->readCommand(rdBuffer+1,1)){
                 if(0x3c == rdBuffer[1]){
                     delay100ms (1 ,ifdelay);
-                    _read_size = dio->read(rdBuffer+2 ,rdSize-2);
+                    _read_size = dio->readCommand(rdBuffer+2 ,rdSize-2);
                     LOG_PARA("read size:%d" ,_read_size == -1 ?-1 : _read_size + 2);
                     j++;
                     break;
@@ -224,7 +284,7 @@ int SetterApi::writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdS
             delay100ms (1 ,ifdelay);
         }
 
-        LOG_PARA("try %d times" ,j);
+//        LOG_PARA("try %d times" ,j);
         if(_read_size == rdSize -2){
             err = DeviceStruct::ERR_ACK;
         }else{
@@ -234,3 +294,4 @@ int SetterApi::writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdS
     }
     return err;
 }
+#endif

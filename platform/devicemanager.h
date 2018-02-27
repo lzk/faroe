@@ -32,16 +32,17 @@ public:
     int isCancelSearch();
     void addDeviceInfo(DeviceInfo* ,int);
     static void addDevice(DeviceInfo* ,void*);
+    static void addUsbDevice(DeviceInfo* ,void*);
 
 signals:
-    void progressChanged(qreal);
-    void addImage(QString  ,QSize);
+    void progressChanged(int progress ,int page);
     void updateDeviceList(QStringList);
     void scanResult(int);
     void cmdResult(int cmd ,int err ,QString);
     void searchComplete();
     void deviceConnected(QString);
     void updateDeviceStatus(bool);
+    void scanedImage(QString ,QSize);
 
 public slots:
     void cancelScan();
@@ -53,11 +54,13 @@ public slots:
 
 private slots:
     void watchDevice();
+    void addImage(QString);
 
 private:
     JKInterface* jkInterface;
     Device* device;
     int cancelSearch;
+    int currentCmd;
     QStringList m_deviceList;
     QList<DeviceInfo> deviceList;
     NetIO netIO;
@@ -65,19 +68,26 @@ private:
     UsbIO usbIO;
 #endif
     AppQt platformApp;
-    QTimer* timerForDeviceWatcher;
-    void saveImage(const QImage& image);
+#if TEST
+    void testAddImage(const QString&);
+#endif
 
     Scanner::Setting parseUiScannerSetting(const QString&);
     Setter::struct_wifiSetting parseUiWifiSetting(const QString&);
     QString parseUiPassword(const QString&);
     int parseUiSaveTime(const QString&);
     QString uiParseSaveTime(int);
+    int parseUiOffTime(const QString&);
+    QString uiParseOffTime(int);
+    Setter::struct_deviceSetting parseUiDeviceSetting(const QString&);
+    QString uiParseDeviceSetting(Setter::struct_deviceSetting);
     QString uiParseWifiInfo(Setter::struct_wifiInfo);
     QString uiParseIpv4(Setter::struct_ipv4);
     Setter::struct_ipv4 parseUiIpv4(const QString&);
     QString uiParseSoftap(Setter::struct_softAp);
     Setter::struct_softAp parseUiSoftap(const QString&);
+
+    void connectDeviceInfo(DeviceInfo*);
 };
 
 #endif // DEVICEMANAGER_H

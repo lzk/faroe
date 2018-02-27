@@ -44,7 +44,7 @@ Item {
         anchors.topMargin: 28
         anchors.rightMargin: 15
         anchors.leftMargin: 15
-        anchors.bottomMargin: 15
+//        anchors.bottomMargin: 15
         anchors.fill: parent
     }
 

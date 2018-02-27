@@ -3,6 +3,24 @@ TEMPLATE = app
 QT += qml quick printsupport
 CONFIG += c++11
 
+TARGET = faroeVOP
+VERSION = 0.0.1
+ICON = faroeVOP.icns
+
+#UI_HEADERS_DIR = ../build
+#UI_SOURCES_DIR = ../build
+#UI_DIR = ../build
+#MOC_DIR = ../build
+#RCC_DIR = ../build
+#CONFIG(release){
+#OBJECTS_DIR = ../build/release
+#DESTDIR = ../build/release
+#}
+#CONFIG(debug){
+#OBJECTS_DIR = ../build/debug
+#DESTDIR = ../build/debug
+#}
+
 SOURCES += main.cpp \
             jkinterface.cpp \
     ImageViewer/imagemodel.cpp \
@@ -20,6 +38,11 @@ SOURCES += main.cpp \
     ../platform/log.cpp \
     ../lld/setter.cpp \
     ../lld/setterapi.cpp \
+    ../imageManager/imagemanager.cpp \
+    ../imageManager/decodemanager.cpp \
+    ../platform/mac/macapi.cpp \
+    ../platform/platform.cpp \
+    ../imageManager/wrapperqimage.cpp
 
 HEADERS += \
     jkenums.h \
@@ -41,52 +64,79 @@ HEADERS += \
     ../lld/setterapi.h \
     ../lld/setterstruct.h \
     ../platform/devicestruct.h \
+    ../imageManager/imagemanager.h \
+    ../imageManager/decodemanager.h \
+    ../platform/platform.h \
+    ../imageManager/wrapperqimage.h
+
+RESOURCES += \
+    ../newui/newui.qrc
+
+#DEFINES += TEST
 
 mac{
 SOURCES += \
     ../platform/mac/mac_usb.cpp \
-    ../platform/mac/usbio.cpp
+    ../platform/mac/usbio.cpp \
+   ../platform/mac/mac_api.mm
+
+OBJECTIVE_SOURCES +=
+   ../platform/mac/mac_api.mm
 
 HEADERS += \
     ../platform/mac/mac_usb.h \
     ../platform/mac/usbio.h
-}
 
-RESOURCES += newui.qrc \
+LIBS += -framework IOKit \
+        -framework CoreFoundation \
+        -framework Foundation \
+         -L$$PWD/../qtftp/build/Release/lib/ -lQt5Ftp \
+         -lnetsnmp \
+         -liconv
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+#         `net-snmp-config --cflags`
 
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
+INCLUDEPATH += $$PWD/../qtftp/build/Release/include
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
+INCLUDEPATH += $$PWD/../libs/zxing-cpp/include
+DEPENDPATH += $$PWD/../libs/zxing-cpp/include
+LIBS += $$PWD/../libs/zxing-cpp/lib/libzxing.a
+#PRE_TARGETDEPS += $$PWD/libs/zxing-cpp/lib/libzxing.a
 
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
-DEFINES += TEST
-
-windows{
-#LIBS += -LC:/usr/lib/ -lnetsnmp
-#INCLUDEPATH += C:/usr/include
-SOURCES -= ../platform/netsnmp.cpp
-DEFINES += OS_WIN
+#  QMAKE_INFO_PLIST = ../mac/Info.plist
 }else{
-LIBS += `net-snmp-config --cflags` -lnetsnmp
+    windows{
+    #LIBS += -LC:/usr/lib/ -lnetsnmp
+    #INCLUDEPATH += C:/usr/include
+    SOURCES -= ../platform/netsnmp.cpp
+    DEFINES += OS_WIN
+    LIBS += -lQt5Ftp
+    }
 }
 
-mac: LIBS += -framework IOKit
-mac: LIBS += -framework CoreFoundation
+TRANSLATIONS = ../newui/translations/vop.en.ts  \
+                ../newui/translations/vop.zh_CN.ts
+lupdate_only{
+SOURCES += ../newui/*.qml \
+            ../newui/*.js \
+          ../newui/component/*.qml \
+          ../newui/component/*.js \
+          ../newui/component/path/*.qml \
+          ../newui/component/path/*.js \
+          ../newui/ImageViewer/*.qml \
+          ../newui/ImageViewer/*.js \
+          ../newui/ScanPage/*.qml \
+          ../newui/ScanPage/*.js \
+          ../newui/ScanToPage/*.qml \
+          ../newui/ScanToPage/*.js \
+          ../newui/SettingsPage/*.qml \
+          ../newui/SettingsPage/*.js \
+          ../newui/SettingsPage/component/*.qml \
+          ../newui/SettingsPage/component/*.js \
+          ../newui/SettingsPage/QuickScanSettings/*.qml \
+          ../newui/SettingsPage/QuickScanSettings/*.js \
+          ../newui/SettingsPage/ScanSetting/*.qml \
+          ../newui/SettingsPage/ScanSetting/*.js \
+}
+
 

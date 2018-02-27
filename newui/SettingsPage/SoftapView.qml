@@ -1,13 +1,15 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
-import "component"
+import "component" as Local
 import "../component"
+import com.liteon.JKInterface 1.0
 
 Item {
-    id: item1
+    id: root
     width: 495
     height: 460
+    enabled: scanData.deviceStatus
 
     ColumnLayout {
         anchors.fill: parent
@@ -30,16 +32,29 @@ Item {
                 font.pixelSize: 14
             }
 
-            Item {
-                id: item_checkbox
-                width: 100
-                height: 50
+            Row{
                 anchors.right: parent.right
+                anchors.rightMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
+                spacing: 5
+                Text{
+                    text: qsTr("Close")
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Local.JKCheckBox {
+                    id: checkbox
+                    width: 45
+                    height: 22
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Text{
+                    text: qsTr("Open")
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
         }
 
-        DividingLine{
+        Local.DividingLine{
             height: 6
             width: parent.width
         }
@@ -61,6 +76,9 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                input.validator: RegExpValidator{
+                    regExp: /[^\s]{0,32}/
+                }
             }
         }
 
@@ -81,6 +99,9 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                input.validator: RegExpValidator{
+                    regExp: /.{0,64}/
+                }
             }
         }
         Item{
@@ -101,19 +122,44 @@ Item {
 
     }
 
-    Component.onCompleted: {
-    }
-
-    CheckBox{
-        parent: item_checkbox
-        anchors.fill: parent
-        text:qsTr("Open")
-
-    }
     Connections{
         target: button_apply
         onClicked: {
+            setting.enable = checkbox.checked
+            setting.ssid = input_ssid.text
+            setting.password = input_password.text
+            setSetterCmd(DeviceStruct.CMD_setSoftap ,setting)
         }
     }
 
+    property var setting:{
+        "enable":true
+        ,"ssid":""
+        ,"password":""
+    }
+    Component.onCompleted: {
+        setSetterCmd(DeviceStruct.CMD_getSoftap ,setting)
+    }
+    Connections{
+        target: jkInterface
+        onCmdResult:{
+            switch(cmd){
+            case DeviceStruct.CMD_getSoftap:
+                if(!result){
+                    setting = JSON.parse(data)
+                    console.log(data)
+                    checkbox.checked = setting.enable
+                    input_ssid.text = setting.ssid
+                    input_password.text = setting.password
+                }
+
+                break;
+            case DeviceStruct.CMD_setSoftap:
+                if(!result){
+                    information_1button(qsTr("Configuration completed. Restart the device to apply changes."))
+                }
+                break
+            }
+        }
+    }
 }

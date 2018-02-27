@@ -114,6 +114,35 @@ Item {
         setting.userName = textInput2.text
         setting.password = textInput3.text
         setting.targetPath = textInput4.text
+        if(setting.userName === ""){
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Faroe_server_addr1")))
+            return false
+        }else if(!setting.serverAddress === ""){
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Faroe_username1")))
+            return false
+        }else if(!setting.password === ""){
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_password1")))
+            return false
+        }else if(!setting.targetPath === ""){
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_targetPath1")))
+            return false
+        }else if(!setting.serverAddress.match(/ftp:\/\/[^\/\.]+$/i)){
+            warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_Faroe_server_addr1")))
+            return false
+        }else if(!setting.targetPath.match(/\/[^\/\.]$/i) && checkQuote(setting.targetPath)){
+            warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_targetPath1")))
+            return false
+        }
         return true
+    }
+    function checkQuote(str) {
+        var items = ["\\", "?", "*"];
+        str = str.toLowerCase();
+        for (var i = 0; i < items.length; i++) {
+            if (str.indexOf(items[i]) >= 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

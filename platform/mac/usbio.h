@@ -9,10 +9,12 @@ class UsbIO : public DeviceIO
 public:
     UsbIO();
     virtual int type();
-    virtual int open();
+    virtual int open(int para = 0);
     virtual int close(void);
     virtual int write(char *buffer, int bufsize);
     virtual int read(char *buffer, int bufsize);
+    virtual int writeCommand(char *buffer, int bufsize);
+    virtual int readCommand(char *buffer, int bufsize);
     virtual int resolveUrl(const char* url);
     virtual bool isConnected();
 
@@ -23,6 +25,7 @@ public:
 private:
     int inPipeRef;
     int outPipeRef;
+    int interface;
     int address;
     IOUSBInterfaceInterface_version **intf;
     IOUSBDeviceInterface_version** dev;

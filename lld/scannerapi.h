@@ -25,6 +25,12 @@ public:
     int getStatus(SC_STATUS_DATA_T& status);
     int resetScan();
 
+    bool ready();
+    int lock();
+    int unlock();
+    int getPowerSupply(SC_POWER_INFO_T& sc_powerData);
+    int setGamma(const unsigned int* gammaTable ,int length);
+
 private:
     DeviceIO* dio;
     int JobID;

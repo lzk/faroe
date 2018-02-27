@@ -7,6 +7,9 @@
 #include "devicemanager.h"
 using namespace JK;
 #include <QNetworkInterface>
+
+#define TimeOutSecond 3
+
 void findAgent(addDeviceHandler handler,void* pData ,char* broadcast);
 void findAgentV6(addDeviceHandler ,void*);
 void snmpSearchDevices(addDeviceHandler handler,void* pData)
@@ -28,7 +31,15 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
 }
 
 
-static const oid oidName[] = {1,3,6,1,4,1,2699,1,2,1,2,1,1,2,1};
+#define SYSOBJECTID_OID               "1.3.6.1.2.1.1.2.0"
+#define SYSNAME_OID                      "1.3.6.1.2.1.1.5.0"
+#define PVT_DEVICEID_OID   "1.3.6.1.4.1.26266.86.10.1.1.1.1.0"
+static const oid sysObjectID[] = {1,3,6,1,2,1,1,2,0};
+static const oid sysNameID[] = {1,3,6,1,2,1,1,5,0};
+static const oid deviceID[] = {1,3,6,1,4,1,26266,86,10,1,1,1,1,0};
+static const oid oidName[] = {1,3,6,1,2,1,1,2,0};
+static const oid objectID[] = {1,3,6,1,4,1,26266,86,10,2,1};
+//static const oid oidName[] = {1,3,6,1,4,1,2699,1,2,1,2,1,1,2,1};
 static const oid oidDeviceID[]={1,3,6,1,4,1,2699,1,2,1,2,1,1,3,1};
 static const size_t sizeofOidName = sizeof(oidName)/sizeof(oidName[0]);
 
@@ -40,6 +51,27 @@ struct My_synch_state{
 
 static void handlerData(netsnmp_pdu *pdu, void *magic)
 {
+    bool found = false;
+    struct variable_list *vars;
+    for(vars = pdu->variables; vars; vars = vars->next_variable){
+//        int i;
+//        for(i=0;i<vars->name_length;i++){
+//            if(i == 0)
+//                printf("oid name:");
+//            printf("%d ",vars->name[i]);
+//        }
+//        printf("\n");
+//        memcpy(str ,vars->val.string ,vars->val_len);
+        if(ASN_OBJECT_ID == vars->type){
+            if(!memcmp(vars->val.objid ,objectID ,vars->val_len)){
+                found = true;
+            }
+        }
+        break;
+    }
+
+    if(!found)
+        return;
     struct synch_state *state = (struct synch_state *) magic;
     struct My_synch_state *mystate;
     mystate = (struct My_synch_state*)magic;
@@ -64,18 +96,6 @@ static void handlerData(netsnmp_pdu *pdu, void *magic)
         }
     }
 
-    struct variable_list *vars;
-    for(vars = pdu->variables; vars; vars = vars->next_variable){
-//        int i;
-//        for(i=0;i<vars->name_length;i++){
-//            printf("%d ",vars->name[i]);
-//        }
-//        print_value(vars->name, vars->name_length, vars);
-//        char str[1024];
-//        memset(str ,0 ,1024);
-        memcpy(deviceInfo.name ,vars->val.string ,vars->val_len);
-        break;
-    }
     mystate->addDevice(&deviceInfo ,mystate->pData);
     qDebug()<<"device info:"<<deviceInfo.name<<"("<<deviceInfo.address<<")";
 }
@@ -229,7 +249,7 @@ void findAgent(addDeviceHandler handler,void* pData ,char* broadcast)
     session.community_len = strlen ((const char*)session.community);
     session.peername = (char*)broadcast;//被监控主机的IP地址
     session.flags |= SNMP_FLAGS_UDP_BROADCAST;
-    session.timeout =  5 *1000 * 1000;
+    session.timeout =  TimeOutSecond *1000 * 1000;
 
     struct My_synch_state lstate;
     memset((void*)&lstate ,0 ,sizeof(lstate));
@@ -249,7 +269,7 @@ void findAgentV6(addDeviceHandler handler,void* pData)
 //    session.peername = (char*)"udp6:[2001:DB8::6:721A:4FF:FE11:6D58]";//被监控主机的IP地址
     session.peername = (char*)"udp6:[ff08::]";//被监控主机的IP地址
     session.flags |= SNMP_FLAGS_UDP_BROADCAST;
-    session.timeout =  5 *1000 * 1000;
+    session.timeout =  TimeOutSecond *1000 * 1000;
 
     struct My_synch_state lstate;
     memset((void*)&lstate ,0 ,sizeof(lstate));

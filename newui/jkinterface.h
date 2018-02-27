@@ -5,7 +5,7 @@
 #include <QSize>
 #include <QMutex>
 #include <QThread>
-#include <QJSValue>
+#include <QImage>
 class DeviceManager;
 class ImageModel;
 class ImageManager;
@@ -15,20 +15,18 @@ class JKInterface : public QObject
 public:
     explicit JKInterface(QObject *parent = nullptr);
     ~JKInterface();
+
+public:
     void setScanDataHandle(QObject* scanData);
     QString getCurrentDevice();
     void installImageModel(ImageModel* imageModel){this->imageModel=imageModel;}
-
 public:
     Q_INVOKABLE QStringList getPrinterName();
     Q_INVOKABLE void cancelScan();
+    Q_INVOKABLE void setCmd(int cmd ,const QString& data=QString());
+    Q_INVOKABLE void setScanToCmd(int cmd ,QList<int> ,const QString& jsonData=QString());
 
-    Q_INVOKABLE void toPrint(QList<int>);
-    Q_INVOKABLE void toEmail(QList<int> ,int);
-    Q_INVOKABLE void toFile(QList<int> ,const QString&);
-    Q_INVOKABLE void toFTP(QList<int> ,const QString& jsonData);
-    Q_INVOKABLE void toApplication(QList<int> ,const QString&);
-    Q_INVOKABLE void toCloud(QList<int> ,const QString& jsonData);
+    Q_INVOKABLE void test();
 signals:
     void searchDeviceList();
 //    void cancelSearch();
@@ -36,41 +34,43 @@ signals:
     void connectDevice(int);
 
     void cmdToDevice(int cmd ,QString data);
-    void cmdResult(int cmd,int result ,QString data);
+    void progressChanged(int progress ,int page);
+    void cmdResult(int cmd,int result ,QString data=QString());
 
-//    void progressChanged();
-//    void ADFModeChanged();
-//    void dpiChanged();
-//    void colorModeChanged();
-//    void scanAreaSizeChanged();
-//    void MultiFeedChanged();
-//    void contrastChanged();
-//    void brightnessChanged();
-//    void AutoCropAndDeskewChanged();
+    void imagesCmdStart(int cmd, QString ,QStringList fileList = QStringList());
+    void imagesCmd(QStringList fileList = QStringList());
+    void imagesCmdEnd(int cmd ,int result);
 
-    void imagesToPrint(QStringList ,QString);
-    void imagesToEmail(QStringList ,int);
-    void imagesToFile(QStringList ,QString);
-    void imagesToFTP(QStringList ,QString);
-    void imagesToApplication(QStringList ,QString);
-    void imagesToCloud(QStringList ,QString);
-    void ftpUploadComplete();
-
+    void init();
+    void deviceConnectCompleted();
 
 public slots:
-//    void setProgress(qreal prgrs);
-    void addImage(QString filename,QSize sourceSize);
+    void imagesCmdResult(int ,int ,int);
+    void deviceCmdResult(int cmd,int result ,QString data);
+    void scanedImage(QString filename,QSize sourceSize);
     void updateDeviceList(QStringList);
     void deviceConnected(QString);
     void updateDeviceStatus(bool);
+
+private:
 
 private:
     QObject* scanData;
     DeviceManager* deviceManager;
     ImageManager* imageManager;
     ImageModel* imageModel;
+    int cmd;
+    int cmd_state;
+    int cmd_status;
+    QString cmd_para;
+    int imageCmdResult;
+    QStringList fileList;
     QMutex mutex;
     QThread thread;
+    QThread thread_decode;
+
+    void sendImagesCommand(int cmd, QString ,const QStringList& fileList = QStringList());
+    void cmdComplete(int cmd,int result ,const QString& data=QString());
 };
 
 #endif // JKINTERFACE_H

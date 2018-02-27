@@ -101,6 +101,7 @@ ScanPageLayout {
             currentIndex ++
         }
     }
+
     JKFunctionButton{
         id:button_decode
         parent: item_decode
@@ -161,10 +162,27 @@ ScanPageLayout {
     }
 
     Connections{
+        target: button_decode
+        onClicked: setScanCmd(DeviceStruct.CMD_DecodeScan ,scanData.qrcodeSetting)
+    }
+    Connections{
+        target: button_separation
+        onClicked: setScanCmd(DeviceStruct.CMD_SeperationScan ,scanData.qrcodeSetting)
+    }
+
+    Connections{
+        target: button_quickScan
+        onClicked:{
+            var cmd = DeviceStruct.CMD_QuickScan_ToPrint + scanData.constQuickScanSids.indexOf(currentQuickScanSetting.sid)
+            setScanCmd(cmd ,currentQuickScanSetting)
+        }
+    }
+
+    Connections{
         target: jkInterface
         onCmdResult:{
-            if(cmd === DeviceStruct.CMD_SCAN){
-                dialog.close()
+            switch(cmd){
+            case DeviceStruct.CMD_ScanTo:
                 switch(result){
                 case DeviceStruct.ERR_ACK:
                     root.StackView.view.push("ScanToPage.qml")
@@ -172,27 +190,24 @@ ScanPageLayout {
                 case DeviceStruct.ERR_SCAN_CANCEL:
                     jkImageModel.removeAll()
                     break;
-                default:
-                    break;
                 }
-
+                break
+            case DeviceStruct.CMD_DecodeScan:
+            case DeviceStruct.CMD_SeperationScan:
+            case DeviceStruct.CMD_QuickScan:
+            case DeviceStruct.CMD_QuickScan_ToPrint:
+            case DeviceStruct.CMD_QuickScan_ToFile:
+            case DeviceStruct.CMD_QuickScan_ToFTP:
+            case DeviceStruct.CMD_QuickScan_ToEmail:
+            case DeviceStruct.CMD_QuickScan_ToApplication:
+            case DeviceStruct.CMD_QuickScan_ToCloud:
+                break
             }
         }
     }
 
     function scanTo(){
         jkImageModel.removeAll()
-        jkInterface.cmdToDevice(DeviceStruct.CMD_SCAN ,JSON.stringify(scanData.scanParameter.scanSetting));
-        openScanningDialog()
-    }
-    function cancelScan(){
-        jkInterface.cancelScan()
-    }
-
-    property var dialog
-    function openScanningDialog(){
-        dialog = openDialog("ScanPage/ScanningDialog.qml" ,{} ,function(dialog){
-            dialog.cancel.connect(cancelScan)
-        })
+        setScanCmd(DeviceStruct.CMD_ScanTo ,scanData.scanToParameter)
     }
 }

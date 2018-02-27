@@ -106,7 +106,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             text.text: qsTr("Connect")
             enabled: listview.count > 0
-            onClicked: jkInterface.connectDevice(listview.currentIndex)
+            onClicked: connectToDevice(listview.currentIndex)
         }
     }
 
@@ -118,6 +118,7 @@ Item {
         height: 70
         source_normal: "qrc:/Images/clockwise-arrow.png"
         source_press: "qrc:/Images/clockwise-arrow_press.png"
+        source_disable: "qrc:/Images/clockwise-arrow.png"
     }
 
     Connections{
@@ -127,7 +128,14 @@ Item {
 
     Connections{
         target: jkInterface
-        onSearchComplete:closeRefreshDialog()
+        onSearchComplete:{
+            closeRefreshDialog()
+            if(listview.count >= 0)
+                connectToDevice(0)
+        }
+        onDeviceConnectCompleted:{
+            button_connect.enabled = true
+        }
     }
 
     Component.onCompleted: refresh()
@@ -139,11 +147,20 @@ Item {
 
     function closeRefreshDialog(){
         dialog.close()
+        button_refresh.enabled = true
     }
     
     function refresh(){
+        button_refresh.enabled = false
         scanData.model_deviceList = null
         jkInterface.searchDeviceList()
         openRefreshDialog()
+    }
+
+    function connectToDevice(index){
+        if(index < 0)
+            return
+        jkInterface.connectDevice(index)
+        button_connect.enabled = false
     }
 }

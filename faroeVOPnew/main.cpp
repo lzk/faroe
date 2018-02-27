@@ -9,6 +9,7 @@
 #include "../newui/jkinterface.h"
 #include "../platform/devicestruct.h"
 #include <QHBoxLayout>
+#include <QTranslator>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -16,6 +17,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Faroe VOP");
     QCoreApplication::setOrganizationName("Liteon");
     QCoreApplication::setOrganizationDomain("com.liteon");
+
+    QTranslator trans;
+    if(!trans.load(QLocale(QLocale::system().name()) ,"vop" ,"." ,":/translations"))
+        trans.load(QLocale(QLocale::English) ,"vop" ,"." ,":/translations");
+
+    a.installTranslator(&trans);
 
     qmlRegisterType<ImageModel>("com.liteon.JKInterface" ,1,0,"ImageModel");
     qmlRegisterType<JKEnums>("com.liteon.JKInterface" ,1,0,"JKEnums");
@@ -54,5 +61,6 @@ int main(int argc, char *argv[])
     QObject* scanData = rootObject->findChild<QObject*>("scanData");
     if(scanData)
         jki.setScanDataHandle(scanData);
+
     return a.exec();
 }

@@ -87,6 +87,7 @@ Item {
             JKTextButton {
                 id: button_reset
                 text.text: qsTr("Reset")
+                visible: comboBox_cloudType.currentText !== JSData.supportCloudType().icloud
                 width: 100
                 height: 35
                 anchors.right: parent.right
@@ -126,10 +127,10 @@ Item {
         }
     }
 
-    property var scanParameter:scanData.scanParameter
+    property var scanToParameter:scanData.scanToParameter
     Component.onCompleted: {
-        comboBox_cloudType.currentIndex = scanParameter.cloudType
-        comboBox_emailAttachmentFileType.currentIndex = scanParameter.emailAttachmentFileType
+        comboBox_cloudType.currentIndex = JSData.constCloudType().indexOf(scanToParameter.cloudTypeText)
+        comboBox_emailAttachmentFileType.currentIndex = scanToParameter.emailAttachmentFileType
     }
 
     JKTextButton{
@@ -137,16 +138,16 @@ Item {
         anchors.fill: parent
         text.text: qsTr("Settings...")
         onClicked: {
-            openScanSettingDialog(scanParameter.scanSetting)
+            openScanSettingDialog(scanToParameter.scanSetting)
         }
     }
     Connections{
         target: comboBox_cloudType
-        onActivated: scanParameter.cloudType = target.currentIndex
+        onActivated: scanToParameter.cloudTypeText = target.currentText
     }
     Connections{
         target: comboBox_emailAttachmentFileType
-        onActivated: scanParameter.emailAttachmentFileType = target.currentIndex
+        onActivated: scanToParameter.emailAttachmentFileType = target.currentIndex
     }
     Connections{
         target:button_reset

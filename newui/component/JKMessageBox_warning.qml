@@ -8,6 +8,7 @@ JKDialog {
 //    property alias title: jKToolbar.text
     property alias message: messagebox.message
     property alias showImage: messagebox.showImage
+    property alias image: image
 
     toolbar{
         text.text: qsTr("Warning")
@@ -20,6 +21,7 @@ JKDialog {
         anchors.fill: parent
 
         Image{
+            id:image
             parent:messagebox.item_image
             source:"qrc:/Images/warning_2.png"
             anchors.fill: parent

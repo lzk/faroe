@@ -5,13 +5,15 @@ import "ScanData.js" as JSData
 QtObject {
     id:root    
 
-    property var constQuickScanSids
-    property var constQuickScanSettings
-    property var quickScanSettings
-
-    property var scanParameter
-    property var qrcodeSetting
-
+    property var constQuickScanSids:JSData.constQuickScanSid()
+    property var constQuickScanSettings:JSData.constQuickScanSettings()
+    property var quickScanSettings:JSData.defaultQuickScanSettings()
+    property var scanToParameter:JSData.defaultScanToSetting()
+    property var qrcodeSetting:JSData.defaultQrcodeSetting()
+    property var ftpSetting: JSData.defaultFTPSettings()
+    property var applicationSetting: JSData.defaultApplicationSettings()
+//    property var emailSetting: JSData.defaultEmailSettings()
+//    property var cloudSetting: JSData.defaultCloudSettings()
     property var model_deviceList
     property string currentDevice:""
     property bool deviceStatus:false
@@ -22,30 +24,31 @@ QtObject {
     }
 
     Component.onCompleted: {
-        constQuickScanSids = JSData.constQuickScanSid()
-        constQuickScanSettings = JSData.constQuickScanSettings()
-        quickScanSettings = JSData.defaultQuickScanSettings()
-        scanParameter = JSData.defaultScanParameterSetting()
-        qrcodeSetting = JSData.defaultQrcodeSetting()
 
         var tmp = JSON.parse(storageSettings.settings)
         if(verifyStorageQuickScanSetting(tmp.quickScanSettings)){
             quickScanSettings = tmp.quickScanSettings
         }
-        if(tmp.scanParameter)
-            scanParameter = tmp.scanParameter
+        if(tmp.scanToParameter)
+            scanToParameter = tmp.scanToParameter
         if(tmp.qrcodeSetting)
             qrcodeSetting = tmp.qrcodeSetting
         if(tmp.currentDevice)
             currentDevice = tmp.currentDevice
+//        if(tmp.emailSetting)
+//            emailSetting.fileType = tmp.emailSetting.fileType
+//        if(tmp.cloudSetting)
+//            cloudSetting.cloudType = tmp.cloudSetting.cloudType
     }
 
     Component.onDestruction: {
         var settings = {}
         settings.quickScanSettings = quickScanSettings
-        settings.scanParameter = scanParameter
+        settings.scanToParameter = scanToParameter
         settings.qrcodeSetting = qrcodeSetting
         settings.currentDevice = currentDevice
+//        settings.emailSetting = emailSetting
+//        settings.cloudSetting = cloudSetting
         storageSettings.settings = JSON.stringify(settings)
     }
 

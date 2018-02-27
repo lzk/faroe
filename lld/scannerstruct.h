@@ -2,6 +2,9 @@
 #define SCANNERSTRUCT_H
 namespace JK {
 
+#define UINT32	unsigned int
+#define UINT16	unsigned short
+#define UINT8	unsigned char
 #define U32	unsigned int
 #define U16	unsigned short
 #define U8	unsigned char
@@ -284,7 +287,9 @@ typedef struct SC_PAR_DATA_STRUCT {
 #define ACQ_NO_MIRROR		(0x02)
 #define ACQ_NO_SHADING		(0x04)
 #define ACQ_BACK_SCAN		(0x08)
-#define ACQ_Ultra_Sonic		(0x01 << 5)
+#define ACQ_NO_GAMMA		(0x10)
+#define ACQ_ULTRA_SONIC     (0x20)
+#define ACQ_CR_ENABLE		(0x40)
 #define ACQ_CROP_DESKEW		(0x01 << 8)
 #define ACQ_PAGE_FILL		(0x02 << 8)
 #define ACQ_LEFT_ALIGN		(0x04 << 8)
@@ -292,6 +297,7 @@ typedef struct SC_PAR_DATA_STRUCT {
 #define ACQ_AUTO_LEVEL		(0x10 << 8)
 #define ACQ_DETECT_COLOR	(0x20 << 8)
 #define ACQ_DETECT_BW		(0x40 << 8)
+#define ACQ_SKIP_BLANKPAGE	(0x40 << 8)
 
 #define ACQ_MOTOR_OFF		(0x01 << 16)    // scan without moving motor
 #define ACQ_NO_PP_SENSOR	(0x02 << 16)    // ADF scan without Doc/ADF sensor detection, Flatbed scan without home sensor detection
@@ -300,8 +306,9 @@ typedef struct SC_PAR_DATA_STRUCT {
 #define ACQ_PSEUDO_SENSOR	(0x10<< 16)
 #define ACQ_CALIBRATION		(0x20 << 16)  //Park test for calibration
 #define ACQ_SET_MTR			(0x40 << 16)  //Park test for set motor par from console
-#define ACQ_LIFE_TEST		(0x80 << 16)  //Park life test
+#define ACQ_SET_ME			(0x80 << 16)  //Park test for set ME par from console
 
+#define ACQ_LIFE_TEST		(0x01 << 24)  //Park life test
 #define ACQ_PICK_SS			(0x02 << 24)  //Park pick ss test
 
 typedef struct SC_PAR_STA_STRUCT {
@@ -354,26 +361,65 @@ typedef struct SC_INFO_STRUCT {
 //} SC_INFO_DATA_T;
 
 typedef struct SC_INFO_DATA_STRUCT {
-    U32 code;        // 4
-    U16 PageNum[2];      // 4
-    U32 ValidPageSize[2];  // 8
-    U16 ImageWidth[2];    // 4
-    U16 ImageHeight[2];    // 4
-    U8  EndPage[2];      // 4
-    U8  EndScan[2];
-    U8  UltraSonic;      // 4
-    U8  PaperJam;
-    U8  CoverOpen;
-    U8  Cancel;
-    U8  key;        // 4
-    U8  MotorMove;
-    U8  AdfSensor;
-    U8  DocSensor;
-    U8  HomeSensor;      // 4
-    U8  JobOwner;
-    U8  reserve1[2];
-    U8  reserve2[4];    // 4
-    U32 JobState;      // 4
+    UINT32 code;        // 4
+    UINT16 PageNum[2];      // 4
+    UINT32 ValidPageSize[2];  // 8
+    UINT16 ImageWidth[2];    // 4
+    UINT16 ImageHeight[2];    // 4
+    //UINT8  EndPage[2];
+    //UINT8  EndScan[2];
+
+    struct {
+        UINT16 EndPage : 1;
+        UINT16 EndScan : 1;
+        UINT16 IsColor : 1;
+        UINT16 IsBlank : 1;
+        UINT16 reserved : 12;
+    } ImgStatus[2];
+
+    struct {
+        UINT32 cover_open_err : 1;
+        UINT32 scan_jam_err : 1;
+        UINT32 scan_canceled_err : 1;
+        UINT32 scan_timeout_err : 1;
+        UINT32 multi_feed_err : 1;
+        UINT32 usb_transfer_err : 1;
+        UINT32 wifi_transfer_err : 1;
+        UINT32 usb_disk_transfer_err : 1;
+        UINT32 ftp_transfer_err : 1;
+        UINT32 smb_transfer_err : 1;
+        UINT32 reserved : 22;
+    } ErrorStatus;
+
+    struct {
+        UINT32 adf_document_sensor : 1;
+        UINT32 fb_home_sensor : 1;
+        UINT32 adf_paper_sensor : 1;
+        UINT32 cover_sensor : 1;
+        UINT32 reserved : 28;
+    } SensorStatus;
+
+    struct {
+        UINT32 scanning : 1;
+        UINT32 sleep_mode : 1;
+        UINT32 reserved : 30;
+    } SystemStatus;
+
+    UINT8  JobID;
+    UINT8  reserved[7];
+    //UINT8  UltraSonic;      // 4
+    //UINT8  PaperJam;
+    //UINT8  CoverOpen;
+    //UINT8  Cancel;
+    //UINT8  key;        // 4
+    //UINT8  MotorMove;
+    //UINT8  AdfSensor;
+    //UINT8  DocSensor;
+    //UINT8  HomeSensor;      // 4
+    //UINT8  JobOwner;
+    //UINT8  reserve1[2];
+    //UINT8  reserve2[4];    // 4
+    //UINT32 JobState;      // 4
 } SC_INFO_DATA_T;
 
 /*sensor parameter*/
@@ -411,6 +457,33 @@ typedef struct SC_IMG_STA_STRUCT {
     //U8	length[2];
     //U8	err;
 } SC_IMG_STA_T;
+
+typedef struct SC_PWRS_STRUCT {
+    U32	code;		//'PWRS'
+    U8 option;		//0-get, 1-set
+    U8 reserve[3];
+} SC_PWRS_T;
+
+typedef struct SC_PWRS_STA_STRUCT {
+    U32	code;		//'STA'
+    U8  ack;		//��A�� means ��Acknowledge��, then Byte 7 is power mode code, ��E�� means error
+    U8 reserve[2];
+    U8 powermodecode;
+} SC_PWRS_STA_T;
+
+typedef struct SC_SET_PWRS_DATA_STRUCT {
+    U16 autoSleepTime;
+    U16 autoOffTime;
+    U8 reserve[4];
+} SC_SET_PWRS_DATA_T;
+
+typedef struct SC_GET_PWRS_DATA_STRUCT {
+    U16 autoSleepTime;
+    U16 autoOffTime;
+    U16 disableAutoSleep;
+    U16 disableAutoOff;
+} SC_GET_PWRS_DATA_T;
+
 #define LENGTH
 //-----------------------------
 typedef struct SC_CNL_STRUCT {
@@ -539,6 +612,17 @@ typedef struct fw_version_ack_STRUCT {
     U8	reserved[4];
 } fw_version_ack;
 
+typedef struct SC_POWER_SUPPLY_STRUCT {
+    U32	code;
+    U8	reserved[4];
+} SC_POWER_T;
+
+typedef struct SC_POWER_INFO_STRUCT {
+    U32	code;
+    U8  ack;
+    U8	reserved[2];
+    U8  mode;
+} SC_POWER_INFO_T;
 
 typedef struct fw_version_get_STRUCT {
     U32	version;

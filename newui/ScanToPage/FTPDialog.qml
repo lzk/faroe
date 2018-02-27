@@ -63,8 +63,8 @@ JKParaDialog{
         onClicked: {
 //            if(settingLoader.item.ok()){
             if(settingLoader.ok()){
-                root.accepted()
                 root.close()
+                root.accepted()
             }
         }
     }

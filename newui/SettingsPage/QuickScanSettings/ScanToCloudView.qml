@@ -30,159 +30,172 @@ Item {
                 model: JSData.constCloudType()
             }
         }
-        Item {
-            id: item2
+        Column{
             width: parent.width
-            height: 60
+            visible: comboBox.currentText !== cloudTypes.icloud
+            Item {
+                id: item2
+                width: parent.width
+                height: 60
 
-            JKText {
-                id: text2
-                text: qsTr("Reset access token in cacle:")
-                font.bold: true
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 12
+                JKText {
+                    id: text2
+                    text: qsTr("Reset access token in cacle:")
+                    font.bold: true
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 12
+                }
+
+                JKTextButton {
+                    id: button_reset
+                    text.text: qsTr("Reset")
+                    width: 100
+                    height: 35
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
 
-            JKTextButton {
-                id: button_reset
-                text.text: qsTr("Reset")
-                width: 100
-                height: 35
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Item{
+                 id: item3
+                 width: parent.width
+                 height: 120
+                 visible: comboBox.currentText === cloudTypes.evernote
+                 Column{
+                     anchors.fill: parent
+                     Item {
+                         id: item31
+                         width: parent.width
+                         height: 60
+
+                         JKText {
+                             id: text31
+                             text: qsTr("Note Title:")
+                             font.bold: true
+                             anchors.left: parent.left
+                             anchors.verticalCenter: parent.verticalCenter
+                             font.pixelSize: 12
+                         }
+
+                         JKTextInput {
+                             id: textInput31
+                             width: 250
+                             height: 30
+                             anchors.right: parent.right
+                             anchors.verticalCenter: parent.verticalCenter
+                         }
+                     }
+                     Item {
+                         id: item32
+                         width: parent.width
+                         height: 60
+
+                         JKText {
+                             id: text32
+                             text: qsTr("Note Content:")
+                             font.bold: true
+                             anchors.left: parent.left
+                             anchors.verticalCenter: parent.verticalCenter
+                             font.pixelSize: 12
+                         }
+
+                         JKTextInput {
+                             id: textInput32
+                             width: 250
+                             height: 30
+                             anchors.right: parent.right
+                             anchors.verticalCenter: parent.verticalCenter
+                         }
+                     }
+                 }
+
+             }
+             Item{
+                 id: item4
+                 width: parent.width
+                 height: 120
+                 visible: !item3.visible
+                 Column{
+                     anchors.fill: parent
+                     Item {
+                         id: item41
+                         width: parent.width
+                         height: 60
+
+                         JKText {
+                             id: text41
+                             text: qsTr("Default Save Path:")
+                             font.bold: true
+                             anchors.left: parent.left
+                             anchors.verticalCenter: parent.verticalCenter
+                             font.pixelSize: 12
+                         }
+
+                         JKTextInput {
+                             id: textInput41
+                             width: 250
+                             height: 30
+                             anchors.right: parent.right
+                             anchors.verticalCenter: parent.verticalCenter
+                         }
+                     }
+                     Item {
+                         id: item42
+                         width: parent.width
+                         height: 60
+
+                         JKTextButton {
+                             id: button_browse
+                             text.text: qsTr("Browser...")
+                             width: 100
+                             height: 30
+                             anchors.right: parent.right
+                             anchors.verticalCenter: parent.verticalCenter
+                         }
+                     }
+                 }
+             }
+
         }
-        Item{
-            id: item3
-            width: parent.width
-            height: 120
-            visible: comboBox.currentIndex === 1
-            Column{
-                anchors.fill: parent
-                Item {
-                    id: item31
-                    width: parent.width
-                    height: 60
-
-                    JKText {
-                        id: text31
-                        text: qsTr("Note Title:")
-                        font.bold: true
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 12
-                    }
-
-                    JKTextInput {
-                        id: textInput31
-                        width: 250
-                        height: 30
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-                Item {
-                    id: item32
-                    width: parent.width
-                    height: 60
-
-                    JKText {
-                        id: text32
-                        text: qsTr("Note Content:")
-                        font.bold: true
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 12
-                    }
-
-                    JKTextInput {
-                        id: textInput32
-                        width: 250
-                        height: 30
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-            }
-
-        }
-        Item{
-            id: item4
-            width: parent.width
-            height: 120
-            visible: !item3.visible
-            Column{
-                anchors.fill: parent
-                Item {
-                    id: item41
-                    width: parent.width
-                    height: 60
-
-                    JKText {
-                        id: text41
-                        text: qsTr("Default Save Path:")
-                        font.bold: true
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 12
-                    }
-
-                    JKTextInput {
-                        id: textInput411
-                        width: 250
-                        height: 30
-                        visible: comboBox.currentIndex === 0
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    JKTextInput {
-                        id: textInput412
-                        width: 250
-                        height: 30
-                        visible: !textInput411.visible
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-                Item {
-                    id: item42
-                    width: parent.width
-                    height: 60
-
-
-                    JKTextButton {
-                        id: button_browse
-                        text.text: qsTr("Browser...")
-                        width: 100
-                        height: 30
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-            }
-        }
-
     }
 
-
+    property var cloudTypes : JSData.supportCloudType()
     property var setting
     Component.onCompleted:{
         init()
     }
 
     function init(){
-        comboBox.currentIndex = setting.cloudType
+        comboBox.currentIndex = JSData.constCloudType().indexOf(setting.cloudTypeText)
         textInput31.text = setting.noteTitle
         textInput32.text = setting.noteContent
-        textInput411.text = setting.dropboxFilePath
-        textInput412.text = setting.oneDriveFilePath
+        var filePath = ""
+        switch(setting.cloudTypeText){
+        case cloudTypes.dropbox:
+            filePath = setting.dropboxFilePath
+            break
+        case cloudTypes.onedrive:
+            filePath = setting.oneDriveFilePath
+            break
+        default:
+            break;
+        }
+        textInput41.text = filePath
     }
     function ok(){
-        setting.cloudType = comboBox.currentIndex
+        setting.cloudTypeText = comboBox.currentText
         setting.noteTitle = textInput31.text
         setting.noteContent = textInput32.text
-        setting.dropboxFilePath = textInput411.text
-        setting.oneDriveFilePath = textInput412.text
+        switch(comboBox.currentText){
+        case cloudTypes.dropbox:
+             setting.dropboxFilePath = textInput41.text
+            break
+        case cloudTypes.onedrive:
+            setting.oneDriveFilePath = textInput41.text
+            break
+        default:
+            break;
+        }
     }
 }

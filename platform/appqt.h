@@ -11,19 +11,20 @@ class AppQt : public QObject ,PlatformApp
 public:
     explicit AppQt(QObject *parent = nullptr);
 
-    void updateProgress(float progress);
+    void updateProgress(int progress ,int page);
     const char* getTempFilename(int side);
-    bool saveScanImage(Scanner::Setting* setting ,int side ,int page ,int lines);
+    bool saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para);
 signals:
-    void addImage(QString filename ,QSize sourceSize);
-    void progressChanged(qreal progress);
+    void addImage(QString filename);
+    void progressChanged(int progress ,int page);
 public slots:
 
-public:
-    const QString tmppath;
+private slots:
+    void completed(const QString& fileName);
 
 private:
-    int saveJpgFile(const char* tmpfilenmae ,const QString& filename ,Scanner::Setting* setting ,int lines);
+    int saveJpgFile(const char* tmpfilenmae ,Scanner::Para_Extra* para);
+    int setBrightnessAndContrast(const QString& fileName ,int brightness ,int contrast);
 };
 
 #endif // APPQT_H

@@ -5,9 +5,15 @@
 #define SETTING_IMG_8_BIT	8
 #define SETTING_IMG_24_BIT	24
 enum{
-    SETTING_DOC_SIZE_FULL,
-    SETTING_DOC_SIZE_A4,
-    SETTING_DOC_SIZE_LT
+    SETTING_papersize_auto,
+    SETTING_papersize_autoNoMultiFeed,
+    SETTING_papersize_A4,
+    SETTING_papersize_A5,
+    SETTING_papersize_B5,
+    SETTING_papersize_A6,
+    SETTING_papersize_letter,
+    SETTING_papersize_legal,
+    SETTING_papersize_long,
 };
 enum{
     SETTING_SCAN_FLB,
@@ -48,23 +54,41 @@ class PlatformApp;
 class Device
 {
 public:
+    enum {
+        CMD_PRINT,
+        CMD_SCAN,
+        CMD_setWifi,
+        CMD_getWifiInfo,
+        CMD_setPassword,
+        CMD_confirmPassword,
+        CMD_setSaveTime,
+        CMD_getSaveTime,
+        CMD_setOffTime,
+        CMD_getOffTime,
+        CMD_getIpv4,
+        CMD_setIpv4,
+        CMD_setSoftap,
+        CMD_getSoftap,
+        CMD_getDeviceSetting,
+        CMD_setDeviceSetting,
+    };
+public:
     Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp);
     virtual ~Device();
-    int scan(void* setting);
+    void resolveUrl(const char* url);
     bool checkConnection();
     int deviceCmd(int cmd ,void* data);
+    const char* getCurrentUrl(){return currentUrl;}
 
     Scanner* getScanner();
 
+    static void searchUsbDevices(addDeviceHandler handler,void* pData);
     static void searchDevices(addDeviceHandler handler,void* pData);
-private:
+private:   
     DeviceIO* deviceIO;
     Scanner* scanner;
     Setter* setter;
-
-//    int open(const char* );
-    int open();
-    int close();
+    char currentUrl[256];
 };
 
 }

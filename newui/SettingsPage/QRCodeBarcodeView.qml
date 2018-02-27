@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 import "component"
 import "../component"
+import QtQuick.Dialogs 1.2
 import "../ScanData.js" as JSData
 import "../JSApi.js" as JSApi
 
@@ -217,6 +218,19 @@ Item {
         input_outputResult.text = qrcodeSetting.outputResult
         comboBox_saveFileType.currentIndex = qrcodeSetting.fileType
         input_filePath.text = qrcodeSetting.filePath
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Save As")
+        folder: shortcuts.pictures
+        nameFilters: JSData.constFileDialogSaveFileType()
+        selectFolder: true
+        onAccepted: input_filePath.text = fileUrl.toString().replace("file:///" ,"/")
+    }
+    Connections{
+        target: button_browser
+        onClicked:fileDialog.open()
     }
 
     JKTextButton{

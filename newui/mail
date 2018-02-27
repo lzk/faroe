@@ -1,0 +1,33 @@
+set theSubject to "hehe"
+set theRecipient to "jacky.liang@liteon.com"
+set theAttachment to {"/Volumes/work/share/images/NatGeo01.jpg", "/Volumes/work/share/images/NatGeo02.jpg"}
+set theBody to ""
+set theSender to ""
+
+tell application "Mail"
+        #set theNewMessage to make new outgoing message with properties {subject:theSubject, content:theBody & return & return, visible:true}
+        set theNewMessage to make new outgoing message
+        tell theNewMessage
+                set visibile to true
+                set subject to theSubject
+                #set sender to theSender
+                make new to recipient at end of to recipients with properties {address:theRecipient}
+                try
+                        #make new attachment with properties {file name:theAttachment} at after the last word of the last paragraph
+
+                        repeat with filename in theAttachment
+                                make new attachment with properties {file name:filename}
+                        end repeat
+                        set message_attachment to 0
+                        log "message_attachment = " & message_attachment
+                on error
+                        set message_attachment to 1
+                end try
+                #tell content
+                #   make new attachment with properties {file name:theAttachment, path:fileList}
+
+                #end tell
+                #send
+        end tell
+        activate
+end tell

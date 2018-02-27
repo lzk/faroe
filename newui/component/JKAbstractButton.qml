@@ -12,7 +12,7 @@ Item{
         color: "black"   //"Transparent"
         anchors.fill: parent
         anchors.margins: -1
-        visible: root.activeFocus
+        visible: false //root.activeFocus
     }
 
     MouseArea {

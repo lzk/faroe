@@ -27,6 +27,7 @@ SettingsLayout {
             id:delegate
             width: ListView.view.width
             height: ListView.view.height / 7
+            enabled: index !== 6
             Image {
                 anchors.fill: parent
                 source: delegate.ListView.isCurrentItem ?imageSource:"qrc:/Images/setting_img_disable.png"
@@ -82,10 +83,21 @@ SettingsLayout {
         }
     }
 
+    onFocusChanged: {
+        console.log("root focus:" ,focus)
+    }
+
     Loader{
         id:loader
         parent:root.item_view
         source: listView.model.get(listView.currentIndex).url
+        focus: true
+        onFocusChanged: {
+            console.log("loader focus:" ,focus)
+        }
+    }
+    Component.onDestruction: {
+        loader.source = ""
     }
 
     Connections{
@@ -95,7 +107,5 @@ SettingsLayout {
         }
     }
 
-    Component.onDestruction: {
-        loader.source = ""
-    }
+
 }

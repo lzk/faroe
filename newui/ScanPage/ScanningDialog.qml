@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Window 2.2
 import "../component"
+import com.liteon.JKInterface 1.0
 
 Window {
     flags: Qt.Dialog | Qt.FramelessWindowHint
@@ -20,7 +21,7 @@ Window {
 
     Rectangle {
         id: rectangle
-        width: 154
+        width: 200
         height: 70
         color: "#ffe5e5e5"
         anchors.horizontalCenter: parent.horizontalCenter
@@ -73,9 +74,6 @@ Window {
 
             JKText {
                 id: text1
-                x: 0
-                y: 0
-                text: qsTr("Scanning...")
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 20
@@ -103,6 +101,24 @@ Window {
 
     }
     function open(){
-        show()
+        text1.text = qsTr("Scanning...")
+        show()        
+    }
+    Connections{
+        target: jkInterface
+        onProgressChanged:{
+            switch(progress){
+            case DeviceStruct.ScanningProgress_Start:
+                text1.text = qsTr("Scanning...")
+                break
+            case DeviceStruct.ScanningProgress_Upload:
+                text1.text = qsTr("Uploading...")
+                break
+            case DeviceStruct.ScanningProgress_Completed:
+                text1.text = qsTr("Page %1 finished.").arg(page + 1)
+                break
+
+            }
+        }
     }
 }

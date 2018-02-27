@@ -1,5 +1,7 @@
 import QtQuick 2.0
+import QtQuick.Dialogs 1.2
 import "../../component"
+import "../../ScanData.js" as JSData
 Item {
     width: 477
     height: 309
@@ -86,8 +88,17 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                onClicked: fileDialog.open()
             }
         }
+    }
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Save As")
+        folder: shortcuts.pictures
+        nameFilters: JSData.constFileDialogSaveFileType()
+        selectFolder: true
+        onAccepted: textInput3.text = fileUrl.toString().replace("file:///" ,"/")
     }
 
 

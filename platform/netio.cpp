@@ -51,9 +51,24 @@ int NetIO::type()
     return DeviceIO::Type_net;
 }
 
-int NetIO::open()
+int NetIO::open(int para)
 {
-    return openPort(23010);
+    int port;
+    switch (para) {
+    case 0:
+        port = 23010;
+        break;
+    case 1:
+        port = 9100;
+        break;
+    case 2:
+        port = 23011;
+        break;
+    default:
+        port = 23010;
+        break;
+    }
+    return openPort(port);
 }
 
 int NetIO::openPort(int port)
@@ -144,6 +159,16 @@ int NetIO::read(char *buffer, int bufsize)
         return -1;
     return numReadTotal;
 #endif
+}
+
+int NetIO::writeCommand(char *buffer, int bufsize)
+{
+    return write(buffer ,bufsize);
+}
+
+int NetIO::readCommand(char *buffer, int bufsize)
+{
+    return read(buffer ,bufsize);
 }
 
 bool NetIO::isConnected()

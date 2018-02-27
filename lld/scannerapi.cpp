@@ -19,6 +19,74 @@ void ScannerAPI::install(DeviceIO* dio)
     this->dio = dio;
 }
 
+bool ScannerAPI::ready()
+{
+    if(dio->type() == DeviceIO::Type_usb)
+        return true;
+    int result = 0;
+    char status = 0;
+    result = dio->read(&status ,1);
+    return result == 1 && status == 1;
+}
+
+int ScannerAPI::lock()
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    if(dio->type() == DeviceIO::Type_usb){
+        return 0;
+    }
+
+    U8 cmd[8] = { 'L','O','C','K', 0, 0, 0, 0 };
+    U8 ack[8] = { 0 };
+
+    int result = dio->write((char*)cmd, sizeof(cmd));
+    if(result>=0){
+        result = dio->read((char*)ack, sizeof(ack));
+    }
+    if(result>=0 &&
+            (ack[0] == 'S' &&
+             ack[1] == 'T' &&
+             ack[2] == 'A' &&
+             ack[4] == 'A')) {
+        result = 0;
+    }
+    return result<0?-1:0;
+}
+
+int ScannerAPI::unlock()
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    if(dio->type() == DeviceIO::Type_usb){
+        return 0;
+    }
+
+    U8 cmd[8] = { 'U','L','C','K', 0, 0, 0, 0 };
+    U8 ack[8] = { 0 };
+
+    int result = dio->write((char*)cmd, sizeof(cmd));
+    if(result>=0){
+        result = dio->read((char*)ack, sizeof(ack));
+    }
+    if(result>=0 &&
+            (ack[0] == 'S' &&
+             ack[1] == 'T' &&
+             ack[2] == 'A')) {
+        result = 0;
+    }
+    return result<0?-1:0;
+}
+
+//Job type define
+#define JOB_PULL_SCAN			0x01
+#define JOB_PULL_SCAN_BUTTON	0x02
+#define JOB_WIFI_SCAN			0x03
+#define JOB_PUSH_STORAGE		0x04
+#define JOB_PUSH_FTP			0x05
+#define JOB_PUSH_SMB			0x06
 int ScannerAPI::jobCreate(int source)
 {
     if(dio == NULL)
@@ -30,7 +98,13 @@ int ScannerAPI::jobCreate(int source)
     pCmdData[0] = 'J';
     pCmdData[1] = 'O';
     pCmdData[2] = 'B';
-    pCmdData[4] = source == CODE_ADF ? JOB_ADF :JOB_FLB;//0;
+    pCmdData[4] = source;
+
+    if(dio->type() == DeviceIO::Type_usb){
+        pCmdData[7] = JOB_PULL_SCAN;
+    }else{
+        pCmdData[7] = JOB_WIFI_SCAN;
+    }
 
     SC_JOB_STA_T status;
 
@@ -67,7 +141,7 @@ int ScannerAPI::jobEnd()
 
     SC_JOB_STA_T status;
 
-    cmd->id = JobID;
+//    cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
     DELAYTIMES();
@@ -76,7 +150,10 @@ int ScannerAPI::jobEnd()
         DELAYTIMES();
         result = dio->read((char*)&status, sizeof(status));
     }
-    if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
+    if(result<=0
+            || status.ack == 'E'
+//            || status.id != JobID
+            ){
         result = -1;
     }
     return result<0?-1:0;
@@ -98,7 +175,7 @@ int ScannerAPI::startScan()
 
     SC_SCAN_STA_T		status;
 
-    cmd->id = JobID;
+//    cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
     DELAYTIMES();
@@ -108,7 +185,10 @@ int ScannerAPI::startScan()
         result = dio->read((char*)&status, sizeof(status));
     }
 
-    if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
+    if(result<=0
+            || status.ack == 'E'
+//            || status.id != JobID
+            ){
         result = -1;
     }
     return result<0?-1:0;
@@ -130,7 +210,7 @@ int ScannerAPI::stopScan()
 
     SC_STOP_STA_T		status;
 
-    cmd->id = JobID;
+//    cmd->id = JobID;
     memset(&status ,0 ,sizeof(status));
 
     DELAYTIMES();
@@ -140,7 +220,10 @@ int ScannerAPI::stopScan()
         result = dio->read((char*)&status, sizeof(status));
     }
 
-    if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
+    if(result<=0
+            || status.ack == 'E'
+//            || status.id != JobID
+            ){
         result = -1;
     }
     return result<0?-1:0;
@@ -163,7 +246,7 @@ int ScannerAPI::setParameters(const SC_PAR_DATA_T& para)
 
     SC_PAR_STA_T		status;
 
-    cmd->id = JobID;
+//    cmd->id = JobID;
     cmd->length	= sizeof(SC_PAR_DATA_T);
     memset(&status ,0 ,sizeof(status));
 
@@ -181,8 +264,9 @@ int ScannerAPI::setParameters(const SC_PAR_DATA_T& para)
         LOG_NOPARA("setParameters write err!");
         return -1;
     }
-    if(result>=0 &&
-            (status.ack == 'E' || status.id != JobID )
+    if(result<= 0
+            || status.ack == 'E'
+//            || status.id != JobID
 //            (status.code != CODE_STA || status.ack != 'A')
             ){
         result = -1;
@@ -204,7 +288,7 @@ int ScannerAPI::getInfo(SC_INFO_DATA_T& sc_infodata)
     pCmdData[2] = 'F';
     pCmdData[3] = 'O';
 
-    cmd->id = JobID;
+//    cmd->id = JobID;
     cmd->length			= sizeof(SC_INFO_DATA_T);
     memset(&sc_infodata ,0 ,sizeof(sc_infodata));
 
@@ -216,11 +300,44 @@ int ScannerAPI::getInfo(SC_INFO_DATA_T& sc_infodata)
     }
 
     char* code = (char*)&sc_infodata.code;
-    if(result >= 0 &&
-       (code[0] != 'I' || code[1] != 'D' || code[2] != 'A' || code[3] != 'T'
-       || sc_infodata.Cancel)){
-//            (sc_infodata.code != 1413563465)){
-//        ((('I'&0x000000ff)<<24) | (('D'&0x000000ff)<<16) | (('A'&0x000000ff)<<8) | 'T') || sc_infodata.Cancel)) {
+    if(result <= 0
+       ||(code[0] != 'I' || code[1] != 'D' || code[2] != 'A' || code[3] != 'T')
+       || sc_infodata.ErrorStatus.scan_canceled_err){
+        result = -1;
+    }
+    return result<0?-1:0;
+}
+
+int ScannerAPI::cancelScan()
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    SC_CNL_T cmdData;
+    char* pCmdData = (char*)&cmdData;
+    SC_CNL_T* cmd = &cmdData;
+    memset(pCmdData ,0 ,sizeof(cmdData));
+    pCmdData[0] = 'C';
+    pCmdData[1] = 'A';
+    pCmdData[2] = 'N';
+    pCmdData[3] = 'C';
+
+    SC_CNL_STA_T		status;
+
+//    cmd->id = JobID;
+    memset(&status ,0 ,sizeof(status));
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(*cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)&status, sizeof(status));
+    }
+
+    if(result<=0
+            || status.ack == 'E'
+//            || status.id != JobID
+            ){
         result = -1;
     }
     return result<0?-1:0;
@@ -259,38 +376,6 @@ int ScannerAPI::readScan(int dup, int *ImgSize,char* buffer ,int size)
     return result;
 }
 
-int ScannerAPI::cancelScan()
-{
-    if(dio == NULL)
-        return NO_DIO;
-
-    SC_CNL_T cmdData;
-    char* pCmdData = (char*)&cmdData;
-    SC_CNL_T* cmd = &cmdData;
-    memset(pCmdData ,0 ,sizeof(cmdData));
-    pCmdData[0] = 'C';
-    pCmdData[1] = 'A';
-    pCmdData[2] = 'N';
-    pCmdData[3] = 'C';
-
-    SC_CNL_STA_T		status;
-
-    cmd->id = JobID;
-    memset(&status ,0 ,sizeof(status));
-
-    DELAYTIMES();
-    int result = dio->write((char*)cmd, sizeof(*cmd));
-    if(result>=0){
-        DELAYTIMES();
-        result = dio->read((char*)&status, sizeof(status));
-    }
-
-    if(result>=0 && (status.ack == 'E' || status.id != JobID)) {
-        result = -1;
-    }
-    return result<0?-1:0;
-}
-
 int ScannerAPI::nvramW(int address ,char* buffer ,int size)
 {
     if(dio == NULL)
@@ -321,7 +406,7 @@ int ScannerAPI::nvramW(int address ,char* buffer ,int size)
         result = dio->read((char*)&status, sizeof(status));
     }
 
-    if(result>=0 && (status.ack == 'E')) {
+    if(result<=0 || (status.ack == 'E')) {
         result = -1;
     }
     return result<0?-1:0;
@@ -383,7 +468,7 @@ int ScannerAPI::adfCheck(SC_ADF_CHECK_STA_T& status)
         result = dio->read((char*)&status, sizeof(status));
     }
 
-    if(result>=0 && (status.ack == 'E')) {
+    if(result<=0 || (status.ack == 'E')) {
         result = -1;
     }
     return result<0?-1:0;
@@ -472,7 +557,76 @@ int ScannerAPI::resetScan()
         result = dio->read((char*)&status, sizeof(status));
     }
 
-    if(result>=0 && (status.ack == 'E')) {
+    if(result<=0 || (status.ack == 'E')) {
+        result = -1;
+    }
+    return result<0?-1:0;
+}
+
+int ScannerAPI::getPowerSupply(SC_POWER_INFO_T& sc_powerData)
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    SC_POWER_T cmdData;
+    char* pCmdData = (char*)&cmdData;
+    SC_POWER_T* cmd = &cmdData;
+    memset(pCmdData ,0 ,sizeof(cmdData));
+    pCmdData[0] = 'P';
+    pCmdData[1] = 'W';
+    pCmdData[2] = 'R';
+    pCmdData[3] = 'M';
+
+    memset(&sc_powerData, 0, sizeof(sc_powerData));
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(*cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)&sc_powerData, sizeof(sc_powerData));
+    }
+
+    char* code = (char*)&sc_powerData.code;
+    if(result <= 0
+       ||(code[0] != 'S' || code[1] != 'T' || code[2] != 'A')
+            || sc_powerData.ack != 'A'
+            ){
+        result = -1;
+    }
+    return result<0?-1:0;
+}
+
+int ScannerAPI::setGamma(const unsigned int* gammaTable ,int length)
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    SC_PAR_T cmdData;
+    char* pCmdData = (char*)&cmdData;
+    SC_PAR_T* cmd = &cmdData;
+    memset(pCmdData ,0 ,sizeof(cmdData));
+    pCmdData[0] = 'G';
+    pCmdData[1] = 'A';
+    pCmdData[2] = 'M';
+    pCmdData[3] = 'A';
+    cmd->length = sizeof(gammaTable[0]) * length;
+
+    SC_PAR_STA_T		status;
+
+    memset(&status ,0 ,sizeof(status));
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(*cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->write((char*)gammaTable, cmd->length);
+    }
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)&status, sizeof(status));
+    }
+
+    if(result<=0 || (status.ack == 'E')) {
         result = -1;
     }
     return result<0?-1:0;

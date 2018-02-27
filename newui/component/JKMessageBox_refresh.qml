@@ -4,6 +4,7 @@ JKDialog {
     id:root
     width: 490 + 20
     height: 188 + 20
+    property alias message: messagebox.message
     toolbar{
         color: "#FF67A1CF"
         enableClose: false

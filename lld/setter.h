@@ -47,6 +47,12 @@ public:
     }
         struct_ipv4;
 
+    typedef struct{
+        int saveTime;
+        int offTime;
+    }
+        struct_deviceSetting;
+
 public:
     Setter();
     ~Setter();
@@ -63,6 +69,10 @@ public:
     int getIpV4(void* ip);
     int setSaveTime(void* st);
     int getSaveTime(void* st);
+    int setOffTime(void* st);
+    int getOffTime(void* st);
+    int setDeviceSetting(void* ds);
+    int getDeviceSetting(void* ds);
 
 private:
     DeviceIO* dio;

@@ -42,8 +42,8 @@ JKDialog {
                 text.text: "Yes"
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked:{
-                    root.accepted()
                     root.close()
+                    root.accepted()
                 }
             }
 
