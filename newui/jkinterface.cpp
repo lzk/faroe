@@ -65,27 +65,33 @@ QStringList JKInterface::getPrinterName()
     return QPrinterInfo::availablePrinterNames();
 }
 
-
 void JKInterface::updateDeviceList(QStringList deviceList)
 {
+    if(!qobject_cast<QObject*>(scanData))
+        return;
     scanData->setProperty("model_deviceList" ,deviceList);
-
 }
 
 void JKInterface::deviceConnected(QString currentDevice)
 {
+    if(!qobject_cast<QObject*>(scanData))
+        return;
     scanData->setProperty("currentDevice" ,currentDevice);
     emit deviceConnectCompleted();
 }
 
 QString JKInterface::getCurrentDevice()
 {
+    if(!qobject_cast<QObject*>(scanData))
+        return "";
     QString str = scanData->property("currentDevice").toString();
     return str;
 }
 
 void JKInterface::updateDeviceStatus(bool status)
 {
+    if(!qobject_cast<QObject*>(scanData))
+        return;
     scanData->setProperty("deviceStatus" ,status);
 }
 

@@ -4,9 +4,10 @@ JKDialog {
     id:root
     width: 548 + 20
     height: 228 + 20
-    signal accepted
+    signal accepted(string para)
     property alias message: messagebox.message
     property alias showImage: messagebox.showImage
+    property string para
 
     toolbar{
         text.text: qsTr("Infomation")
@@ -43,7 +44,7 @@ JKDialog {
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked:{
                     root.close()
-                    root.accepted()
+                    root.accepted(para)
                 }
             }
 
@@ -58,8 +59,8 @@ JKDialog {
         }
     }
 
-    function openWithMessage(message){
-        messagebox.message.text = message
-        open()
-    }
+//    function openWithMessage(message){
+//        messagebox.message.text = message
+//        open()
+//    }
 }

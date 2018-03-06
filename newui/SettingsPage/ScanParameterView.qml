@@ -130,7 +130,7 @@ Item {
     property var scanToParameter:scanData.scanToParameter
     Component.onCompleted: {
         comboBox_cloudType.currentIndex = JSData.constCloudType().indexOf(scanToParameter.cloudTypeText)
-        comboBox_emailAttachmentFileType.currentIndex = scanToParameter.emailAttachmentFileType
+        comboBox_emailAttachmentFileType.currentIndex = JSData.constEmailAttachmentFileType().indexOf(scanToParameter.emailAttachmentFileType)
     }
 
     JKTextButton{

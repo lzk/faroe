@@ -11,6 +11,7 @@ class JKEnums : public QObject{
     Q_ENUMS(SeparationFileType)
     Q_ENUMS(DecodeType)
     Q_ENUMS(ImageCommandResult)
+    Q_ENUMS(PowerMode)
 
 public:
     enum QuickScanMode{
@@ -57,6 +58,12 @@ public:
         ImageCommandResult_error_icloudNotLogin,
         ImageCommandResult_error_icloudeUpload,
 
+    };
+    enum PowerMode{
+        PowerMode_unknown,
+        PowerMode_ACPower,
+        PowerMode_PowerBank,
+        PowerMode_usbBusPower,
     };
 };
 

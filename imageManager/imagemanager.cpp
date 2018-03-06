@@ -326,6 +326,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
     return success;
 }
 
+#include <QTcpSocket>
 void ImageManager::ftpStart(const QString& para)
 {
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
@@ -334,14 +335,34 @@ void ImageManager::ftpStart(const QString& para)
     QString password = jsonObj.value("password").toString();
     QString targetPath = jsonObj.value("targetPath").toString().remove(0 ,1);
 
+    QString host;
+    if(serverAddress.startsWith("ftp://")){
+        host = serverAddress.mid(6);
+    }else{
+        host = serverAddress;
+    }
+    QTcpSocket socket;
+    socket.connectToHost(host,21);
+    if(!socket.waitForConnected(5000))
+    {
+        qDebug()<<"ftp tcp error:"<< socket.error();
+        qDebug()<< socket.errorString();
+        socket.close();
+        result = JKEnums::ImageCommandResult_error_ftpConnect;
+        cmdResult(cmd ,result);
+        return;
+    }
+    socket.close();
+
     ftpUrl = QUrl(serverAddress);
     ftpUrl.setScheme("ftp");
-//    ftpUrl.setHost(serverAddress);
+    ftpUrl.setHost(host);
     ftpUrl.setUserName(userName);
     ftpUrl.setPassword(password);
     ftpUrl.setPath(targetPath);
 
-    ftp->connectToHost(ftpUrl.host());
+//    ftp->connectToHost(ftpUrl.host());
+    ftp->connectToHost(host);
 }
 
 void ImageManager::ftpEnd()

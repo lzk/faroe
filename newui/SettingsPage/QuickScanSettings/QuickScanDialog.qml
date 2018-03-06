@@ -16,7 +16,7 @@ JKParaDialog{
         text.text:
         switch(mode){
         case 0:
-            return setting !== undefined && setting !== null ?setting.sid :"";
+            return setting ?setting.sid :"";
         case 1:
             return qsTr("Add Quick Scan Setting");
         case 2:

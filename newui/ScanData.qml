@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Qt.labs.settings 1.0
 import "ScanData.js" as JSData
+import "JSApi.js" as JSApi
 
 QtObject {
     id:root    
@@ -27,14 +28,20 @@ QtObject {
 
         var tmp = JSON.parse(storageSettings.settings)
         if(verifyStorageQuickScanSetting(tmp.quickScanSettings)){
-            quickScanSettings = tmp.quickScanSettings
+            JSApi.deepCopy(tmp.quickScanSettings ,quickScanSettings)
+//            quickScanSettings = tmp.quickScanSettings
         }
-        if(tmp.scanToParameter)
-            scanToParameter = tmp.scanToParameter
-        if(tmp.qrcodeSetting)
-            qrcodeSetting = tmp.qrcodeSetting
-        if(tmp.currentDevice)
+        if(tmp.scanToParameter){
+            JSApi.deepCopy(tmp.scanToParameter ,scanToParameter)
+//            scanToParameter = tmp.scanToParameter
+        }
+        if(tmp.qrcodeSetting){
+            JSApi.deepCopy(tmp.qrcodeSetting ,qrcodeSetting)
+//            qrcodeSetting = tmp.qrcodeSetting
+        }
+        if(tmp.currentDevice){
             currentDevice = tmp.currentDevice
+        }
 //        if(tmp.emailSetting)
 //            emailSetting.fileType = tmp.emailSetting.fileType
 //        if(tmp.cloudSetting)
@@ -117,6 +124,19 @@ QtObject {
             }
         }
         return ok
+    }
+
+    function findQuickScanSettingViaName(name){
+        var index = -1
+        for(var i = 0 ;i < quickScanSettings.length ;i++){
+            if(quickScanSettings[i].name === name){
+                index = i
+                break
+            }
+        }
+        if(index === -1)
+            return null
+        return quickScanSettings[index]
     }
 
     function deleteQuickScanSetting(index){

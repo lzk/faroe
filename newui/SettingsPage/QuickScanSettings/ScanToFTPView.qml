@@ -114,23 +114,36 @@ Item {
         setting.userName = textInput2.text
         setting.password = textInput3.text
         setting.targetPath = textInput4.text
-        if(setting.userName === ""){
-            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Faroe_server_addr1")))
+        if(setting.serverAddress === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Server Address")))
+//            textInput1.input.forceActiveFocus()
+            textInput1.input.focus = true
             return false
-        }else if(!setting.serverAddress === ""){
-            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Faroe_username1")))
+        }else if(setting.userName === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("User Name")))
+//            textInput2.input.forceActiveFocus()
+            textInput2.input.focus = true
             return false
-        }else if(!setting.password === ""){
-            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_password1")))
+        }else if(setting.password === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Password")))
+//            textInput3.input.forceActiveFocus()
+            textInput3.input.focus = true
             return false
-        }else if(!setting.targetPath === ""){
-            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_targetPath1")))
+        }else if(setting.targetPath === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Target Path")))
+//            textInput4.input.forceActiveFocus()
+            textInput4.input.focus = true
             return false
-        }else if(!setting.serverAddress.match(/ftp:\/\/[^\/\.]+$/i)){
-            warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_Faroe_server_addr1")))
+        }else if(!setting.serverAddress.match(/ftp:\/\/[^\s]+$/i)){
+            warningWithImage(qsTr("The %1 format is incorrect, Please check your %1 and enter again.").arg(qsTr("Server Address")))
+//            textInput1.input.forceActiveFocus()
+            textInput1.input.focus = true
             return false
-        }else if(!setting.targetPath.match(/\/[^\/\.]$/i) && checkQuote(setting.targetPath)){
-            warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_targetPath1")))
+        }else if(!setting.targetPath.match(/\/[^\\\?\s]*$/)){
+//        }else if(!setting.targetPath.test(/\/[^\\\?\*]$/i) && checkQuote(setting.targetPath)){
+            warningWithImage(qsTr("The %1 format is incorrect, Please check your %1 and enter again.").arg(qsTr("Target Path")))
+//            textInput4.input.forceActiveFocus()
+            textInput4.input.focus = true
             return false
         }
         return true

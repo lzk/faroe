@@ -196,6 +196,11 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
+    case CMD_getPowerSupply:
+    {
+        err = scanner->getPowerSupply(data);
+        break;
+    }
     default:
         break;
     }

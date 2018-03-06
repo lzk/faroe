@@ -90,6 +90,20 @@ function constEmailAttachmentFileType(){
     return ["PDF" ,"JPG"]
 }
 
+function constScanIds(){
+    var ob = {
+        "scanTo" : "scanTo",
+        "scanToPrint" : "Scan To Print",
+        "scanToFile" : "Scan To File" ,
+        "scanToApplication" : "Scan To Application" ,
+        "scanToEmail" : "Scan To Email" ,
+        "scanToFTP" : "Scan To FTP" ,
+        "scanToCloud" : "Scan To Cloud" ,
+        "qrcodeScan" : "qrcodeScan" ,
+    }
+    return ob
+}
+
 function defaultScanSetting(){
     var ob = {
         "adfMode" : true ,
@@ -109,7 +123,9 @@ function defaultScanSetting(){
 }
 
 function defaultScanToSetting(){
+    var sid = constScanIds()
     return {
+        "sid":sid.scanTo,
         "scanSetting" :defaultScanSetting() ,
         "cloudTypeText" :supportCloudType().icloud ,
         "emailAttachmentFileType" :constEmailAttachmentFileType()[0]
@@ -127,7 +143,9 @@ function constQrcodeFileType(){
     return ["PDF" ,"TIFF"]
 }
 function defaultQrcodeSetting(){
+    var sid = constScanIds()
     var ob = {
+        "sid":sid.qrcodeScan,
         "scanSetting" : defaultScanSetting(),
         "codeType" : 0 ,
         "outputResult" : "QRcodeBarcodeResult.html" ,
@@ -138,8 +156,11 @@ function defaultQrcodeSetting(){
 }
 
 function constQuickScanSid(){
-    return ["Scan To Print" ,"Scan To File" ,"Scan To Application"
-            ,"Scan To Email" ,"Scan To FTP" ,"Scan To Cloud"]
+    var sid = constScanIds()
+    return [sid.scanToPrint ,sid.scanToFile ,sid.scanToApplication
+            ,sid.scanToEmail ,sid.scanToFTP ,sid.scanToCloud ]
+//    return ["Scan To Print" ,"Scan To File" ,"Scan To Application"
+//            ,"Scan To Email" ,"Scan To FTP" ,"Scan To Cloud"]
 }
 
 function constQuickScanSettings(){

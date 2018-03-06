@@ -71,6 +71,7 @@ public:
         CMD_getSoftap,
         CMD_getDeviceSetting,
         CMD_setDeviceSetting,
+        CMD_getPowerSupply,
     };
 public:
     Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp);

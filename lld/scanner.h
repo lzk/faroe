@@ -93,6 +93,7 @@ public:
     int open();
     int close();
     int ADFScan(void* setting);
+    int getPowerSupply(void* data);
     void cancel();
 
     Setting* getSetting();
@@ -110,6 +111,9 @@ private:
     int _ADFScan(Setting* setting);
     int checkStatus(int stage ,struct SC_INFO_DATA_STRUCT* sc_infodata);
     void getGammaTable(float gamma ,unsigned int*);
+    int doScannerJob(int (*)(Scanner* ,void*) ,Scanner*,void*);
+    int _getPowerSupply(void* data);
+    static int static_getPowerSupply(Scanner* ,void* data);
 };
 
 }

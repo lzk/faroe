@@ -50,6 +50,7 @@ Item {
                     width:143
                     height: parent.height
                     text:qsTr("Static")
+                    checked: !radiobutton_dhcp.checked
                 }
             }
         }
@@ -188,10 +189,17 @@ Item {
                     input_gateway.text = setting.gatewayAddress
                     input_ipAddress.text = setting.address
                     input_submask.text = setting.subnetMask
-                    if(setting.addressMode === 3)
-                        radiobutton_dhcp.checked = true
-                    else if(setting.addressMode === 4)
-                        radiobutton_static.checked = true
+//                    if(setting.addressMode === 4)
+//                        radiobutton_static.checked = true
+//                    else
+////                        if(setting.addressMode === 3)
+//                        radiobutton_dhcp.checked = true
+                    radiobutton_dhcp.checked = setting.addressMode !== 4
+                }else{
+                    input_gateway.text = "0.0.0.0"
+                    input_ipAddress.text = "0.0.0.0"
+                    input_submask.text = "0.0.0.0"
+                    radiobutton_dhcp.checked = true
                 }
 
                 break;

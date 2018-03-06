@@ -93,7 +93,7 @@ int Scanner::close()
 int Scanner::ADFScan(void* data)
 {
     if(!data)
-        return -1;
+        return DeviceStruct::ERR_invalid_data;
     Scanner::Setting* setting = (Scanner::Setting*)data;
     int result = 0;
     if(deviceIO->type() == DeviceIO::Type_net){
@@ -122,7 +122,7 @@ int Scanner::ADFScan(void* data)
         return result;
     result = open();
     if(!result){
-        result = scannerApi->ready() ?0 :-1;
+        result = scannerApi->ready() ?RETSCAN_OK :RETSCAN_BUSY;
     }
     if(!result){
         SC_INFO_DATA_T sc_infodata;
@@ -154,7 +154,6 @@ int Scanner::ADFScan(void* data)
         result = _ADFScan(setting);
     close();
     return result;
-
 }
 
 void Scanner::cancel()
@@ -689,4 +688,67 @@ void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
 //            break;
 //        }
     }
+}
+
+int Scanner::doScannerJob(int (*func)(Scanner* ,void*) ,Scanner* scanner ,void* data)
+{
+    if(!data || !func)
+        return -1;
+
+    int result = 0;
+    if(deviceIO->type() == DeviceIO::Type_net){
+//        result = deviceIO->read(&status ,1);
+        result = ((NetDeviceIO*)deviceIO)->openPort(23011);
+        if(!result){
+            char cmd[4] = { 'J','D','G','S' };
+            char status[8] = { 0 };
+            if(4 == deviceIO->write(cmd ,4)){
+                if(8==deviceIO->read(status ,8)){
+                    if (   status[0] == 'J'
+                        && status[1] == 'D'
+                        && status[2] == 'A'
+                           && status[3] == 'T'
+                        && status[4] == 0x00){
+                        result = RETSCAN_OK;
+                    }else{
+                        result = RETSCAN_BUSY;
+                    }
+                }
+            }
+            deviceIO->close();
+        }
+    }
+    if(result != RETSCAN_OK)
+        return result;
+    result = open();
+    if(!result){
+        result = scannerApi->ready() ?RETSCAN_OK :RETSCAN_BUSY;
+    }
+    if(!result)
+        result = func(scanner ,data);
+    close();
+    return result;
+}
+
+int Scanner::_getPowerSupply(void* data)
+{
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    SC_POWER_INFO_T sc_powerData;
+    int result = scannerApi->getPowerSupply(sc_powerData);
+    if(!result){
+        int* mode = (int*) data;
+        *mode = sc_powerData.mode;
+    }
+    return result;
+}
+
+int Scanner::static_getPowerSupply(Scanner* scanner ,void* data)
+{
+    return scanner->_getPowerSupply(data);
+}
+
+int Scanner::getPowerSupply(void* data)
+{
+    return doScannerJob(static_getPowerSupply ,this ,data);
 }

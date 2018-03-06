@@ -48,4 +48,11 @@ Item {
         anchors.fill: parent
     }
 
+    Rectangle{
+        anchors.fill: parent
+        visible:  !parent.enabled
+        color: "lightgray"
+        opacity: 0.2
+        radius: rectangle.radius
+    }
 }

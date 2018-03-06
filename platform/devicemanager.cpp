@@ -218,7 +218,7 @@ void DeviceManager::cancelScan()
 void DeviceManager::cmdToDevice(int cmd ,QString obj)
 {
     int err = 0;
-    QString value = "";
+    QString value = obj;
 //    qDebug()<<"cmd:"<<cmd;
 //    qDebug()<<"data:"<<obj;
 #if TEST
@@ -374,6 +374,14 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         data = (void*)&para;
         err = device->deviceCmd(Device::CMD_getSoftap ,data);
         value = uiParseSoftap(para);
+        break;
+    }
+    case DeviceStruct::CMD_getPowerSupply:
+    {
+        int para;
+        data = (void*)&para;
+        err = device->deviceCmd(Device::CMD_getPowerSupply ,data);
+        value = uiParsePowerSupply(para);
         break;
     }
     default:
@@ -650,4 +658,12 @@ Setter::struct_softAp DeviceManager::parseUiSoftap(const QString& obj)
         strcpy(para.password ,str);
     }
     return para;
+}
+
+QString DeviceManager::uiParsePowerSupply(int para)
+{
+    QJsonObject obj{
+        {"powerSupply",para}
+    };
+    return QString(QJsonDocument(obj).toJson());
 }

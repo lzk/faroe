@@ -6,31 +6,41 @@ Item {
     id: item9
     width: 537
     height: 655 - 30
+
     property alias spin_contrast: spin_contrast
     property alias spin_gamma: spin_gamma
     property alias spin_brightness: spin_brightness
+
     property alias comboBox_dpi: comboBox_dpi
     property alias comboBox_mediaType: comboBox_mediaType
     property alias comboBox_scanAreaSize: comboBox_scanAreaSize
-    property alias radioButton_skipBlankPage_on: radioButton_skipBlankPage_on
-    property alias radioButton_skipBlankPage_off: radioButton_skipBlankPage_off
-    property alias radioButton_autoColorDetection_on: radioButton_autoColorDetection_on
-    property alias radioButton_autoColorDetection_off: radioButton_autoColorDetection_off
-    property alias radioButton_multiFeedDetection_on: radioButton_multiFeedDetection_on
-    property alias radioButton_multiFeedDetection_off: radioButton_multiFeedDetection_off
-    property alias radioButton_autoCropDeskew_on: radioButton_autoCropDeskew_on
-    property alias radioButton_autoCropDeskew_off: radioButton_autoCropDeskew_off
-    property alias radioButton_gray: radioButton_gray
-    property alias radioButton_color: radioButton_color
+
     property alias item_btnDefault: item_btnDefault
     property alias item_btnOK: item_btnOK
+
+    property alias item_adfMode: item_adfMode
     property alias radioButton_twoSide: radioButton_twoSide
-    property alias radioButton_oneSide: radioButton_oneSide
+//    property alias radioButton_oneSide: radioButton_oneSide
+
+    property alias item_colorMode: item_colorMode
+//    property alias radioButton_gray: radioButton_gray
+    property alias radioButton_color: radioButton_color
 
     property alias item_multiFeedDetection: item_multiFeedDetection
+    property alias radioButton_multiFeedDetection_on: radioButton_multiFeedDetection_on
+//    property alias radioButton_multiFeedDetection_off: radioButton_multiFeedDetection_off
+
     property alias item_autoCropDeskew: item_autoCropDeskew
-    property alias item_skipBlankPage: item_skipBlankPage
+    property alias radioButton_autoCropDeskew_on: radioButton_autoCropDeskew_on
+//    property alias radioButton_autoCropDeskew_off: radioButton_autoCropDeskew_off
+
+    property alias item_skipBlankPage: item_skipBlankPage    
+    property alias radioButton_skipBlankPage_on: radioButton_skipBlankPage_on
+//    property alias radioButton_skipBlankPage_off: radioButton_skipBlankPage_off
+
     property alias item_autoColorDetection: item_autoColorDetection
+    property alias radioButton_autoColorDetection_on: radioButton_autoColorDetection_on
+//    property alias radioButton_autoColorDetection_off: radioButton_autoColorDetection_off
 
     Item {
         id: item1
@@ -50,6 +60,7 @@ Item {
                 height: 90
 
                 ScanSettingBackground{
+                    id:item_adfMode
                     width: 220
                     height: 75
                     text: qsTr("ADF Mode")
@@ -72,6 +83,7 @@ Item {
                             width: 90
                             height: 20
                             text: qsTr("One Side")
+                            checked: !radioButton_twoSide.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -83,6 +95,7 @@ Item {
                 width: 240
                 height: 90
                 ScanSettingBackground {
+                    id:item_colorMode
                     width: 220
                     height: 75
                     text: qsTr("Color Mode")
@@ -115,6 +128,7 @@ Item {
                             width: 90
                             height: 20
                             indicator.x:10
+                            checked: !radioButton_color.checked
                             contentItem:  Item{
                                 anchors.fill: parent
                                 Image{
@@ -287,6 +301,7 @@ Item {
                                 width: 90
                                 height: 20
                                 text: qsTr("Off")
+                                checked: !radioButton_skipBlankPage_on.checked
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                         }
@@ -315,6 +330,7 @@ Item {
                                 width: 90
                                 height: 20
                                 text: qsTr("Off")
+                                checked: !radioButton_autoColorDetection_on.checked
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                         }
@@ -349,6 +365,7 @@ Item {
                             width: 90
                             height: 20
                             text: qsTr("Off")
+                            checked: !radioButton_multiFeedDetection_on.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -382,6 +399,7 @@ Item {
                             width: 90
                             height: 20
                             text: qsTr("Off")
+                            checked: !radioButton_autoCropDeskew_on.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }

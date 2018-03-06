@@ -59,6 +59,10 @@ bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
     default:
         break;
     }
+    if(setting->bSkipBlankPage && para->isBlank){
+        QFile::remove(saveFileName);
+        return true;
+    }
     if(setBrightnessAndContrast(saveFileName ,setting->brightness ,setting->contrast))
         return false;
     return true;

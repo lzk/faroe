@@ -86,6 +86,7 @@ private:
     Setter::struct_ipv4 parseUiIpv4(const QString&);
     QString uiParseSoftap(Setter::struct_softAp);
     Setter::struct_softAp parseUiSoftap(const QString&);
+    QString uiParsePowerSupply(int);
 
     void connectDeviceInfo(DeviceInfo*);
 };

@@ -5,6 +5,7 @@ import "component"
 import "ScanPage"
 import "component/path"
 import com.liteon.JKInterface 1.0
+import "ScanData.js" as JSData
 
 Item {
     id:root
@@ -133,7 +134,11 @@ Item {
     property var dialog
     property var window:Application.window
     function information(message ,acceptCallback){
-        dialog = openDialog("component/JKMessageBox_information.qml" ,{"message.text":message} ,function(dialog){
+        informationWithProperty({"message.text":message} ,acceptCallback)
+    }
+
+    function informationWithProperty(prpty ,acceptCallback){
+        dialog = openDialog("component/JKMessageBox_information.qml" ,prpty ,function(dialog){
             if(typeof(acceptCallback) === "function")
                 dialog.accepted.connect(acceptCallback)
             })
@@ -197,7 +202,12 @@ Item {
 
     function setScanToCmd(cmd ,selectList ,setting)
     {
-        jkInterface.setScanToCmd(cmd ,selectList , JSON.stringify(setting))
+        if(cmd === DeviceStruct.CMD_ScanTo_ToFile){
+            jkInterface.setScanToCmd(cmd ,selectList , setting)
+        }else{
+            jkInterface.setScanToCmd(cmd ,selectList , JSON.stringify(setting))
+        }
+
         var message = qsTr("processing")
         switch(cmd){
         case DeviceStruct.CMD_ScanTo_ToFTP:
@@ -210,11 +220,86 @@ Item {
         dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
     }
 
+    function updateSetting(cmd ,setting){
+//        switch(cmd){
+//        case DeviceStruct.CMD_ScanTo:
+//        case DeviceStruct.CMD_ScanTo_ToPrint:
+//        case DeviceStruct.CMD_ScanTo_ToFile:
+//        case DeviceStruct.CMD_ScanTo_ToApplication:
+//        case DeviceStruct.CMD_ScanTo_ToEmail:
+//        case DeviceStruct.CMD_ScanTo_ToFTP:
+//        case DeviceStruct.CMD_ScanTo_ToCloud:
+//            break;
+//        case DeviceStruct.CMD_QuickScan_ToPrint:
+//        case DeviceStruct.CMD_QuickScan_ToFile:
+//        case DeviceStruct.CMD_QuickScan_ToApplication:
+//        case DeviceStruct.CMD_QuickScan_ToEmail:
+//        case DeviceStruct.CMD_QuickScan_ToFTP:
+//        case DeviceStruct.CMD_QuickScan_ToCloud:
+//        case DeviceStruct.CMD_DecodeScan:
+//        case DeviceStruct.CMD_SeperationScan:
+//            break;
+//        default:
+//                break
+//        }
+        var sid = JSData.constScanIds()
+        switch(setting.sid){
+        case sid.scanTo:
+            scanData.scanToParameter.scanSetting = setting.scanSetting
+            break
+        case sid.qrcodeScan:
+            scanData.qrcodeSetting.scanSetting = setting.scanSetting
+            break
+        case sid.scanToPrint:
+        case sid.scanToFile:
+        case sid.scanToApplication:
+        case sid.scanToEmail:
+        case sid.scanToFTP:
+        case sid.scanToCloud:
+            scanData.findQuickScanSettingViaName(setting.name).scanSetting = setting.scanSetting
+            break
+        }
+    }
+
+    function callbackScan(para){
+        console.log("callback:" ,para)
+        var data = JSON.parse(para)
+        var setting = JSON.parse(data.setting)
+        var scanSetting = setting.scanSetting
+        var constPaperSize = JSData.constPaperSize()
+        var constPaperSizeMap = JSData.constPaperSizeMap()
+        switch(data.id){
+        case 0:
+            scanSetting.multiFeed = false
+            scanSetting.adfMode = false
+            scanSetting.autoCropAndDeskew = false
+            scanSetting.mediaType = 0
+            if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
+                scanSetting.scanAreaSize = 0
+            break
+        case 1:
+//            scanSetting.multiFeed = false
+//            scanSetting.adfMode = false
+            scanSetting.autoCropAndDeskew = false
+            scanSetting.mediaType = 0
+            if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
+                scanSetting.scanAreaSize = 0
+            break
+        }
+        updateSetting(data.cmd ,setting)
+        setScanCmd(data.cmd ,setting)
+    }
+
     Connections{
         target: jkInterface
         onCmdResult:{
-            dialog.close()
             console.log("result:" ,result)
+            switch(cmd){
+            case DeviceStruct.CMD_getPowerSupply:
+                return
+            }
+            dialog.close()
+
             switch(result){
             case DeviceStruct.ERR_RETSCAN_OPENFAIL:
                 errorWithImage(qsTr("The Device is not ready!"))
@@ -248,10 +333,56 @@ Item {
             case DeviceStruct.ERR_RETSCAN_CANCEL:
                 break
             case DeviceStruct.ERR_RETSCAN_ERROR_POWER1:
-                errorWithImage(qsTr("The scan job could not be continued, because the Power Bank mode do not support."))
+                var para1 = {}
+                para1.id = 1
+                para1.cmd = cmd
+                para1.setting = data
+                informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode do not support the following settings.
+\tAuto Crop:   \tOn
+\tMediaType:   \tDeposit Book or Card
+\tScan Size:   \tLong Page Mode
+
+If you select 'Yes', the scan job will be continue, but the following settings will be changed
+
+If you select 'No', the scan job will be canceled!
+
+\tAuto Crop:   \tOff
+\tMediaType:   \tNormal
+\tScan Size:   \tAuto")
+                                            ,"message.horizontalAlignment":Text.AlignLeft
+                                            ,"para":JSON.stringify(para1)
+                                            ,"height":380
+                                            },callbackScan )
                 break
             case DeviceStruct.ERR_RETSCAN_ERROR_POWER2:
-                errorWithImage(qsTr("The scan job could not be continued, because the USB Bus power mode do not support."))
+                if(scanData.currentDevice.match(/^usb+/i)){
+                    var para = {}
+                    para.id = 0
+                    para.cmd = cmd
+                    para.setting = data
+                    informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus power mode do not support the follow settings.
+\tADF Mode:   \tTwo Side
+\tMulti Feed:   \tOn
+\tAuto Crop:   \tOn
+\tMediaType:   \tDeposit Book or Card
+\tScan Size:   \tLong Page Mode
+
+If you select 'Yes', the scan job will be continue, but the following settings will be changed
+
+If you select 'No', the scan job will be canceled!
+
+\tADF Mode:   \tOne Side
+\tMulti Feed:   \tOff
+\tAuto Crop:   \tOff
+\tMediaType:   \tNormal
+\tScan Size:   \tAuto")
+                                                ,"message.horizontalAlignment":Text.AlignLeft
+                                                ,"para":JSON.stringify(para)
+                                                ,"height":440
+                                                },callbackScan )
+                }else{
+                    errorWithImage(qsTr("The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning."))
+                }
                 break
             case DeviceStruct.ERR_wifi_have_not_been_inited:
                 errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
@@ -286,7 +417,7 @@ Item {
 
             default:
                 console.log("err:" ,result)
-                errorWithImage(qsTr("Scan Fail!"))
+                errorWithImage(qsTr("Fail!"))
                 break;
             }
 

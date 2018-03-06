@@ -46,6 +46,8 @@ public:
         CMD_QuickScan_ToCloud,
         CMD_DecodeScan,
         CMD_SeperationScan,
+
+        CMD_getPowerSupply,
     };
 
     enum StatusType{

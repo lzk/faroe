@@ -1,20 +1,19 @@
 .pragma library
 
-function deepCopy(p, a) {
-    var c = a || {};
-    for (var i in p) {
-        if (typeof p[i] === 'object') {
-          c[i] = (p[i].constructor === Array) ? [] : {};
-          deepCopy(p[i], c[i]);
-        } else {
-           c[i] = p[i];
-        }
-      }
-    return c;
-}
+function deepCopy(source, target) {
 
-function copy(target ,source){
-    for(var i in source){
-        target[i] = source[i]
+    if (typeof target !== 'object') {
+        target = {}
     }
+
+    var c = target;
+    for (var i in source) {
+        if (typeof source[i] === 'object') {
+          c[i] = (source[i].constructor === Array) ? [] : {};
+          deepCopy(source[i], c[i]);
+        } else {
+           c[i] = source[i];
+        }
+    }
+    return c;
 }

@@ -19,6 +19,7 @@ Item {
 
     ColumnLayout{
         anchors.fill: parent
+        anchors.bottomMargin: 15
         Item{
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -29,14 +30,12 @@ Item {
                 anchors.leftMargin: 30
                 spacing: 15
 
-
                 Item {
                     id: item_image
                     width: 54
                     height: 54
                     anchors.verticalCenter: parent.verticalCenter
                     visible: showImage
-
                 }
 
                 JKText {

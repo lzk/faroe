@@ -26,7 +26,7 @@ ScanPageLayout {
             onClicked: root.StackView.view.push("SearchDevicePage.qml")
         }
         Text {
-            text: scanData.deviceStatus ?scanData.currentDevice.match("USB") ?"USB" :scanData.currentDevice :qsTr("Disconnected")
+            text: scanData.deviceStatus ?scanData.currentDevice.match(/^usb+/i) ?"USB" :scanData.currentDevice :qsTr("Disconnected")
             anchors.verticalCenter: parent.verticalCenter
         }
     }
@@ -185,7 +185,8 @@ ScanPageLayout {
             case DeviceStruct.CMD_ScanTo:
                 switch(result){
                 case DeviceStruct.ERR_ACK:
-                    root.StackView.view.push("ScanToPage.qml")
+                    if(jkImageModel.count > 0)
+                        root.StackView.view.push("ScanToPage.qml")
                     break;
                 case DeviceStruct.ERR_SCAN_CANCEL:
                     jkImageModel.removeAll()

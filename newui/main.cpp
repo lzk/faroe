@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationName("Faroe VOP");
     QCoreApplication::setOrganizationName("Liteon");
-    QCoreApplication::setOrganizationDomain("com.liteon");
+//    QCoreApplication::setOrganizationDomain("com.liteon");
 
     qmlRegisterType<ImageModel>("com.liteon.JKInterface" ,1,0,"ImageModel");
     qmlRegisterType<JKEnums>("com.liteon.JKInterface" ,1,0,"JKEnums");

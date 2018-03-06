@@ -1,13 +1,50 @@
 import QtQuick 2.0
 import "../../component"
 import "../../ScanData.js" as JSData
+import "../../JSApi.js" as JSApi
+import com.liteon.JKInterface 1.0
 
-JKParaDialog{
+JKDialog{
     id: root
     width: 537 + 20
     height: 655 + 20
+
+    property var constPaperSize: JSData.constPaperSize()
+    property var constPaperSizeMap: JSData.constPaperSizeMap()
+    property var constPaperSize_noLongPage: JSData.constPaperSize().slice(0 ,-1)
+    property var constPaperSize_onlyAuto: JSData.constPaperSize().slice(0 ,2)
+    property var constDPIName: JSData.constDPIName()
+    property var constDPI: JSData.constDPI()
+    property var constDPI_lessThan300: JSData.constDPI().slice(0 ,-1)
+    property var constMediaType: JSData.constMediaType()
+    property var constMediaTypeMap: JSData.constMediaTypeMap()
+    property var constMediaType_onlyNormal: JSData.constMediaType().slice(0 ,-2)
+
+    property int powerMode: JKEnums.PowerMode_ACPower
+    property var scanSetting:JSData.defaultScanSetting()
+    property var setting
+
+    function initWithSetting(setting){
+        root.setting = setting
+        JSApi.deepCopy(setting ,scanSetting)
+        update(scanSetting)
+    }
+    function ok(){
+        JSApi.deepCopy(scanSetting ,setting)
+    }
+
     toolbar{
-        text.text:qsTr("Scan Setting(AC Power)")
+        text.text:{
+            if(scanData.deviceStatus){
+                    switch(powerMode){
+                        case JKEnums.PowerMode_ACPower:qsTr("Scan Settings(AC Power)");break
+                        case JKEnums.PowerMode_usbBusPower:qsTr("Scan Settings(USB Bus Power)");break
+                        case JKEnums.PowerMode_PowerBank:qsTr("Scan Settings(Power Bank)");break
+                        default: qsTr("Scan Settings");break
+                    }
+            }else
+                qsTr("Scan Settings")
+}
         text.font.pixelSize: 15
         text.color: "black"
         text.font.bold: true
@@ -19,19 +56,62 @@ JKParaDialog{
         source: "qrc:/Images/popup_gnd_scan settings.png"
     }
 
+
     ScanSettingView{
         id:scanSettingView
         parent: container
         anchors.fill: parent
-        comboBox_dpi.model: JSData.constDPI()
-        comboBox_mediaType.model: JSData.constMediaType()
-        comboBox_scanAreaSize.model: JSData.constPaperSize()
+        enabled: !refresh.visible
+        item_adfMode.enabled: powerMode !== JKEnums.PowerMode_usbBusPower
+        item_colorMode.enabled: !radioButton_autoColorDetection_on.checked
+        item_skipBlankPage.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+                                    && radioButton_autoCropDeskew_on.checked
+        item_autoColorDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+        item_multiFeedDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+                                         && comboBox_scanAreaSize.currentText !== constPaperSizeMap.autoNoMultiFeed
+                                         && comboBox_scanAreaSize.currentText !== constPaperSizeMap.A6
+        item_autoCropDeskew.enabled: comboBox_scanAreaSize.currentIndex < 2
+                                     && !radioButton_skipBlankPage_on.checked
+
         spin_gamma{
             slider{
                 from: 1
                 to:50
             }
             text:Math.floor(spin_gamma.value) / 10
+        }
+        function updateComboxModel_dpi(){
+            var index = comboBox_dpi.currentIndex
+            comboBox_dpi.model = comboBox_scanAreaSize.currentText === constPaperSizeMap.longPage
+                                ? constDPI_lessThan300
+                                : constDPI
+            comboBox_dpi.currentIndex = index
+        }
+        function updateComboxModel_mediaType(){
+            var index = comboBox_mediaType.currentIndex
+            comboBox_mediaType.model = comboBox_scanAreaSize.currentText === constPaperSizeMap.longPage
+                                      ? constMediaType_onlyNormal
+                                      : constMediaType
+            comboBox_mediaType.currentIndex = index
+        }
+        function updateComboxModel_scanAreaSize(){
+            var index = comboBox_scanAreaSize.currentIndex
+            comboBox_scanAreaSize.model= (comboBox_mediaType.currentText === constMediaTypeMap.normal
+                                          &&!radioButton_autoCropDeskew_on.checked
+                                          )?
+                constDPIName[comboBox_dpi.currentIndex] === "600DPI" ?constPaperSize_noLongPage :constPaperSize
+                :constPaperSize_onlyAuto
+            comboBox_scanAreaSize.currentIndex = index
+        }
+        property bool lastMultiFeed
+        function updateRadio_multiFeed(){
+            if(comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+                    && comboBox_scanAreaSize.currentText !== constPaperSizeMap.autoNoMultiFeed
+                    && comboBox_scanAreaSize.currentText !== constPaperSizeMap.A6){
+                lastMultiFeed = radioButton_multiFeedDetection_on.checked
+            }else{
+                radioButton_multiFeedDetection_on.checked = false
+            }
         }
     }
 
@@ -40,8 +120,8 @@ JKParaDialog{
         anchors.fill: parent
         text.text: qsTr("Default")
         onClicked: {
-            setting = JSData.defaultScanSetting()
-            root.update()
+            scanSetting = JSData.defaultScanSetting()
+            root.update(scanSetting)
         }
     }
 
@@ -54,188 +134,127 @@ JKParaDialog{
             close()
         }
     }
-    Connections{
-        target: scanSettingView.radioButton_twoSide
-        onCheckedChanged: setting.adfMode = scanSettingView.radioButton_twoSide.checked
 
-    }
-    Connections{
-        target: scanSettingView.radioButton_color
-        onCheckedChanged: setting.colorMode = scanSettingView.radioButton_color.checked
-
-    }
-    Connections{
-        target: scanSettingView.radioButton_multiFeedDetection_on
-        onCheckedChanged: setting.multiFeed = scanSettingView.radioButton_multiFeedDetection_on.checked
-
-    }
     Connections{
         target: scanSettingView.radioButton_autoCropDeskew_on
-        onCheckedChanged: setting.autoCropAndDeskew = scanSettingView.radioButton_autoCropDeskew_on.checked
+        onCheckedChanged: {
+            scanSettingView.updateComboxModel_scanAreaSize()
+            scanSettingView.updateRadio_multiFeed()
+        }
 
-    }
-    Connections{
-        target: scanSettingView.radioButton_autoColorDetection_on
-        onCheckedChanged: setting.autoColorDetection = scanSettingView.radioButton_autoColorDetection_on.checked
-
-    }
-    Connections{
-        target: scanSettingView.radioButton_skipBlankPage_on
-        onCheckedChanged: setting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
     }
     Connections{
         target: scanSettingView.comboBox_dpi
         onActivated: {
-            setting.dpi = index
+            scanSettingView.updateComboxModel_scanAreaSize()
         }
     }
     Connections{
         target: scanSettingView.comboBox_mediaType
         onActivated: {
-            var constMediaTypeMap = JSData.constMediaTypeMap()
             switch(target.currentText){
             case constMediaTypeMap.depositBook:
             case constMediaTypeMap.card:
                 openMediaTypePromptDialog()
                 break;
             }
-            setting.mediaType = index
+            scanSettingView.updateComboxModel_scanAreaSize()
         }
     }
 
-//    property int lastRes:-1
-//    property int lastPaperSize:-1
-//    property int lastPaperType: -1
-//    property var constPaperSizeMap: JSData.constPaperSizeMap()
     Connections{
         target: scanSettingView.comboBox_scanAreaSize
         onActivated:{
-//            if(index === lastPaperSize)
-//                return
-
-//            var dpimodel = JSData.constDPI()
-//            var mediamodel = JSData.constMediaType()
-//            if(target.currentText === constPaperSizeMap.longPage){
-
-//                dpimodel.pop()
-//                scanSettingView.comboBox_dpi.model = dpimodel
-//                lastRes = scanSettingView.comboBox_dpi.currentIndex
-//                scanSettingView.comboBox_dpi.currentIndex = 1
-//                scanSettingView.comboBox_dpi.enabled = false
-
-//                mediamodel.pop()
-//                mediamodel.pop()
-//                scanSettingView.comboBox_mediaType.model = mediamodel
-
-//                scanSettingView.radioButton_multiFeedDetection_on.checked = true
-//                scanSettingView.item_multiFeedDetection.enabled = false
-
-//                scanSettingView.radioButton_autoCropDeskew_on.checked = false
-//                scanSettingView.item_autoCropDeskew.enabled = false
-
-//                scanSettingView.radioButton_skipBlankPage_on.checked = false
-//                scanSettingView.item_skipBlankPage.enabled = false
-
-//                scanSettingView.radioButton_autoColorDetection_on.checked = true
-//                scanSettingView.item_autoColorDetection.enabled = false
-
-//            }else{
-//                scanSettingView.comboBox_dpi.model = dpimodel
-//                scanSettingView.comboBox_dpi.currentIndex = lastRes
-//                scanSettingView.comboBox_dpi.enabled = true
-
-//                scanSettingView.comboBox_mediaType.model = mediamodel
-
-//                if(target.currentText === constPaperSizeMap.A6
-//                        || target.currentText === constPaperSizeMap.autoNoMultiFeed){
-//                    scanSettingView.radioButton_multiFeedDetection_on.checked = false
-//                    scanSettingView.item_multiFeedDetection.enabled = false
-//                }else{
-//                    scanSettingView.radioButton_multiFeedDetection_on.checked = setting.multiFeed
-//                    scanSettingView.item_multiFeedDetection.enabled = true
-//                }
-
-//                if(target.currentText !== constPaperSizeMap.auto
-//                        ||target.currentText !== constPaperSizeMap.autoNoMultiFeed){
-//                    scanSettingView.radioButton_autoCropDeskew_on.checked = false
-//                    scanSettingView.item_autoCropDeskew.enabled = false
-//                }else{
-//                    scanSettingView.radioButton_autoCropDeskew_on.checked = setting.autoCropAndDeskew
-//                    scanSettingView.item_autoCropDeskew.enabled = true
-//                }
-
-//                scanSettingView.radioButton_skipBlankPage_on.checked = setting.skipBlankPage
-//                scanSettingView.item_skipBlankPage.enabled = true
-
-//                scanSettingView.radioButton_autoColorDetection_on.checked = setting.autoColorDetection
-//                scanSettingView.item_autoColorDetection.enabled = true
-//            }
-
-//            lastPaperSize = index
+            scanSettingView.updateComboxModel_dpi()
+            scanSettingView.updateComboxModel_mediaType()
+            scanSettingView.updateRadio_multiFeed()
         }
-    }
-    Connections{
-        target: scanSettingView.spin_brightness
-        onValueChanged: setting.brightness = Math.floor(target.value)
-    }
-    Connections{
-        target: scanSettingView.spin_contrast
-        onValueChanged: setting.contrast = Math.floor(target.value)
-    }
-    Connections{
-        target: scanSettingView.spin_gamma
-        onValueChanged: setting.gamma = Math.floor(target.value)
-    }
-    Component.onCompleted: {
     }
 
     function confirm(){
-        setting.adfMode = scanSettingView.radioButton_twoSide.checked
-        setting.colorMode = scanSettingView.radioButton_color.checked
-        setting.multiFeed = scanSettingView.radioButton_multiFeedDetection_on.checked
-        setting.autoCropAndDeskew = scanSettingView.radioButton_autoCropDeskew_on.checked
-        setting.autoColorDetection = scanSettingView.radioButton_autoColorDetection_on.checked
-        setting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
-        setting.dpi = scanSettingView.comboBox_dpi.currentIndex
-        setting.mediaType = scanSettingView.comboBox_mediaType.currentIndex
-        setting.scanAreaSize = scanSettingView.comboBox_scanAreaSize.currentIndex
-        setting.brightness = Math.floor(scanSettingView.spin_brightness.value)
-        setting.contrast = Math.floor(scanSettingView.spin_contrast.value)
-        setting.gamma = Math.floor(scanSettingView.spin_gamma.value)
+        scanSetting.adfMode = scanSettingView.radioButton_twoSide.checked
+        scanSetting.colorMode = scanSettingView.radioButton_color.checked
+        scanSetting.multiFeed = scanSettingView.radioButton_multiFeedDetection_on.checked
+        scanSetting.autoCropAndDeskew = scanSettingView.radioButton_autoCropDeskew_on.checked
+        scanSetting.autoColorDetection = scanSettingView.radioButton_autoColorDetection_on.checked
+        scanSetting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
+        scanSetting.dpi = scanSettingView.comboBox_dpi.currentIndex
+        scanSetting.mediaType = scanSettingView.comboBox_mediaType.currentIndex
+        scanSetting.scanAreaSize = scanSettingView.comboBox_scanAreaSize.currentIndex
+        scanSetting.brightness = Math.floor(scanSettingView.spin_brightness.value)
+        scanSetting.contrast = Math.floor(scanSettingView.spin_contrast.value)
+        scanSetting.gamma = Math.floor(scanSettingView.spin_gamma.value)
         ok()
     }
 
-    function update(){
-        if(setting.adfMode)
-            scanSettingView.radioButton_twoSide.checked = true
-        else
-            scanSettingView.radioButton_oneSide.checked = true
-        if(setting.colorMode)
-            scanSettingView.radioButton_color.checked = true
-        else
-            scanSettingView.radioButton_gray.checked = true
-        if(setting.multiFeed)
-            scanSettingView.radioButton_multiFeedDetection_on.checked = true
-        else
-            scanSettingView.radioButton_multiFeedDetection_off.checked = true
-        if(setting.autoCropAndDeskew)
-            scanSettingView.radioButton_autoCropDeskew_on.checked = true
-        else
-            scanSettingView.radioButton_autoCropDeskew_off.checked = true
-        if(setting.autoColorDetection)
-            scanSettingView.radioButton_autoColorDetection_on.checked = true
-        else
-            scanSettingView.radioButton_autoColorDetection_off.checked = true
-        if(setting.skipBlankPage)
-            scanSettingView.radioButton_skipBlankPage_on.checked = true
-        else
-            scanSettingView.radioButton_skipBlankPage_off.checked = true
-        scanSettingView.comboBox_dpi.currentIndex = setting.dpi
-        scanSettingView.comboBox_mediaType.currentIndex = setting.mediaType
-        scanSettingView.comboBox_scanAreaSize.currentIndex = setting.scanAreaSize
-        scanSettingView.spin_brightness.value = setting.brightness
-        scanSettingView.spin_contrast.value = setting.contrast
-        scanSettingView.spin_gamma.value = setting.gamma
+    function update(scanSetting){
+        switch(powerMode){
+        case JKEnums.PowerMode_usbBusPower:
+//            scanSetting.multiFeed = false
+            scanSetting.adfMode = false
+//            scanSetting.autoCropAndDeskew = false
+            scanSetting.mediaType = 0
+            if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
+                scanSetting.scanAreaSize = 0
+            break
+        case JKEnums.PowerMode_PowerBank:
+//            scanSetting.multiFeed = false
+//            scanSetting.adfMode = false
+//            scanSetting.autoCropAndDeskew = false
+            scanSetting.mediaType = 0
+            if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
+                scanSetting.scanAreaSize = 0
+            break
+        }
+
+        scanSettingView.updateComboxModel_scanAreaSize()
+        scanSettingView.updateComboxModel_dpi()
+        scanSettingView.updateComboxModel_mediaType()
+
+        scanSettingView.radioButton_twoSide.checked = scanSetting.adfMode
+        scanSettingView.radioButton_color.checked = scanSetting.colorMode
+        scanSettingView.radioButton_multiFeedDetection_on.checked = scanSetting.multiFeed
+        scanSettingView.radioButton_autoCropDeskew_on.checked = scanSetting.autoCropAndDeskew
+        scanSettingView.radioButton_autoColorDetection_on.checked = scanSetting.autoColorDetection
+        scanSettingView.radioButton_skipBlankPage_on.checked = scanSetting.skipBlankPage
+
+        scanSettingView.comboBox_dpi.currentIndex = scanSetting.dpi
+        scanSettingView.comboBox_mediaType.currentIndex = scanSetting.mediaType
+        scanSettingView.comboBox_scanAreaSize.currentIndex = scanSetting.scanAreaSize
+        scanSettingView.spin_brightness.value = scanSetting.brightness
+        scanSettingView.spin_contrast.value = scanSetting.contrast
+        scanSettingView.spin_gamma.value = scanSetting.gamma
+
     }
 
+    JKBusyIndicator{
+        id:refresh
+        visible: false
+        width: 50
+        height: 50
+        parent: container
+        anchors.centerIn: parent
+        z:1
+    }
+
+    Component.onCompleted: {
+        jkInterface.setCmd(DeviceStruct.CMD_getPowerSupply)
+        refresh.visible = true
+    }
+    Connections{
+        target: jkInterface
+        onCmdResult:{
+            refresh.visible = false
+            switch(cmd){
+            case DeviceStruct.CMD_getPowerSupply:
+                if(!result){
+                    var setting = JSON.parse(data)
+                    powerMode = setting.powerSupply
+                }else{
+                    powerMode = JKEnums.PowerMode_unknown
+                }
+                break
+            }
+        }
+    }
 }
