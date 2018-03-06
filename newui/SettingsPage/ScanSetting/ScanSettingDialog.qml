@@ -22,16 +22,7 @@ JKDialog{
 
     property int powerMode: JKEnums.PowerMode_ACPower
     property var scanSetting:JSData.defaultScanSetting()
-    property var setting
-
-    function initWithSetting(setting){
-        root.setting = setting
-        JSApi.deepCopy(setting ,scanSetting)
-        update(scanSetting)
-    }
-    function ok(){
-        JSApi.deepCopy(scanSetting ,setting)
-    }
+    property var setting:JSData.defaultScanSetting()
 
     toolbar{
         text.text:{
@@ -121,7 +112,7 @@ JKDialog{
         text.text: qsTr("Default")
         onClicked: {
             scanSetting = JSData.defaultScanSetting()
-            root.update(scanSetting)
+            root.update()
         }
     }
 
@@ -131,7 +122,6 @@ JKDialog{
         text.text: qsTr("OK")
         onClicked: {
             confirm()
-            close()
         }
     }
 
@@ -172,22 +162,22 @@ JKDialog{
     }
 
     function confirm(){
-        scanSetting.adfMode = scanSettingView.radioButton_twoSide.checked
-        scanSetting.colorMode = scanSettingView.radioButton_color.checked
-        scanSetting.multiFeed = scanSettingView.radioButton_multiFeedDetection_on.checked
-        scanSetting.autoCropAndDeskew = scanSettingView.radioButton_autoCropDeskew_on.checked
-        scanSetting.autoColorDetection = scanSettingView.radioButton_autoColorDetection_on.checked
-        scanSetting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
-        scanSetting.dpi = scanSettingView.comboBox_dpi.currentIndex
-        scanSetting.mediaType = scanSettingView.comboBox_mediaType.currentIndex
-        scanSetting.scanAreaSize = scanSettingView.comboBox_scanAreaSize.currentIndex
-        scanSetting.brightness = Math.floor(scanSettingView.spin_brightness.value)
-        scanSetting.contrast = Math.floor(scanSettingView.spin_contrast.value)
-        scanSetting.gamma = Math.floor(scanSettingView.spin_gamma.value)
-        ok()
+        setting.adfMode = scanSettingView.radioButton_twoSide.checked
+        setting.colorMode = scanSettingView.radioButton_color.checked
+        setting.multiFeed = scanSettingView.radioButton_multiFeedDetection_on.checked
+        setting.autoCropAndDeskew = scanSettingView.radioButton_autoCropDeskew_on.checked
+        setting.autoColorDetection = scanSettingView.radioButton_autoColorDetection_on.checked
+        setting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
+        setting.dpi = scanSettingView.comboBox_dpi.currentIndex
+        setting.mediaType = scanSettingView.comboBox_mediaType.currentIndex
+        setting.scanAreaSize = scanSettingView.comboBox_scanAreaSize.currentIndex
+        setting.brightness = Math.floor(scanSettingView.spin_brightness.value)
+        setting.contrast = Math.floor(scanSettingView.spin_contrast.value)
+        setting.gamma = Math.floor(scanSettingView.spin_gamma.value)
+        close()
     }
 
-    function update(scanSetting){
+    function update(){
         switch(powerMode){
         case JKEnums.PowerMode_usbBusPower:
 //            scanSetting.multiFeed = false
@@ -238,6 +228,8 @@ JKDialog{
     }
 
     Component.onCompleted: {
+        JSApi.deepCopy(setting ,scanSetting)
+        update()
         jkInterface.setCmd(DeviceStruct.CMD_getPowerSupply)
         refresh.visible = true
     }
@@ -253,6 +245,7 @@ JKDialog{
                 }else{
                     powerMode = JKEnums.PowerMode_unknown
                 }
+                update()
                 break
             }
         }

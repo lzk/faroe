@@ -68,7 +68,7 @@ int Scanner::open()
             deviceIO->close();
             result = deviceIO->open();
         }else{
-            scannerApi->unlock();
+//            scannerApi->unlock();
             deviceIO->close();
         }
     }

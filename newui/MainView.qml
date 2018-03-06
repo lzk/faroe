@@ -180,6 +180,10 @@ Item {
         return dialog
     }
 
+    function openScanSettingDialog(setting){
+        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{"setting":setting})
+    }
+
     function setScanCmd(cmd ,setting){
         if(!scanData.deviceStatus){
             warningWithImage(qsTr("Scanning connection failed"))
@@ -192,9 +196,21 @@ Item {
     }
 
     function setSetterCmd(cmd ,setting){
-        if(!scanData.deviceStatus){
-            warningWithImage(qsTr("Scanning connection failed"))
-            return
+        switch(cmd){
+        case DeviceStruct.CMD_getIpv4:
+        case DeviceStruct.CMD_getSoftap:
+        case DeviceStruct.CMD_getWifiInfo:
+        case DeviceStruct.CMD_getDeviceSetting:
+        case DeviceStruct.CMD_getOffTime:
+        case DeviceStruct.CMD_getSaveTime:
+            break
+
+        default:
+            if(!scanData.deviceStatus){
+                warningWithImage(qsTr("Scanning connection failed"))
+                return
+            }
+            break
         }
         jkInterface.setCmd(cmd ,JSON.stringify(setting));
         dialog = openDialog("component/JKRefresh.qml" ,{})
@@ -300,6 +316,16 @@ Item {
             }
             dialog.close()
 
+            switch(cmd){
+            case DeviceStruct.CMD_getIpv4:
+            case DeviceStruct.CMD_getSoftap:
+            case DeviceStruct.CMD_getWifiInfo:
+            case DeviceStruct.CMD_getDeviceSetting:
+            case DeviceStruct.CMD_getOffTime:
+            case DeviceStruct.CMD_getSaveTime:
+                return
+            }
+
             switch(result){
             case DeviceStruct.ERR_RETSCAN_OPENFAIL:
                 errorWithImage(qsTr("The Device is not ready!"))
@@ -338,7 +364,7 @@ Item {
                 para1.cmd = cmd
                 para1.setting = data
                 informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode do not support the following settings.
-\tAuto Crop:   \tOn
+
 \tMediaType:   \tDeposit Book or Card
 \tScan Size:   \tLong Page Mode
 
@@ -346,7 +372,6 @@ If you select 'Yes', the scan job will be continue, but the following settings w
 
 If you select 'No', the scan job will be canceled!
 
-\tAuto Crop:   \tOff
 \tMediaType:   \tNormal
 \tScan Size:   \tAuto")
                                             ,"message.horizontalAlignment":Text.AlignLeft
@@ -361,9 +386,8 @@ If you select 'No', the scan job will be canceled!
                     para.cmd = cmd
                     para.setting = data
                     informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus power mode do not support the follow settings.
+
 \tADF Mode:   \tTwo Side
-\tMulti Feed:   \tOn
-\tAuto Crop:   \tOn
 \tMediaType:   \tDeposit Book or Card
 \tScan Size:   \tLong Page Mode
 
@@ -372,8 +396,6 @@ If you select 'Yes', the scan job will be continue, but the following settings w
 If you select 'No', the scan job will be canceled!
 
 \tADF Mode:   \tOne Side
-\tMulti Feed:   \tOff
-\tAuto Crop:   \tOff
 \tMediaType:   \tNormal
 \tScan Size:   \tAuto")
                                                 ,"message.horizontalAlignment":Text.AlignLeft

@@ -257,11 +257,4 @@ Item {
                     })
         }
     }
-
-    property var dialog
-    function openScanSettingDialog(setting){
-        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{} ,function(dialog){
-            dialog.initWithSetting(setting)
-        })
-    }
 }

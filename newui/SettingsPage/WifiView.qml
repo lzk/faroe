@@ -214,7 +214,7 @@ Component{
                     anchors.right: parent.right
                     anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: !displayDetail
+                    visible: delegate.ListView.isCurrentItem ?!displayDetail :true
                     source:model.modelData.encryption > 127?"qrc:/Images/Signal_Connect.png"
                                                                  :"qrc:/Images/Signal_Enable.png"
                 }
