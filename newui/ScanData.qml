@@ -25,7 +25,8 @@ QtObject {
     }
 
     Component.onCompleted: {
-
+        if(!storageSettings.settings)
+            return
         var tmp = JSON.parse(storageSettings.settings)
         if(verifyStorageQuickScanSetting(tmp.quickScanSettings)){
             JSApi.deepCopy(tmp.quickScanSettings ,quickScanSettings)

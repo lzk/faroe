@@ -21,7 +21,6 @@ JKInterface::JKInterface(QObject *parent)
     connect(&thread ,SIGNAL(finished()) ,deviceManager ,SLOT(deleteLater()));
 
     connect(this ,SIGNAL(searchDeviceList()) ,deviceManager ,SLOT(searchDeviceList()));
-//    connect(this ,SIGNAL(cancelSearch()) ,deviceManager ,SLOT(cancelSearchDeviceList()));
     connect(this ,SIGNAL(connectDevice(int)) ,deviceManager ,SLOT(connectDevice(int)));
     connect(deviceManager ,SIGNAL(searchComplete()) ,this , SIGNAL(searchComplete()));
     connect(deviceManager ,&DeviceManager::updateDeviceList ,this ,&JKInterface::updateDeviceList);
@@ -274,6 +273,12 @@ void JKInterface::cancelScan()
 {
     deviceManager->cancelScan();
 }
+
+void JKInterface::cancelSearch()
+{
+    deviceManager->cancelSearchDeviceList();
+}
+
 
 #include <QPrintDialog>
 #include <QPrinter>

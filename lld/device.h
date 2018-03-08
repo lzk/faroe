@@ -85,6 +85,7 @@ public:
 
     static void searchUsbDevices(addDeviceHandler handler,void* pData);
     static void searchDevices(addDeviceHandler handler,void* pData);
+    static void cancelSearch();
 private:   
     DeviceIO* deviceIO;
     Scanner* scanner;

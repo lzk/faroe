@@ -14,6 +14,7 @@ void findAgent(addDeviceHandler handler,void* pData ,char* broadcast);
 void findAgentV6(addDeviceHandler ,void*);
 void snmpSearchDevices(addDeviceHandler handler,void* pData)
 {
+    QHostAddress broadcast;
     QList<QNetworkInterface> ilist = QNetworkInterface::allInterfaces();
     foreach (QNetworkInterface interface, ilist) {
         QList<QNetworkAddressEntry> entrylist = interface.addressEntries();
@@ -21,12 +22,15 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
             QHostAddress address = entry.ip();
             if(address.protocol() == QAbstractSocket::IPv4Protocol){
                 if(!address.isLoopback() && entry.netmask().isEqual(QHostAddress("255.255.255.0"))){
-                    findAgent(handler ,pData ,entry.broadcast().toString().toLatin1().data());
+                    broadcast = entry.broadcast();
+                    qDebug()<<"search:"<<broadcast;
+                    findAgent(handler ,pData ,broadcast.toString().toLatin1().data());
                 }
             }
         }
     }
 
+    qDebug()<<"search: ipv6";
     findAgentV6(handler ,pData);
 }
 
@@ -51,6 +55,22 @@ struct My_synch_state{
 
 static void handlerData(netsnmp_pdu *pdu, void *magic)
 {
+    {
+        struct sockaddr_in *to = NULL;
+        to = (struct sockaddr_in *)pdu->transport_data;
+        if(to->sin_family == AF_INET){
+            qDebug()<<"find ip:"<<inet_ntoa(to->sin_addr);
+        }
+    }
+    {
+        struct sockaddr_in6 *to = NULL;
+        to = (struct sockaddr_in6 *)pdu->transport_data;
+        if(to->sin6_family == AF_INET6){
+            char ipv6[256];
+            inet_ntop(AF_INET6 ,&to->sin6_addr ,ipv6 ,256);
+            qDebug()<<"find ip:"<<ipv6;
+        }
+    }
     bool found = false;
     struct variable_list *vars;
     for(vars = pdu->variables; vars; vars = vars->next_variable){
@@ -65,9 +85,9 @@ static void handlerData(netsnmp_pdu *pdu, void *magic)
         if(ASN_OBJECT_ID == vars->type){
             if(!memcmp(vars->val.objid ,objectID ,vars->val_len)){
                 found = true;
+                break;
             }
         }
-        break;
     }
 
     if(!found)
@@ -113,9 +133,9 @@ static int  callback(int op,
         return 0;
     }
 
-    state->waiting = 0;
-    qDebug( "\nResponse (ReqID: %d - Cmd %d)",
-                               reqid, (pdu ? pdu->command : -1));
+    state->waiting = 1;
+//    qDebug( "\nResponse (ReqID: %d - Cmd %d)",
+//                               reqid, (pdu ? pdu->command : -1));
 
     if (op == NETSNMP_CALLBACK_OP_RECEIVED_MESSAGE && pdu) {
         if (pdu->command == SNMP_MSG_REPORT) {
@@ -189,34 +209,84 @@ int netsnmpBroadcast(netsnmp_session& session ,void* magic)
     state = (struct synch_state*)magic;
     ss->callback = callback;
     ss->callback_magic = (void*) state;
-    fd_set fdset;
-    struct timeval timeout ,*tvp;
-    int block;
-    int numfds ,count;
     state->reqid = snmp_send(ss ,pdu);
     state->waiting = 1;
     if(state->reqid == 0){
         snmp_free_pdu(pdu);
         state->status = STAT_ERROR;
     }else{
+        fd_set fdset;
+        int block;
+        int numfds ,count;
+        struct timeval timeout ,*tvp;
+#if 0
+
+        numfds = 0;
+        FD_ZERO(&fdset);
+        block = NETSNMP_SNMPBLOCK;
+        tvp=&timeout;
+        timerclear(tvp);
+//            snmp_select_info(&numfds ,&fdset ,tvp ,&block);
+        snmp_sess_select_info_flags(0 ,&numfds ,&fdset ,tvp ,&block ,NETSNMP_SELECT_NOALARMS);
+//        if(block == 1){
+//            tvp=NULL;
+//            break;
+//        }
+        qDebug()<<"timeout time:"<<tvp->tv_sec <<"."<<tvp->tv_usec;
+
+        long tm_val = 1000 * 1000;
+        int times = TimeOutSecond * 1;
+
+        struct timeval tpstart,tpend;
+        long long tm;
+        for(int i = 0 ;i < times ;i++){
+            gettimeofday(&tpstart,NULL);
+            while(!((DeviceManager*)mystate->pData)->isCancelSearch()){
+
+                gettimeofday(&tpend,NULL);
+                tm = tm_val + tpstart.tv_sec*1000*1000+tpstart.tv_usec  - tpend.tv_sec*1000*1000 - tpend.tv_usec;
+                if(tm <= 0)
+                    break;
+                timeout.tv_sec = tm / tm_val;
+                timeout.tv_usec = tm % tm_val;
+                count = select(numfds ,&fdset ,NULL ,NULL ,tvp);
+                if(count > 0){
+                    snmp_read(&fdset);
+                }
+            }
+        }
+//        for(int i = 0; i < times ;i++){
+//            if(((DeviceManager*)mystate->pData)->isCancelSearch()){
+//               break;
+//            }
+//            timeout.tv_sec = 0;//tm / tm_val;
+//            timeout.tv_usec = 0;//tm % tm_val;
+//            count = select(numfds ,&fdset ,NULL ,NULL ,tvp);
+//            if(count > 0){
+//                snmp_read(&fdset);
+//            }
+//            usleep(tm_val);
+//        }
+        snmp_timeout();
+#else
         while(state->waiting & !((DeviceManager*)mystate->pData)->isCancelSearch()){
             numfds = 0;
             FD_ZERO(&fdset);
             block = NETSNMP_SNMPBLOCK;
             tvp=&timeout;
             timerclear(tvp);
-            snmp_sess_select_info_flags(0 ,&numfds ,&fdset ,tvp ,&block ,NETSNMP_SELECT_NOALARMS);
-            qDebug()<<"timeout:"<<tvp->tv_sec<<":"<<tvp->tv_usec;
-            qDebug()<<"block?"<<block;
-            if(block == 1)
-                tvp=NULL;
+            snmp_select_info(&numfds ,&fdset ,tvp ,&block);
+//            snmp_sess_select_info_flags(0 ,&numfds ,&fdset ,tvp ,&block ,NETSNMP_SELECT_NOALARMS);
+//            if(block == 1)
+//                tvp=NULL;
             count = select(numfds ,&fdset ,NULL ,NULL ,tvp);
-            if(count > 0)
+            if(count > 0){
                 snmp_read(&fdset);
-            else{
+            }else{
                 switch (count) {
                 case 0:
                     snmp_timeout();
+                    qDebug()<<"time out";
                     break;
                 case -1:
 //                    if(errno == EINTR)
@@ -230,8 +300,8 @@ int netsnmpBroadcast(netsnmp_session& session ,void* magic)
                 break;
             }
         }
+#endif
     }
-
 //    ss->callback = cbsav;
 //    ss->callback_magic = cbmagsav;
     snmp_close (ss);
@@ -276,4 +346,15 @@ void findAgentV6(addDeviceHandler handler,void* pData)
     lstate.addDevice = handler;
     lstate.pData = pData;
     netsnmpBroadcast(session ,(void*)&lstate);
+}
+
+//#include <QUdpSocket>
+//QUdpSocket udpSocket;
+void snmpCancelSearch()
+{
+    snmp_close_sessions();
+
+//    system("echo \"cancel search\" >>0 ");
+//    qDebug()<<"cancel search";
+//    udpSocket.writeDatagram("cancel search",11,QHostAddress::LocalHost, 59230);
 }

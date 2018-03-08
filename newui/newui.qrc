@@ -175,7 +175,6 @@
         <file>Images/Status_RefreshEnable.tif</file>
         <file>translations/vop.en.qm</file>
         <file>translations/vop.zh_CN.qm</file>
-        <file>Images/ai.icns</file>
         <file>Images/others.png</file>
         <file>SettingsPage/component/JKCheckBox.qml</file>
         <file>Images/checkbox_ disable.png</file>
@@ -190,5 +189,6 @@
         <file>Images/Wifi.png</file>
         <file>Images/setting_wifilist panel.png</file>
         <file>Images/switch.png</file>
+        <file>Images/Preview.png</file>
     </qresource>
 </RCC>

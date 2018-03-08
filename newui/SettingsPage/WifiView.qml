@@ -68,6 +68,7 @@ Item {
                             listview.model = null
                             setSetterCmd(DeviceStruct.CMD_setWifi ,wifiSetting)
                         }
+                        checked: false
                     }
                     Local.DividingLine{
                         height: 6
@@ -376,6 +377,8 @@ Component{
                     console.log(data)
                     listview.model = wifiSetting.apList
                     checkbox.checked = wifiSetting.enable
+                }else{
+                    checkbox.checked = false;
                 }
 
                 break;

@@ -59,6 +59,12 @@ void Device::searchDevices(addDeviceHandler handler,void* pData)
     snmpSearchDevices(handler ,pData);
 }
 #endif
+void snmpCancelSearch();
+void Device::cancelSearch()
+{
+    snmpCancelSearch();
+}
+
 int Device::deviceCmd(int cmd ,void* data)
 {
     int err = DeviceStruct::ERR_cmd_cannot_support;

@@ -39,13 +39,14 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
 
-                RadioButton{
+                JKRadioButton{
                     id:radiobutton_dhcp
                     width:142
                     height: parent.height
                     text:qsTr("DHCP")
+                    checked: true
                 }
-                RadioButton{
+                JKRadioButton{
                     id:radiobutton_static
                     width:143
                     height: parent.height

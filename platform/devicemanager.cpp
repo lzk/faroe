@@ -62,8 +62,13 @@ void DeviceManager::watchDevice()
         connected = device->checkConnection();
         if(!connected && currentDevice.startsWith("USB")){
             Device::searchUsbDevices(addUsbDevice ,this);
-            connected = device->checkConnection();
+            if(device)
+                connected = device->checkConnection();
         }
+    }else{
+        Device::searchUsbDevices(addUsbDevice ,this);
+        if(device)
+            connected = device->checkConnection();
     }
     emit updateDeviceStatus(connected);
     QTimer::singleShot(5000, this, SLOT(watchDevice()));
@@ -114,13 +119,17 @@ void DeviceManager::addDevice(DeviceInfo* deviceInfo ,void* pData)
 
 void DeviceManager::addDeviceInfo(DeviceInfo* deviceInfo ,int count)
 {
+    QString str;
     for(int i = 0 ;i < count ;i++){
-        deviceList << deviceInfo[i];
-        if(deviceInfo->type == DeviceInfo::Type_usb)
-            m_deviceList << QString(deviceInfo->name) + QString(" ") + QString(deviceInfo->address);
+        if(deviceInfo[i].type == DeviceInfo::Type_usb)
+            str = QString(deviceInfo[i].name) + QString(" ") + QString(deviceInfo[i].address);
         else
-            m_deviceList << deviceInfo->address;
+            str = deviceInfo[i].address;
 
+        if(!m_deviceList.contains(str)){
+            m_deviceList << str;
+            deviceList << deviceInfo[i];
+        }
         emit updateDeviceList( m_deviceList);
     }
 }
@@ -155,6 +164,7 @@ void DeviceManager::searchDeviceList()
 void DeviceManager::cancelSearchDeviceList()
 {
     cancelSearch = 1;
+    Device::cancelSearch();
 }
 
 int DeviceManager::isCancelSearch()

@@ -34,7 +34,8 @@ JKParaDialog{
             clip: true
             model: ListModel{
                 ListElement{
-                    imageSource:"qrc:/Images/ai.icns"
+                    imageSource:"qrc:/Images/Preview.png"
+//                    imageSource:"file:/Applications/Preview/Contents/Resources/Preview.icns"
                     appName:"Preview"
                 }
                 ListElement{

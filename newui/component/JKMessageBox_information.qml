@@ -40,7 +40,7 @@ JKDialog {
                 id: button_yes
                 width: 120
                 height: 30
-                text.text: "Yes"
+                text.text: qsTr("Yes")
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked:{
                     root.close()
@@ -52,7 +52,7 @@ JKDialog {
                 id: button_no
                 width: 120
                 height: 30
-                text.text: "No"
+                text.text: qsTr("No")
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: root.close()
             }
