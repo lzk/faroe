@@ -27,7 +27,7 @@ SettingsLayout {
             id:delegate
             width: ListView.view.width
             height: ListView.view.height / 7
-            enabled: index !== 6
+//            enabled: index !== 6
             Image {
                 anchors.fill: parent
                 source: delegate.ListView.isCurrentItem ?imageSource:"qrc:/Images/setting_img_disable.png"

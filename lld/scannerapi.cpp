@@ -631,3 +631,160 @@ int ScannerAPI::setGamma(const unsigned int* gammaTable ,int length)
     }
     return result<0?-1:0;
 }
+
+int ScannerAPI::getPowerSaveTime(int& sleepTime ,int& offTime ,int& powerMode)
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    SC_PWRS_T cmdData;
+    char* pCmdData = (char*)&cmdData;
+    SC_PWRS_T* cmd = &cmdData;
+    memset(pCmdData ,0 ,sizeof(cmdData));
+    pCmdData[0] = 'P';
+    pCmdData[1] = 'W';
+    pCmdData[2] = 'R';
+    pCmdData[3] = 'S';
+
+    SC_GET_PWRS_DATA_T data;
+    memset(&data, 0, sizeof(data));
+
+    SC_PWRS_STA_T sta;
+    memset(&sta, 0, sizeof(sta));
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(*cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)&sta, sizeof(sta));
+    }
+    char* code = (char*)&sta.code;
+    if(result <= 0
+       ||(code[0] != 'S' || code[1] != 'T' || code[2] != 'A')
+            || sta.ack != 'A'
+            ){
+        result = -1;
+    }
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)&data, sizeof(data));
+    }
+
+    if(data.disableAutoSleep & 0xff)
+        sleepTime = 0;
+    else
+        sleepTime = data.autoSleepTime;
+    if(data.disableAutoOff & 0xff)
+        offTime = 0;
+    else
+        offTime = data.autoOffTime;
+    powerMode = sta.powermodecode;
+    return result<0?-1:0;
+
+}
+
+int ScannerAPI::setPowerSaveTime(int sleepTime ,int offTime ,int& powerMode)
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    SC_PWRS_T cmdData;
+    char* pCmdData = (char*)&cmdData;
+    SC_PWRS_T* cmd = &cmdData;
+    memset(pCmdData ,0 ,sizeof(cmdData));
+    pCmdData[0] = 'P';
+    pCmdData[1] = 'W';
+    pCmdData[2] = 'R';
+    pCmdData[3] = 'S';
+    cmd->option = 1;
+
+    SC_GET_PWRS_DATA_T data;
+    data.disableAutoOff = 0;
+    data.disableAutoSleep = 0;
+    data.autoOffTime = offTime;
+    data.autoSleepTime = sleepTime;
+
+    SC_PWRS_STA_T sta;
+    memset(&sta, 0, sizeof(sta));
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(*cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->write((char*)&data, sizeof(data));
+    }
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)&sta, sizeof(sta));
+    }
+    char* code = (char*)&sta.code;
+    if(result <= 0
+       ||(code[0] != 'S' || code[1] != 'T' || code[2] != 'A')
+            || sta.ack != 'A'
+            ){
+        result = -1;
+    }
+
+    powerMode = sta.powermodecode;
+    return result<0?-1:0;
+}
+
+int ScannerAPI::nvram_read(unsigned char addr ,unsigned int len ,unsigned char* data)
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    char cmd[8] = { 'R','E','E','P' ,0,0,0,0};
+    char status[8] = { 0 };
+    cmd[4] = addr;
+    cmd[5] = len;
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)status, sizeof(status));
+    }
+    char* code = (char*)status;
+    if(result <= 0
+       ||(code[0] != 'S' || code[1] != 'T' || code[2] != 'A')
+            || code[4] != 'A'
+            ){
+        result = -1;
+    }
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)data, len);
+    }
+    return result<0?-1:0;
+}
+
+int ScannerAPI::nvram_write(unsigned char addr ,unsigned int len ,unsigned char* data)
+{
+    if(dio == NULL)
+        return NO_DIO;
+
+    char cmd[8] = { 'W','E','E','P' ,0,0,0,0};
+    char status[8] = { 0 };
+    cmd[4] = addr;
+    cmd[5] = len;
+
+    DELAYTIMES();
+    int result = dio->write((char*)cmd, sizeof(cmd));
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->write((char*)data, len);
+    }
+    if(result>=0){
+        DELAYTIMES();
+        result = dio->read((char*)status, sizeof(status));
+    }
+    char* code = (char*)status;
+    if(result <= 0
+       ||(code[0] != 'S' || code[1] != 'T' || code[2] != 'A')
+            || code[4] != 'A'
+            ){
+        result = -1;
+    }
+    return result<0?-1:0;
+}

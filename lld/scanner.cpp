@@ -7,6 +7,7 @@
 #include "device.h"
 #include "deviceio.h"
 #include "../platform/devicestruct.h"
+#include "../platform/log.h"
 using namespace JK;
 
 #define _SCANMODE_1BIT_BLACKWHITE 1
@@ -64,7 +65,7 @@ int Scanner::open()
     result = ((NetDeviceIO*)deviceIO)->openPort(23011);
     if(!result){
         result = scannerApi->lock();
-        if(!result){
+        if(!result && !m_cancel){
             deviceIO->close();
             result = deviceIO->open();
         }else{
@@ -90,75 +91,9 @@ int Scanner::close()
     return result;
 }
 
-int Scanner::ADFScan(void* data)
+void Scanner::cancel(bool iscancel)
 {
-    if(!data)
-        return DeviceStruct::ERR_invalid_data;
-    Scanner::Setting* setting = (Scanner::Setting*)data;
-    int result = 0;
-    if(deviceIO->type() == DeviceIO::Type_net){
-//        result = deviceIO->read(&status ,1);
-        result = ((NetDeviceIO*)deviceIO)->openPort(23011);
-        if(!result){
-            char cmd[4] = { 'J','D','G','S' };
-            char status[8] = { 0 };
-            if(4 == deviceIO->write(cmd ,4)){
-                if(8==deviceIO->read(status ,8)){
-                    if (   status[0] == 'J'
-                        && status[1] == 'D'
-                        && status[2] == 'A'
-                           && status[3] == 'T'
-                        && status[4] == 0x00){
-                        result = RETSCAN_OK;
-                    }else{
-                        result = RETSCAN_BUSY;
-                    }
-                }
-            }
-            deviceIO->close();
-        }
-    }
-    if(result != RETSCAN_OK)
-        return result;
-    result = open();
-    if(!result){
-        result = scannerApi->ready() ?RETSCAN_OK :RETSCAN_BUSY;
-    }
-    if(!result){
-        SC_INFO_DATA_T sc_infodata;
-        result = checkStatus(START_STAGE ,&sc_infodata);
-    }
-    if(!result){
-        calculateParameters(*setting);
-        SC_POWER_INFO_T sc_powerData;
-        result = scannerApi->getPowerSupply(sc_powerData);
-        switch (sc_powerData.mode) {
-        case 2:
-            if(setting->AutoCrop || setting->type > 0 ||parameters.nColPixelNumOrig > 14000)
-                result = RETSCAN_ERROR_POWER1;
-            break;
-        case 3:
-            if(setting->AutoCrop
-                    || setting->type > 0 //mediaType
-                    ||parameters.nColPixelNumOrig > 14000
-                    ||setting->ADFMode == SETTING_SCAN_AB_SIDE
-                    ||setting->MultiFeed
-                    || deviceIO->type() == DeviceIO::Type_net)
-                result = RETSCAN_ERROR_POWER2;
-            break;
-        default:
-            break;
-        }
-    }
-    if(!result)
-        result = _ADFScan(setting);
-    close();
-    return result;
-}
-
-void Scanner::cancel()
-{
-    m_cancel = true;
+    m_cancel = iscancel;
 }
 
 int Scanner::receiveData()
@@ -180,7 +115,6 @@ int Scanner::receiveData()
     Para_Extra para;
     memset(&para ,0 ,sizeof(para));
 
-    m_cancel = false;
     while (!m_cancel){
         result = checkStatus(SCANNING_STAGE ,&sc_infodata);
         if(result == RETSCAN_GETINFO_FAIL){
@@ -690,11 +624,235 @@ void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
     }
 }
 
-int Scanner::doScannerJob(int (*func)(Scanner* ,void*) ,Scanner* scanner ,void* data)
-{
-    if(!data || !func)
-        return -1;
+enum ScannerCmd{
+    ScannerCmd_adfScan,
+    ScannerCmd_getPwerSupply,
+    ScannerCmd_getDeviceSettings,
+    ScannerCmd_setPowerSaveTime,
+    ScannerCmd_clearRollerCount,
+    ScannerCmd_clearACMCount,
+};
 
+int Scanner::doScannerJob(int cmd ,void* data)
+{
+    int result = 0;
+    if(deviceIO->type() == DeviceIO::Type_net){
+//        result = deviceIO->read(&status ,1);
+        result = ((NetDeviceIO*)deviceIO)->openPort(23011);
+        if(!result){
+            char cmd[4] = { 'J','D','G','S' };
+            char status[8] = { 0 };
+            if(4 == deviceIO->write(cmd ,4)){
+                if(8==deviceIO->read(status ,8)){
+                    if (   status[0] == 'J'
+                        && status[1] == 'D'
+                        && status[2] == 'A'
+                           && status[3] == 'T'
+                        && status[4] == 0x00){
+                        result = RETSCAN_OK;
+                    }else{
+                        result = RETSCAN_BUSY;
+                    }
+                }
+            }
+            deviceIO->close();
+        }
+    }
+    if(result != RETSCAN_OK)
+        return result;
+    result = open();
+    if(!result){
+        if(m_cancel){
+            result = RETSCAN_CANCEL;
+        }else
+            result = scannerApi->ready() ?RETSCAN_OK :RETSCAN_BUSY;
+    }
+    if(!result){
+        if(m_cancel){
+            result = RETSCAN_CANCEL;
+        }else
+            result = scanner_cmd(cmd ,data);
+    }
+    close();
+    return result;
+}
+
+int Scanner::scanner_cmd(int cmd ,void* data)
+{
+    int result = DeviceStruct::ERR_invalid_data;
+    switch (cmd) {
+    case ScannerCmd_adfScan:
+    {
+        result = adfScan(data);
+    }
+        break;
+    case ScannerCmd_getPwerSupply:
+    {
+        if(!data)
+            return DeviceStruct::ERR_invalid_data;
+        SC_POWER_INFO_T sc_powerData;
+        result = scannerApi->getPowerSupply(sc_powerData);
+        if(!result){
+            int* mode = (int*) data;
+            *mode = sc_powerData.mode;
+        }
+    }
+        break;
+    case ScannerCmd_getDeviceSettings:
+    {
+        if(!data)
+            return DeviceStruct::ERR_invalid_data;
+        struct_deviceSetting* pData = (struct_deviceSetting*)data;
+        {
+            int sleepTime;int offTime;
+            int powermode;
+            result = scannerApi->getPowerSaveTime(sleepTime ,offTime ,powermode);
+            if(!result){
+                pData->saveTime = sleepTime;
+                pData->offTime = offTime;
+            }else{
+                return -1;
+            }
+        }
+        {
+            unsigned char dt[4];
+            result = scannerApi->nvram_read(0x48 ,4 ,dt);
+            if(!result){
+                pData->rollerCount = dt[0]
+                        |(dt[1] & 0xff00)
+                        |(dt[2] & 0xff0000)
+                        |(dt[3] & 0xff000000);
+            }else{
+                return -1;
+            }
+            result = scannerApi->nvram_read(0x4c ,4 ,dt);
+            if(!result){
+                pData->acmCount = dt[0]
+                        |(dt[1] & 0xff00)
+                        |(dt[2] & 0xff0000)
+                        |(dt[3] & 0xff000000);
+            }else{
+                return -1;
+            }
+            result = scannerApi->nvram_read(0x00 ,4 ,dt);
+            if(!result){
+                pData->scanCount = dt[0]
+                        |(dt[1] & 0xff00)
+                        |(dt[2] & 0xff0000)
+                        |(dt[3] & 0xff000000);
+            }else{
+                return -1;
+            }
+        }
+        break;
+    }
+    case ScannerCmd_setPowerSaveTime:
+    {
+        if(!data)
+            return DeviceStruct::ERR_invalid_data;
+        struct_deviceSetting* pData = (struct_deviceSetting*)data;
+        int sleepTime = pData->saveTime;
+        int offTime = pData->offTime;
+        int powermode;
+        result = scannerApi->setPowerSaveTime(sleepTime ,offTime ,powermode);
+        break;
+    }
+    case ScannerCmd_clearRollerCount:
+    {
+        unsigned char dt[4] = {0};
+        result = scannerApi->nvram_write(0x48 ,4 ,dt);
+        break;
+    }
+    case ScannerCmd_clearACMCount:
+    {
+        unsigned char dt[4] = {0};
+        result = scannerApi->nvram_write(0x4c ,4 ,dt);
+        break;
+    }
+    default:
+        break;
+    }
+    return result;
+}
+
+
+int Scanner::getPowerSupply(void* data)
+{
+    return doScannerJob(ScannerCmd_getPwerSupply ,data);
+}
+
+int Scanner::getDeviceSettings(void* data)
+{
+    return doScannerJob(ScannerCmd_getDeviceSettings ,data);
+}
+
+int Scanner::setPowerSaveTime(void* data)
+{
+    return doScannerJob(ScannerCmd_setPowerSaveTime ,data);
+}
+
+int Scanner::clearRollerCount()
+{
+    return doScannerJob(ScannerCmd_clearRollerCount ,NULL);
+}
+
+int Scanner::clearACMCount()
+{
+    return doScannerJob(ScannerCmd_clearACMCount ,NULL);
+}
+
+int Scanner::adfScan(void *data)
+{
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+    Scanner::Setting* setting = (Scanner::Setting*)data;
+    int result;
+    {
+        SC_INFO_DATA_T sc_infodata;
+        result = checkStatus(START_STAGE ,&sc_infodata);
+    }
+    if(!result){
+        if(m_cancel){
+            return RETSCAN_CANCEL;
+        }
+        calculateParameters(*setting);
+        SC_POWER_INFO_T sc_powerData;
+        result = scannerApi->getPowerSupply(sc_powerData);
+        switch (sc_powerData.mode) {
+        case 2:
+            if(setting->AutoCrop || setting->type > 0 ||parameters.nColPixelNumOrig > 14000)
+                result = RETSCAN_ERROR_POWER1;
+            break;
+        case 3:
+            if(setting->AutoCrop
+                    || setting->type > 0 //mediaType
+                    ||parameters.nColPixelNumOrig > 14000
+                    ||setting->ADFMode == SETTING_SCAN_AB_SIDE
+                    ||setting->MultiFeed
+                    || deviceIO->type() == DeviceIO::Type_net)
+                result = RETSCAN_ERROR_POWER2;
+            break;
+        default:
+            break;
+        }
+    }
+    if(!result)
+        result = _ADFScan(setting);
+    return result;
+}
+
+#if 1
+int Scanner::ADFScan(void* data)
+{
+    return doScannerJob(ScannerCmd_adfScan ,data);
+}
+#else
+int Scanner::ADFScan(void* data)
+{
+    if(!data)
+        return DeviceStruct::ERR_invalid_data;
+
+    Scanner::Setting* setting = (Scanner::Setting*)data;
     int result = 0;
     if(deviceIO->type() == DeviceIO::Type_net){
 //        result = deviceIO->read(&status ,1);
@@ -724,31 +882,44 @@ int Scanner::doScannerJob(int (*func)(Scanner* ,void*) ,Scanner* scanner ,void* 
     if(!result){
         result = scannerApi->ready() ?RETSCAN_OK :RETSCAN_BUSY;
     }
+    if(!result){
+        SC_INFO_DATA_T sc_infodata;
+        result = checkStatus(START_STAGE ,&sc_infodata);
+    }
+    if(!result){
+        calculateParameters(*setting);
+        SC_POWER_INFO_T sc_powerData;
+        result = scannerApi->getPowerSupply(sc_powerData);
+        switch (sc_powerData.mode) {
+        case 2:
+            if(setting->AutoCrop || setting->type > 0 ||parameters.nColPixelNumOrig > 14000)
+                result = RETSCAN_ERROR_POWER1;
+            break;
+        case 3:
+            if(setting->AutoCrop
+                    || setting->type > 0 //mediaType
+                    ||parameters.nColPixelNumOrig > 14000
+                    ||setting->ADFMode == SETTING_SCAN_AB_SIDE
+                    ||setting->MultiFeed
+                    || deviceIO->type() == DeviceIO::Type_net)
+                result = RETSCAN_ERROR_POWER2;
+            break;
+        default:
+            break;
+        }
+    }
     if(!result)
-        result = func(scanner ,data);
+        result = _ADFScan(setting);
     close();
     return result;
 }
+#endif
 
-int Scanner::_getPowerSupply(void* data)
+int Scanner::doCalibration()
 {
-    if(!data)
-        return DeviceStruct::ERR_invalid_data;
-    SC_POWER_INFO_T sc_powerData;
-    int result = scannerApi->getPowerSupply(sc_powerData);
-    if(!result){
-        int* mode = (int*) data;
-        *mode = sc_powerData.mode;
+    if(deviceIO->type() == DeviceIO::Type_net){
+        return DeviceStruct::ERR_cmd_cannot_support;
     }
-    return result;
-}
-
-int Scanner::static_getPowerSupply(Scanner* scanner ,void* data)
-{
-    return scanner->_getPowerSupply(data);
-}
-
-int Scanner::getPowerSupply(void* data)
-{
-    return doScannerJob(static_getPowerSupply ,this ,data);
+    LOG_NOPARA("to do");
+    return 0;
 }

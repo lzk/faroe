@@ -110,6 +110,7 @@ void JKInterface::setCmd(int cmd ,const QString& data)
     qDebug()<<"cmd:"<<this->cmd;
     qDebug()<<"cmd para"<<data;
 
+    deviceManager->cancelScan(false);
     switch (cmd) {
 
     case DeviceStruct::CMD_QuickScan_ToFile:{
@@ -271,7 +272,7 @@ void JKInterface::imagesCmdResult(int cmd ,int state ,int result)
 
 void JKInterface::cancelScan()
 {
-    deviceManager->cancelScan();
+    deviceManager->cancelScan(true);
 }
 
 void JKInterface::cancelSearch()

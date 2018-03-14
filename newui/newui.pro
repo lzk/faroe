@@ -42,7 +42,7 @@ SOURCES += main.cpp \
     ../imageManager/decodemanager.cpp \
     ../platform/mac/macapi.cpp \
     ../platform/platform.cpp \
-    ../imageManager/wrapperqimage.cpp
+    ../imageManager/wrapperqimage.cpp \
 
 HEADERS += \
     jkenums.h \
@@ -67,7 +67,7 @@ HEADERS += \
     ../imageManager/imagemanager.h \
     ../imageManager/decodemanager.h \
     ../platform/platform.h \
-    ../imageManager/wrapperqimage.h
+    ../imageManager/wrapperqimage.h \
 
 RESOURCES += \
     ../newui/newui.qrc

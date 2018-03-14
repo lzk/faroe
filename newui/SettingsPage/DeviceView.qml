@@ -39,99 +39,214 @@ Item {
             width: parent.width
         }
 
-        Item {
-            id: item2
-            height: 135
+        Item{
+            height: 120
             width: parent.width
+            Item{
+                anchors.fill: parent
+                anchors.rightMargin: parent.width / 2
 
-            GroupBox {
-                id: groupBox
-                width: 400
-                height: 115
-                font.bold: true
-                font.pixelSize: 12
-                spacing: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                anchors.verticalCenter: parent.verticalCenter
-                title: qsTr("Auto Sleep Time")
+                GroupBox {
+                    id: groupBox
+                    anchors.fill: parent
 
-                Column {
-                    width: 360
-                    height: 80
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
+                    font.bold: true
+                    font.pixelSize: 12
+                    spacing: 0
+                    title: qsTr("Sleep Time")
 
-                    Item {
-                        id: item4
-                        width: parent.width
-                        height: 45
-                        Local.SpinView{
-                            id:spin_saveTime
-                            anchors.centerIn: parent
-                            slider{
-                                visible: false
-                                to: 60
-                                value: 0
+                    Column {
+                        anchors.fill: parent
+
+                        Item {
+                            id: item4
+                            width: parent.width
+                            height: 50
+                            Local.SpinView{
+                                id:spin_saveTime
+                                anchors.fill: parent
+                                anchors.leftMargin: 20
+                                anchors.rightMargin: 20
+                                slider{
+                                    visible: false
+                                    from: 1
+                                    to: 60
+                                    value: 0
+                                }
                             }
                         }
-                    }
-                    JKText {
-                        id: text3
-                        text: qsTr("0-60 Minutes")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.pixelSize: 14
+                        JKText {
+                            id: text3
+                            text: qsTr("(1-60 Minutes)")
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: 14
+                        }
                     }
                 }
             }
-        }        
 
-        Item {
-            id: item5
-            height: 135
-            width: parent.width
+            Item{
+                anchors.fill: parent
+                anchors.leftMargin: parent.width / 2
 
-            GroupBox {
-                id: groupBox1
-                width: 400
-                height: 115
-                font.bold: true
-                font.pixelSize: 12
-                spacing: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                anchors.verticalCenter: parent.verticalCenter
-                title: qsTr("Auto Off Time")
+                GroupBox {
+                    id: groupBox1
+                    anchors.fill: parent
 
-                Column {
-                    width: 360
-                    height: 80
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
+                    font.bold: true
+                    font.pixelSize: 12
+                    spacing: 0
+                    title: qsTr("Auto-Off Time")
 
-                    Item {
-                        id: item6
-                        width: parent.width
-                        height: 45
-                        Local.SpinView{
-                            id:spin_offTime
-                            anchors.centerIn: parent
-                            slider{
-                                visible: false
-                                to: 4
-                                value: 0
+                    Column {
+                        anchors.fill: parent
+                        Item {
+                            id: item6
+                            width: parent.width
+                            height: 50
+                            Local.SpinView{
+                                id:spin_offTime
+                                anchors.fill: parent
+                                anchors.leftMargin: 20
+                                anchors.rightMargin: 20
+                                slider{
+                                    visible: false
+                                    to: 4
+                                    value: 0
+                                }
                             }
                         }
-                    }
-                    JKText {
-                        id: text4
-                        text: qsTr("0-4 Hours")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.pixelSize: 14
+                        JKText {
+                            id: text4
+                            text: qsTr("(0-4 Hours)")
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: 14
+                        }
                     }
                 }
             }
         }
+
+        Item{
+            height: 140
+            Layout.fillWidth: true
+            GroupBox {
+                id: groupBox2
+                anchors.fill: parent
+
+                font.bold: true
+                font.pixelSize: 12
+                spacing: 0
+                title: qsTr("Life Count")
+
+                Column {
+                    anchors.fill: parent
+                    RowLayout{
+                        width: parent.width
+                        height: parent.height / 3
+                        Item{
+                            width: 140
+                            height: parent.height
+                            JKText{
+                                font.pixelSize: 12
+                                text:qsTr("Retard Roller Count:")
+                                anchors.verticalCenter: parent.verticalCenter
+                                x:5
+                            }
+                        }
+                        Item{
+                            width: 80
+                            height: parent.height
+                            JKText{
+                                id:text_rollerCount
+                                font.pixelSize: 12
+                                anchors.centerIn: parent
+                                text:setting.rollerCount
+                            }
+                        }
+                        Item{
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            JKTextButton{
+                                id:button_clearRollerCount
+                                text.text: qsTr("Clear")
+                                width: 100
+                                height: 24
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+
+                            }
+                        }
+                    }
+                    RowLayout{
+                        width: parent.width
+                        height: parent.height / 3
+                        Item{
+                            width: 140
+                            height: parent.height
+                            JKText{
+                                font.pixelSize: 12
+                                text:qsTr("ACM Count:")
+                                anchors.verticalCenter: parent.verticalCenter
+                                x:5
+                            }
+                        }
+                        Item{
+                            width: 80
+                            height: parent.height
+                            JKText{
+                                id:text_ACMCount
+                                font.pixelSize: 12
+                                anchors.centerIn: parent
+                                text:setting.acmCount
+                            }
+                        }
+                        Item{
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            JKTextButton{
+                                id:button_clearACMCount
+                                text.text: qsTr("Clear")
+                                width: 100
+                                height: 24
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+
+                            }
+                        }
+                    }
+                    RowLayout{
+                        width: parent.width
+                        height: parent.height / 3
+                        Item{
+                            width: 140
+                            height: parent.height
+                            JKText{
+                                font.pixelSize: 12
+                                text:qsTr("Scan Count:")
+                                anchors.verticalCenter: parent.verticalCenter
+                                x:5
+                            }
+                        }
+                        Item{
+                            width: 80
+                            height: parent.height
+                            JKText{
+                                id:text_scanCount
+                                font.pixelSize: 12
+                                anchors.centerIn: parent
+                                text:setting.scanCount
+                            }
+                        }
+                        Item{
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                        }
+                    }
+                }
+            }
+        }
+
         Item{
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -155,6 +270,7 @@ Item {
         anchors.fill: parent
         text.text: qsTr("Calibration")
         onClicked: {
+            setSetterCmd(DeviceStruct.CMD_doCalibration ,setting)
         }
     }
     Connections{
@@ -162,13 +278,27 @@ Item {
         onClicked: {
             setting.saveTime = Math.floor(spin_saveTime.value)
             setting.offTime = Math.floor(spin_offTime.value)
-//            setSetterCmd(DeviceStruct.CMD_setDeviceSetting ,setting)
+            if(setting.saveTime < 1)
+                setting.saveTime = 1;
+            if(setting.saveTime > 60)
+                setting.saveTime = 60;
+            if(setting.offTime < 0)
+                setting.offTime = 0;
+            if(setting.offTime > 4)
+                setting.offTime = 4;
+            spin_saveTime.value = setting.saveTime
+            spin_offTime.value = setting.offTime
+            setting.offTime *= 60
+            setSetterCmd(DeviceStruct.CMD_setPowerSaveTime ,setting)
         }
     }
 
     property var setting:{
-        "saveTime":0
-        ,"offTime":0
+        "saveTime":0,
+        "offTime":0,
+        "rollerCount":0,
+        "acmCount": 0,
+        "scanCount": 0
     }
     Component.onCompleted: {
         setSetterCmd(DeviceStruct.CMD_getDeviceSetting ,setting)
@@ -181,14 +311,47 @@ Item {
                 if(!result){
                     setting = JSON.parse(data)
                     console.log(data)
+                    setting.offTime /= 60
+
+                    if(setting.saveTime < 1)
+                        setting.saveTime = 1;
+                    if(setting.saveTime > 60)
+                        setting.saveTime = 60;
+                    if(setting.offTime < 0)
+                        setting.offTime = 0;
+                    if(setting.offTime > 4)
+                        setting.offTime = 4;
+
                     spin_saveTime.value = setting.saveTime
                     spin_offTime.value = setting.offTime
-                }
 
+                }
                 break;
-            case DeviceStruct.CMD_setDeviceSetting:
+            case DeviceStruct.CMD_clearACMCount:
+                if(!result){
+                    setting.acmCount = 0
+                    setting = setting
+                }
                 break
+            case DeviceStruct.CMD_clearRollerCount:
+                if(!result){
+                    setting.rollerCount = 0
+                    setting = setting
+                }
+                break;
             }
+        }
+    }
+    Connections{
+        target: button_clearACMCount
+        onClicked:{
+            setSetterCmd(DeviceStruct.CMD_clearACMCount ,setting)
+        }
+    }
+    Connections{
+        target: button_clearRollerCount
+        onClicked:{
+            setSetterCmd(DeviceStruct.CMD_clearRollerCount ,setting)
         }
     }
 }

@@ -30,6 +30,10 @@ public:
     int unlock();
     int getPowerSupply(SC_POWER_INFO_T& sc_powerData);
     int setGamma(const unsigned int* gammaTable ,int length);
+    int getPowerSaveTime(int& sleepTime ,int& offTime ,int& powerMode);
+    int setPowerSaveTime(int sleepTime ,int offTime ,int& powerMode);
+    int nvram_read(unsigned char addr ,unsigned int len ,unsigned char* data);
+    int nvram_write(unsigned char addr ,unsigned int len ,unsigned char* data);
 
 private:
     DeviceIO* dio;

@@ -70,10 +70,8 @@ int Device::deviceCmd(int cmd ,void* data)
     int err = DeviceStruct::ERR_cmd_cannot_support;
     switch (cmd) {
     case CMD_SCAN:
-        if(!data)
-            return DeviceStruct::ERR_invalid_data;
         err = scanner->ADFScan(data);
-        if(err)
+        if(err > 0)
             err += DeviceStruct::ERR_SCAN;
         break;
     case CMD_setWifi:
@@ -184,27 +182,34 @@ int Device::deviceCmd(int cmd ,void* data)
         }
         break;
     }
-    case CMD_setDeviceSetting:
+    case CMD_setPowerSaveTime:
     {
-        err =deviceIO->open(1);
-        if(!err){
-            err = setter->setDeviceSetting(data);
-            deviceIO->close();
-        }
+        err = scanner->setPowerSaveTime(data);
         break;
     }
     case CMD_getDeviceSetting:
     {
-        err =deviceIO->open(1);
-        if(!err){
-            err = setter->getDeviceSetting(data);
-            deviceIO->close();
-        }
+        err = scanner->getDeviceSettings(data);
         break;
     }
     case CMD_getPowerSupply:
     {
         err = scanner->getPowerSupply(data);
+        break;
+    }
+    case CMD_clearRollerCount:
+    {
+        err = scanner->clearRollerCount();
+        break;
+    }
+    case CMD_clearACMCount:
+    {
+        err = scanner->clearACMCount();
+        break;
+    }
+    case CMD_doCalibration:
+    {
+        err = scanner->doCalibration();
         break;
     }
     default:

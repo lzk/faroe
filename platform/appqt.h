@@ -17,10 +17,6 @@ public:
 signals:
     void addImage(QString filename);
     void progressChanged(int progress ,int page);
-public slots:
-
-private slots:
-    void completed(const QString& fileName);
 
 private:
     int saveJpgFile(const char* tmpfilenmae ,Scanner::Para_Extra* para);

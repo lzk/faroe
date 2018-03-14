@@ -84,6 +84,15 @@ public:
         int dpi_y;
     }
         Para_Extra;
+
+    typedef struct{
+        int saveTime;
+        int offTime;
+        int rollerCount;
+        int acmCount;
+        int scanCount;
+    }
+        struct_deviceSetting;
 public:
     Scanner();
     ~Scanner();
@@ -94,7 +103,12 @@ public:
     int close();
     int ADFScan(void* setting);
     int getPowerSupply(void* data);
-    void cancel();
+    int getDeviceSettings(void* data);
+    int setPowerSaveTime(void* data);
+    int clearRollerCount();
+    int clearACMCount();
+    void cancel(bool iscancel);
+    int doCalibration();
 
     Setting* getSetting();
 private:
@@ -111,9 +125,9 @@ private:
     int _ADFScan(Setting* setting);
     int checkStatus(int stage ,struct SC_INFO_DATA_STRUCT* sc_infodata);
     void getGammaTable(float gamma ,unsigned int*);
-    int doScannerJob(int (*)(Scanner* ,void*) ,Scanner*,void*);
-    int _getPowerSupply(void* data);
-    static int static_getPowerSupply(Scanner* ,void* data);
+    int doScannerJob(int,void*);
+    int scanner_cmd(int cmd ,void* data);
+    int adfScan(void* data);
 };
 
 }

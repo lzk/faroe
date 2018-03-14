@@ -65,6 +65,7 @@ bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
     }
     if(setBrightnessAndContrast(saveFileName ,setting->brightness ,setting->contrast))
         return false;
+    emit addImage(saveFileName);
     return true;
 }
 
@@ -94,43 +95,39 @@ int AppQt::saveJpgFile(const char* filename ,Scanner::Para_Extra* para)
     return 0;
 }
 
-#include <QQmlEngine>
-#include <QQmlComponent>
 int AppQt::setBrightnessAndContrast(const QString& fileName ,int brightness ,int contrast)
 {
-#if 1
-    completed(fileName);
-    return 0;
-#else
     if(brightness == 50 && contrast == 50){
-        completed(fileName);
         return 0;
     }
 
-    QQmlEngine engine;
-    QQmlComponent component(&engine, "qrc:/newui/component/BrightnessAndContrast.qml" ,QQmlComponent::PreferSynchronous);
-    QObject *rootObject = component.create();
+    QImage image(fileName);
+    if(image.isNull())
+        return -1;
+    uchar* line = image.scanLine(0);
+    uchar* pixel = line;
 
-    bool ret = false;
-    if(rootObject){
-        QObject::connect(rootObject ,SIGNAL(completed(QString)) ,this ,SLOT(completed(const QString&)));
-        ret = QMetaObject::invokeMethod(rootObject ,"save"
-                                        ,Q_ARG(QVariant ,fileName)
-                                        ,Q_ARG(QVariant ,brightness)
-                                        ,Q_ARG(QVariant ,contrast)
-                                        );
+    float bb = (brightness - 50) * 0.01;
+    float cc = (contrast) * 0.02;
+    bb = qBound(-0.3f ,bb ,0.3f);
+    cc = cc < 0.5 ?0.5 :cc;
+    bb += 0.5 * (1 - cc);
+
+    uchar tabel[256];
+    for(int i = 0 ;i < 256 ;i++){
+        tabel[i] = qBound(0 ,(int)(cc * i + bb * 255) ,255);
     }
-    return ret ?0 :-1;
-#endif
+    for(int y = 0 ;y < image.height() ;y++){
+        pixel = line;
+        for(int x = 0 ;x < image.width() ;x++){
+            pixel[0] = tabel[pixel[0]];
+            pixel[1] = tabel[pixel[1]];
+            pixel[2] = tabel[pixel[2]];
+            pixel += 4;
+        }
+        line += image.bytesPerLine();
+    }
+    image.save(fileName);
+    return 0;
 }
 
-#include <QQuickItem>
-void AppQt::completed(const QString& fileName)
-{
-    qDebug()<<"save complete";
-    QObject* object = sender();
-    if(qobject_cast<QQuickItem*>(object)){
-        delete object;
-    }
-    emit addImage(fileName);
-}

@@ -213,15 +213,15 @@ void DeviceManager::testAddImage(const QString& sourceFile)
     addImage(tmpFile);
 }
 #endif
-void DeviceManager::cancelScan()
+void DeviceManager::cancelScan(bool cancel)
 {
 #if TEST
-    g_cancelScan = true;
+    g_cancelScan = cancel;
 #else
     if(device == NULL)
         return;
     Scanner* scanner = device->getScanner();
-    scanner->cancel();
+    scanner->cancel(cancel);
 #endif
 }
 
@@ -232,7 +232,6 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
 //    qDebug()<<"cmd:"<<cmd;
 //    qDebug()<<"data:"<<obj;
 #if TEST
-    g_cancelScan = false;
     switch (cmd) {
     case DeviceStruct::CMD_ScanTo:
     case DeviceStruct::CMD_SCAN:
@@ -333,16 +332,9 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         value = uiParseOffTime(para);
         break;
     }
-    case DeviceStruct::CMD_setDeviceSetting:
-    {
-        Setter::struct_deviceSetting para = parseUiDeviceSetting(obj);
-        data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_setDeviceSetting ,data);
-        break;
-    }
     case DeviceStruct::CMD_getDeviceSetting:
     {
-        Setter::struct_deviceSetting para;
+        Scanner::struct_deviceSetting para;
         data = (void*)&para;
         err = device->deviceCmd(Device::CMD_getDeviceSetting ,data);
         value = uiParseDeviceSetting(para);
@@ -392,6 +384,28 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         data = (void*)&para;
         err = device->deviceCmd(Device::CMD_getPowerSupply ,data);
         value = uiParsePowerSupply(para);
+        break;
+    }
+    case DeviceStruct::CMD_setPowerSaveTime:
+    {
+        Scanner::struct_deviceSetting para = parseUiPowerSaveTime(obj);
+        data = (void*)&para;
+        err = device->deviceCmd(Device::CMD_setPowerSaveTime ,data);
+        break;
+    }
+    case DeviceStruct::CMD_clearRollerCount:
+    {
+        err = device->deviceCmd(Device::CMD_clearRollerCount ,NULL);
+        break;
+    }
+    case DeviceStruct::CMD_clearACMCount:
+    {
+        err = device->deviceCmd(Device::CMD_clearACMCount ,NULL);
+        break;
+    }
+    case DeviceStruct::CMD_doCalibration:
+    {
+        err = device->deviceCmd(Device::CMD_doCalibration ,NULL);
         break;
     }
     default:
@@ -564,11 +578,14 @@ Setter::struct_deviceSetting DeviceManager::parseUiDeviceSetting(const QString& 
     return para;
 }
 
-QString DeviceManager::uiParseDeviceSetting(Setter::struct_deviceSetting para)
+QString DeviceManager::uiParseDeviceSetting(Scanner::struct_deviceSetting para)
 {
     QJsonObject obj{
         {"saveTime",para.saveTime}
         ,{"offTime",para.offTime}
+        ,{"rollerCount",para.rollerCount}
+        ,{"acmCount",para.acmCount}
+        ,{"scanCount",para.scanCount}
     };
 
     return QString(QJsonDocument(obj).toJson());
@@ -676,4 +693,13 @@ QString DeviceManager::uiParsePowerSupply(int para)
         {"powerSupply",para}
     };
     return QString(QJsonDocument(obj).toJson());
+}
+
+Scanner::struct_deviceSetting DeviceManager::parseUiPowerSaveTime(const QString& obj)
+{
+    QJsonObject jsonobj = QJsonDocument::fromJson(obj.toLatin1()).object();
+    Scanner::struct_deviceSetting para;
+    para.saveTime = jsonobj.value("saveTime").toInt();
+    para.offTime = jsonobj.value("offTime").toInt();
+    return para;
 }

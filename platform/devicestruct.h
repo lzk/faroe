@@ -48,6 +48,10 @@ public:
         CMD_SeperationScan,
 
         CMD_getPowerSupply,
+        CMD_setPowerSaveTime,
+        CMD_clearRollerCount,
+        CMD_clearACMCount,
+        CMD_doCalibration,
     };
 
     enum StatusType{

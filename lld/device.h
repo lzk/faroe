@@ -70,8 +70,11 @@ public:
         CMD_setSoftap,
         CMD_getSoftap,
         CMD_getDeviceSetting,
-        CMD_setDeviceSetting,
+        CMD_setPowerSaveTime,
         CMD_getPowerSupply,
+        CMD_clearRollerCount,
+        CMD_clearACMCount,
+        CMD_doCalibration,
     };
 public:
     Device(const char* url ,DeviceIO* dio ,PlatformApp* platformApp);

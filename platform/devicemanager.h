@@ -33,6 +33,7 @@ public:
     void addDeviceInfo(DeviceInfo* ,int);
     static void addDevice(DeviceInfo* ,void*);
     static void addUsbDevice(DeviceInfo* ,void*);
+    void cancelScan(bool cancel);
 
 signals:
     void progressChanged(int progress ,int page);
@@ -45,7 +46,6 @@ signals:
     void scanedImage(QString ,QSize);
 
 public slots:
-    void cancelScan();
     void searchDeviceList();
     void cancelSearchDeviceList();
     void connectDevice(int);
@@ -80,13 +80,14 @@ private:
     int parseUiOffTime(const QString&);
     QString uiParseOffTime(int);
     Setter::struct_deviceSetting parseUiDeviceSetting(const QString&);
-    QString uiParseDeviceSetting(Setter::struct_deviceSetting);
+    QString uiParseDeviceSetting(Scanner::struct_deviceSetting);
     QString uiParseWifiInfo(Setter::struct_wifiInfo);
     QString uiParseIpv4(Setter::struct_ipv4);
     Setter::struct_ipv4 parseUiIpv4(const QString&);
     QString uiParseSoftap(Setter::struct_softAp);
     Setter::struct_softAp parseUiSoftap(const QString&);
     QString uiParsePowerSupply(int);
+    Scanner::struct_deviceSetting parseUiPowerSaveTime(const QString&);
 
     void connectDeviceInfo(DeviceInfo*);
 };
