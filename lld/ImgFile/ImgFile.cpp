@@ -1,5 +1,5 @@
 #include "ImgFile.h"
-#define FALSE 0
+//#define FALSE 0
 
 int ImgFile_Open(IMG_FILE_T *imgfile, char *filename)
 {

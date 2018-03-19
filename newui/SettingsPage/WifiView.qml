@@ -107,7 +107,11 @@ Item {
                                 text.text: qsTr("Manual Wi-Fi...")
                                 anchors.right: parent.right
                                 anchors.rightMargin: 5
-                                onClicked: column2.visible = false
+                                onClicked: {
+                                    pitem_manual.input_password.text = wifiSetting.password
+                                    pitem_manual.input_ssid.text = wifiSetting.ssid
+                                    column2.visible = false
+                                }
                             }
                         }
 
@@ -232,6 +236,7 @@ Component{
                     Item{
                         width: parent.width
                         height: 30
+                        visible:model.modelData.encryption % 4 !== 0
                         JKText{
                             text: qsTr("Password")
                             font.pixelSize: 12
@@ -246,6 +251,10 @@ Component{
                              anchors.right: parent.right
                              anchors.rightMargin: 5
                              input.echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
+                             input.validator: RegExpValidator{
+                                 regExp:  model.modelData.encryption % 4 === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
+                                                                   :/^(?:.{8,63}|[0-9a-fA-F]{64})$/
+                             }
                          }
 
                     }
@@ -253,6 +262,7 @@ Component{
                     CheckBox{
                         id:checkbox_input
                         text: qsTr("Display Password")
+                        visible:model.modelData.encryption % 4 !== 0
                         indicator: Rectangle {
                             implicitWidth: 26
                             implicitHeight: 26
@@ -278,23 +288,23 @@ Component{
                         spacing: 2
                         RadioButton{
                             id:radio0
-                            text: qsTr("wepKey0")
+                            text: qsTr("Key1")
                             checked: true
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         RadioButton{
                             id:radio1
-                            text: qsTr("wepKey1")
+                            text: qsTr("Key2")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         RadioButton{
                             id:radio2
-                            text: qsTr("wepKey2")
+                            text: qsTr("Key3")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         RadioButton{
                             id:radio3
-                            text: qsTr("wepKey3")
+                            text: qsTr("Key4")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -309,6 +319,8 @@ Component{
                                 anchors.margins: 5
                                 anchors.centerIn: parent
                                 text.text: qsTr("Cancel")
+                                onClicked:
+                                    displayDetail = false
                             }
                         }
                         Item{
@@ -320,13 +332,34 @@ Component{
                                 anchors.centerIn: parent
                                 text.text: qsTr("Connect")
                                 onClicked: {
+                                    var encryption = model.modelData.encryption % 4
+                                    switch(encryption){
+                                    case 1:
+                                        if(!input_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
+                                            warningWithImage(qsTr("The password must be 5 or 13 ASCII characters or 10 or 16 HEX characters,please check and enter again."))
+                                            input_password.input.focus = true
+                                            return
+                                        }
+                                        break;
+                                    case 3:
+                                    case 4:
+                                        if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+                                            warningWithImage(qsTr("The password must be 8 to 63 ASCII characters or 64 HEX characters,please check and enter again."))
+                                            input_password.input.focus = true
+                                            return
+                                        }
+                                        break;
+                                    default:
+                                        break
+                                    }
+
                                     var setting = {}
                                     setting.enable = true
                                     setting.type = 0
                                     setting.channel = 0
                                     setting.ssid = text_ssid.text
                                     setting.password = input_password.text
-                                    setting.encryption = model.modelData.encryption % 4
+                                    setting.encryption = encryption
                                     if(radio0.checked){
                                         setting.wepKeyId = 0
                                     }else if(radio1.checked){
@@ -358,7 +391,8 @@ Component{
 //        }
         onClicked:{
             ListView.view.currentIndex = index
-            displayDetail = !displayDetail
+//            displayDetail = !displayDetail
+            displayDetail = true
         }
     }
 }

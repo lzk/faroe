@@ -26,6 +26,7 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                input.maximumLength: 255
             }
         }
         Item {
@@ -48,7 +49,7 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-
+                input.maximumLength: 30
             }
         }
         Item {
@@ -71,6 +72,8 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                input.maximumLength: 32
+                input.echoMode:TextInput.Password
             }
         }
         Item {
@@ -93,6 +96,7 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                input.maximumLength: 255
             }
         }
     }

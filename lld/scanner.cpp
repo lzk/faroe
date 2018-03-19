@@ -200,6 +200,9 @@ int Scanner::receiveData()
         }
     }
     EXIT:
+    if(m_cancel){
+        result = RETSCAN_CANCEL;
+    }
     for(int i = 0 ;i < 2 ;i++){
         if(fileIsOpened[i]){
             fclose(file[i]);
@@ -307,6 +310,9 @@ void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
 
 int Scanner::_scan(Setting* setting)
 {
+    if(m_cancel){
+        return RETSCAN_CANCEL;
+    }
     int result;
     SC_PAR_DATA_T para;
     getScanParameters(*setting ,&para);
@@ -315,6 +321,9 @@ int Scanner::_scan(Setting* setting)
         return RETSCAN_ERRORPARAMETER;
     }
 
+    if(m_cancel){
+        return RETSCAN_CANCEL;
+    }
     unsigned int gGammaData[768];
     getGammaTable(setting->gammaValue / 10.0 ,gGammaData);
     result = scannerApi->setGamma(gGammaData ,768);
@@ -324,6 +333,9 @@ int Scanner::_scan(Setting* setting)
 
     pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Start ,0);
 
+    if(m_cancel){
+        return RETSCAN_CANCEL;
+    }
     result = scannerApi->startScan();
     if(result){
         return RETSCAN_ERROR;
@@ -437,40 +449,40 @@ void Scanner::calculateParameters(const Setting& setting)
     switch (setting.scan_doc_size) {
     case SETTING_papersize_auto:
     case SETTING_papersize_autoNoMultiFeed:
-        width = 8500 ;
-        height = 14000 ;
+        width = 8500;
+        height = 15000;
         break;
     case SETTING_papersize_A4:
-        width = 8268 ;
-        height = 11693 ;
+        width = 8268;
+        height = 11693;
         break;
     case SETTING_papersize_A5:
-        width = 5827 ;
-        height = 8268 ;
+        width = 5827;
+        height = 8268;
         break;
     case SETTING_papersize_B5:
-        width = 7165 ;
-        height = 10118 ;
+        width = 7165;
+        height = 10118;
         break;
     case SETTING_papersize_A6:
-        width = 4134 ;
-        height = 5827 ;
+        width = 4134;
+        height = 5827;
         break;
     case SETTING_papersize_letter:
-        width = 8500 ;
-        height = 11000 ;
+        width = 8500;
+        height = 11000;
         break;
     case SETTING_papersize_legal:
-        width = 8500 ;
-        height = 14000 ;
+        width = 8500;
+        height = 14000;
         break;
     case SETTING_papersize_long:
-        width = 8500 ;
-        height = 118110 ;
+        width = 8500;
+        height = 118110;
         break;
     default:
-        width = 8268 ;
-        height = 11693 ;
+        width = 8500;
+        height = 15000;
         break;
 
 //    case SETTING_DOC_SIZE_A4:
@@ -915,11 +927,13 @@ int Scanner::ADFScan(void* data)
 }
 #endif
 
+extern DeviceIO* usbio;
+int DoCalibration();
 int Scanner::doCalibration()
 {
     if(deviceIO->type() == DeviceIO::Type_net){
         return DeviceStruct::ERR_cmd_cannot_support;
     }
-    LOG_NOPARA("to do");
-    return 0;
+    usbio = deviceIO;
+    return DoCalibration();
 }

@@ -2,12 +2,7 @@
 #define _ImgFile_h_
 
 #include <stdio.h>
-#define U32	unsigned int
-#define U16	unsigned short
-#define U8	unsigned char
-#define S32 int
-#define S16 short
-#define	S8  char
+#include "uType.h"
 
 // image format ------------
 //#define IMG_FMT_RAW I3('RAW')
@@ -50,58 +45,97 @@ enum{
 #define DOC_SIZE_FULL		0
 #define DOC_SIZE_A4			1
 #define DOC_SIZE_LT			2
-#define DOC_SIZE_LL			3
+#define DOC_SIZE_LG14		3
+#define DOC_SIZE_LL			4
+#define DOC_SIZE_A6			5
 
-// image size dots
+#define DOC_CHART_A01		95
+
+#define DOC_K_PREFEED		96
+#define DOC_K_PRNU			97
+#define DOC_S_PRNU			98
+#define DOC_FB_LIFE			99
+
+//Full image size dots
 #define IMG_300_DOT_X		2592
-#define IMG_300_DOT_Y		3600
+#define IMG_300_DOT_Y		15*300
+
 
 #define IMG_A4_300_DOT_X	2480
 #define IMG_A4_300_DOT_Y	3512
+#define IMG_A4_300_ORG_X		(IMG_300_DOT_X - IMG_A4_300_DOT_X)/2
 
-#define IMG_LT_300_DOT_X	2536//2552
+
+#define IMG_A6_300_DOT_X	1240
+#define IMG_A6_300_DOT_Y	1748
+#define IMG_A6_300_ORG_X		(IMG_300_DOT_X - IMG_A6_300_DOT_X)/2
+
+
+#define IMG_LT_300_DOT_X	2552
 #define IMG_LT_300_DOT_Y	3296
+#define IMG_LT_300_ORG_X		(IMG_300_DOT_X - IMG_LT_300_DOT_X)/2
 
-#define IMG_LL_300_DOT_X	2592//2552
-#define IMG_LL_300_DOT_Y	32400//10800
+
+#define IMG_LG14_300_DOT_X		216*300/25.4
+#define IMG_LG14_300_DOT_Y		356*300/25.4
+#define IMG_LG14_300_ORG_X		(IMG_300_DOT_X - IMG_LG14_300_DOT_X)/2
+
+
+#define IMG_LL_300_DOT_X	2592
+#define IMG_LL_300_DOT_Y	118*300
+#define IMG_LL_300_ORG_X		0
+
+
+//ADF chart A01
+#define IMG_CHART_A01_300_DOT_X		2536
+#define IMG_CHART_A01_300_DOT_Y		3294
+#define IMG_CHART_A01_300_ORG_X		(IMG_300_DOT_X - IMG_CHART_A01_300_DOT_X)/2
+
+#define IMG_FB_LIFE_300_DOT_X		432
+#define IMG_FB_LIFE_300_DOT_Y		3512
+
+
+//For calibration scan PRNU
+#define IMG_K_PRNU_300_DOT_X		2592
+#define IMG_K_PRUN_300_DOT_Y		48
+
+//For normal scan PRNU
+#define IMG_S_PRNU_300_DOT_X		IMG_K_PRNU_300_DOT_X
+#define IMG_S_PRUN_300_DOT_Y		IMG_K_PRUN_300_DOT_Y*5
+
+//For K prefeed
+#define IMG_K_PREFEED_300_DOT_X		IMG_K_PRNU_300_DOT_X
+#define IMG_K_PREFEED_300_DOT_Y		300//4*300
+
 
 //image size org dots
 #define IMG_300_ORG_X		0
 #define IMG_300_ORG_Y		0
 
-#define IMG_A4_300_ORG_X		46
-#define IMG_A4_300_ORG_Y		0
-
-#define IMG_LT_300_ORG_X		19
-#define IMG_LT_300_ORG_Y		0
-
-#define IMG_LL_300_ORG_X		0
-#define IMG_LL_300_ORG_Y		0
-
 typedef struct IMAGE_STRUCT {
-	U32 format;	// 'RAW', 'JPG', 'TIF', 'BMP', 'PDF', 'PNG'
-	U16	option;	// 0
-	U8	bit;	// 1:BW, 8:Gray8, 16:Gray16, 24:Color24, 48:Color48
-	U8	mono;	// 0:'MONO', 1:'R', 2:'G', 4:'B', 8:'IR', 7:'NTSC'
-	struct{U16 x; U16 y;} dpi;
-	struct{U32 x; U32 y;} org;
-	U32 width;
-	U32 height;
+    U32 format;	// 'RAW', 'JPG', 'TIF', 'BMP', 'PDF', 'PNG'
+    U16	option;	// 0
+    U8	bit;	// 1:BW, 8:Gray8, 16:Gray16, 24:Color24, 48:Color48
+    U8	mono;	// 0:'MONO', 1:'R', 2:'G', 4:'B', 8:'IR', 7:'NTSC'
+    struct{U16 x; U16 y;} dpi;
+    struct{U32 x; U32 y;} org;
+    U32 width;
+    U32 height;
 } IMAGE_T;
 
 typedef struct IMAGE_FILE_STRUCT {
-	IMAGE_T img;
-	FILE *stream;
-	int row_size;
-	int	row;
-	int size;
+    IMAGE_T img;
+    FILE *stream;
+    int row_size;
+    int	row;
+    int size;
 } IMG_FILE_T;
 
 typedef struct IMAGE_MEMORY_STRUCT {
-	IMAGE_T img;
-	int row_size;
-	int row;
-	int size;
+    IMAGE_T img;
+    int row_size;
+    int row;
+    int size;
 } IMG_MEM_T;
 
 int ImgFile_Open(IMG_FILE_T *imgfile, char *filename);

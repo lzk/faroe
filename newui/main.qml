@@ -20,7 +20,7 @@ ApplicationWindow {
     Connections{
         target: mainview
         onClosed: close()
-        onMinimized: showMinimized()//root.visibility = ApplicationWindow.Minimized
+        onMinimized: root.visibility = ApplicationWindow.Minimized//showMinimized()//
         onMove: {
             root.x += dx
             root.y += dy

@@ -327,6 +327,20 @@ Item {
             }
 
             switch(result){
+            case DeviceStruct.ERR_ACK:
+            case JKEnums.ImageCommandResult_NoError:
+                switch(cmd){
+                case DeviceStruct.CMD_ScanTo_ToFTP:
+                case DeviceStruct.CMD_QuickScan_ToFTP:
+                case DeviceStruct.CMD_ScanTo_ToCloud:
+                case DeviceStruct.CMD_QuickScan_ToCloud:
+                    information_1button(qsTr("Upload complete"))
+                    break
+                case DeviceStruct.CMD_doCalibration:
+                    information_1button(qsTr("Calibration completed!"))
+                    break
+                }
+                break
             case DeviceStruct.ERR_RETSCAN_OPENFAIL:
                 errorWithImage(qsTr("The Device is not ready!"))
                 break
@@ -357,6 +371,7 @@ Item {
                 errorWithImage(qsTr("Multi-feed error"))
                 break
             case DeviceStruct.ERR_RETSCAN_CANCEL:
+                information_1button("The scan job has been canceled")
                 break
             case DeviceStruct.ERR_RETSCAN_ERROR_POWER1:
                 var para1 = {}
@@ -409,17 +424,6 @@ If you select 'No', the scan job will be canceled!
             case DeviceStruct.ERR_wifi_have_not_been_inited:
                 errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
                 break
-            case DeviceStruct.ERR_ACK:
-            case JKEnums.ImageCommandResult_NoError:
-                switch(cmd){
-                case DeviceStruct.CMD_ScanTo_ToFTP:
-                case DeviceStruct.CMD_QuickScan_ToFTP:
-                case DeviceStruct.CMD_ScanTo_ToCloud:
-                case DeviceStruct.CMD_QuickScan_ToCloud:
-                    information_1button(qsTr("Upload complete"))
-                    break
-                }
-                break
             case JKEnums.ImageCommandResult_error_ftpConnect:
                 warningWithImage(qsTr("Upload failed.Unable to connet to the remote server."))
                 break
@@ -439,7 +443,7 @@ If you select 'No', the scan job will be canceled!
 
             default:
                 console.log("err:" ,result)
-                errorWithImage(qsTr("Fail!"))
+                errorWithImage(qsTr("Scan Fail!"))
                 break;
             }
 

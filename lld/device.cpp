@@ -210,6 +210,8 @@ int Device::deviceCmd(int cmd ,void* data)
     case CMD_doCalibration:
     {
         err = scanner->doCalibration();
+        if(err > 0)
+            err += DeviceStruct::ERR_SCAN;
         break;
     }
     default:

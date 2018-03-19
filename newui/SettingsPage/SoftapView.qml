@@ -77,7 +77,7 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 input.validator: RegExpValidator{
-                    regExp: /[^\s]{0,32}/
+                    regExp: /^[\\x0020-\\x007e]{1,32}$/
                 }
             }
         }
@@ -100,7 +100,7 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 input.validator: RegExpValidator{
-                    regExp: /.{0,64}/
+                    regExp: /^(?:.{8,63}|[0-9a-fA-F]{64})$/
                 }
             }
         }
@@ -125,6 +125,16 @@ Item {
     Connections{
         target: button_apply
         onClicked: {
+            if(!input_ssid.text.match(/^[\\x0020-\\x007e]{1,32}$/)){
+                warningWithImage(qsTr("The network name must be 1 to 32 characters long. Please check and enter again."))
+                input_ssid.input.focus = true
+                return
+            }
+            if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+                warningWithImage(qsTr("The password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+                input_password.input.focus = true
+                return
+            }
             setting.enable = checkbox.checked
             setting.ssid = input_ssid.text
             setting.password = input_password.text

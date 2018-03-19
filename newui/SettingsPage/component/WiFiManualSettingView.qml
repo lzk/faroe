@@ -5,6 +5,8 @@ Item{
     id:root
     signal returnClicked
     signal connectClicked(var setting)
+    property alias input_ssid: input_ssid
+    property alias input_password: input_password
     Image {
         source: "qrc:/Images/setting_wifilist panel.png"
         anchors.fill:item_manual
@@ -63,6 +65,7 @@ Item{
             Item {
                 height: 30
                 width: parent.width
+                enabled: combobox.currentIndex !== 0
                 JKText {
                     id: text4
                     text: qsTr("Password")
@@ -78,7 +81,8 @@ Item{
                     anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     input.validator: RegExpValidator{
-                        regExp: /.{0,64}/
+                        regExp:  combobox.currentIndex === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
+                                                          :/^(?:.{8,63}|[0-9a-fA-F]{64})$/
                     }
                     input.echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
                 }
@@ -87,6 +91,7 @@ Item{
             CheckBox{
                 id:checkbox_input
                 text: qsTr("Display Password")
+                enabled: combobox.currentIndex !== 0
                 indicator: Rectangle {
                     implicitWidth: 26
                     implicitHeight: 26
@@ -140,22 +145,22 @@ Item{
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
-                RadioButton{
+                JKRadioButton{
                     id:radio0
-                    text: qsTr("Key0")
+                    text: qsTr("Key1")
                     checked: true
                 }
-                RadioButton{
+                JKRadioButton{
                     id:radio1
-                    text: qsTr("Key1")
-                }
-                RadioButton{
-                    id:radio2
                     text: qsTr("Key2")
                 }
-                RadioButton{
-                    id:radio3
+                JKRadioButton{
+                    id:radio2
                     text: qsTr("Key3")
+                }
+                JKRadioButton{
+                    id:radio3
+                    text: qsTr("Key4")
                 }
             }
 
@@ -175,13 +180,38 @@ Item{
                     height: parent.height
                     text.text: qsTr("Connect")
                     onClicked: {
+                        if(!input_ssid.text.match(/^[\\x0020-\\x007e]{1,32}$/)){
+                            warningWithImage(qsTr("The network name must be 1 to 32 characters long. Please check and enter again."))
+                            input_ssid.input.focus = true
+                            return
+                        }
+                        var encryption = combobox.currentIndex > 1 ?combobox.currentIndex + 1 :combobox.currentIndex
+                        switch(encryption){
+                        case 1:
+                            if(!input_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
+                                warningWithImage(qsTr("The password must be 5 or 13 ASCII characters or 10 or 26 hex characters,please check and enter again."))
+                                input_password.input.focus = true
+                                return
+                            }
+                            break;
+                        case 3:
+                        case 4:
+                            if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+                                warningWithImage(qsTr("The password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+                                input_password.input.focus = true
+                                return
+                            }
+                            break;
+                        default:
+                            break
+                        }
                         var setting = {}
                         setting.enable = true
                         setting.type = 0
                         setting.channel = 0
                         setting.ssid = input_ssid.text
                         setting.password = input_password.text
-                        setting.encryption = combobox.currentIndex > 1 ?combobox.currentIndex + 1 :combobox.currentIndex
+                        setting.encryption = encryption
                         if(radio0.checked){
                             setting.wepKeyId = 0
                         }else if(radio1.checked){

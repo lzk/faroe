@@ -43,6 +43,13 @@ SOURCES += main.cpp \
     ../platform/mac/macapi.cpp \
     ../platform/platform.cpp \
     ../imageManager/wrapperqimage.cpp \
+    ../lld/Calibration/calibration_flow.cpp \
+    ../lld/Calibration/calibration_scan.cpp \
+    ../lld/Calibration/EdgeDetect.cpp \
+    ../lld/Calibration/MotorMove.cpp \
+    ../lld/Calibration/ScanCMD.cpp \
+    ../lld/Calibration/ScanFunction.cpp \
+    ../lld/Calibration/macusbio.cpp
 
 HEADERS += \
     jkenums.h \
@@ -68,6 +75,11 @@ HEADERS += \
     ../imageManager/decodemanager.h \
     ../platform/platform.h \
     ../imageManager/wrapperqimage.h \
+    ../lld/Calibration/EdgeDetect.h \
+    ../lld/Calibration/model.h \
+    ../lld/Calibration/ScanCMD.h \
+    ../lld/Calibration/macusbio.h \
+    ../lld/ImgFile/utype.h
 
 RESOURCES += \
     ../newui/newui.qrc

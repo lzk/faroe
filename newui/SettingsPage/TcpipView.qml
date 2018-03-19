@@ -86,7 +86,7 @@ Item {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     input.validator: RegExpValidator{
-                        regExp: /[0-2]?\d{0,2}\.[0-2]?\d{0,2}\.[0-2]?\d{0,2}\.[0-2]?\d{0,2}/
+                        regExp: /[\d.]*/
                     }
                 }
             }
@@ -109,7 +109,7 @@ Item {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     input.validator: RegExpValidator{
-                        regExp: /[0-2]?\d{0,2}\.[0-2]?\d{0,2}\.[0-2]?\d{0,2}\.[0-2]?\d{0,2}/
+                        regExp: /[\d.]*/
                     }
                 }
             }
@@ -132,7 +132,7 @@ Item {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     input.validator: RegExpValidator{
-                        regExp: /[0-2]?\d{0,2}\.[0-2]?\d{0,2}\.[0-2]?\d{0,2}\.[0-2]?\d{0,2}/
+                        regExp: /[\d.]*/
                     }
                 }
             }
@@ -156,10 +156,25 @@ Item {
 
     }
 
-
     Connections{
         target: button_apply
         onClicked: {
+            var regExp = /^((2[0-4]\d)|(25[0-5])|([01]\d{2})|(\d{1,2}))(\.((2[0-4]\d)|(25[0-5])|([01]\d{2})|(\d{1,2}))){3}$/
+            if(!input_ipAddress.text.match(regExp)){
+                warningWithImage(qsTr("Invalid IP address.Please check and enter again."))
+                input_ipAddress.input.focus = true
+                return
+            }
+            if(!input_submask.text.match(regExp)){
+                warningWithImage(qsTr("Invalid subnet mask.Please check and enter again."))
+                input_submask.input.focus = true
+                return
+            }
+            if(!input_gateway.text.match(regExp)){
+                warningWithImage(qsTr("Invalid Gateway.Please check and enter again."))
+                input_gateway.input.focus = true
+                return
+            }
             setting.gatewayAddress = input_gateway.text
             setting.address = input_ipAddress.text
             setting.subnetMask = input_submask.text

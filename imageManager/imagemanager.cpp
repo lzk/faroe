@@ -234,7 +234,7 @@ void ImageManager::toEmail(const QString& para)
     QString recipient =  jsonObj.value("recipient").toString();
     switch (fileType) {
     case JKEnums::EmailFileType_PDF:{
-        QString filename = getTempPath() + "/emailAttach.pdf";
+        QString filename = getTempPath() + "/vopimg" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + ".pdf";
         saveMultiPagePdfImageInit(filename);
         bool first = true;
         foreach (QString tmpFileName, fileList) {

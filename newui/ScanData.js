@@ -244,7 +244,7 @@ function newQuickScanToEmailObject() {
     ob.name = "Scan To Email"
     ob.fileType = 0
     ob.recipient = ""
-    ob.subject = ""
+    ob.subject = "Scan Pictures"
     return ob
 }
 
