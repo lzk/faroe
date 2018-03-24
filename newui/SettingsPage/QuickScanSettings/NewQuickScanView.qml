@@ -33,6 +33,7 @@ Item {
                 height: 35
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+                maximumLength: 20
             }
         }
 
@@ -113,17 +114,27 @@ Item {
     }
 
     function ok(){
-        if(textInput.text === ""){
-            warning({"message.text":qsTr("The Name cannot be empty!")
-                    ,"showImage": true
-                    ,"width": 520
-                    ,"height": 200})
+        var text = textInput.text
+        if(text === ""){
+//            warning({"message.text":qsTr("The Name cannot be empty!")
+//                    ,"showImage": true
+//                    ,"width": 520
+//                    ,"height": 200})
+            warningWithImage(qsTr("The Name cannot be empty!"))
             return false
+        }else if(text.match(/^[\s]+$/)){
+            warningWithImage(qsTr("The Name cannot be all space!"))
+            return false
+        }else{
+            var texts = /\s*(.+?)\s*$/.exec(text)
+            console.log(texts)
+            text = texts[1]
         }
+
         if(settings[comboBox.currentIndex] === undefined){
             settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
         }
-        settings[comboBox.currentIndex].name = textInput.text
+        settings[comboBox.currentIndex].name = text
         var verify = true
         if(mode !== 1 && settings[comboBox.currentIndex].name === setting.name){
             //edit do not change name
@@ -144,7 +155,7 @@ Item {
     property var dialog
     function openModifyQuickScanSettingDialog(setting){
         dialog = openDialog("SettingsPage/QuickScanSettings/QuickScanDialog.qml" ,{} ,function(dialog){
-            dialog.initWithPara(setting ,0)
+                dialog.initWithPara(setting ,0)
             })
     }
 }

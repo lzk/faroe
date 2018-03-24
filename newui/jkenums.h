@@ -43,12 +43,13 @@ public:
     };
 
     enum ImageCommandResult{
-        ImageCommandResult_NoError = 0,
-        ImageCommandResult_error_interface = -100,
+        ImageCommandResult_NoError = -100,
+        ImageCommandResult_error_interface,
         ImageCommandResult_error_noProcessing,
         ImageCommandResult_error_processing,
 
         ImageCommandResult_error_saveFile,
+        ImageCommandResult_error_invalidFilePath,
 
         ImageCommandResult_error_ftpConnect,
         ImageCommandResult_error_ftpLogin,
@@ -57,6 +58,8 @@ public:
 
         ImageCommandResult_error_icloudNotLogin,
         ImageCommandResult_error_icloudeUpload,
+
+        ImageCommandResult_error_invalidPrinter,
 
     };
     enum PowerMode{

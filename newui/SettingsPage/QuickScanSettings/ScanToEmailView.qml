@@ -100,7 +100,11 @@ Item {
     function ok(){
         var regExp = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.([a-zA-Z0-9]{1,}\.)*[a-zA-Z]{2,}$/
 //        var regExp = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+(([a-zA-Z0-9]*\.)*[a-zA-Z]{2,15})*$/
-        if(!textInput2.text.match(regExp)){
+        if(textInput2.text === ""){
+            warningWithImage(qsTr("The Recipient cannot be empty!"))
+            textInput2.input.focus = true
+            return false
+        }else if(!textInput2.text.match(regExp)){
             warningWithImage(qsTr("The E-mail address format is incorrect,Please check your E-mail address and enter again."))
             textInput2.input.focus = true
             return false

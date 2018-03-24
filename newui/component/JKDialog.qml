@@ -11,6 +11,7 @@ Window {
     flags: Qt.Dialog | Qt.FramelessWindowHint
     color: "transparent"
     modality: Qt.ApplicationModal // Qt.WindowModal
+    property bool defaultClose: true
 
     Item{
         anchors.fill: parent
@@ -39,7 +40,11 @@ Window {
             anchors.bottom: parent.top
             anchors.bottomMargin: -30
             z:10
-            onClose: {window.close();dialog=undefined}
+            onClose: {
+                if(defaultClose)
+                    window.close();
+                dialog=undefined
+            }
             onMovedXChanged: window.x += movedX
             onMovedYChanged: window.y += movedY
         }

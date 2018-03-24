@@ -3,6 +3,7 @@
 #include <QQuickItem>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QDir>
 
 #include "../platform/devicemanager.h"
 #include "ImageViewer/imagemodel.h"
@@ -112,13 +113,17 @@ void JKInterface::setCmd(int cmd ,const QString& data)
 
     deviceManager->cancelScan(false);
     switch (cmd) {
-
+    //quick scan and decode sepearation check first.
     case DeviceStruct::CMD_QuickScan_ToFile:{
         QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
-        int fileType = jsonObj.value("fileType").toInt(0);
         QString filePath = jsonObj.value("filePath").toString();
+        if(!QDir(filePath).exists()){
+            cmdComplete(cmd ,JKEnums::ImageCommandResult_error_invalidFilePath);
+            return;
+        }
         QString fileName = jsonObj.value("fileName").toString();
         QString fullPath = filePath + "/" + fileName;
+        int fileType = jsonObj.value("fileType").toInt(0);
         switch (fileType) {
         case 0:     fullPath += ".pdf";    break;
         case 1:     fullPath += ".tif";    break;
@@ -145,7 +150,8 @@ void JKInterface::setCmd(int cmd ,const QString& data)
     case DeviceStruct::CMD_QuickScan_ToFTP:
         sendImagesCommand(cmd ,data);
         break;
-    case DeviceStruct::CMD_SCAN:
+
+    //scan to and device cmd just send cmd
     case DeviceStruct::CMD_ScanTo:
     default:
         emit cmdToDevice(cmd ,data);
@@ -155,8 +161,8 @@ void JKInterface::setCmd(int cmd ,const QString& data)
 
 void JKInterface::deviceCmdResult(int cmd,int result ,QString data)
 {
-    Q_UNUSED(cmd);
-    switch (this->cmd) {
+    Q_UNUSED(cmd);//it's device cmd
+    switch (this->cmd) {//realy cmd
     case DeviceStruct::CMD_DecodeScan:
     case DeviceStruct::CMD_SeperationScan:
     case DeviceStruct::CMD_QuickScan_ToPrint:
@@ -175,10 +181,9 @@ void JKInterface::deviceCmdResult(int cmd,int result ,QString data)
 
 void JKInterface::scanedImage(QString filename,QSize sourceSize)
 {
+    imageModel->addImage(ImageItem(filename ,sourceSize));
+
     switch (this->cmd) {
-    case DeviceStruct::CMD_ScanTo:
-        imageModel->addImage(ImageItem(filename ,sourceSize));
-        break;
     case DeviceStruct::CMD_DecodeScan:
     case DeviceStruct::CMD_SeperationScan:
     case DeviceStruct::CMD_QuickScan_ToPrint:
@@ -189,12 +194,15 @@ void JKInterface::scanedImage(QString filename,QSize sourceSize)
         emit imagesCmd(QStringList()<<filename);
         break;
     case DeviceStruct::CMD_QuickScan_ToFTP:
-        if(imageCmdResult != JKEnums::ImageCommandResult_NoError)
+        if(imageCmdResult || imageCmdResult != JKEnums::ImageCommandResult_NoError)
             break;
+        //waiting for ftp login to processing
         if(cmd_state ==JKEnums::ImageCommandState_processing)
             emit imagesCmd(QStringList()<<filename);
         else
             fileList << filename;
+        break;
+    case DeviceStruct::CMD_ScanTo:
         break;
     default:
         break;
@@ -207,7 +215,7 @@ void JKInterface::imagesCmdResult(int cmd ,int state ,int result)
     imageCmdResult = result;
     switch (state) {
     case JKEnums::ImageCommandState_start:
-        if(imageCmdResult == JKEnums::ImageCommandResult_NoError){
+        if(!imageCmdResult || imageCmdResult == JKEnums::ImageCommandResult_NoError){
             switch (cmd) {
             case DeviceStruct::CMD_ScanTo_ToPrint:
             case DeviceStruct::CMD_ScanTo_ToFile:
@@ -262,7 +270,7 @@ void JKInterface::imagesCmdResult(int cmd ,int state ,int result)
         break;
 
     case JKEnums::ImageCommandState_end:
-        cmdComplete(cmd ,result);
+        cmdComplete(cmd ,result ,this->cmd_para);
         break;
 
     default:
@@ -290,23 +298,20 @@ void JKInterface::setScanToCmd(int cmd ,QList<int> selectedList,const QString& j
     }
     if(cmd_status)
         return;
-    cmd_status = 1;
     fileList = imageModel->getFileList(selectedList);
     switch (cmd) {
     case DeviceStruct::CMD_ScanTo_ToPrint:{
+        if(QPrinterInfo::availablePrinterNames().isEmpty()){
+            cmdComplete(cmd ,JKEnums::ImageCommandResult_error_invalidPrinter);
+        }
         QPrintDialog printDialog;
         if (printDialog.exec() == QDialog::Accepted){
-            sendImagesCommand(cmd ,printDialog.printer()->printerName() ,fileList);
+            QPrinter* printer = printDialog.printer();
+            sendImagesCommand(cmd ,printer->printerName() ,fileList);
         }
     }
         break;
-    case DeviceStruct::CMD_ScanTo_ToFile:{
-//        QString fileName = QUrl(jsonData).toLocalFile();
-//        emit imagesCmdStart(cmd ,fileName);
-//        emit imagesCmd(fileList);
-//        emit imagesCmdEnd(cmd ,0);
-//        break;
-    }
+    case DeviceStruct::CMD_ScanTo_ToFile:
     case DeviceStruct::CMD_ScanTo_ToEmail:
     case DeviceStruct::CMD_ScanTo_ToApplication:
     case DeviceStruct::CMD_ScanTo_ToFTP:
@@ -321,10 +326,17 @@ void JKInterface::setScanToCmd(int cmd ,QList<int> selectedList,const QString& j
 void JKInterface::sendImagesCommand(int cmd, QString para ,const QStringList& fileList)
 {
     this->fileList = fileList;
+    cmd_status = 1;
     imageCmdResult = JKEnums::ImageCommandResult_NoError;
     cmd_state = JKEnums::ImageCommandState_start;
     emit imagesCmdStart(cmd ,para ,fileList);
 }
+
+QString JKInterface::homeDictory()
+{
+    return QDir::home().absolutePath();
+}
+
 void JKInterface::test()
 {
     qDebug()<<"test";

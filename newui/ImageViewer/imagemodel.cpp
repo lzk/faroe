@@ -49,16 +49,7 @@ int ImageModel::rowCount(const QModelIndex &parent) const
 
 QVariant ImageModel::data(const QModelIndex &index, int role) const
 {
-    if(index.row()<0 || index.row() >= m_list.count())
-        return QVariant();
-    const ImageItem &ip = m_list[index.row()];
-    if(role == UrlRole)
-        return ip.url();
-    else if(role == SnRole)
-        return ip.sn();
-    else if(role == SourceSizeRole)
-        return ip.sourceSize();
-    return QVariant();
+    return get(index.row() ,role);
 }
 
 QHash<int,QByteArray> ImageModel::roleNames() const
@@ -93,19 +84,20 @@ bool ImageModel::setData(const QModelIndex &index, const QVariant &value, int ro
     return isDataChanged;
 }
 
-QVariant ImageModel::get(int row)
+QVariant ImageModel::get(int row ,int role) const
 {
-//    qDebug()<<__func__;
-    if(row >= 0)
-    {
-//        const ImageItem* item = &m_list.at(row);
-//        QMap<QString, QVariant> itemData;
-//        itemData.insert("url" ,QVariant(item->url()));
-//        itemData.insert("sn" ,QVariant(item->sn()));
-//        return QVariant(itemData);
-        return QVariant(&m_list.at(row));
-    }
+    if(row<0 || row >= m_list.count())
+        return QVariant();
+
+    const ImageItem &ip = m_list[row];
+    if(role == UrlRole)
+        return ip.url();
+    else if(role == SnRole)
+        return ip.sn();
+    else if(role == SourceSizeRole)
+        return ip.sourceSize();
     return QVariant();
+
 }
 
 int ImageModel::getCount() const
@@ -135,7 +127,8 @@ void ImageModel::saveRotatoedImage(int row ,int angle)
 void ImageModel::addImage(const ImageItem& ip)
 {
     beginInsertRows(QModelIndex() ,rowCount() ,rowCount());
-    m_list << ip;
+//    m_list << ip;
+    m_list.push_front(ip);
     endInsertRows();
 }
 

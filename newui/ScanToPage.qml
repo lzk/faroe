@@ -203,7 +203,7 @@ ScanToPageLayout {
             }else{
                 var setting =scanData.applicationSetting
                 dialog = openDialog("ScanToPage/ApplicationDialog.qml" ,{} ,function(dialog){
-                                dialog.initWithSetting(setting)
+                                dialog.setting = setting
                                 dialog.accepted.connect(toApplication)
                             })
             }
@@ -262,38 +262,6 @@ ScanToPageLayout {
             information(qsTr("Do you want leave this page ,if you exit ,all the images will be deleted?") ,back)
         }
     }
-
-//    Connections{
-//        target: jkInterface
-//        onCmdResult:{
-//            switch(cmd){
-//            case DeviceStruct.CMD_ScanTo_ToFTP:
-//                dialog.close()
-//                ftpResult(result)
-//                break
-//            default:
-//                break
-//            }
-//        }
-//    }
-
-//    function ftpResult(result){
-//        switch(result){
-//        case JKEnums.ImageCommandResult_NoError:
-//            information_1button(qsTr("Upload complete"))
-//            break
-//        case JKEnums.ImageCommandResult_error_ftpConnect:
-//            warningWithImage(qsTr("Upload failed.Unable to connet to the remote server."))
-//            break
-//        case JKEnums.ImageCommandResult_error_ftpLogin:
-//            warningWithImage(qsTr("Upload failed.The remote server returned an error:(530) Not logged in."))
-//            break
-//        case JKEnums.ImageCommandResult_error_ftpCd:
-//        case JKEnums.ImageCommandResult_error_ftpPut:
-//            warningWithImage(qsTr("Upload failed.The remote server returned an error:(553) File name not allowed."))
-//            break
-//        }
-//    }
 
     function warning_noSelectedFiles(){
         information_1button(qsTr("please select one or more pictures to process!"))

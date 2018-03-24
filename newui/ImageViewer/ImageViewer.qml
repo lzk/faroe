@@ -39,6 +39,7 @@ Item {
             model: ImageDelegateModel{
                 id:model
             }
+
         }
     }
 

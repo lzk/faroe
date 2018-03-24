@@ -120,6 +120,13 @@ Item {
         objectName: "scanData"
     }
 
+    Component.onCompleted: {
+            jkInterface.setScanDataHandle(scanData)
+    }
+    Component.onDestruction: {
+        jkInterface.setScanDataHandle(null)
+    }
+
     property int originCenterX
     property int originCenterY
 //    property int centerx: ApplicationWindow.window.x + ApplicationWindow.window.width / 2
@@ -133,14 +140,16 @@ Item {
 
     property var dialog
     property var window:Application.window
-    function information(message ,acceptCallback){
-        informationWithProperty({"message.text":message} ,acceptCallback)
+    function information(message ,acceptCallback ,rejectCallback){
+        informationWithProperty({"message.text":message} ,acceptCallback ,rejectCallback)
     }
 
-    function informationWithProperty(prpty ,acceptCallback){
+    function informationWithProperty(prpty ,acceptCallback ,rejectCallback){
         dialog = openDialog("component/JKMessageBox_information.qml" ,prpty ,function(dialog){
             if(typeof(acceptCallback) === "function")
                 dialog.accepted.connect(acceptCallback)
+            if(typeof(rejectCallback) === "function")
+                dialog.rejected.connect(rejectCallback)
             })
     }
 
@@ -180,22 +189,15 @@ Item {
         return dialog
     }
 
+    function openPreviewDialog(init){
+        return openDialog("ImageViewer/ImagePreviewDialog.qml" ,{} ,init)
+    }
+
     function openScanSettingDialog(setting){
         dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{"setting":setting})
     }
 
-    function setScanCmd(cmd ,setting){
-        if(!scanData.deviceStatus){
-            warningWithImage(qsTr("Scanning connection failed"))
-            return
-        }
-        jkInterface.setCmd(cmd ,JSON.stringify(setting));
-        dialog = openDialog("ScanPage/ScanningDialog.qml" ,{} ,function(dialog){
-            dialog.cancel.connect(jkInterface.cancelScan)
-        })
-    }
-
-    function setSetterCmd(cmd ,setting){
+    function setCmd(cmd ,setting){
         switch(cmd){
         case DeviceStruct.CMD_getIpv4:
         case DeviceStruct.CMD_getSoftap:
@@ -213,7 +215,15 @@ Item {
             break
         }
         jkInterface.setCmd(cmd ,JSON.stringify(setting));
-        dialog = openDialog("component/JKRefresh.qml" ,{})
+    }
+
+    function setScanCmd(cmd ,setting){
+        jkImageModel.removeAll()
+        setCmd(cmd ,setting)
+    }
+
+    function setSetterCmd(cmd ,setting){
+        setCmd(cmd ,setting)
     }
 
     function setScanToCmd(cmd ,selectList ,setting)
@@ -223,17 +233,6 @@ Item {
         }else{
             jkInterface.setScanToCmd(cmd ,selectList , JSON.stringify(setting))
         }
-
-        var message = qsTr("processing")
-        switch(cmd){
-        case DeviceStruct.CMD_ScanTo_ToFTP:
-        case DeviceStruct.CMD_ScanTo_ToCloud:
-            message = qsTr("Upload,please wait!")
-            break
-        case DeviceStruct.CMD_ScanTo_ToPrint:
-            return
-        }
-        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
     }
 
     function updateSetting(cmd ,setting){
@@ -308,13 +307,58 @@ Item {
 
     Connections{
         target: jkInterface
-        onCmdResult:{
-            console.log("result:" ,result)
+        onCmdToDevice:{
+            console.log("cmd to device:" ,cmd)
             switch(cmd){
+            case DeviceStruct.CMD_SCAN:
+            case DeviceStruct.CMD_ScanTo:
+                dialog = openDialog("ScanPage/ScanningDialog.qml" ,{} ,function(dialog){
+                    dialog.cancel.connect(jkInterface.cancelScan)
+                })
+                break
             case DeviceStruct.CMD_getPowerSupply:
+                break
+            case DeviceStruct.CMD_getIpv4:
+            case DeviceStruct.CMD_getSoftap:
+            case DeviceStruct.CMD_getWifiInfo:
+            case DeviceStruct.CMD_getDeviceSetting:
+            case DeviceStruct.CMD_getOffTime:
+            case DeviceStruct.CMD_getSaveTime:
+            default:
+                dialog = openDialog("component/JKRefresh.qml" ,{})
+                break
+            }
+        }
+        onImagesCmdStart:{
+            console.log("cmd to images:" ,cmd)
+            var message = qsTr("processing")
+            switch(cmd){
+            case DeviceStruct.CMD_ScanTo_ToFTP:
+            case DeviceStruct.CMD_ScanTo_ToCloud:
+                message = qsTr("Upload,please wait!")
+                break
+            case DeviceStruct.CMD_ScanTo_ToPrint:
+                message = qsTr("Printing picture,please wait...")
+                break
+            case DeviceStruct.CMD_ScanTo_ToFile:
+                message = qsTr("Saving picture to file,please wait...")
+                break
+            case DeviceStruct.CMD_ScanTo_ToApplication:
+            case DeviceStruct.CMD_ScanTo_ToEmail:
+                break
+            default:
                 return
             }
-            dialog.close()
+            dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
+        }
+
+        onCmdResult:{
+            console.log("cmd back:" ,cmd)
+            if(cmd === DeviceStruct.CMD_getPowerSupply)
+                return
+            console.log("result:" ,result)
+            if(dialog && dialog.visible)
+                dialog.close()
 
             switch(cmd){
             case DeviceStruct.CMD_getIpv4:
@@ -323,62 +367,241 @@ Item {
             case DeviceStruct.CMD_getDeviceSetting:
             case DeviceStruct.CMD_getOffTime:
             case DeviceStruct.CMD_getSaveTime:
-                return
-            }
+                break
 
-            switch(result){
-            case DeviceStruct.ERR_ACK:
-            case JKEnums.ImageCommandResult_NoError:
-                switch(cmd){
-                case DeviceStruct.CMD_ScanTo_ToFTP:
-                case DeviceStruct.CMD_QuickScan_ToFTP:
-                case DeviceStruct.CMD_ScanTo_ToCloud:
-                case DeviceStruct.CMD_QuickScan_ToCloud:
-                    information_1button(qsTr("Upload complete"))
+            case DeviceStruct.CMD_setDeviceSetting:
+            case DeviceStruct.CMD_setIpv4:
+            case DeviceStruct.CMD_setPassword:
+            case DeviceStruct.CMD_setWifi:
+            case DeviceStruct.CMD_setSoftap:
+            case DeviceStruct.CMD_setOffTime:
+            case DeviceStruct.CMD_setPowerSaveTime:
+            case DeviceStruct.CMD_setSaveTime:
+            case DeviceStruct.CMD_clearACMCount:
+            case DeviceStruct.CMD_clearRollerCount:
+                switch(result){
+                case DeviceStruct.ERR_ACK:
+                    information_1button(qsTr("Configure Successed!"))
                     break
-                case DeviceStruct.CMD_doCalibration:
-                    information_1button(qsTr("Calibration completed!"))
+                case DeviceStruct.ERR_wifi_have_not_been_inited:
+                    errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
+                    break
+                default:
+                    errorWithImage(qsTr("Configure Failed!"))
+                }
+                break
+
+            case DeviceStruct.CMD_QuickScan_ToPrint:
+            case DeviceStruct.CMD_ScanTo_ToPrint:
+                switch(result){
+                case JKEnums.ImageCommandResult_error_invalidPrinter:
+                    warningWithImage(qsTr("Not find printer!"))
+                    break
+                case DeviceStruct.ERR_ACK:
+                case JKEnums.ImageCommandResult_NoError:
+                    if(DeviceStruct.CMD_ScanTo_ToPrint === cmd)
+                        break
+                    if(jkImageModel.count > 0){
+                        dialog = openPreviewDialog(function(dialog){
+                            dialog.title = qsTr("Quick Scan Preview")
+                            dialog.showExtra = true
+                            dialog.index = 0
+                            dialog.save = false
+                            dialog.name = qsTr("Print completed")
+                            dialog.requestImage(0 ,0)
+                        })
+                    }
+                    break;
+                default:
+                    scanResult(cmd ,result ,data)
                     break
                 }
                 break
-            case DeviceStruct.ERR_RETSCAN_OPENFAIL:
-                errorWithImage(qsTr("The Device is not ready!"))
+            case DeviceStruct.CMD_QuickScan_ToFile:
+            case DeviceStruct.CMD_ScanTo_ToFile:
+                switch(result){
+                case JKEnums.ImageCommandResult_error_saveFile:
+                    warningWithImage(qsTr("Fail to save files."))
+                    break
+                case JKEnums.ImageCommandResult_error_invalidFilePath:
+                    warningWithImage(qsTr("invalid File Path."))
+                    break
+                case DeviceStruct.ERR_ACK:
+                case JKEnums.ImageCommandResult_NoError:
+                    if(DeviceStruct.CMD_ScanTo_ToFile === cmd){
+                        break
+                    }
+                    if(jkImageModel.count > 0){
+                        dialog = openPreviewDialog(function(dialog){
+                            dialog.title = qsTr("Quick Scan Preview")
+                            dialog.showExtra = true
+                            dialog.index = 0
+                            dialog.save = false
+                            dialog.name = qsTr("Save files completed")
+                            dialog.requestImage(0 ,0)
+                        })
+                    }
+                    break
+                default:
+                    scanResult(cmd ,result ,data)
+                    break
+                }
                 break
-            case DeviceStruct.ERR_RETSCAN_OPENFAIL_NET:
-                errorWithImage(qsTr("The Device is not ready!"))
+            case DeviceStruct.CMD_QuickScan_ToEmail:
+                switch(result){
+                case DeviceStruct.ERR_ACK:
+                case JKEnums.ImageCommandResult_NoError:
+                    if(jkImageModel.count > 0){
+                        dialog = openPreviewDialog(function(dialog){
+                            dialog.title = qsTr("Quick Scan Preview")
+                            dialog.showExtra = true
+                            dialog.index = 0
+                            dialog.save = false
+                            dialog.name = qsTr("Send Email completed")
+                            dialog.requestImage(0 ,0)
+                        })
+                    }
+                    break
+                default:
+                    scanResult(cmd ,result ,data)
+                    break
+                }
                 break
-            case DeviceStruct.ERR_RETSCAN_BUSY:
-                errorWithImage(qsTr("The Device is currently in use. Confirm that the device is available and try again."))
+            case DeviceStruct.CMD_QuickScan_ToFTP:
+            case DeviceStruct.CMD_ScanTo_ToFTP:
+                switch(result){
+                case JKEnums.ImageCommandResult_error_ftpConnect:
+                    warningWithImage(qsTr("Upload failed.Unable to connet to the remote server."))
+                    break
+                case JKEnums.ImageCommandResult_error_ftpLogin:
+                    warningWithImage(qsTr("Upload failed.The remote server returned an error:(530) Not logged in."))
+                    break
+                case JKEnums.ImageCommandResult_error_ftpCd:
+                case JKEnums.ImageCommandResult_error_ftpPut:
+                    warningWithImage(qsTr("Upload failed.The remote server returned an error:(553) File name not allowed."))
+                    break
+
+                case DeviceStruct.ERR_ACK:
+                case JKEnums.ImageCommandResult_NoError:
+                    if(DeviceStruct.CMD_ScanTo_ToFTP === cmd){
+                        information_1button(qsTr("Upload complete"))
+                        break
+                    }
+                    if(jkImageModel.count > 0){
+                        dialog = openPreviewDialog(function(dialog){
+                            dialog.title = qsTr("Quick Scan Preview")
+                            dialog.showExtra = true
+                            dialog.index = 0
+                            dialog.save = false
+                            dialog.name = qsTr("Upload completed")
+                            dialog.requestImage(0 ,0)
+                        })
+                    }
+                    break
+                default:
+                    scanResult(cmd ,result ,data)
+                    break
+                }
                 break
-            case DeviceStruct.ERR_RETSCAN_PAPER_JAM:
-                errorWithImage(qsTr("Paper jam"))
+            case DeviceStruct.CMD_ScanTo_ToCloud:
+            case DeviceStruct.CMD_QuickScan_ToCloud:
+                switch(result){
+                case JKEnums.ImageCommandResult_error_icloudNotLogin:
+                    warningWithImage(qsTr("ICloud not login ,please login iCloud on MAC System Settings."))
+                    break
+                case JKEnums.ImageCommandResult_error_icloudeUpload:
+                    warningWithImage(qsTr("ICloud upload fail."))
+                    break
+                case DeviceStruct.ERR_ACK:
+                case JKEnums.ImageCommandResult_NoError:
+                    if(DeviceStruct.CMD_ScanTo_ToCloud === cmd){
+                        information_1button(qsTr("Upload complete"))
+                        break
+                    }
+                    if(jkImageModel.count > 0){
+                        dialog = openPreviewDialog(function(dialog){
+                            dialog.title = qsTr("Quick Scan Preview")
+                            dialog.showExtra = true
+                            dialog.index = 0
+                            dialog.save = false
+                            dialog.name = qsTr("Upload completed")
+                            dialog.requestImage(0 ,0)
+                        })
+                    }
+                    break
+                default:
+                    scanResult(cmd ,result ,data)
+                    break
+                }
                 break
-            case DeviceStruct.ERR_RETSCAN_COVER_OPEN:
-                errorWithImage(qsTr("Cover is opened"))
+            case DeviceStruct.CMD_doCalibration:
+                switch(result){
+                case DeviceStruct.ERR_ACK:
+                    information_1button(qsTr("Calibration completed!"))
+                    break
+                default:
+                    scanResult(cmd ,result ,data)
+                    break
+                }
                 break
-            case DeviceStruct.ERR_RETSCAN_PAPER_NOT_READY:
-                errorWithImage(qsTr("Paper is not ready!"))
+            case DeviceStruct.CMD_ScanTo_ToEmail:
+            case DeviceStruct.CMD_QuickScan_ToApplication:
+            case DeviceStruct.CMD_ScanTo_ToApplication:
                 break
-            case DeviceStruct.ERR_RETSCAN_ADFCOVER_NOT_READY:
-            case DeviceStruct.ERR_RETSCAN_ADFPATH_NOT_READY:
-            case DeviceStruct.ERR_RETSCAN_ADFDOC_NOT_READY:
-                errorWithImage(qsTr("ADF is not ready"))
+            case DeviceStruct.CMD_DecodeScan:
+            case DeviceStruct.CMD_SeperationScan:
+            case DeviceStruct.CMD_SCAN:
+            case DeviceStruct.CMD_ScanTo://handler in ScanPage.qml too
+            default:
+                scanResult(cmd ,result ,data)
                 break
-            case DeviceStruct.ERR_RETSCAN_HOME_NOT_READY:
-                errorWithImage(qsTr("Home is not ready"))
-                break
-            case DeviceStruct.ERR_RETSCAN_ULTRA_SONIC:
-                errorWithImage(qsTr("Multi-feed error"))
-                break
-            case DeviceStruct.ERR_RETSCAN_CANCEL:
-                information_1button("The scan job has been canceled")
-                break
-            case DeviceStruct.ERR_RETSCAN_ERROR_POWER1:
-                var para1 = {}
-                para1.id = 1
-                para1.cmd = cmd
-                para1.setting = data
-                informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode do not support the following settings.
+            }
+        }
+    }
+
+    function scanResult(cmd ,result ,data){
+        switch(result){
+        case DeviceStruct.ERR_ACK:
+        case JKEnums.ImageCommandResult_NoError:
+            break
+        case DeviceStruct.ERR_RETSCAN_OPENFAIL:
+            errorWithImage(qsTr("The Device is not ready!"))
+            break
+        case DeviceStruct.ERR_RETSCAN_OPENFAIL_NET:
+            errorWithImage(qsTr("The Device is not ready!"))
+            break
+        case DeviceStruct.ERR_RETSCAN_BUSY:
+            errorWithImage(qsTr("The Device is currently in use. Confirm that the device is available and try again."))
+            break
+        case DeviceStruct.ERR_RETSCAN_PAPER_JAM:
+            errorWithImage(qsTr("Paper jam"))
+            break
+        case DeviceStruct.ERR_RETSCAN_COVER_OPEN:
+            errorWithImage(qsTr("Cover is opened"))
+            break
+        case DeviceStruct.ERR_RETSCAN_PAPER_NOT_READY:
+            errorWithImage(qsTr("Paper is not ready!"))
+            break
+        case DeviceStruct.ERR_RETSCAN_ADFCOVER_NOT_READY:
+        case DeviceStruct.ERR_RETSCAN_ADFPATH_NOT_READY:
+        case DeviceStruct.ERR_RETSCAN_ADFDOC_NOT_READY:
+            errorWithImage(qsTr("ADF is not ready"))
+            break
+        case DeviceStruct.ERR_RETSCAN_HOME_NOT_READY:
+            errorWithImage(qsTr("Home is not ready"))
+            break
+        case DeviceStruct.ERR_RETSCAN_ULTRA_SONIC:
+            errorWithImage(qsTr("Multi-feed error"))
+            break
+        case DeviceStruct.ERR_RETSCAN_CANCEL:
+            information_1button("The scan job has been canceled")
+            break
+        case DeviceStruct.ERR_RETSCAN_ERROR_POWER1:
+            var para1 = {}
+            para1.id = 1
+            para1.cmd = cmd
+            para1.setting = data
+            informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode do not support the following settings.
 
 \tMediaType:   \tDeposit Book or Card
 \tScan Size:   \tLong Page Mode
@@ -389,18 +612,18 @@ If you select 'No', the scan job will be canceled!
 
 \tMediaType:   \tNormal
 \tScan Size:   \tAuto")
-                                            ,"message.horizontalAlignment":Text.AlignLeft
-                                            ,"para":JSON.stringify(para1)
-                                            ,"height":380
-                                            },callbackScan )
-                break
-            case DeviceStruct.ERR_RETSCAN_ERROR_POWER2:
-                if(scanData.currentDevice.match(/^usb+/i)){
-                    var para = {}
-                    para.id = 0
-                    para.cmd = cmd
-                    para.setting = data
-                    informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus power mode do not support the follow settings.
+                                        ,"message.horizontalAlignment":Text.AlignLeft
+                                        ,"para":JSON.stringify(para1)
+                                        ,"height":380
+                                        },callbackScan )
+            break
+        case DeviceStruct.ERR_RETSCAN_ERROR_POWER2:
+            if(scanData.currentDevice.match(/^usb+/i)){
+                var para = {}
+                para.id = 0
+                para.cmd = cmd
+                para.setting = data
+                informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus power mode do not support the follow settings.
 
 \tADF Mode:   \tTwo Side
 \tMediaType:   \tDeposit Book or Card
@@ -413,40 +636,20 @@ If you select 'No', the scan job will be canceled!
 \tADF Mode:   \tOne Side
 \tMediaType:   \tNormal
 \tScan Size:   \tAuto")
-                                                ,"message.horizontalAlignment":Text.AlignLeft
-                                                ,"para":JSON.stringify(para)
-                                                ,"height":440
-                                                },callbackScan )
-                }else{
-                    errorWithImage(qsTr("The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning."))
-                }
-                break
-            case DeviceStruct.ERR_wifi_have_not_been_inited:
-                errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
-                break
-            case JKEnums.ImageCommandResult_error_ftpConnect:
-                warningWithImage(qsTr("Upload failed.Unable to connet to the remote server."))
-                break
-            case JKEnums.ImageCommandResult_error_ftpLogin:
-                warningWithImage(qsTr("Upload failed.The remote server returned an error:(530) Not logged in."))
-                break
-            case JKEnums.ImageCommandResult_error_ftpCd:
-            case JKEnums.ImageCommandResult_error_ftpPut:
-                warningWithImage(qsTr("Upload failed.The remote server returned an error:(553) File name not allowed."))
-                break
-            case JKEnums.ImageCommandResult_error_icloudNotLogin:
-                warningWithImage(qsTr("ICloud not login ,please login iCloud on MAC System Settings."))
-                break
-            case JKEnums.ImageCommandResult_error_icloudeUpload:
-                warningWithImage(qsTr("ICloud upload fail."))
-                break
-
-            default:
-                console.log("err:" ,result)
-                errorWithImage(qsTr("Scan Fail!"))
-                break;
+                                            ,"message.horizontalAlignment":Text.AlignLeft
+                                            ,"para":JSON.stringify(para)
+                                            ,"height":440
+                                            },callbackScan )
+            }else{
+                errorWithImage(qsTr("The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning."))
             }
+            break
 
+        default:
+            console.log("err:" ,result)
+            errorWithImage(qsTr("Scan Fail!"))
+            break;
         }
+
     }
 }

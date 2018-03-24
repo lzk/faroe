@@ -84,22 +84,22 @@ QtObject {
         var newSetting = undefined
         switch(sid){
         case "Scan To Print":
-            newSetting = JSData.newQuickScanToPrintObject()
+            newSetting = JSData.defaultQuickScanSetting_toPrint()
             break
         case "Scan To File":
-            newSetting = JSData.newQuickScanToFileObject()
+            newSetting = JSData.defaultQuickScanSetting_toFile()
             break
         case "Scan To Application":
-            newSetting = JSData.newQuickScanToApplicationObject()
+            newSetting = JSData.defaultQuickScanSetting_toApplication()
             break
         case "Scan To Email":
-            newSetting = JSData.newQuickScanToEmailObject()
+            newSetting = JSData.defaultQuickScanSetting_toEmail()
             break
         case "Scan To FTP":
-            newSetting = JSData.newQuickScanToFTPObject()
+            newSetting = JSData.defaultQuickScanSetting_toFTP()
             break
         case "Scan To Cloud":
-            newSetting = JSData.newQuickScanToCloudObject()
+            newSetting = JSData.defaultQuickScanSetting_toCloud()
             break
         }
         if(newSetting){

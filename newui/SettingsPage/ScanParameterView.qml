@@ -147,7 +147,7 @@ Item {
     }
     Connections{
         target: comboBox_emailAttachmentFileType
-        onActivated: scanToParameter.emailAttachmentFileType = target.currentIndex
+        onActivated: scanToParameter.emailAttachmentFileType = target.currentText
     }
     Connections{
         target:button_reset

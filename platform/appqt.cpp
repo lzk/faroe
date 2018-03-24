@@ -117,15 +117,48 @@ int AppQt::setBrightnessAndContrast(const QString& fileName ,int brightness ,int
     for(int i = 0 ;i < 256 ;i++){
         tabel[i] = qBound(0 ,(int)(cc * i + bb * 255) ,255);
     }
-    for(int y = 0 ;y < image.height() ;y++){
-        pixel = line;
-        for(int x = 0 ;x < image.width() ;x++){
-            pixel[0] = tabel[pixel[0]];
-            pixel[1] = tabel[pixel[1]];
-            pixel[2] = tabel[pixel[2]];
-            pixel += 4;
+    int height = image.height();
+    int width = image.width();
+    int bytesPerLine = image.bytesPerLine();
+    qDebug()<<"image format:"<<image.format();
+    switch (image.format()) {
+    case QImage::Format_ARGB32:
+    case QImage::QImage::Format_RGB32:
+        for(int y = 0 ;y < height ;y++){
+            pixel = line;
+            for(int x = 0 ;x < width ;x++){
+                pixel[0] = tabel[pixel[0]];
+                pixel[1] = tabel[pixel[1]];
+                pixel[2] = tabel[pixel[2]];
+                pixel += 4;
+            }
+            line += bytesPerLine;
         }
-        line += image.bytesPerLine();
+        break;
+    case QImage::Format_Grayscale8:
+        for(int y = 0 ;y < height ;y++){
+            pixel = line;
+            for(int x = 0 ;x < width ;x++){
+                pixel[0] = tabel[pixel[0]];
+                pixel ++;
+            }
+            line += bytesPerLine;
+        }
+        break;
+    case QImage::QImage::Format_RGB888:
+        for(int y = 0 ;y < height ;y++){
+            pixel = line;
+            for(int x = 0 ;x < width ;x++){
+                pixel[0] = tabel[pixel[0]];
+                pixel[1] = tabel[pixel[1]];
+                pixel[2] = tabel[pixel[2]];
+                pixel += 3;
+            }
+            line += bytesPerLine;
+        }
+        break;
+    default:
+        break;
     }
     image.save(fileName);
     return 0;

@@ -6,7 +6,7 @@ JKDialog{
     property var setting
     property var settingEffective
 
-    function ok(){
+    function sourceTheSetting(){
         JSApi.deepCopy(setting ,settingEffective)
     }
 

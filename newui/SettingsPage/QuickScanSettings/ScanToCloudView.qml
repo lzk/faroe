@@ -197,5 +197,6 @@ Item {
         default:
             break;
         }
+        return true
     }
 }

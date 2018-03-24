@@ -236,7 +236,8 @@ Component{
                     Item{
                         width: parent.width
                         height: 30
-                        visible:model.modelData.encryption % 4 !== 0
+                        enabled:model.modelData.encryption % 4 !== 0
+                        opacity: enabled ?1 :0.3
                         JKText{
                             text: qsTr("Password")
                             font.pixelSize: 12
@@ -250,8 +251,8 @@ Component{
                              anchors.verticalCenter: parent.verticalCenter
                              anchors.right: parent.right
                              anchors.rightMargin: 5
-                             input.echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
-                             input.validator: RegExpValidator{
+                             echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
+                             validator: RegExpValidator{
                                  regExp:  model.modelData.encryption % 4 === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
                                                                    :/^(?:.{8,63}|[0-9a-fA-F]{64})$/
                              }
@@ -262,7 +263,7 @@ Component{
                     CheckBox{
                         id:checkbox_input
                         text: qsTr("Display Password")
-                        visible:model.modelData.encryption % 4 !== 0
+                        enabled:model.modelData.encryption % 4 !== 0
                         indicator: Rectangle {
                             implicitWidth: 26
                             implicitHeight: 26

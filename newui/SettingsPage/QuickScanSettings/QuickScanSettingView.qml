@@ -2,10 +2,12 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import "../../component"
 import "../component"
+import "../../ScanData.js" as ScanData
 Item {
     id:root
     width: 477
     height: 425
+    property var setting: ScanData.defaultQuickScanSetting_toPrint()
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -86,7 +88,6 @@ Item {
     }
 
     function ok(){
-        settingLoader.item.ok()
-        return true
+        return settingLoader.item.ok()
     }
 }

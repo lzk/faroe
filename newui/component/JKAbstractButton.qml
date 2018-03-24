@@ -3,6 +3,7 @@ import QtQuick 2.7
 Item{
     id: root
     signal clicked
+    signal doubleClicked
     property alias mouseArea: mouseArea
     property alias dashRectange: dashRectange
     activeFocusOnTab: true
@@ -22,5 +23,8 @@ Item{
         onClicked: {
             root.clicked()
             }
+        onDoubleClicked: {
+            root.doubleClicked()
+        }
     }
 }

@@ -76,7 +76,7 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                input.validator: RegExpValidator{
+                validator: RegExpValidator{
                     regExp: /^[\\x0020-\\x007e]{1,32}$/
                 }
             }
@@ -99,7 +99,7 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                input.validator: RegExpValidator{
+                validator: RegExpValidator{
                     regExp: /^(?:.{8,63}|[0-9a-fA-F]{64})$/
                 }
             }

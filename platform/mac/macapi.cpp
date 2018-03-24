@@ -25,6 +25,8 @@ void saveMultiPagePdfImageInit(const QString& fileName)
 bool saveMultiPagePdfImage(const QString& tmpPath ,bool firstPage)
 {
     QRect rect = painter->viewport();
+    if(rect.isEmpty())
+        return false;
     QPixmap pixmap = QPixmap(tmpPath).scaled(rect.size() ,Qt::KeepAspectRatio);
     QSize size = pixmap.size();
     if(!size.isValid())

@@ -176,12 +176,12 @@ function constQuickScanSettings(){
 
 function defaultQuickScanSettings(){
     return [
-            newQuickScanToPrintObject(),
-            newQuickScanToFileObject(),
-            newQuickScanToApplicationObject(),
-            newQuickScanToEmailObject(),
-            newQuickScanToFTPObject(),
-            newQuickScanToCloudObject(),
+            defaultQuickScanSetting_toPrint(),
+            defaultQuickScanSetting_toFile(),
+            defaultQuickScanSetting_toApplication(),
+            defaultQuickScanSetting_toEmail(),
+            defaultQuickScanSetting_toFTP(),
+            defaultQuickScanSetting_toCloud(),
             ]
 }
 
@@ -194,19 +194,19 @@ function newQuickScanObject() {
     return ob
 }
 
-function newQuickScanToPrintObject() {
+function defaultQuickScanSetting_toPrint() {
     var ob = newQuickScanObject()
     ob.printerName = ""
     return ob
 }
 
-function newQuickScanToFileObject() {
+function defaultQuickScanSetting_toFile() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To File"
     ob.name = "Scan To File"
     ob.fileType = 0
-    ob.fileName = ""
-    ob.filePath = ""
+    ob.fileName = "ScanPictures"
+    ob.filePath = "~/Pictures"
     return ob
 }
 
@@ -219,7 +219,7 @@ function defaultApplicationSettings(){
     return ob
 }
 
-function newQuickScanToApplicationObject() {
+function defaultQuickScanSetting_toApplication() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Application"
     ob.name = "Scan To Application"
@@ -238,7 +238,7 @@ function defaultEmailSettings(){
     return ob
 }
 
-function newQuickScanToEmailObject() {
+function defaultQuickScanSetting_toEmail() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Email"
     ob.name = "Scan To Email"
@@ -257,7 +257,7 @@ function defaultFTPSettings(){
     return ob
 }
 
-function newQuickScanToFTPObject() {
+function defaultQuickScanSetting_toFTP() {
     var ob = defaultFTPSettings()
     ob.sid = "Scan To FTP"
     ob.name = "Scan To FTP"
@@ -271,7 +271,7 @@ function defaultCloudSettings(){
     return ob
 }
 
-function newQuickScanToCloudObject() {
+function defaultQuickScanSetting_toCloud() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Cloud"
     ob.name = "Scan To Cloud"

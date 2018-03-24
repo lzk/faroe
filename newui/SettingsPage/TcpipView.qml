@@ -85,7 +85,7 @@ Item {
                     height: 30
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    input.validator: RegExpValidator{
+                    validator: RegExpValidator{
                         regExp: /[\d.]*/
                     }
                 }
@@ -108,7 +108,7 @@ Item {
                     height: 30
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    input.validator: RegExpValidator{
+                    validator: RegExpValidator{
                         regExp: /[\d.]*/
                     }
                 }
@@ -131,7 +131,7 @@ Item {
                     height: 30
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    input.validator: RegExpValidator{
+                    validator: RegExpValidator{
                         regExp: /[\d.]*/
                     }
                 }

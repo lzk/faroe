@@ -13,6 +13,7 @@ Item {
     property alias item_fb1: item_fb1
     property alias item_viewname: item_viewname
     property alias item_view: item_view
+    property alias item_extra: item_extra
 
     Image {
        anchors.fill: parent
@@ -38,34 +39,46 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        Row {
-            id: item1
-            width: 30
-            height: 30
-            spacing: 10
-            anchors.horizontalCenter: parent.horizontalCenter
+        Item{
+            id:item
+            width: parent.width
+            height: 60
 
-            Item {
-                id: item_pre
-                width: 10
-                height: 15
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Item{
+                anchors.fill: parent
+                id:item_extra
+                Row {
+                    id: item1
+                    width: 30
+                    height: 30
+                    spacing: 10
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-            Item {
-                id: item_next
-                width: 10
-                height: 15
-                anchors.verticalCenter: parent.verticalCenter
+                    Item {
+                        id: item_pre
+                        width: 10
+                        height: 15
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Item {
+                        id: item_next
+                        width: 10
+                        height: 15
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+
+                Item {
+                    y:30
+                    id: item_viewname
+                    width: 200
+                    height: 30
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
             }
         }
 
-        Item {
-            id: item_viewname
-            width: 200
-            height: 30
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
 
         Item {
             id: item3

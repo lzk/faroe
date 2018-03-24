@@ -97,33 +97,33 @@ void ImageManager::imagesCmdEnd(int cmd ,int result)
         break;
     case DeviceStruct::CMD_QuickScan_ToFile:
     case DeviceStruct::CMD_ScanTo_ToFile:
-//        if(result == JKEnums::ImageCommandResult_NoError){
+//        if(!result || result == JKEnums::ImageCommandResult_NoError){
             saveToFileEnd(cmd_para);
 //        }
         cmdResult(cmd ,result);
         break;
     case DeviceStruct::CMD_ScanTo_ToEmail:
     case DeviceStruct::CMD_QuickScan_ToEmail:
-        if(result == JKEnums::ImageCommandResult_NoError){
+        if(!result || result == JKEnums::ImageCommandResult_NoError){
             toEmail(cmd_para);
         }
         cmdResult(cmd ,result);
         break;
     case DeviceStruct::CMD_ScanTo_ToApplication:
     case DeviceStruct::CMD_QuickScan_ToApplication:
-        if(result == JKEnums::ImageCommandResult_NoError){
+        if(!result || result == JKEnums::ImageCommandResult_NoError){
             toApplication(cmd_para ,fileList);
         }
         cmdResult(cmd ,result);
         break;
     case DeviceStruct::CMD_SeperationScan:
-        if(result == JKEnums::ImageCommandResult_NoError){
+        if(!result || result == JKEnums::ImageCommandResult_NoError){
             separationScanDecodeEnd();
         }
         cmdResult(cmd ,result);
         break;
     case DeviceStruct::CMD_DecodeScan:
-        if(result == JKEnums::ImageCommandResult_NoError){
+        if(!result || result == JKEnums::ImageCommandResult_NoError){
             decodeScanEnd();
         }
         cmdResult(cmd ,result);
@@ -169,8 +169,11 @@ void ImageManager::imagesCmd(QStringList fileList)
         break;
     case DeviceStruct::CMD_ScanTo_ToPrint:
     case DeviceStruct::CMD_QuickScan_ToPrint:
-        toPrint(fileList ,cmd_para);
-        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+        if(toPrint(fileList ,cmd_para)){
+            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+        }else{
+            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidPrinter);
+        }
         break;
 
     case DeviceStruct::CMD_ScanTo_ToFTP:
@@ -202,12 +205,16 @@ void ImageManager::imagesCmd(QStringList fileList)
     }
 }
 
-void ImageManager::toPrint(const QStringList& fileList ,const QString& printerName)
+bool ImageManager::toPrint(const QStringList& fileList ,const QString& printerName)
 {
     qDebug()<<"file list:"<<fileList;
     QPrinter _printer(QPrinterInfo::printerInfo(printerName));
     QPrinter* printer = &_printer;
-    QPainter painter(printer);
+    QPainter painter;
+    cmd_state = JKEnums::ImageCommandState_processing;
+    if(!printer->isValid() || !painter.begin(printer)){
+        return false;
+    }
     QRect rect = painter.viewport();
     QPixmap pixmap;
     QSize size;
@@ -224,6 +231,7 @@ void ImageManager::toPrint(const QStringList& fileList ,const QString& printerNa
         painter.drawPixmap(rect.x() + (rect.width() - size.width()) / 2,
                            rect.y() + (rect.height() - size.height()) / 2,pixmap);
     }
+    return true;
 }
 
 void ImageManager::toEmail(const QString& para)
@@ -254,6 +262,7 @@ void ImageManager::toEmail(const QString& para)
 
 void ImageManager::saveToFileStart(const QString& fileName)
 {
+    qDebug()<<"save file name:"<<fileName;
     QFileInfo fileInfo(fileName);
     QString suffix = fileInfo.suffix();
     if(suffix == "pdf"){

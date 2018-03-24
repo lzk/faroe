@@ -191,24 +191,14 @@ ScanPageLayout {
                 case DeviceStruct.ERR_SCAN_CANCEL:
                     jkImageModel.removeAll()
                     break;
+                default:
+                    break
                 }
-                break
-            case DeviceStruct.CMD_DecodeScan:
-            case DeviceStruct.CMD_SeperationScan:
-            case DeviceStruct.CMD_QuickScan:
-            case DeviceStruct.CMD_QuickScan_ToPrint:
-            case DeviceStruct.CMD_QuickScan_ToFile:
-            case DeviceStruct.CMD_QuickScan_ToFTP:
-            case DeviceStruct.CMD_QuickScan_ToEmail:
-            case DeviceStruct.CMD_QuickScan_ToApplication:
-            case DeviceStruct.CMD_QuickScan_ToCloud:
                 break
             }
         }
     }
-
     function scanTo(){
-        jkImageModel.removeAll()
         setScanCmd(DeviceStruct.CMD_ScanTo ,scanData.scanToParameter)
     }
 }

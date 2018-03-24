@@ -56,7 +56,7 @@ Item{
                     anchors.right: parent.right
                     anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
-                    input.validator: RegExpValidator{
+                    validator: RegExpValidator{
                         regExp: /[^\s]{0,32}/
                     }
                 }
@@ -66,6 +66,8 @@ Item{
                 height: 30
                 width: parent.width
                 enabled: combobox.currentIndex !== 0
+                opacity: enabled ?1 :0.3
+
                 JKText {
                     id: text4
                     text: qsTr("Password")
@@ -80,11 +82,11 @@ Item{
                     anchors.right: parent.right
                     anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
-                    input.validator: RegExpValidator{
+                    validator: RegExpValidator{
                         regExp:  combobox.currentIndex === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
                                                           :/^(?:.{8,63}|[0-9a-fA-F]{64})$/
                     }
-                    input.echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
+                    echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
                 }
             }
 

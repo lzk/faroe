@@ -17,7 +17,6 @@ public:
     ~JKInterface();
 
 public:
-    void setScanDataHandle(QObject* scanData);
     QString getCurrentDevice();
     void installImageModel(ImageModel* imageModel){this->imageModel=imageModel;}
 public:
@@ -28,6 +27,8 @@ public:
     Q_INVOKABLE void setScanToCmd(int cmd ,QList<int> ,const QString& jsonData=QString());
 
     Q_INVOKABLE void test();
+    Q_INVOKABLE void setScanDataHandle(QObject* scanData);
+    Q_INVOKABLE QString homeDictory();
 signals:
     void searchDeviceList();
     void searchComplete();
@@ -37,7 +38,7 @@ signals:
     void progressChanged(int progress ,int page);
     void cmdResult(int cmd,int result ,QString data=QString());
 
-    void imagesCmdStart(int cmd, QString ,QStringList fileList = QStringList());
+    void imagesCmdStart(int cmd, QString data ,QStringList fileList = QStringList());
     void imagesCmd(QStringList fileList = QStringList());
     void imagesCmdEnd(int cmd ,int result);
 

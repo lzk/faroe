@@ -1,11 +1,13 @@
 import QtQuick 2.0
 import "../component"
 import QtQuick.Dialogs 1.2
-
-JKParaDialog{
+import "../ScanData.js" as ScanData
+JKDialog{
     id: root
     width: 550 + 20
     height: 450 + 20
+
+    property var setting: ScanData.defaultApplicationSettings()
     toolbar{
         text.text:qsTr("To Application")
         text.font.pixelSize: 15
@@ -53,12 +55,12 @@ JKParaDialog{
                     anchors.fill: parent
                     anchors.margins: 1
                     z:1
-                    opacity: wrapper.ListView.isCurrentItem || mouseArea.containsMouse ?0.5 :1
-                    border.color: wrapper.ListView.isCurrentItem ? "green"
+                    opacity: wrapper.ListView.isCurrentItem ?0.7 :mouseArea.containsMouse ?0.5 :1
+                    border.color: mouseArea.containsMouse || wrapper.ListView.isCurrentItem ?"#2996e0"
                                                          :"Transparent"
                     border.width: 2
-                    color: mouseArea.containsMouse ? "LightSlateGray"
-                                                   : "LightSteelBlue"
+                    color: mouseArea.containsMouse || wrapper.ListView.isCurrentItem ?"lightblue"
+                                                   : "white"
                     Image{
                         x:10
                         width: 50
@@ -77,11 +79,25 @@ JKParaDialog{
                     activeFocusOnTab = focus
                 onClicked: {
                     wrapper.ListView.view.currentIndex = index
-                    if(index === 1){
+                }
+                onDoubleClicked: {
+                    wrapper.ListView.view.currentIndex = index
+                    switch(index){
+                    case 0:
+                        acceptOK()
+                        break
+                    case 1:
+                    default:
                         fileDialog.open()
+                        break
                     }
                 }
             }
+        }
+        Rectangle{
+            anchors.fill: listView
+            border.color: "lightgray"
+            color: "transparent"
         }
 
         Item{
@@ -114,12 +130,11 @@ JKParaDialog{
         }
     }
 
-    function acceptOK(){
+    function acceptOK(index){
         if(listView.currentIndex === 0){
             setting.fullFileName = "/Applications/Preview.app"
         }
         setting.fileType = listView.currentIndex
-        ok()
         root.close()
         root.accepted()
     }
@@ -130,7 +145,15 @@ JKParaDialog{
         anchors.fill: parent
         text.text: qsTr("OK")
         onClicked: {
-            acceptOK()
+            switch(listView.currentIndex){
+            case 0:
+                acceptOK()
+                break
+            case 1:
+            default:
+                fileDialog.open()
+                break
+            }
         }
     }
 }

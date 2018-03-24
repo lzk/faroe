@@ -65,7 +65,10 @@ Item {
     Connections {
         target: mouseArea
         onClicked: click()
-        onDoubleClicked: doubleClick()
+        onDoubleClicked: {
+            doubleClick()
+//            mouse.accepted = false
+        }
     }
 
     Connections {

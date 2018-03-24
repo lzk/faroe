@@ -51,7 +51,7 @@ Item {
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-
+                maximumLength: 32
             }
         }
         Item {
@@ -110,11 +110,25 @@ Item {
     function init(){
         comboBox.currentIndex = setting.fileType
         textInput2.text = setting.fileName
-        textInput3.text = setting.filePath
+        textInput3.text = setting.filePath.replace("~" ,jkInterface.homeDictory())
     }
     function ok(){
-        setting.fileType = comboBox.currentIndex
-        setting.fileName = textInput2.text
-        setting.filePath = textInput3.text
+        var fileType = comboBox.currentIndex
+        var fileName = textInput2.text
+        var filePath = textInput3.text
+
+        if(fileName === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
+            textInput3.input.focus = true
+            return false
+        }else if(filePath === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
+            textInput3.input.focus = true
+            return false
+        }
+        setting.fileType = fileType
+        setting.fileName = fileName
+        setting.filePath = filePath
+        return true
     }
 }

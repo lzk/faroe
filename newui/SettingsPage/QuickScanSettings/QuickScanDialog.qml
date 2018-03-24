@@ -1,12 +1,14 @@
 import QtQuick 2.0
 import "../../component"
 import QtQuick.Layouts 1.3
+import "../../ScanData.js" as ScanData
 
 JKParaDialog{
     id: root
     width: 537 + 20
     height: 545 + 20
     property int mode: 0
+    setting: ScanData.defaultQuickScanSetting_toPrint()
     signal accepted
 
     toolbar{
@@ -76,7 +78,7 @@ JKParaDialog{
                 if(mode === 1){
                     scanData.addQuickScanSetting(setting)
                 }else{
-                    root.ok()
+                    root.sourceTheSetting()
                 }
                 root.accepted()
                 root.close()
@@ -90,23 +92,19 @@ JKParaDialog{
         anchors.fill: parent
     }
 
-
     function initWithPara(setting ,mode){
         root.mode = mode
-        if(mode === 1 && setting === undefined)
-            ;
-        else
-            initWithSetting(setting)
+        initWithSetting(setting)
 
         var source = ""
         switch(mode){
         case 0:   source = "QuickScanSettingView.qml";  break
-        case 1:   source = "NewQuickScanView.qml";  break
+        case 1:
         case 2:   source = "NewQuickScanView.qml";  break
         default:
             break
         }
-        settingLoader.source = source
+        settingLoader.setSource(source ,{"setting":root.setting})
         if(settingLoader.item)
             settingLoader.item.init()
     }

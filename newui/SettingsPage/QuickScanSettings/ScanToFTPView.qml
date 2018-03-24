@@ -114,52 +114,45 @@ Item {
         textInput4.text = setting.targetPath
     }
     function ok(){
-        setting.serverAddress = textInput1.text
-        setting.userName = textInput2.text
-        setting.password = textInput3.text
-        setting.targetPath = textInput4.text
-        if(setting.serverAddress === ""){
+        var serverAddress = textInput1.text
+        var userName = textInput2.text
+        var password = textInput3.text
+        var targetPath = textInput4.text
+        if(serverAddress === ""){
             warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Server Address")))
 //            textInput1.input.forceActiveFocus()
             textInput1.input.focus = true
             return false
-        }else if(setting.userName === ""){
+        }else if(userName === ""){
             warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("User Name")))
 //            textInput2.input.forceActiveFocus()
             textInput2.input.focus = true
             return false
-        }else if(setting.password === ""){
+        }else if(password === ""){
             warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Password")))
 //            textInput3.input.forceActiveFocus()
             textInput3.input.focus = true
             return false
-        }else if(setting.targetPath === ""){
+        }else if(targetPath === ""){
             warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Target Path")))
 //            textInput4.input.forceActiveFocus()
             textInput4.input.focus = true
             return false
-        }else if(!setting.serverAddress.match(/ftp:\/\/[^\s]+$/i)){
+        }else if(!serverAddress.match(/ftp:\/\/[^\s]+$/i)){
             warningWithImage(qsTr("The %1 format is incorrect, Please check your %1 and enter again.").arg(qsTr("Server Address")))
 //            textInput1.input.forceActiveFocus()
             textInput1.input.focus = true
             return false
-        }else if(!setting.targetPath.match(/\/[^\\\?\s]*$/)){
-//        }else if(!setting.targetPath.test(/\/[^\\\?\*]$/i) && checkQuote(setting.targetPath)){
+        }else if(!targetPath.match(/\/[^\\\?\s\*:<>|\"]*$/)){
             warningWithImage(qsTr("The %1 format is incorrect, Please check your %1 and enter again.").arg(qsTr("Target Path")))
 //            textInput4.input.forceActiveFocus()
             textInput4.input.focus = true
             return false
         }
+        setting.serverAddress = serverAddress
+        setting.userName = userName
+        setting.password = password
+        setting.targetPath = targetPath
         return true
-    }
-    function checkQuote(str) {
-        var items = ["\\", "?", "*"];
-        str = str.toLowerCase();
-        for (var i = 0; i < items.length; i++) {
-            if (str.indexOf(items[i]) >= 0) {
-                return true;
-            }
-        }
-        return false;
     }
 }

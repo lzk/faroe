@@ -38,7 +38,7 @@ private:
     void toEmail(const QString& para);
     void toApplication(const QString& para,const QStringList& fileList);
 
-    void toPrint(const QStringList& ,const QString&);
+    bool toPrint(const QStringList& ,const QString&);
 
     void cloudStart(const QString&);
     void toCloud(const QStringList& ,const QString&);

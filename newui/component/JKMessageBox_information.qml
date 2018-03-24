@@ -5,6 +5,7 @@ JKDialog {
     width: 548 + 20
     height: 228 + 20
     signal accepted(string para)
+    signal rejected()
     property alias message: messagebox.message
     property alias showImage: messagebox.showImage
     property string para
@@ -54,7 +55,10 @@ JKDialog {
                 height: 30
                 text.text: qsTr("No")
                 anchors.verticalCenter: parent.verticalCenter
-                onClicked: root.close()
+                onClicked: {
+                    root.close()
+                    root.rejected()
+                }
             }
         }
     }

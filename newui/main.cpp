@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    QObject* rootObject = engine.rootObjects()[0];
-    QObject* scanData = rootObject->findChild<QObject*>("scanData");
-    if(scanData)
-        jki.setScanDataHandle(scanData);
+//    QObject* rootObject = engine.rootObjects()[0];
+//    QObject* scanData = rootObject->findChild<QObject*>("scanData");
+//    if(scanData)
+//        jki.setScanDataHandle(scanData);
     return app.exec();
 }

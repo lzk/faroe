@@ -15,7 +15,10 @@ DelegateModel{
     }
     function selectAll(selectOrDeselect){
         if(selectOrDeselect){
-            visualModel.items.addGroups(0 ,visualModel.items.count ,"selected")
+            for(var i = visualModel.items.count ;i > 0 ;i--){
+                visualModel.items.addGroups(i-1 ,1 ,"selected")
+            }
+//            visualModel.items.addGroups(0 ,visualModel.items.count ,"selected")
         }else{
             if(selectionGroup.count === visualModel.items.count)
                 selectionGroup.remove(0 ,selectionGroup.count)
@@ -41,7 +44,7 @@ DelegateModel{
         DelegateModelGroup {
             id:selectionGroup
             name: "selected"
-            includeByDefault :true
+            includeByDefault :false
             onChanged:{
 //                    root.selectedAll = count === visualModel.items.count
                 var i,j
@@ -107,8 +110,9 @@ DelegateModel{
             if(image.status === Image.Ready){
 
                 openPreviewDialog(function(dialog){
-                    dialog.image.source = "file:///" + url
-                    dialog.sourceSize = sourceSize
+//                    dialog.image.source = "file:///" + url
+//                    dialog.sourceSize = sourceSize
+//                    dialog.model = jkImageModel
                     dialog.index = index
                     dialog.requestImage(0 ,0)
                 })
@@ -123,11 +127,14 @@ DelegateModel{
         deleteImage(visualModel.currentIndex)
     }
     property var dialog
-    function openPreviewDialog(init){
-        dialog = openDialog("ImageViewer/ImagePreviewDialog.qml" ,{} ,init)
-    }
+//    function openPreviewDialog(init){
+//        dialog = openDialog("ImageViewer/ImagePreviewDialog.qml" ,{} ,init)
+//    }
 
     function removeAllImages(){
         jkImageModel.removeAll()
+    }
+    Component.onCompleted: {
+        selectAll(true)
     }
 }

@@ -51,5 +51,6 @@ Item {
     }
     function ok(){
         setting.printerName = comboBox.currentText
+        return true
     }
 }

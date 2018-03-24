@@ -2,9 +2,11 @@ import QtQuick 2.0
 import QtQuick.Controls 2.2
 import "../../component"
 import QtQuick.Dialogs 1.2
+import "../../ScanData.js" as ScanData
 Item {
     width: 477
     height: 309
+    property var setting:ScanData.defaultApplicationSettings()
 
     Column{
         anchors.fill: parent
@@ -74,7 +76,6 @@ Item {
         }
     }
 
-    property var setting
     Component.onCompleted:{
         init()
     }
@@ -91,11 +92,8 @@ Item {
 //        comboBox.currentIndex = index
         comboBox.currentIndex = setting.fileType >= 1 ?1 :0
         textInput2.text = setting.fullFileName
-//        textInput2.text = setting.filePath
     }
     function ok(){
-//        setting.fileName = comboBox.currentText
-//        setting.filePath = textInput2.text
         if(comboBox.currentIndex !== 0){
 
             if(textInput2.text.lastIndexOf(".app") === textInput2.text.length - 4){
@@ -111,13 +109,6 @@ Item {
         return true
     }
 
-//    property var dialog
-//    function openSettingDialog(setting){
-//        dialog = openDialog("ScanToPage/AppSelectDialog.qml" ,{} ,function(dialog){
-//            dialog.initWithSetting(setting)
-//            })
-//    }
-
     FileDialog {
         id: fileDialog
         title: qsTr("Applications")
@@ -125,11 +116,9 @@ Item {
         nameFilters: ["APP (*.app)"]
 //        selectFolder: true
         onAccepted: {
-//            var fullpath = fileUrl.toString().replace("file:///" ,"/")
             textInput2.text = fileUrl.toString().replace("file:///" ,"/")
         }
         onRejected: {
-            console.log("Canceled")
         }
     }
 }
