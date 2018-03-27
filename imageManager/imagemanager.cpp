@@ -205,9 +205,16 @@ void ImageManager::imagesCmd(QStringList fileList)
     }
 }
 
-bool ImageManager::toPrint(const QStringList& fileList ,const QString& printerName)
+bool ImageManager::toPrint(const QStringList& fileList ,const QString& data)
 {
-    qDebug()<<"file list:"<<fileList;
+    QJsonObject jsonObj = QJsonDocument::fromJson(data.toLatin1()).object();
+    QString printerName = jsonObj.value("printerName").toString();
+    qDebug()<<"printer name:"<<printerName<<"\tfile list:"<<fileList;
+
+    QStringList printerList = QPrinterInfo::availablePrinterNames();
+    if(printerList.isEmpty() || !printerList.contains(printerName)){
+        return false;
+    }
     QPrinter _printer(QPrinterInfo::printerInfo(printerName));
     QPrinter* printer = &_printer;
     QPainter painter;
@@ -300,7 +307,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
     QString preFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName();
     qDebug()<<"pre file name:" <<preFileName;
 
-    QString tmpFile = preFileName + "tmp.tif";
+    QString tmpFile = getTempPath() + "/tmp.tif";
     for (int i = 0 ;i < fileList.length() ;i++){
         if(suffix == "jpg"){
             fullFileName = preFileName + QString().sprintf("_%d." ,currentPage) +suffix;
@@ -533,7 +540,6 @@ void ImageManager::separationScanDecode(const QStringList& fileList)
             separation_data << sd;
         }
     }
-    ;
 }
 
 void ImageManager::separationScanDecodeEnd()

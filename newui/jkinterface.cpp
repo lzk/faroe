@@ -135,9 +135,15 @@ void JKInterface::setCmd(int cmd ,const QString& data)
         sendImagesCommand(cmd ,fullPath);
     }
         break;
-    case DeviceStruct::CMD_QuickScan_ToPrint:{
+    case DeviceStruct::CMD_QuickScan_ToPrint:
+    {
         QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
         QString printerName = jsonObj.value("printerName").toString();
+        QStringList printerList = QPrinterInfo::availablePrinterNames();
+        if(printerList.isEmpty() || !printerList.contains(printerName)){
+            cmdComplete(cmd ,JKEnums::ImageCommandResult_error_invalidPrinter);
+            return;
+        }
         sendImagesCommand(cmd ,printerName);
     }
         break;
@@ -171,6 +177,8 @@ void JKInterface::deviceCmdResult(int cmd,int result ,QString data)
     case DeviceStruct::CMD_QuickScan_ToApplication:
     case DeviceStruct::CMD_QuickScan_ToFTP:
     case DeviceStruct::CMD_QuickScan_ToCloud:
+        if(!result)
+            result = imageCmdResult;
         emit imagesCmdEnd(this->cmd ,result);
         break;
     default:
@@ -194,7 +202,7 @@ void JKInterface::scanedImage(QString filename,QSize sourceSize)
         emit imagesCmd(QStringList()<<filename);
         break;
     case DeviceStruct::CMD_QuickScan_ToFTP:
-        if(imageCmdResult || imageCmdResult != JKEnums::ImageCommandResult_NoError)
+        if(imageCmdResult && imageCmdResult != JKEnums::ImageCommandResult_NoError)
             break;
         //waiting for ftp login to processing
         if(cmd_state ==JKEnums::ImageCommandState_processing)
@@ -303,11 +311,17 @@ void JKInterface::setScanToCmd(int cmd ,QList<int> selectedList,const QString& j
     case DeviceStruct::CMD_ScanTo_ToPrint:{
         if(QPrinterInfo::availablePrinterNames().isEmpty()){
             cmdComplete(cmd ,JKEnums::ImageCommandResult_error_invalidPrinter);
+            break;
         }
         QPrintDialog printDialog;
         if (printDialog.exec() == QDialog::Accepted){
             QPrinter* printer = printDialog.printer();
             sendImagesCommand(cmd ,printer->printerName() ,fileList);
+            QJsonObject obj{
+                {"printerName",printer->printerName()}
+            };
+            sendImagesCommand(cmd ,QString(QJsonDocument(obj).toJson()) ,fileList);
+
         }
     }
         break;

@@ -66,8 +66,9 @@ int Scanner::open()
     if(!result){
         result = scannerApi->lock();
         if(!result && !m_cancel){
-            deviceIO->close();
-            result = deviceIO->open();
+            result = deviceIO->close();
+            if(!result)
+                result = deviceIO->open();
         }else{
 //            scannerApi->unlock();
             deviceIO->close();
@@ -85,8 +86,9 @@ int Scanner::close()
         result = ((NetDeviceIO*)deviceIO)->openPort(23011);
         if(!result){
             result = scannerApi->unlock();
+            if(!result)
+                result = deviceIO->close();
         }
-        deviceIO->close();
     }
     return result;
 }
@@ -117,10 +119,10 @@ int Scanner::receiveData()
 
     while (!m_cancel){
         result = checkStatus(SCANNING_STAGE ,&sc_infodata);
-        if(result == RETSCAN_GETINFO_FAIL){
-            usleep(100 * 1000);
-            continue;
-        }
+//        if(result == RETSCAN_GETINFO_FAIL){
+//            usleep(100 * 1000);
+//            continue;
+//        }
         if(result)
             break;
         if ((!(duplex & 1) || sc_infodata.ImgStatus[0].EndScan)

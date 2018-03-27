@@ -77,7 +77,7 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 validator: RegExpValidator{
-                    regExp: /^[\\x0020-\\x007e]{1,32}$/
+                    regExp: /^[\x20-\x7e]{1,32}$/
                 }
             }
         }
@@ -125,7 +125,7 @@ Item {
     Connections{
         target: button_apply
         onClicked: {
-            if(!input_ssid.text.match(/^[\\x0020-\\x007e]{1,32}$/)){
+            if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
                 warningWithImage(qsTr("The network name must be 1 to 32 characters long. Please check and enter again."))
                 input_ssid.input.focus = true
                 return

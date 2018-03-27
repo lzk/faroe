@@ -21,6 +21,7 @@ void ScannerAPI::install(DeviceIO* dio)
 
 bool ScannerAPI::ready()
 {
+
     if(dio->type() == DeviceIO::Type_usb)
         return true;
     int result = 0;
@@ -31,6 +32,7 @@ bool ScannerAPI::ready()
 
 int ScannerAPI::lock()
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -57,6 +59,7 @@ int ScannerAPI::lock()
 
 int ScannerAPI::unlock()
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -89,6 +92,7 @@ int ScannerAPI::unlock()
 #define JOB_PUSH_SMB			0x06
 int ScannerAPI::jobCreate(int source)
 {
+
     if(dio == NULL)
         return NO_DIO;
     SC_JOB_T cmdData;
@@ -127,6 +131,7 @@ int ScannerAPI::jobCreate(int source)
 
 int ScannerAPI::jobEnd()
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -161,6 +166,7 @@ int ScannerAPI::jobEnd()
 
 int ScannerAPI::startScan()
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -196,6 +202,7 @@ int ScannerAPI::startScan()
 
 int ScannerAPI::stopScan()
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -276,6 +283,7 @@ int ScannerAPI::setParameters(const SC_PAR_DATA_T& para)
 
 int ScannerAPI::getInfo(SC_INFO_DATA_T& sc_infodata)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -310,6 +318,7 @@ int ScannerAPI::getInfo(SC_INFO_DATA_T& sc_infodata)
 
 int ScannerAPI::cancelScan()
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -378,6 +387,7 @@ int ScannerAPI::readScan(int dup, int *ImgSize,char* buffer ,int size)
 
 int ScannerAPI::nvramW(int address ,char* buffer ,int size)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -414,6 +424,7 @@ int ScannerAPI::nvramW(int address ,char* buffer ,int size)
 
 int ScannerAPI::nvramR(int address ,char* buffer ,int size)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -448,6 +459,7 @@ int ScannerAPI::nvramR(int address ,char* buffer ,int size)
 
 int ScannerAPI::adfCheck(SC_ADF_CHECK_STA_T& status)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -476,6 +488,7 @@ int ScannerAPI::adfCheck(SC_ADF_CHECK_STA_T& status)
 
 int ScannerAPI::getFwVersion(char* version ,int maxLength)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -508,6 +521,7 @@ int ScannerAPI::getFwVersion(char* version ,int maxLength)
 
 int ScannerAPI::getStatus(SC_STATUS_DATA_T& status)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -565,6 +579,7 @@ int ScannerAPI::resetScan()
 
 int ScannerAPI::getPowerSupply(SC_POWER_INFO_T& sc_powerData)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -598,6 +613,7 @@ int ScannerAPI::getPowerSupply(SC_POWER_INFO_T& sc_powerData)
 
 int ScannerAPI::setGamma(const unsigned int* gammaTable ,int length)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -634,6 +650,7 @@ int ScannerAPI::setGamma(const unsigned int* gammaTable ,int length)
 
 int ScannerAPI::getPowerSaveTime(int& sleepTime ,int& offTime ,int& powerMode)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -685,6 +702,7 @@ int ScannerAPI::getPowerSaveTime(int& sleepTime ,int& offTime ,int& powerMode)
 
 int ScannerAPI::setPowerSaveTime(int sleepTime ,int offTime ,int& powerMode)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -731,6 +749,7 @@ int ScannerAPI::setPowerSaveTime(int sleepTime ,int offTime ,int& powerMode)
 
 int ScannerAPI::nvram_read(unsigned char addr ,unsigned int len ,unsigned char* data)
 {
+
     if(dio == NULL)
         return NO_DIO;
 
@@ -761,6 +780,7 @@ int ScannerAPI::nvram_read(unsigned char addr ,unsigned int len ,unsigned char* 
 
 int ScannerAPI::nvram_write(unsigned char addr ,unsigned int len ,unsigned char* data)
 {
+
     if(dio == NULL)
         return NO_DIO;
 

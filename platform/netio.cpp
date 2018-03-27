@@ -94,6 +94,7 @@ int NetIO::close(void)
         return -1;
 //    tcpSocket->disconnectFromHost();
 //    tcpSocket->waitForDisconnected();
+//    tcpSocket->abort();
     tcpSocket->close();
     return 0;
 }
@@ -107,8 +108,9 @@ int NetIO::write(char *buffer, int bufsize)
     int ret;
     ret = tcpSocket->write(buffer ,bufsize);
 
-    if(!tcpSocket->waitForBytesWritten(5000)){
-//        LOG_NOPARA("tcp_socket write timeout");
+    if(!tcpSocket->waitForBytesWritten(15000)){
+        LOG_NOPARA("tcp_socket write timeout");
+        return -1;
     }
     return ret;
 }
@@ -124,7 +126,7 @@ int NetIO::read(char *buffer, int bufsize)
         if(bytesAvailable < bufsize){
 //            LOG_PARA("not enough bytesAvailable:%d,buffer size:%d",bytesAvailable ,bufsize);
 //            if(!tcpSocket->waitForReadyRead(10)){
-            if(!tcpSocket->waitForReadyRead()){
+            if(!tcpSocket->waitForReadyRead(15000)){
                 return -1;
             }
         }else{
@@ -137,23 +139,23 @@ int NetIO::read(char *buffer, int bufsize)
 #else
     int numRead = 0, numReadTotal = 0;
     do{
+        if (!tcpSocket->waitForReadyRead(15000)){
+            LOG_NOPARA("tcp_socket read timeout");
+            break;
+        }
         bytesAvailable = tcpSocket->bytesAvailable();
         if(bytesAvailable > bufsize - numReadTotal)
             bytesAvailable = bufsize - numReadTotal;
         if(bytesAvailable > 0){
             numRead = tcpSocket->read(buffer + numReadTotal ,bytesAvailable);
-            if(numRead < 0){
+            if(numRead <= 0){
                 break;
             }else{
                 numReadTotal += numRead;
-                if (numRead == 0 && !tcpSocket->waitForReadyRead())
-                    break;
             }
         }else{
-            if(!tcpSocket->waitForReadyRead())
-                break;
+            break;
         }
-
     }while(numReadTotal < bufsize);
     if(numReadTotal != bufsize)
         return -1;
