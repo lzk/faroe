@@ -52,6 +52,10 @@ public:
         CMD_clearRollerCount,
         CMD_clearACMCount,
         CMD_doCalibration,
+        CMD_Cloud_isLogin,
+        CMD_Cloud_getFileList,
+        CMD_Cloud_upload,
+        CMD_Cloud_isExist,
     };
 
     enum StatusType{

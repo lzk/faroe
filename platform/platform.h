@@ -14,6 +14,8 @@ void saveMultiPagePdfImageRelease();
 void openEmail(const QString& subject ,const QString& recipient ,const QStringList& attachment);
 void openApplication(const QString& appName ,const QStringList& fileList);
 
-bool iCloudCheckLogin();
+bool iCloudCheckLogin(QString&);
 bool iCloudUpload(const QString& fileName);
+bool iCloudGetFileList(QString& para);
+bool iCouldIsExist(const QString& fileName);
 #endif // PLATFORM_H

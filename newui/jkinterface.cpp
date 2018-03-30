@@ -41,6 +41,8 @@ JKInterface::JKInterface(QObject *parent)
     connect(this ,&JKInterface::imagesCmdEnd ,imageManager ,&ImageManager::imagesCmdEnd);
     connect(imageManager ,&ImageManager::imagesCommandResult ,this ,&JKInterface::imagesCmdResult);
     connect(this ,&JKInterface::init ,imageManager ,&ImageManager::init);
+    connect(this ,&JKInterface::cmdExtra ,imageManager ,&ImageManager::cmdExtra);
+    connect(imageManager ,&ImageManager::cmdExtraResult ,this ,&JKInterface::cmdExtraResult);
 
     thread.start();
     thread_decode.start();
@@ -97,7 +99,8 @@ void JKInterface::updateDeviceStatus(bool status)
 
 void JKInterface::cmdComplete(int cmd,int result ,const QString& data)
 {
-    emit cmdResult(cmd ,result ,data);
+    qDebug()<<"cmd complete data:"<<data;
+    cmdResult(cmd ,result ,data);
     cmd_status = 0;
 }
 

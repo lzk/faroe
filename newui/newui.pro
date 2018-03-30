@@ -151,4 +151,8 @@ SOURCES += ../newui/*.qml \
           ../newui/SettingsPage/ScanSetting/*.js \
 }
 
+DISTFILES += \
+    ScanToPage/CloudDialog.qml \
+    ScanToPage/CloudDialog.qml
+
 

@@ -45,43 +45,10 @@ JKDialog{
                     appName:qsTr("Others")
                 }
             }
-            delegate:JKAbstractButton {
-                id:wrapper
-                height:76
-                width: ListView.view.width
-                activeFocusOnTab: ListView.isCurrentItem
-                dashRectange.z: 2
-                Rectangle{
-                    anchors.fill: parent
-                    anchors.margins: 1
-                    z:1
-                    opacity: wrapper.ListView.isCurrentItem ?0.7 :mouseArea.containsMouse ?0.5 :1
-                    border.color: mouseArea.containsMouse || wrapper.ListView.isCurrentItem ?"#2996e0"
-                                                         :"Transparent"
-                    border.width: 2
-                    color: mouseArea.containsMouse || wrapper.ListView.isCurrentItem ?"lightblue"
-                                                   : "white"
-                    Image{
-                        x:10
-                        width: 50
-                        height:50
-                        source: imageSource
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    JKText{
-                        x:100
-                        text: appName
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-
-                onFocusChanged:
-                    activeFocusOnTab = focus
-                onClicked: {
-                    wrapper.ListView.view.currentIndex = index
-                }
+            delegate: FilelistDelegate{
+                source: imageSource
+                text: appName
                 onDoubleClicked: {
-                    wrapper.ListView.view.currentIndex = index
                     switch(index){
                     case 0:
                         acceptOK()
@@ -93,6 +60,55 @@ JKDialog{
                     }
                 }
             }
+
+//            delegate:JKAbstractButton {
+//                id:wrapper
+//                height:76
+//                width: ListView.view.width
+//                activeFocusOnTab: ListView.isCurrentItem
+//                dashRectange.z: 2
+//                Rectangle{
+//                    anchors.fill: parent
+//                    anchors.margins: 1
+//                    z:1
+//                    opacity: wrapper.ListView.isCurrentItem ?0.7 :mouseArea.containsMouse ?0.5 :1
+//                    border.color: mouseArea.containsMouse || wrapper.ListView.isCurrentItem ?"#2996e0"
+//                                                         :"Transparent"
+//                    border.width: 2
+//                    color: mouseArea.containsMouse || wrapper.ListView.isCurrentItem ?"lightblue"
+//                                                   : "white"
+//                    Image{
+//                        x:10
+//                        width: 50
+//                        height:50
+//                        source: imageSource
+//                        anchors.verticalCenter: parent.verticalCenter
+//                    }
+//                    JKText{
+//                        x:100
+//                        text: appName
+//                        anchors.verticalCenter: parent.verticalCenter
+//                    }
+//                }
+
+//                onFocusChanged:
+//                    activeFocusOnTab = focus
+//                onClicked: {
+//                    wrapper.ListView.view.currentIndex = index
+//                }
+//                onDoubleClicked: {
+//                    wrapper.ListView.view.currentIndex = index
+//                    switch(index){
+//                    case 0:
+//                        acceptOK()
+//                        break
+//                    case 1:
+//                    default:
+//                        fileDialog.open()
+//                        break
+//                    }
+//                }
+//            }
         }
         Rectangle{
             anchors.fill: listView

@@ -42,6 +42,9 @@ signals:
     void imagesCmd(QStringList fileList = QStringList());
     void imagesCmdEnd(int cmd ,int result);
 
+    void cmdExtra(int cmd ,QString para);
+    void cmdExtraResult(int cmd ,QString para);
+
     void init();
     void deviceConnectCompleted();
 

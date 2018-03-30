@@ -15,11 +15,14 @@ public:
 
 signals:
     void imagesCommandResult(int cmd ,int state ,int result);
+    void cmdExtraResult(int cmd ,QString para);
 
 public slots:
     void imagesCmdStart(int cmd, QString ,QStringList fileList = QStringList());
     void imagesCmd(QStringList);
     void imagesCmdEnd(int cmd ,int result);
+
+    void cmdExtra(int cmd ,QString para);
 
     void init();
 private slots:

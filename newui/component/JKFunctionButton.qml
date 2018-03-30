@@ -12,7 +12,9 @@ Item {
         id:button
         width: parent.width
         height: parent.width
-        onClicked: root.clicked()
+        onClicked: {
+            root.clicked()
+        }
     }
     JKText {
         id:jktext

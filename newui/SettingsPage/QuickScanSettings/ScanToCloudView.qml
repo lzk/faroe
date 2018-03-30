@@ -1,7 +1,9 @@
 import QtQuick 2.0
 import "../../component"
 import "../../ScanData.js" as JSData
+import com.liteon.JKInterface 1.0
 Item {
+    id:root
     width: 477
     height: 309
 
@@ -32,7 +34,7 @@ Item {
         }
         Column{
             width: parent.width
-            visible: comboBox.currentText !== cloudTypes.icloud
+//            visible: comboBox.currentText !== cloudTypes.icloud
             Item {
                 id: item2
                 width: parent.width
@@ -199,4 +201,22 @@ Item {
         }
         return true
     }
+
+    Connections{
+        target: button_browse
+        onClicked:{
+            var setting ={}
+            setting.cloudTypeText = root.setting.cloudTypeText
+            setting.filePath = textInput41.text
+            setting.callback = accepted
+            setting.okButtonText = qsTr("OK")
+            setCmdExtra(DeviceStruct.CMD_Cloud_getFileList ,setting)
+        }
+    }
+
+    function accepted(setting){
+        textInput41.text = setting.filePath
+        setting.dialog.close()
+    }
+
 }

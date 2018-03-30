@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
 #include <QFtp>
 #include "../platform/devicestruct.h"
@@ -493,7 +494,8 @@ void ImageManager::cloudStart(const QString& para)
     QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
     if(!cloudTypeText.compare("iCloud")){
         cmd_state = JKEnums::ImageCommandState_start;
-        if(iCloudCheckLogin()){
+        QString str;
+        if(iCloudCheckLogin(str)){
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
         }else{
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_icloudNotLogin);
@@ -733,4 +735,79 @@ void ImageManager::decodeScanEnd()
     fprintf(file ,"</html>\n");
     fclose(file);
     system((QString("open ") + fileName).toLatin1().constData());
+}
+
+void ImageManager::cmdExtra(int cmd ,QString para)
+{
+    bool success = true;
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
+    switch (cmd) {
+    case DeviceStruct::CMD_Cloud_isLogin:
+    {
+        bool isLogin = false;
+        if(!cloudTypeText.compare("iCloud")){
+            isLogin = iCloudCheckLogin(para);
+
+        }
+        jsonObj.insert("isLogin" ,isLogin);
+    }
+        cmdExtraResult(cmd ,QString(QJsonDocument(jsonObj).toJson()));
+        break;
+    case DeviceStruct::CMD_Cloud_getFileList:
+        if(!cloudTypeText.compare("iCloud")){
+            if(iCloudCheckLogin(para)){
+                if(!iCloudGetFileList(para)){
+                    if(!iCloudGetFileList(para)){
+                        success = iCloudGetFileList(para);
+                    }
+                }
+            }
+        }
+        jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+        jsonObj.insert("success" ,success);
+        cmdExtraResult(cmd ,QString(QJsonDocument(jsonObj).toJson()));
+        break;
+    case DeviceStruct::CMD_Cloud_isExist:
+    {
+        bool isExist = false;
+        if(!cloudTypeText.compare("iCloud")){
+            QJsonObject selectList = jsonObj.value("selectList").toObject();
+            foreach (QString key, selectList.keys()) {
+                if(iCouldIsExist(selectList.value(key).toString())){
+                    isExist = true;
+                    break;
+                }
+            }
+        }
+        jsonObj.insert("isExist" ,isExist);
+    }
+        cmdExtraResult(cmd ,QString(QJsonDocument(jsonObj).toJson()));
+        break;
+    case DeviceStruct::CMD_Cloud_upload:
+        if(!cloudTypeText.compare("iCloud")){
+            QString str;
+            QJsonObject selectList = jsonObj.value("selectList").toObject();
+            foreach (QString key, selectList.keys()) {
+                str = QString(QJsonDocument(jsonObj).toJson());
+                success = iCloudUpload(selectList.value(key).toString());
+                if(!success)
+                    break;
+                else{
+                }
+            }
+
+            if(success && !iCloudGetFileList(str)){
+                if(!iCloudGetFileList(str)){
+                    iCloudGetFileList(str);
+                }
+            }
+            jsonObj = QJsonDocument::fromJson(str.toLatin1()).object();
+            jsonObj.insert("success" ,success);
+        }
+        cmdExtraResult(cmd ,QString(QJsonDocument(jsonObj).toJson()));
+        break;
+    default:
+        break;
+    }
 }

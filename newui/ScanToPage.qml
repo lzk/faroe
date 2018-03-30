@@ -238,16 +238,25 @@ ScanToPageLayout {
             if(imageViewer.selectList.length < 1){
                 warning_noSelectedFiles()
             }else{
-                var setting = JSData.defaultCloudSettings()
+                var setting ={}
                 setting.cloudTypeText = scanData.scanToParameter.cloudTypeText
-                var cloudTypes = JSData.supportCloudType()
-                switch(setting.cloudTypeText){
-                case cloudTypes.icloud:
-                    setScanToCmd(DeviceStruct.CMD_ScanTo_ToCloud ,imageViewer.selectList ,setting)
-                    break
-                }
-
+                setting.callback = toCloud
+                setting.okButtonText = qsTr("Upload")
+                setCmdExtra(DeviceStruct.CMD_Cloud_getFileList ,setting)
             }
+        }
+    }
+
+    function toCloud(setting){
+        var cloudTypes = JSData.supportCloudType()
+        switch(setting.cloudTypeText){
+        case cloudTypes.icloud:
+            var setting_new = {}
+            setting_new.cloudTypeText = setting.cloudTypeText
+            setting_new.selectList = jkImageModel.getFileList(imageViewer.selectList)
+            setCmdExtra(DeviceStruct.CMD_Cloud_isExist ,setting_new)
+//            setScanToCmd(DeviceStruct.CMD_ScanTo_ToCloud ,imageViewer.selectList ,setting)
+            break
         }
     }
 

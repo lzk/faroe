@@ -1,4 +1,5 @@
 
+#include <QDebug>
 #import <Carbon/Carbon.h>
 #include <QString>
 void saveMultiPageTiffImage(const QString& _tmpPath ,const QString& _imageFilePath)
@@ -53,40 +54,113 @@ void openApplication(const QString& appName ,const QStringList& fileList)
                                     arguments:a];
 }
 
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
 NSURL *rootUrl;
-bool iCloudCheckLogin()
+bool iCloudCheckLogin(QString& para)
 {
+    bool isLogin = false;
     rootUrl = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 
     if (rootUrl){
         rootUrl = [rootUrl URLByAppendingPathComponent:@"Documents"];
         NSLog(@"iCloud is sign in,documentUrl:%@",rootUrl);
-        return true;
+        isLogin = true;
     }else{
         NSLog(@"iCloud is  sign out");
     }
-    return false;
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    jsonObj.insert("isLogin" ,isLogin);
+    para = QString(QJsonDocument(jsonObj).toJson());
+    return isLogin;
+}
+
+
+bool iCloudGetFileList(QString& para)
+{
+    bool success = true;
+    if(!rootUrl)
+        return false;
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSArray* array = [manager contentsOfDirectoryAtURL:rootUrl includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles  error:nil];
+    if(!array){
+        return false;
+    }
+    
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonArray jarray;
+    NSMetadataItem *item;
+    NSString *fileName;
+    long long fileSize;
+
+    for (int i = 0; i<(int)array.count; i++) {
+        QJsonObject obj;
+        id url = [array objectAtIndex:i];
+        item = [[NSMetadataItem alloc] initWithURL:url];
+        fileName = [item valueForAttribute:NSMetadataItemFSNameKey];
+        fileSize = [[item valueForAttribute:NSMetadataItemFSSizeKey] longLongValue];
+//        NSLog(@"item attribute NSMetadataUbiquitousItemIsUploadedKey is:%@" ,[item valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] );
+//        NSLog(@"item attribute NSMetadataUbiquitousItemIsUploadingKey is:%@" ,[item valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey]);
+//        bool isUploaded = [[item valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
+//        bool isUploading = [[item valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
+//        qDebug()<<"isUploaded"<<isUploaded;
+//        qDebug()<<"isUploading"<<isUploading;
+        if(fileSize < 1){
+            success = false;
+        }else{
+            obj.insert("imageUrl", "qrc:/Images/file.png");
+            obj.insert("fileName", QString::fromNSString(fileName));
+            obj.insert("fileSize", fileSize);
+//        BOOL isDirectory;
+//        if([manager fileExistsAtPath:url isDirectory:&isDirectory] && isDirectory){
+//            obj.insert("imageUrl", "qrc:/Images/Folder-icon.png");
+//        }else{
+//            obj.insert("imageUrl", "qrc:/Images/file.png");
+//        }
+//        obj.insert("fileName", QString::fromNSString([manager displayNameAtPath:url]));
+            jarray << obj;
+        }
+    }
+    jsonObj.insert("fileList" ,jarray);
+    para = QString(QJsonDocument(jsonObj).toJson());
+    return success;
 }
 
 #include <QFileInfo>
-#include <QDebug>
 #include <QFile>
+
+bool iCouldIsExist(const QString& fileName)
+{
+    if(!rootUrl)
+        return false;
+    QFileInfo fileInfo(fileName);
+    NSString* nsFileName = fileInfo.fileName().toNSString();
+    NSURL *iCloudUrl1 = [NSURL URLWithString:nsFileName relativeToURL:rootUrl];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    bool isExist = [manager isUbiquitousItemAtURL:iCloudUrl1];
+    NSLog(@"ns filename:%@ " ,nsFileName);
+    qDebug()<<"is exist:" <<isExist;
+    return isExist;
+}
+
 bool iCloudUpload(const QString& fileName)
 {
     if(!rootUrl)
         return false;
     QFileInfo fileInfo(fileName);
     NSString* nsFileName = fileInfo.fileName().toNSString();
-    QString couldFileName = fileInfo.absolutePath() + "/toiCloud_" + fileInfo.fileName();
+    QString couldFileName = fileInfo.absolutePath() + "/tmpfiletoiCloud." + fileInfo.suffix();
+//    QString couldFileName = fileInfo.absolutePath() + "/toiCloud_" + fileInfo.fileName();
     QFile::copy(fileName, couldFileName);
     NSString* nsFilePath = couldFileName.toNSString();
-//    NSString* nsFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    nsFilePath = [nsFilePath stringByAppendingPathComponent:nsFileName];
-//    QFile::copy(fileName, QString::fromNSString(nsFilePath));
+    //    NSString* nsFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    //    nsFilePath = [nsFilePath stringByAppendingPathComponent:nsFileName];
+    //    QFile::copy(fileName, QString::fromNSString(nsFilePath));
     
     NSLog(@"ns filepath:%@ ,filename:%@" ,nsFilePath ,nsFileName);
     NSURL *iCloudUrl1 = [NSURL URLWithString:nsFileName relativeToURL:rootUrl];
-
+    
     NSFileManager *manager = [NSFileManager defaultManager];
     if ([manager fileExistsAtPath:nsFilePath])
     {
@@ -100,7 +174,10 @@ bool iCloudUpload(const QString& fileName)
         } else{
             NSURL *fileUrl = [NSURL fileURLWithPath:nsFilePath];
             [manager setUbiquitous:YES itemAtURL:fileUrl destinationURL:iCloudUrl1 error:&error];
-
+//            [manager moveItemAtURL:fileUrl toURL:iCloudUrl1 error:&error];
+//            NSData *data = [NSData dataWithContentsOfFile:nsFilePath];
+//            [data writeToURL:iCloudUrl1 options:NSDataWritingAtomic error:&error];
+            
             NSLog(@"ns iCloudUrl1:%@ ,fileUrl:%@" ,iCloudUrl1 ,fileUrl);
             dispatch_sync(dispatch_get_main_queue(), ^{
                 NSLog(@"2%@",error);
@@ -115,6 +192,5 @@ bool iCloudUpload(const QString& fileName)
         NSLog(@"file1 not exsit");
     }
     return false;
-
+    
 }
-

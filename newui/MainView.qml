@@ -235,6 +235,66 @@ Item {
         }
     }
 
+    property var extraCallback
+    function setCmdExtra(cmd ,setting){
+        console.log("quick scan extra cmd:" ,cmd)
+        console.log("setting:" ,JSON.stringify(setting))
+        switch(cmd){
+        case DeviceStruct.CMD_Cloud_getFileList:
+            dialog = openDialog("component/JKRefresh.qml" ,{})
+            extraCallback = setting.callback
+            jkInterface.cmdExtra(cmd ,JSON.stringify(setting))
+            break
+        case DeviceStruct.CMD_Cloud_isExist:
+            dialog = openDialog("component/JKRefresh.qml" ,{})
+            jkInterface.cmdExtra(cmd ,JSON.stringify(setting))
+            break
+        case DeviceStruct.CMD_Cloud_upload:
+            dialog = openDialog("component/JKRefresh.qml" ,{})
+            jkInterface.cmdExtra(cmd ,JSON.stringify(setting))
+            break
+        }
+    }
+    function cloudUpload(setting){
+        var uploadsetting = JSON.parse(setting)
+        setCmdExtra(DeviceStruct.CMD_Cloud_upload ,uploadsetting)
+    }
+
+    Connections{
+        target: jkInterface
+        onCmdExtraResult:{
+            console.log("quick scan extra cmd result:" ,cmd)
+            console.log("para" ,para)
+            var setting = JSON.parse(para)
+            switch(cmd){
+
+            case DeviceStruct.CMD_Cloud_getFileList:
+                dialog.close()
+                if(setting.isLogin){
+                    setting.dialog = openDialog("ScanToPage/CloudDialog.qml" ,{"setting":setting}
+                                        ,function(dialog){
+                                            dialog.accepted.connect(extraCallback)
+                                        })
+                }else{
+                    warningWithImage(qsTr("ICloud not login ,please login iCloud on MAC System Settings."))
+                }
+                break
+            case DeviceStruct.CMD_Cloud_isExist:
+                dialog.close()
+                if(setting.isExist){
+                    informationWithProperty({"message.text":qsTr("The file is exist ,replace it?") ,"para":JSON.stringify(setting)} ,cloudUpload)
+                }else{
+                    setCmdExtra(DeviceStruct.CMD_Cloud_upload ,setting)
+                }
+
+                break
+            case DeviceStruct.CMD_Cloud_upload:
+                dialog.close()
+                break
+            }
+        }
+    }
+
     function updateSetting(cmd ,setting){
 //        switch(cmd){
 //        case DeviceStruct.CMD_ScanTo:

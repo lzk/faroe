@@ -79,6 +79,8 @@
         <file>SettingsPage/component/JKRadioButton.qml</file>
         <file>SettingsPage/component/WiFiManualSettingView.qml</file>
         <file>SettingsPage/ScanSetting/MediaTypePrompt.qml</file>
+        <file>ScanToPage/CloudDialog.qml</file>
+        <file>ScanToPage/FilelistDelegate.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/background3.png</file>
@@ -190,5 +192,10 @@
         <file>Images/setting_wifilist panel.png</file>
         <file>Images/switch.png</file>
         <file>Images/Preview.png</file>
+        <file>Images/folder_add.png</file>
+        <file>Images/folder_with_arrow_up_disable.png</file>
+        <file>Images/folder_with_arrow_up.png</file>
+        <file>Images/file.png</file>
+        <file>Images/Folder-icon.png</file>
     </qresource>
 </RCC>
