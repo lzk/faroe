@@ -110,6 +110,20 @@ Item {
                                 onClicked: {
                                     pitem_manual.input_password.text = wifiSetting.password
                                     pitem_manual.input_ssid.text = wifiSetting.ssid
+                                    var encryption = wifiSetting.encryption % 4
+                                    switch(encryption){
+                                    case 0:
+                                    case 1:
+                                        pitem_manual.combox_index = encryption
+                                        break;
+                                    case 3:
+                                    case 4:
+                                        pitem_manual.combox_index = encryption - 1
+                                        break;
+                                    default:
+                                        pitem_manual.combox_index = -1
+                                        break
+                                    }
                                     column2.visible = false
                                 }
                             }

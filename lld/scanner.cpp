@@ -188,7 +188,10 @@ int Scanner::receiveData()
                         para.isBlank = sc_infodata.ImgStatus[para.dup].IsBlank;
 
                         para.lines = sc_infodata.ImageHeight[para.dup];
-                        pPlatformApp->saveScanImage(setting ,&para);
+                        if(!pPlatformApp->saveScanImage(setting ,&para)){
+//                            result = RETSCAN_ERROR;
+//                            goto EXIT;
+                        }
                         if(duplex == SETTING_SCAN_AB_SIDE){
                             if(para.dup == 0)
                                 pPlatformApp->updateProgress(DeviceStruct::ScanningProgress_Completed ,para.page[para.dup]);
@@ -508,10 +511,12 @@ void Scanner::calculateParameters(const Setting& setting)
 //    parameters.y = 0;
     parameters.nLinePixelNumOrig = width * setting.dpi_x / 1000;
     parameters.nLinePixelNumOrig -= parameters.nLinePixelNumOrig % 8;
-    parameters.x = (8.5 * setting.dpi_x - parameters.nLinePixelNumOrig) / 2;
+//    parameters.x = (8.5 * setting.dpi_x - parameters.nLinePixelNumOrig) / 2;
+    parameters.x = (8.64 * setting.dpi_x - parameters.nLinePixelNumOrig) / 2;
     parameters.nColPixelNumOrig = height * setting.dpi_y / 1000;
     parameters.nColPixelNumOrig -= parameters.nColPixelNumOrig % 8;
-    parameters.y = (14 * setting.dpi_y - parameters.nColPixelNumOrig) / 2;
+//    parameters.y = (14 * setting.dpi_y - parameters.nColPixelNumOrig) / 2;
+    parameters.y = 0;
     parameters.bytesPerLine = GetByteNumPerLineWidthPad(setting.BitsPerPixel, parameters.nLinePixelNumOrig);
     parameters.setting = setting;
 }

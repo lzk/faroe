@@ -311,7 +311,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
     QString tmpFile = getTempPath() + "/tmp.tif";
     for (int i = 0 ;i < fileList.length() ;i++){
         if(suffix == "jpg"){
-            fullFileName = preFileName + QString().sprintf("_%d." ,currentPage) +suffix;
+            fullFileName = preFileName + "_" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + QString().sprintf("%d." ,currentPage) +suffix;
             if(QFile::exists(fullFileName))
                 QFile::remove(fullFileName);
             if(!QFile::copy(fileList[i] ,fullFileName)){
@@ -319,7 +319,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
                 break;
             }
         }else if(suffix == "bmp"){
-            fullFileName = preFileName + QString().sprintf("_%d." ,currentPage) +suffix;
+            fullFileName = preFileName+ "_" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + QString().sprintf("%d." ,currentPage) +suffix;
             if(!QImage(fileList[i]).save(fullFileName ,"bmp")){
                 success = false;
                 break;

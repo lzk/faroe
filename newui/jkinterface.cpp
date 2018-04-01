@@ -147,7 +147,10 @@ void JKInterface::setCmd(int cmd ,const QString& data)
             cmdComplete(cmd ,JKEnums::ImageCommandResult_error_invalidPrinter);
             return;
         }
-        sendImagesCommand(cmd ,printerName);
+        QJsonObject obj{
+            {"printerName",printerName}
+        };
+        sendImagesCommand(cmd ,QString(QJsonDocument(obj).toJson()));
     }
         break;
     case DeviceStruct::CMD_DecodeScan:

@@ -12,6 +12,7 @@ public:
     explicit AppQt(QObject *parent = nullptr);
 
     void updateProgress(int progress ,int page);
+    inline QString getStillTempFilename(int side);
     const char* getTempFilename(int side);
     bool saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para);
 signals:

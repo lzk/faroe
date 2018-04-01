@@ -182,6 +182,7 @@ void DeviceManager::addImage(QString filename)
     }
     if(!sourceSize.isValid()){
         qDebug()<<"not valid image!";
+        return;
     }
     switch (currentCmd) {
     case DeviceStruct::CMD_ScanTo:{

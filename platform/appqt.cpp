@@ -15,10 +15,15 @@ void AppQt::updateProgress(int progress ,int page)
     emit progressChanged(progress ,page);
 }
 
+QString AppQt::getStillTempFilename(int side)
+{
+    return  getTempPath() + "/tmpimage"  + (side ?"B":"A");
+}
+
 const char* AppQt::getTempFilename(int side)
 {
-    QString tmppath = getTempPath();
-    return (tmppath + "/tmpimage"  + (side ?"B":"A")).toLatin1().data();
+    QString tmppath = getStillTempFilename(side);
+    return tmppath.toLatin1().constData();//
 }
 
 bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
@@ -47,14 +52,18 @@ bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
             saveFileName += "_gray";
         }
     }
-    const char* scanFileName = getTempFilename(para->dup);
-    err = saveJpgFile(scanFileName ,para);
-    if(err)
+    QString scanFileName = getStillTempFilename(para->dup);
+    err = saveJpgFile(scanFileName.toLatin1().constData() ,para);
+    if(err){
+        LOG_NOPARA("save jpg fail");
         return false;
+    }
     switch (setting->format) {
     case SETTING_IMG_FORMAT_JPG:
         saveFileName += ".JPG";
-        QFile::rename(scanFileName ,saveFileName);
+        if(!QFile::rename(scanFileName ,saveFileName)){
+            LOG_NOPARA("rename fail " + scanFileName + " to " +saveFileName);
+        }
         break;
     default:
         break;

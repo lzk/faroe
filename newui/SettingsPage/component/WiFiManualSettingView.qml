@@ -7,6 +7,7 @@ Item{
     signal connectClicked(var setting)
     property alias input_ssid: input_ssid
     property alias input_password: input_password
+    property alias combox_index: combobox.currentIndex
     Image {
         source: "qrc:/Images/setting_wifilist panel.png"
         anchors.fill:item_manual
@@ -137,34 +138,39 @@ Item{
                 }
             }
 
-            Row{
-                visible:combobox.currentIndex === 1
-                anchors.horizontalCenter: parent.horizontalCenter
+            Item{
                 height: 30
-                spacing: 2
-                JKText {
-                    text: qsTr("WEP KeyID")
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 12
-                }
-                JKRadioButton{
-                    id:radio0
-                    text: qsTr("Key1")
-                    checked: true
-                }
-                JKRadioButton{
-                    id:radio1
-                    text: qsTr("Key2")
-                }
-                JKRadioButton{
-                    id:radio2
-                    text: qsTr("Key3")
-                }
-                JKRadioButton{
-                    id:radio3
-                    text: qsTr("Key4")
+                width: parent.width
+                Row{
+                    visible:combobox.currentIndex === 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 25
+                    spacing: 2
+                    JKText {
+                        text: qsTr("WEP KeyID")
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 12
+                    }
+                    JKRadioButton{
+                        id:radio0
+                        text: qsTr("Key1")
+                        checked: true
+                    }
+                    JKRadioButton{
+                        id:radio1
+                        text: qsTr("Key2")
+                    }
+                    JKRadioButton{
+                        id:radio2
+                        text: qsTr("Key3")
+                    }
+                    JKRadioButton{
+                        id:radio3
+                        text: qsTr("Key4")
+                    }
                 }
             }
+
 
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -182,7 +188,7 @@ Item{
                     height: parent.height
                     text.text: qsTr("Connect")
                     onClicked: {
-                        if(!input_ssid.text.match(/^[\\x0020-\\x007e]{1,32}$/)){
+                        if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
                             warningWithImage(qsTr("The network name must be 1 to 32 characters long. Please check and enter again."))
                             input_ssid.input.focus = true
                             return
