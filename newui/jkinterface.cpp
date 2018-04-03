@@ -322,7 +322,7 @@ void JKInterface::setScanToCmd(int cmd ,QList<int> selectedList,const QString& j
         QPrintDialog printDialog;
         if (printDialog.exec() == QDialog::Accepted){
             QPrinter* printer = printDialog.printer();
-            sendImagesCommand(cmd ,printer->printerName() ,fileList);
+
             QJsonObject obj{
                 {"printerName",printer->printerName()}
             };
@@ -357,11 +357,7 @@ QString JKInterface::homeDictory()
     return QDir::home().absolutePath();
 }
 
-void JKInterface::test()
+bool JKInterface::pathExist(const QString& filePath)
 {
-    qDebug()<<"test";
-    QPrintDialog printDialog;
-    if (printDialog.exec() == QDialog::Accepted){
-
-    }
+    return QDir(filePath).exists();
 }

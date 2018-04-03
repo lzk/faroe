@@ -7,12 +7,15 @@ import com.liteon.JKInterface 1.0
 JKDialog{
     id: root
     width: 537 + 20
-    height: 655 + 20
+    height: decodeMode ? 300:638 + 20
+
+    property alias decodeMode: scanSettingView.decodeMode
 
     property var constPaperSize: JSData.constPaperSize()
     property var constPaperSizeMap: JSData.constPaperSizeMap()
     property var constPaperSize_noLongPage: JSData.constPaperSize().slice(0 ,-1)
-    property var constPaperSize_onlyAuto: JSData.constPaperSize().slice(0 ,2)
+    property var constPaperSize_onlyAuto: JSData.constPaperSize().slice(0 ,1)
+    property var constPaperSize_onlyAutoNoMultiFeed: JSData.constPaperSize().slice(1 ,2)
     property var constDPIName: JSData.constDPIName()
     property var constDPI: JSData.constDPI()
     property var constDPI_lessThan300: JSData.constDPI().slice(0 ,-1)
@@ -55,14 +58,25 @@ JKDialog{
         enabled: !refresh.visible
         item_adfMode.enabled: powerMode !== JKEnums.PowerMode_usbBusPower
         item_colorMode.enabled: !radioButton_autoColorDetection_on.checked
-        item_skipBlankPage.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
-                                    && radioButton_autoCropDeskew_on.checked
+        item_skipBlankPage.enabled: //comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+                                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+                                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
+//                                    && radioButton_autoCropDeskew_on.checked
+                                    && powerMode !== JKEnums.PowerMode_usbBusPower
         item_autoColorDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+                                        && radioButton_color.checked
+                                        && powerMode !== JKEnums.PowerMode_usbBusPower
         item_multiFeedDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
                                          && comboBox_scanAreaSize.currentText !== constPaperSizeMap.autoNoMultiFeed
                                          && comboBox_scanAreaSize.currentText !== constPaperSizeMap.A6
-        item_autoCropDeskew.enabled: comboBox_scanAreaSize.currentIndex < 2
-                                     && !radioButton_skipBlankPage_on.checked
+                                         && comboBox_mediaType.currentText === constMediaTypeMap.normal
+                                         && powerMode !== JKEnums.PowerMode_usbBusPower
+//        item_autoCropDeskew.enabled: comboBox_scanAreaSize.currentIndex < 2
+//                                     && !radioButton_skipBlankPage_on.checked
+        radioButton_autoCropDeskew_on.checked:item_skipBlankPage.enabled
+//                                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+//                                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
+//                                    && powerMode !== JKEnums.PowerMode_usbBusPower
 
         spin_gamma{
             slider{
@@ -80,27 +94,44 @@ JKDialog{
         }
         function updateComboxModel_mediaType(){
             var index = comboBox_mediaType.currentIndex
-            comboBox_mediaType.model = comboBox_scanAreaSize.currentText === constPaperSizeMap.longPage
-                                      ? constMediaType_onlyNormal
-                                      : constMediaType
+            comboBox_mediaType.model =
+                    comboBox_scanAreaSize.currentText === constPaperSizeMap.longPage
+//                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+//                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
+                    || powerMode === JKEnums.PowerMode_usbBusPower
+//                    || radioButton_multiFeedDetection_on.checked
+                  ? constMediaType_onlyNormal
+                  : constMediaType
             comboBox_mediaType.currentIndex = index
         }
         function updateComboxModel_scanAreaSize(){
-            var index = comboBox_scanAreaSize.currentIndex
-            comboBox_scanAreaSize.model= (comboBox_mediaType.currentText === constMediaTypeMap.normal
-                                          &&!radioButton_autoCropDeskew_on.checked
-                                          )?
-                constDPIName[comboBox_dpi.currentIndex] === "600DPI" ?constPaperSize_noLongPage :constPaperSize
-                :constPaperSize_onlyAuto
+//            var index = comboBox_scanAreaSize.currentIndex
+//            comboBox_scanAreaSize.model= (comboBox_mediaType.currentText === constMediaTypeMap.normal
+//                                          &&!radioButton_autoCropDeskew_on.checked
+//                                          )?
+//                constDPIName[comboBox_dpi.currentIndex] === "600DPI" ?constPaperSize_noLongPage :constPaperSize
+//                :constPaperSize_onlyAuto
+//            comboBox_scanAreaSize.currentIndex = index
+            var index = 0
+            if(comboBox_mediaType.currentText === constMediaTypeMap.normal){
+                index = comboBox_scanAreaSize.currentIndex
+                comboBox_scanAreaSize.model = powerMode === JKEnums.PowerMode_usbBusPower ?constPaperSize_noLongPage :constPaperSize
+            }else{
+                index = 0
+                comboBox_scanAreaSize.model = constPaperSize_onlyAuto
+            }
             comboBox_scanAreaSize.currentIndex = index
         }
-        property bool lastMultiFeed
+        property bool lastMultiFeed:false
         function updateRadio_multiFeed(){
             if(comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
                     && comboBox_scanAreaSize.currentText !== constPaperSizeMap.autoNoMultiFeed
-                    && comboBox_scanAreaSize.currentText !== constPaperSizeMap.A6){
-                lastMultiFeed = radioButton_multiFeedDetection_on.checked
+                    && comboBox_scanAreaSize.currentText !== constPaperSizeMap.A6
+                    && comboBox_mediaType.currentText === constMediaTypeMap.normal){
+                radioButton_multiFeedDetection_on.checked = lastMultiFeed
             }else{
+                if(radioButton_multiFeedDetection_on.checked)
+                    lastMultiFeed = radioButton_multiFeedDetection_on.checked
                 radioButton_multiFeedDetection_on.checked = false
             }
         }
@@ -125,20 +156,21 @@ JKDialog{
         }
     }
 
-    Connections{
-        target: scanSettingView.radioButton_autoCropDeskew_on
-        onCheckedChanged: {
-            scanSettingView.updateComboxModel_scanAreaSize()
-            scanSettingView.updateRadio_multiFeed()
-        }
+//    Connections{
+//        target: scanSettingView.radioButton_autoCropDeskew_on
+//        onCheckedChanged: {
+////            scanSettingView.updateComboxModel_scanAreaSize()
+////            scanSettingView.updateRadio_multiFeed()
+//        }
 
-    }
+//    }
     Connections{
         target: scanSettingView.comboBox_dpi
         onActivated: {
-            scanSettingView.updateComboxModel_scanAreaSize()
+//            scanSettingView.updateComboxModel_scanAreaSize()
         }
     }
+
     Connections{
         target: scanSettingView.comboBox_mediaType
         onActivated: {
@@ -149,6 +181,7 @@ JKDialog{
                 break;
             }
             scanSettingView.updateComboxModel_scanAreaSize()
+            scanSettingView.updateRadio_multiFeed()
         }
     }
 
@@ -178,33 +211,17 @@ JKDialog{
     }
 
     function update(){
-        switch(powerMode){
-        case JKEnums.PowerMode_usbBusPower:
-//            scanSetting.multiFeed = false
-            scanSetting.adfMode = false
-//            scanSetting.autoCropAndDeskew = false
-            scanSetting.mediaType = 0
-            if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
-                scanSetting.scanAreaSize = 0
-            break
-        case JKEnums.PowerMode_PowerBank:
-//            scanSetting.multiFeed = false
-//            scanSetting.adfMode = false
-//            scanSetting.autoCropAndDeskew = false
-            scanSetting.mediaType = 0
-            if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
-                scanSetting.scanAreaSize = 0
-            break
-        }
+        updateScanSetting(scanSetting ,powerMode)
 
         scanSettingView.updateComboxModel_scanAreaSize()
         scanSettingView.updateComboxModel_dpi()
         scanSettingView.updateComboxModel_mediaType()
+        scanSettingView.updateRadio_multiFeed()
 
         scanSettingView.radioButton_twoSide.checked = scanSetting.adfMode
         scanSettingView.radioButton_color.checked = scanSetting.colorMode
         scanSettingView.radioButton_multiFeedDetection_on.checked = scanSetting.multiFeed
-        scanSettingView.radioButton_autoCropDeskew_on.checked = scanSetting.autoCropAndDeskew
+//        scanSettingView.radioButton_autoCropDeskew_on.checked = scanSetting.autoCropAndDeskew
         scanSettingView.radioButton_autoColorDetection_on.checked = scanSetting.autoColorDetection
         scanSettingView.radioButton_skipBlankPage_on.checked = scanSetting.skipBlankPage
 

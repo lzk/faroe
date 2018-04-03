@@ -39,6 +39,7 @@ Item {
                 id: item2
                 width: parent.width
                 height: 60
+                visible: comboBox.currentText !== cloudTypes.icloud
 
                 JKText {
                     id: text2
@@ -124,6 +125,7 @@ Item {
                          id: item41
                          width: parent.width
                          height: 60
+                         visible: comboBox.currentText !== cloudTypes.icloud
 
                          JKText {
                              id: text41

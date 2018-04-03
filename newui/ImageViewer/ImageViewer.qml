@@ -4,6 +4,7 @@ import com.liteon.JKInterface 1.0
 
 Item {
     id:root
+    property alias empty: model.empty
     property alias allSelected: model.selectedAll
 //    property alias model: gridView.model
     property alias selectList: model.selectList

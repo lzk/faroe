@@ -85,7 +85,7 @@ JKDialog {
                     JKText{
                         id:text_currentDir
                         anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr("/")
+                        text: qsTr("")
                     }
                 }
             }
@@ -153,7 +153,7 @@ JKDialog {
         switch(setting.cloudTypeText){
         case supportCloudType.icloud:
             title = qsTr("iCloud File Viewer")
-            button_cdup.enabled = false
+            button_cdup.visible = false
             button_mkdir.visible = false
             break
         }

@@ -9,6 +9,7 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <QFtp>
+#include <QDir>
 #include "../platform/devicestruct.h"
 #include "../newui/jkenums.h"
 #include "../platform/platform.h"
@@ -51,15 +52,13 @@ void ImageManager::imagesCmdStart(int cmd, QString para ,QStringList)
     case DeviceStruct::CMD_QuickScan_ToFile:
     case DeviceStruct::CMD_ScanTo_ToFile:
         saveToFileStart(para);
-        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
         break;
     case DeviceStruct::CMD_SeperationScan:
         separation_data.clear();
         emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
         break;
     case DeviceStruct::CMD_DecodeScan:
-        decode_data.clear();
-        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+        separationScanDecodeStart();
         break;
     case DeviceStruct::CMD_ScanTo_ToCloud:
     case DeviceStruct::CMD_QuickScan_ToCloud:
@@ -91,6 +90,7 @@ void ImageManager::cmdResult(int cmd ,int result)
 
 void ImageManager::imagesCmdEnd(int cmd ,int result)
 {
+    this->result = result;
     switch (cmd) {
     case DeviceStruct::CMD_QuickScan_ToFTP:
     case DeviceStruct::CMD_ScanTo_ToFTP:
@@ -272,6 +272,10 @@ void ImageManager::saveToFileStart(const QString& fileName)
 {
     qDebug()<<"save file name:"<<fileName;
     QFileInfo fileInfo(fileName);
+    if(fileInfo.fileName().length() > 230){
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidFilePath);
+        return;
+    }
     QString suffix = fileInfo.suffix();
     if(suffix == "pdf"){
         if(QFile::exists(fileName)){
@@ -283,6 +287,7 @@ void ImageManager::saveToFileStart(const QString& fileName)
             QFile::remove(fileName);
         }
     }
+    emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
 }
 
 void ImageManager::saveToFileEnd(const QString& fileName)
@@ -519,6 +524,18 @@ void ImageManager::toCloud(const QStringList& fileList,const QString& para)
     emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
 }
 
+void ImageManager::separationScanDecodeStart()
+{
+    decode_data.clear();
+    QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
+    QString filePath = jsonObj.value("filePath").toString();
+    if(!QDir(filePath).exists()){
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidFilePath);
+        return;
+    }
+    emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+}
+
 void ImageManager::separationScanDecode(const QStringList& fileList)
 {
     QString str;
@@ -612,7 +629,7 @@ void ImageManager::decodeScanDecode(const QStringList& fileList)
 void ImageManager::decodeScanEnd()
 {
     QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
-    QString fileName = jsonObj.value("outputResult").toString();
+    QString fileName = jsonObj.value("fileName").toString();
     QString tmppath = getTempPath();
     fileName = tmppath + "/" + fileName;
     QFileInfo info(fileName);

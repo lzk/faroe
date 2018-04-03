@@ -20,41 +20,14 @@ Item {
         anchors.rightMargin: 20
 
         Item {
-            id: item3
-            height: 50
-            width: parent.width
-
-            JKText {
-                id: text1
-                text: qsTr("Scan Setting:")
-                font.bold: true
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 14
-            }
-
-            Item {
-                id: item_btnSettings
-                width: 100
-                height: 35
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-
-        DividingLine{
-            height: 6
-            width: parent.width
-        }
-
-        Item {
             id: item2
-            height: 130
+            height: 180
             width: parent.width
 
             GroupBox {
                 id: groupBox
                 width: 400
-                height: 112
+                height: 162
                 font.bold: true
                 font.pixelSize: 12
                 spacing: 0
@@ -65,9 +38,30 @@ Item {
 
                 Column {
                     width: 360
-                    height: 90
+                    height: 150
                     anchors.left: parent.left
                     anchors.leftMargin: 20
+
+                    Item {
+                        id: item3
+                        height: 50
+                        width: parent.width
+
+                        JKText {
+                            id: text1
+                            text: qsTr("Scan Settings:")
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize: 12
+                        }
+
+                        Item {
+                            id: item_btnSettings_decode
+                            width: 100
+                            height: 35
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
 
                     Item {
                         id: item4
@@ -103,7 +97,7 @@ Item {
                         }
 
                         JKTextInput {
-                            id: input_outputResult
+                            id: input_fileName
                             width: 200
                             height: 30
                             anchors.right: parent.right
@@ -116,13 +110,13 @@ Item {
 
         Item {
             id: item6
-            height: 180
+            height: 230
             width: parent.width
 
             GroupBox {
                 id: groupBox1
                 width: 400
-                height: 177
+                height: 227
                 font.bold: true
                 font.pixelSize: 12
                 spacing: 0
@@ -133,17 +127,38 @@ Item {
 
                 Column {
                     width: 360
-                    height: 155
+                    height: 205
                     anchors.left: parent.left
                     anchors.leftMargin: 20
 
                     Item {
                         id: item7
+                        height: 50
+                        width: parent.width
+
+                        JKText {
+                            id: text4
+                            text: qsTr("Scan Settings:")
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize: 12
+                        }
+
+                        Item {
+                            id: item_btnSettings_separation
+                            width: 100
+                            height: 35
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
+
+                    Item {
+                        id: item8
                         width: parent.width
                         height: 50
 
                         JKText {
-                            id: text4
+                            id: text5
                             text: qsTr("Save File Type:")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -159,12 +174,12 @@ Item {
                         }
                     }
                     Item {
-                        id: item8
+                        id: item9
                         width: parent.width
                         height: 50
 
                         JKText {
-                            id: text5
+                            id: text6
                             text: qsTr("File Path:")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -172,6 +187,7 @@ Item {
 
                         JKTextInput {
                             id: input_filePath
+                            enabled: false
                             width: 200
                             height: 30
                             anchors.right: parent.right
@@ -197,33 +213,12 @@ Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
-        Item{
-            Layout.fillWidth: true
-            height: 60
-            JKTextButton {
-                id: button_apply
-                text.text: qsTr("Apply")
-                width: 150
-                height: 35
-                anchors.centerIn: parent
-            }
-        }
-
-    }
-
-    property var qrcodeSetting
-    Component.onCompleted: {
-        qrcodeSetting = JSApi.deepCopy(scanData.qrcodeSetting)
-        comboBox_codeType.currentIndex = qrcodeSetting.codeType
-        input_outputResult.text = qrcodeSetting.outputResult
-        comboBox_saveFileType.currentIndex = qrcodeSetting.fileType
-        input_filePath.text = qrcodeSetting.filePath
     }
 
     FileDialog {
         id: fileDialog
         title: qsTr("Save As")
-        folder: shortcuts.pictures
+        folder: "file://" + JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
         onAccepted: input_filePath.text = fileUrl.toString().replace("file:///" ,"/")
@@ -234,27 +229,37 @@ Item {
     }
 
     JKTextButton{
-        parent: item_btnSettings
+        parent: item_btnSettings_decode
         anchors.fill: parent
         text.text: qsTr("Settings...")
         onClicked: {
-            openScanSettingDialog(qrcodeSetting.scanSetting)
+            openScanSettingDialog(decodeSetting.scanSetting ,true)
         }
     }
-    Connections{
-        target: button_apply
+    JKTextButton{
+        parent: item_btnSettings_separation
+        anchors.fill: parent
+        text.text: qsTr("Settings...")
         onClicked: {
-            qrcodeSetting.codeType = comboBox_codeType.currentIndex
-            qrcodeSetting.outputResult = input_outputResult.text
-            qrcodeSetting.fileType = comboBox_saveFileType.currentIndex
-            qrcodeSetting.filePath = input_filePath.text
-            scanData.qrcodeSetting = qrcodeSetting
-            warning({"message.text":qsTr("Configuration Completed!")
-                        ,"message.horizontalAlignment":Text.AlignLeft
-                        ,"toolbar.text.text":qsTr("Information")
-                    ,"width": 520
-                    ,"height": 200
-                    })
+            openScanSettingDialog(separationSetting.scanSetting)
         }
+    }
+
+    property var decodeSetting :scanData.decodeSetting
+    property var separationSetting :scanData.separationSetting
+    Component.onCompleted: {
+//        console.log("qrcode on Component")
+        comboBox_codeType.currentIndex = decodeSetting.codeType
+        input_fileName.text = decodeSetting.fileName
+        comboBox_saveFileType.currentIndex = separationSetting.fileType
+        input_filePath.text = separationSetting.filePath
+//        .replace("~" ,jkInterface.homeDictory())
+    }
+    Component.onDestruction: {
+//        console.log("qrcode on Destruction")
+        decodeSetting.codeType = comboBox_codeType.currentIndex
+        decodeSetting.fileName = input_fileName.text
+        separationSetting.fileType = comboBox_saveFileType.currentIndex
+        separationSetting.filePath = input_filePath.text
     }
 }

@@ -1,4 +1,8 @@
 .pragma library
+function defaultFilePath(){
+    return "/Users/Shared/Pictures"
+}
+
 function constDPIName() {
     return [
             "150DPI" ,
@@ -99,7 +103,8 @@ function constScanIds(){
         "scanToEmail" : "Scan To Email" ,
         "scanToFTP" : "Scan To FTP" ,
         "scanToCloud" : "Scan To Cloud" ,
-        "qrcodeScan" : "qrcodeScan" ,
+        "decodeScan" : "decodeScan" ,
+        "separationScan" : "separationScan" ,
     }
     return ob
 }
@@ -111,7 +116,7 @@ function defaultScanSetting(){
         "colorMode" : true ,
         "scanAreaSize" : 0 ,
         "mediaType" : 0 ,
-        "multiFeed" : true ,
+        "multiFeed" : false ,
         "contrast" : 50 ,
         "brightness" : 50 ,
         "autoCropAndDeskew" : true ,
@@ -142,18 +147,29 @@ function constQrcodeCodeType(){
 function constQrcodeFileType(){
     return ["PDF" ,"TIFF"]
 }
-function defaultQrcodeSetting(){
+
+function defaultDecodeSetting(){
     var sid = constScanIds()
     var ob = {
-        "sid":sid.qrcodeScan,
+        "sid":sid.decodeScan,
         "scanSetting" : defaultScanSetting(),
         "codeType" : 0 ,
-        "outputResult" : "QRcodeBarcodeResult.html" ,
-        "fileType" : 0 ,
-        "filePath" : "" ,
+        "fileName" : "QRcodeBarcodeResult.html" ,
     }
     return ob
 }
+
+function defaultSeparationSetting(){
+    var sid = constScanIds()
+    var ob = {
+        "sid":sid.separationScan,
+        "scanSetting" : defaultScanSetting(),
+        "fileType" : 0 ,
+        "filePath" : defaultFilePath(),
+    }
+    return ob
+}
+
 
 function constQuickScanSid(){
     var sid = constScanIds()
@@ -206,7 +222,7 @@ function defaultQuickScanSetting_toFile() {
     ob.name = "Scan To File"
     ob.fileType = 0
     ob.fileName = "ScanPictures"
-    ob.filePath = "~/Pictures"
+    ob.filePath = defaultFilePath()
     return ob
 }
 

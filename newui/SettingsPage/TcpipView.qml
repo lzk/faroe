@@ -220,9 +220,6 @@ Item {
 
                 break;
             case DeviceStruct.CMD_setIpv4:
-                if(!result){
-                    information_1button(qsTr("Configuration completed. Restart the device to apply changes."))
-                }
                 break
             }
         }

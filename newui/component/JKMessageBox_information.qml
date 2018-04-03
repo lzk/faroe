@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 JKDialog {
     id:root
-    width: 548 + 20
+    width: 600 + 20 //548 + 20
     height: 228 + 20
     signal accepted(string para)
     signal rejected()

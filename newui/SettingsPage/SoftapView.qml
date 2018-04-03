@@ -63,6 +63,8 @@ Item {
             id: item2
             height: 80
             width: parent.width
+            enabled: checkbox.checked
+            opacity: enabled ?1 :0.3
             JKText {
                 id: text3
                 text: qsTr("SSID")
@@ -86,6 +88,8 @@ Item {
             id: item5
             height: 60
             width: parent.width
+            enabled: checkbox.checked
+            opacity: enabled ?1 :0.3
             JKText {
                 id: text4
                 text: qsTr("Password")
@@ -165,9 +169,6 @@ Item {
 
                 break;
             case DeviceStruct.CMD_setSoftap:
-                if(!result){
-                    information_1button(qsTr("Configuration completed. Restart the device to apply changes."))
-                }
                 break
             }
         }

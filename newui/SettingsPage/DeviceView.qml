@@ -256,6 +256,8 @@ Item {
             height: 60
             JKTextButton {
                 id: button_apply
+                enabled:((Math.floor(spin_saveTime.value) !== setting.saveTime)
+                         ||(Math.floor(spin_offTime.value) !== setting.offTime))
                 text.text: qsTr("Apply")
                 width: 150
                 height: 35

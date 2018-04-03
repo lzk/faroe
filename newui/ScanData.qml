@@ -10,7 +10,8 @@ QtObject {
     property var constQuickScanSettings:JSData.constQuickScanSettings()
     property var quickScanSettings:JSData.defaultQuickScanSettings()
     property var scanToParameter:JSData.defaultScanToSetting()
-    property var qrcodeSetting:JSData.defaultQrcodeSetting()
+    property var decodeSetting:JSData.defaultDecodeSetting()
+    property var separationSetting:JSData.defaultSeparationSetting()
     property var ftpSetting: JSData.defaultFTPSettings()
     property var applicationSetting: JSData.defaultApplicationSettings()
 //    property var emailSetting: JSData.defaultEmailSettings()
@@ -30,15 +31,21 @@ QtObject {
         var tmp = JSON.parse(storageSettings.settings)
         if(verifyStorageQuickScanSetting(tmp.quickScanSettings)){
             JSApi.deepCopy(tmp.quickScanSettings ,quickScanSettings)
+            quickScanSettings = quickScanSettings
 //            quickScanSettings = tmp.quickScanSettings
         }
         if(tmp.scanToParameter){
             JSApi.deepCopy(tmp.scanToParameter ,scanToParameter)
+            scanToParameter = scanToParameter
 //            scanToParameter = tmp.scanToParameter
         }
-        if(tmp.qrcodeSetting){
-            JSApi.deepCopy(tmp.qrcodeSetting ,qrcodeSetting)
-//            qrcodeSetting = tmp.qrcodeSetting
+        if(tmp.decodeSetting){
+            JSApi.deepCopy(tmp.decodeSetting ,decodeSetting)
+            decodeSetting = decodeSetting
+        }
+        if(tmp.separationSetting){
+            JSApi.deepCopy(tmp.separationSetting ,separationSetting)
+            separationSetting = separationSetting
         }
         if(tmp.currentDevice){
             currentDevice = tmp.currentDevice
@@ -53,7 +60,8 @@ QtObject {
         var settings = {}
         settings.quickScanSettings = quickScanSettings
         settings.scanToParameter = scanToParameter
-        settings.qrcodeSetting = qrcodeSetting
+        settings.decodeSetting = decodeSetting
+        settings.separationSetting = separationSetting
         settings.currentDevice = currentDevice
 //        settings.emailSetting = emailSetting
 //        settings.cloudSetting = cloudSetting

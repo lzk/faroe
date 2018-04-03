@@ -193,8 +193,8 @@ Item {
         return openDialog("ImageViewer/ImagePreviewDialog.qml" ,{} ,init)
     }
 
-    function openScanSettingDialog(setting){
-        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{"setting":setting})
+    function openScanSettingDialog(setting ,decodeMode){
+        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{"setting":setting ,"decodeMode":decodeMode})
     }
 
     function setCmd(cmd ,setting){
@@ -219,6 +219,50 @@ Item {
 
     function setScanCmd(cmd ,setting){
         jkImageModel.removeAll()
+        switch(cmd){
+        case DeviceStruct.CMD_DecodeScan:
+            setting.scanSetting.adfMode = false
+            setting.scanSetting.dpi = 2
+            setting.scanSetting.colorMode = true
+            setting.scanSetting.mediaType = 0
+            if(setting.fileName === ""){
+                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Html File Name")))
+                return
+//            }else if(!setting.fileName.match(/^[0-9a-zA-Z\-_.]{1,250}.html$/)){
+            }else if(!setting.fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]{1,250}.html$/)
+                     || !setting.fileName.match(/^[\x20-\x7e]*$/)){
+                warningWithImage(qsTr("Invalid %1!").arg(qsTr("Html File Name")))
+                return
+            }
+            break
+        case DeviceStruct.CMD_SeperationScan:
+            if(setting.filePath === ""){
+                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
+                return
+            }else if(!jkInterface.pathExist(setting.filePath)){
+                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
+                return
+            }
+            break
+        case DeviceStruct.CMD_QuickScan_ToFile:
+            if(setting.filePath === ""){
+                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
+                return
+            }else if(setting.fileName === ""){
+                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
+                return
+            }else if(!jkInterface.pathExist(setting.filePath)){
+                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
+                return
+//            }else if(!setting.fileName.match(/^[0-9a-zA-Z\-_.]{1,230}$/)){
+            }else if(!setting.fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]{1,230}$/)
+                     || !setting.fileName.match(/^[\x20-\x7e]*$/)){
+                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name")))
+                return
+            }
+            break
+        }
+
         setCmd(cmd ,setting)
     }
 
@@ -322,8 +366,11 @@ Item {
         case sid.scanTo:
             scanData.scanToParameter.scanSetting = setting.scanSetting
             break
-        case sid.qrcodeScan:
-            scanData.qrcodeSetting.scanSetting = setting.scanSetting
+        case sid.decodeScan:
+            scanData.decodeSetting.scanSetting = setting.scanSetting
+            break
+        case sid.separationScan:
+            scanData.separationSetting.scanSetting = setting.scanSetting
             break
         case sid.scanToPrint:
         case sid.scanToFile:
@@ -336,31 +383,35 @@ Item {
         }
     }
 
-    function callbackScan(para){
-        console.log("callback:" ,para)
-        var data = JSON.parse(para)
-        var setting = JSON.parse(data.setting)
-        var scanSetting = setting.scanSetting
+    function updateScanSetting(scanSetting ,powerMode){
         var constPaperSize = JSData.constPaperSize()
         var constPaperSizeMap = JSData.constPaperSizeMap()
-        switch(data.id){
-        case 0:
+        switch(powerMode){
+        case JKEnums.PowerMode_usbBusPower:
             scanSetting.multiFeed = false
             scanSetting.adfMode = false
             scanSetting.autoCropAndDeskew = false
+            scanSetting.skipBlankPage = false
             scanSetting.mediaType = 0
             if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
                 scanSetting.scanAreaSize = 0
             break
-        case 1:
+        case JKEnums.PowerMode_PowerBank:
 //            scanSetting.multiFeed = false
 //            scanSetting.adfMode = false
-            scanSetting.autoCropAndDeskew = false
+//            scanSetting.autoCropAndDeskew = false
             scanSetting.mediaType = 0
             if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
                 scanSetting.scanAreaSize = 0
             break
         }
+    }
+
+    function callbackScan(para){
+        console.log("callback:" ,para)
+        var data = JSON.parse(para)
+        var setting = JSON.parse(data.setting)
+        updateScanSetting(setting.scanSetting ,data.powerMode)
         updateSetting(data.cmd ,setting)
         setScanCmd(data.cmd ,setting)
     }
@@ -403,8 +454,10 @@ Item {
             case DeviceStruct.CMD_ScanTo_ToFile:
                 message = qsTr("Saving picture to file,please wait...")
                 break
-            case DeviceStruct.CMD_ScanTo_ToApplication:
             case DeviceStruct.CMD_ScanTo_ToEmail:
+                message = qsTr("Saving,please wait...")
+                break
+            case DeviceStruct.CMD_ScanTo_ToApplication:
                 break
             default:
                 return
@@ -429,11 +482,23 @@ Item {
             case DeviceStruct.CMD_getSaveTime:
                 break
 
-            case DeviceStruct.CMD_setDeviceSetting:
-            case DeviceStruct.CMD_setIpv4:
-            case DeviceStruct.CMD_setPassword:
-            case DeviceStruct.CMD_setWifi:
             case DeviceStruct.CMD_setSoftap:
+            case DeviceStruct.CMD_setIpv4:
+            case DeviceStruct.CMD_setWifi:
+                switch(result){
+                case DeviceStruct.ERR_ACK:
+                    information_1button(qsTr("Configuration completed. Restart the device to apply changes."))
+                    break
+                case DeviceStruct.ERR_wifi_have_not_been_inited:
+                    errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
+                    break
+                default:
+                    errorWithImage(qsTr("Configure Failed!"))
+                    break
+                }
+                break
+            case DeviceStruct.CMD_setDeviceSetting:
+            case DeviceStruct.CMD_setPassword:
             case DeviceStruct.CMD_setOffTime:
             case DeviceStruct.CMD_setPowerSaveTime:
             case DeviceStruct.CMD_setSaveTime:
@@ -443,11 +508,9 @@ Item {
                 case DeviceStruct.ERR_ACK:
                     information_1button(qsTr("Configure Successed!"))
                     break
-                case DeviceStruct.ERR_wifi_have_not_been_inited:
-                    errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
-                    break
                 default:
                     errorWithImage(qsTr("Configure Failed!"))
+                    break
                 }
                 break
 
@@ -607,7 +670,6 @@ Item {
             case DeviceStruct.CMD_ScanTo_ToEmail:
             case DeviceStruct.CMD_QuickScan_ToApplication:
             case DeviceStruct.CMD_ScanTo_ToApplication:
-                break
             case DeviceStruct.CMD_DecodeScan:
             case DeviceStruct.CMD_SeperationScan:
             case DeviceStruct.CMD_SCAN:
@@ -631,6 +693,7 @@ Item {
             errorWithImage(qsTr("The Device is not ready!"))
             break
         case DeviceStruct.ERR_RETSCAN_BUSY:
+        case DeviceStruct.ERR_RETSCAN_JOB_GOGING:
             errorWithImage(qsTr("The Device is currently in use. Confirm that the device is available and try again."))
             break
         case DeviceStruct.ERR_RETSCAN_PAPER_JAM:
@@ -642,10 +705,12 @@ Item {
         case DeviceStruct.ERR_RETSCAN_PAPER_NOT_READY:
             errorWithImage(qsTr("Paper is not ready!"))
             break
-        case DeviceStruct.ERR_RETSCAN_ADFCOVER_NOT_READY:
         case DeviceStruct.ERR_RETSCAN_ADFPATH_NOT_READY:
         case DeviceStruct.ERR_RETSCAN_ADFDOC_NOT_READY:
             errorWithImage(qsTr("ADF is not ready"))
+            break
+        case DeviceStruct.ERR_RETSCAN_ADFCOVER_NOT_READY:
+            errorWithImage(qsTr("Cover(ADF) is opened!"))
             break
         case DeviceStruct.ERR_RETSCAN_HOME_NOT_READY:
             errorWithImage(qsTr("Home is not ready"))
@@ -658,7 +723,7 @@ Item {
             break
         case DeviceStruct.ERR_RETSCAN_ERROR_POWER1:
             var para1 = {}
-            para1.id = 1
+            para1.powerMode = JKEnums.PowerMode_PowerBank
             para1.cmd = cmd
             para1.setting = data
             informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode do not support the following settings.
@@ -680,22 +745,24 @@ If you select 'No', the scan job will be canceled!
         case DeviceStruct.ERR_RETSCAN_ERROR_POWER2:
             if(scanData.currentDevice.match(/^usb+/i)){
                 var para = {}
-                para.id = 0
+                para.powerMode = JKEnums.PowerMode_usbBusPower
                 para.cmd = cmd
                 para.setting = data
                 informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus power mode do not support the follow settings.
-
 \tADF Mode:   \tTwo Side
 \tMediaType:   \tDeposit Book or Card
 \tScan Size:   \tLong Page Mode
-
+\tMulti Feed Detection:\tOn
+\tSkip Blank Page:\tOn
+\tAuto Color Detection:\tOn
 If you select 'Yes', the scan job will be continue, but the following settings will be changed
-
 If you select 'No', the scan job will be canceled!
-
 \tADF Mode:   \tOne Side
 \tMediaType:   \tNormal
-\tScan Size:   \tAuto")
+\tScan Size:   \tAuto
+\tMulti Feed Detection:\tOff
+\tSkip Blank Page:\tOff
+\tAuto Color Detection:\tOff")
                                             ,"message.horizontalAlignment":Text.AlignLeft
                                             ,"para":JSON.stringify(para)
                                             ,"height":440
@@ -705,6 +772,13 @@ If you select 'No', the scan job will be canceled!
             }
             break
 
+        case DeviceStruct.ERR_RETSCAN_MEMORY_FULL:
+            errorWithImage(qsTr("Device Memory is full!"))
+            break
+        case DeviceStruct.ERR_RETSCAN_USB_TRANSFERERROR:
+        case DeviceStruct.ERR_RETSCAN_WIFI_TRANSFERERROR:
+            errorWithImage(qsTr("The Device transfering has some error!"))
+            break
         default:
             console.log("err:" ,result)
             errorWithImage(qsTr("Scan Fail!"))

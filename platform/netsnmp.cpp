@@ -14,6 +14,7 @@ void findAgent(addDeviceHandler handler,void* pData ,char* broadcast);
 void findAgentV6(addDeviceHandler ,void*);
 void snmpSearchDevices(addDeviceHandler handler,void* pData)
 {
+    char broadcast_ip[256];
     QHostAddress broadcast;
     QList<QNetworkInterface> ilist = QNetworkInterface::allInterfaces();
     foreach (QNetworkInterface interface, ilist) {
@@ -23,8 +24,9 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
             if(address.protocol() == QAbstractSocket::IPv4Protocol){
                 if(!address.isLoopback() && entry.netmask().isEqual(QHostAddress("255.255.255.0"))){
                     broadcast = entry.broadcast();
+                    strcpy(broadcast_ip ,broadcast.toString().toLatin1().constData());
                     qDebug()<<"search:"<<broadcast;
-                    findAgent(handler ,pData ,broadcast.toString().toLatin1().data());
+                    findAgent(handler ,pData ,broadcast_ip);
                 }
             }
         }

@@ -366,39 +366,49 @@ int Scanner::checkStatus(int stage ,SC_INFO_DATA_T* sc_infodata)
     if (!result){
         switch (stage) {
         case START_STAGE:
-            if(sc_infodata->JobID)
+            if(sc_infodata->JobID){
                 result = RETSCAN_JOB_GOGING;
+                return result;
+            }
             break;
         case SCANNING_STAGE:
-            if(!sc_infodata->JobID)
+            if(!sc_infodata->JobID){
                 result = RETSCAN_JOB_MISSING;
+                return result;
+            }
             break;
         case PUSH_TRANSFER_STAGE:
-            if(sc_infodata->ErrorStatus.cover_open_err)
-                result = RETSCAN_COVER_OPEN;
+//            if(sc_infodata->ErrorStatus.cover_open_err)
+//                result = RETSCAN_COVER_OPEN;
             break;
         default:
             break;
         }
-        if(sc_infodata->ErrorStatus.scan_jam_err)
+        if(sc_infodata->ErrorStatus.cover_open_err)
+            result = RETSCAN_COVER_OPEN;
+        else if(sc_infodata->ErrorStatus.scan_jam_err)
             result = RETSCAN_PAPER_JAM;
-        if(sc_infodata->ErrorStatus.scan_canceled_err)
-            result = RETSCAN_CANCEL;
-        if(sc_infodata->ErrorStatus.scan_timeout_err)
+        else if(sc_infodata->ErrorStatus.scan_timeout_err)
             result = RETSCAN_TIME_OUT;
-        if(sc_infodata->ErrorStatus.multi_feed_err)
+        else if(sc_infodata->ErrorStatus.multi_feed_err)
             result = RETSCAN_ULTRA_SONIC;
-        if(sc_infodata->ErrorStatus.usb_transfer_err)
+        else if(sc_infodata->ErrorStatus.usb_transfer_err)
             result = RETSCAN_USB_TRANSFERERROR;
-        if(sc_infodata->ErrorStatus.wifi_transfer_err)
+        else if(sc_infodata->ErrorStatus.wifi_transfer_err)
             result = RETSCAN_WIFI_TRANSFERERROR;
-        if(stage == START_STAGE){
-            if(sc_infodata->SensorStatus.adf_document_sensor)
-                result = RETSCAN_ADFDOC_NOT_READY;
-            if(sc_infodata->SensorStatus.adf_paper_sensor)
-                result = RETSCAN_ADFPATH_NOT_READY;
-            if(sc_infodata->SensorStatus.cover_sensor)
+        else if(sc_infodata->ErrorStatus.memory_full_err)
+            result = RETSCAN_MEMORY_FULL;
+        else if(sc_infodata->ErrorStatus.scan_canceled_err)
+            result = RETSCAN_CANCEL_LAST;
+        else if(stage == START_STAGE){
+            if(sc_infodata->SystemStatus.scanning)
+                result = RETSCAN_BUSY;
+            else if(sc_infodata->SensorStatus.cover_sensor)
                 result = RETSCAN_ADFCOVER_NOT_READY;
+            else if(sc_infodata->SensorStatus.adf_paper_sensor)
+                result = RETSCAN_ADFPATH_NOT_READY;
+            else if(sc_infodata->SensorStatus.adf_document_sensor)
+                result = RETSCAN_ADFDOC_NOT_READY;
         }
     }else{
         result = RETSCAN_GETINFO_FAIL;

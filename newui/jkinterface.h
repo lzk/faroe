@@ -26,7 +26,7 @@ public:
     Q_INVOKABLE void setCmd(int cmd ,const QString& data=QString());
     Q_INVOKABLE void setScanToCmd(int cmd ,QList<int> ,const QString& jsonData=QString());
 
-    Q_INVOKABLE void test();
+    Q_INVOKABLE bool pathExist(const QString& filePath);
     Q_INVOKABLE void setScanDataHandle(QObject* scanData);
     Q_INVOKABLE QString homeDictory();
 signals:

@@ -53,6 +53,7 @@ ScanToPageLayout {
         anchors.bottomMargin: 5
         text:qsTr("Select All")
         checked: imageViewer.allSelected
+        enabled: !imageViewer.empty
     }
 
     JKFunctionButton{
@@ -159,7 +160,8 @@ ScanToPageLayout {
     FileDialog {
         id: fileDialog
         title: qsTr("Save As")
-        folder: shortcuts.pictures
+        folder: "file://" + JSData.defaultFilePath()
+//        folder: shortcuts.pictures
         nameFilters: JSData.constFileDialogSaveFileType()
         selectExisting:false
         onAccepted: {
@@ -189,7 +191,7 @@ ScanToPageLayout {
                 warning_noSelectedFiles()
             }else{
                 var setting = JSData.defaultEmailSettings()
-                setting.fileType = scanData.scanToParameter.emailAttachmentFileType
+                setting.fileType = JSData.constEmailAttachmentFileType().indexOf(scanData.scanToParameter.emailAttachmentFileType)
                 setScanToCmd(DeviceStruct.CMD_ScanTo_ToEmail ,imageViewer.selectList ,setting)
             }
         }

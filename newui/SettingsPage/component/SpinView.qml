@@ -3,7 +3,7 @@ import QtQuick.Controls 2.2
 
 Item {
     width: 190
-    height: 55
+    height: 65
     property alias value: slider.value
     property alias slider: slider
     property alias text: text1.text
@@ -11,6 +11,8 @@ Item {
     Column {
         id: column
         anchors.fill: parent
+        anchors.topMargin: 5
+        spacing: 5
 
         Slider {
             id: slider

@@ -87,12 +87,12 @@ int AppQt::saveJpgFile(const char* filename ,Scanner::Para_Extra* para)
         unsigned char dpi[5] = { 0x01, 0x01, 0x2c, 0x01, 0x2c };
         unsigned char height[2];
         dpi[0] = 0x01;
-        dpi[1] = (unsigned char)(para->dpi_x >> 8);
-        dpi[2] = (unsigned char)(para->dpi_x);
-        dpi[3] = (unsigned char)(para->dpi_y >> 8);
-        dpi[4] = (unsigned char)para->dpi_y;
+        dpi[1] = (unsigned char) (para->dpi_x / 256);//(para->dpi_x >> 8);
+        dpi[2] = (unsigned char) (para->dpi_x);
+        dpi[3] = (unsigned char) (para->dpi_y / 256);//(para->dpi_y >> 8);
+        dpi[4] = (unsigned char) para->dpi_y;
         para->lines -= 7;
-        height[0] = (unsigned char)(para->lines >> 8);
+        height[0] = (unsigned char) (para->lines / 256);//(para->lines >> 8);
         height[1] = (unsigned char)para->lines;
         fseek(file, 0x0d, SEEK_SET);
         fwrite(dpi, 1, sizeof(dpi), file);

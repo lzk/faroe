@@ -7,7 +7,8 @@ import com.liteon.JKInterface 1.0
 DelegateModel{
     id: visualModel
     property int currentIndex //for delete dialog
-    property bool selectedAll:visualModel.items.count === selectionGroup.count
+    property bool empty: visualModel.items.count === 0
+    property bool selectedAll:!empty && visualModel.items.count === selectionGroup.count
     property var selectList:[]
     property var lastSelectList:[]
     function getThumbnailFilename(url){
@@ -20,7 +21,7 @@ DelegateModel{
             }
 //            visualModel.items.addGroups(0 ,visualModel.items.count ,"selected")
         }else{
-            if(selectionGroup.count === visualModel.items.count)
+            if(!empty && selectionGroup.count === visualModel.items.count)
                 selectionGroup.remove(0 ,selectionGroup.count)
         }
     }

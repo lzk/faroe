@@ -19,7 +19,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Scan Setting:")
+                text: qsTr("Scan Settings:")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14

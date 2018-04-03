@@ -163,11 +163,11 @@ ScanPageLayout {
 
     Connections{
         target: button_decode
-        onClicked: setScanCmd(DeviceStruct.CMD_DecodeScan ,scanData.qrcodeSetting)
+        onClicked: setScanCmd(DeviceStruct.CMD_DecodeScan ,scanData.decodeSetting)
     }
     Connections{
         target: button_separation
-        onClicked: setScanCmd(DeviceStruct.CMD_SeperationScan ,scanData.qrcodeSetting)
+        onClicked: setScanCmd(DeviceStruct.CMD_SeperationScan ,scanData.separationSetting)
     }
 
     Connections{

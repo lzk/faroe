@@ -66,7 +66,7 @@ SettingsLayout {
                 url:"SettingsPage/WifiView.qml"
             }
             ListElement {
-                name: qsTr("Tcp/IPv4")
+                name: qsTr("TCP/IPv4")
                 imageSource:"qrc:/Images/setting_img_IPv4.png"
                 url:"SettingsPage/TcpipView.qml"
             }

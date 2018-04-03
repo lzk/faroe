@@ -46,6 +46,7 @@ private:
     void cloudStart(const QString&);
     void toCloud(const QStringList& ,const QString&);
 
+    void separationScanDecodeStart();
     void separationScanDecode(const QStringList&);
     void separationScanDecodeEnd();
 
@@ -69,7 +70,7 @@ private:
     int cmd_status;
     int cmd_state;
     int currentPage;
-    int result;
+    int result;//for ftp
     DecodeManager* decodeManager;
     QString cmd_para;
     QStringList fileList;

@@ -70,6 +70,7 @@ Item {
 
             JKTextInput {
                 id: textInput3
+                enabled: false
                 width: 250
                 height: 30
                 anchors.right: parent.right
@@ -95,7 +96,8 @@ Item {
     FileDialog {
         id: fileDialog
         title: qsTr("Save As")
-        folder: shortcuts.pictures
+//        folder: shortcuts.pictures
+        folder: "file://" + JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
         onAccepted: textInput3.text = fileUrl.toString().replace("file:///" ,"/")
@@ -110,20 +112,40 @@ Item {
     function init(){
         comboBox.currentIndex = setting.fileType
         textInput2.text = setting.fileName
-        textInput3.text = setting.filePath.replace("~" ,jkInterface.homeDictory())
+        textInput3.text = setting.filePath
+//        .replace("~" ,jkInterface.homeDictory())
     }
     function ok(){
         var fileType = comboBox.currentIndex
         var fileName = textInput2.text
         var filePath = textInput3.text
-
-        if(fileName === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
-            textInput3.input.focus = true
+        if(filePath === ""){
+            if(fileName === ""){
+                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path and File Name")))
+                textInput2.input.focus = true
+            }else{
+                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
+                textInput3.input.focus = true
+            }
             return false
-        }else if(filePath === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
-            textInput3.input.focus = true
+        }else if(fileName === ""){
+            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
+            textInput2.input.focus = true
+            return false
+        }else if(!filePath.match(/^[^\\\?\*:<>|\"\(\)\[\]]*$/)){
+//            if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
+            if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
+                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name and File Path")))
+                textInput2.input.focus = true
+            }else{
+                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
+                textInput3.input.focus = true
+            }
+            return false
+        }else if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
+//        }else if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
+            warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name")))
+            textInput2.input.focus = true
             return false
         }
         setting.fileType = fileType

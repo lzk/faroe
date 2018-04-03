@@ -53,7 +53,7 @@ Item {
                         text: qsTr("WLAN")
                         font.bold: true
                         anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 14
+                        font.pixelSize: 16
                     }
 
                     Local.JKCheckBox {
@@ -155,7 +155,7 @@ Item {
                                         id: text4
                                         text: qsTr("WLAN Network")
                                         anchors.verticalCenter: parent.verticalCenter
-                                        font.pixelSize: 16
+                                        font.pixelSize: 14
                                     }
 
                                     JKImageButton{
@@ -432,9 +432,6 @@ Component{
 
                 break;
             case DeviceStruct.CMD_setWifi:
-                if(!result){
-                    information_1button(qsTr("Configuration completed! Please restart device to apply settings."))
-                }
                 break
             }
         }
