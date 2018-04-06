@@ -75,6 +75,7 @@ private:
     QString cmd_para;
     QStringList fileList;
     QUrl ftpUrl;
+    QString fileName_;
     QList<struct Private_data> ftp_data;
     QList<struct Separation_data> separation_data;
     QList<struct DMDecodeResult> decode_data;

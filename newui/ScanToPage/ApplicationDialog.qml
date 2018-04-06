@@ -140,7 +140,7 @@ JKDialog{
         nameFilters: ["APP (*.app)"]
 //        selectFolder: true
         onAccepted: {
-            var fullpath = fileUrl.toString().replace("file:///" ,"/")
+            var fullpath = decodeURIComponent(fileUrl).replace("file:///" ,"/")
             setting.fullFileName = fullpath
             acceptOK()
         }

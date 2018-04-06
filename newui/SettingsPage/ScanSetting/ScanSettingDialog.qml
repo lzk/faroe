@@ -99,6 +99,7 @@ JKDialog{
 //                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
 //                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
                     || powerMode === JKEnums.PowerMode_usbBusPower
+                    || powerMode === JKEnums.PowerMode_PowerBank
 //                    || radioButton_multiFeedDetection_on.checked
                   ? constMediaType_onlyNormal
                   : constMediaType
@@ -115,7 +116,8 @@ JKDialog{
             var index = 0
             if(comboBox_mediaType.currentText === constMediaTypeMap.normal){
                 index = comboBox_scanAreaSize.currentIndex
-                comboBox_scanAreaSize.model = powerMode === JKEnums.PowerMode_usbBusPower ?constPaperSize_noLongPage :constPaperSize
+                comboBox_scanAreaSize.model = (powerMode === JKEnums.PowerMode_usbBusPower
+                                                || powerMode === JKEnums.PowerMode_PowerBank) ?constPaperSize_noLongPage :constPaperSize
             }else{
                 index = 0
                 comboBox_scanAreaSize.model = constPaperSize_onlyAuto
@@ -213,11 +215,6 @@ JKDialog{
     function update(){
         updateScanSetting(scanSetting ,powerMode)
 
-        scanSettingView.updateComboxModel_scanAreaSize()
-        scanSettingView.updateComboxModel_dpi()
-        scanSettingView.updateComboxModel_mediaType()
-        scanSettingView.updateRadio_multiFeed()
-
         scanSettingView.radioButton_twoSide.checked = scanSetting.adfMode
         scanSettingView.radioButton_color.checked = scanSetting.colorMode
         scanSettingView.radioButton_multiFeedDetection_on.checked = scanSetting.multiFeed
@@ -232,6 +229,10 @@ JKDialog{
         scanSettingView.spin_contrast.value = scanSetting.contrast
         scanSettingView.spin_gamma.value = scanSetting.gamma
 
+        scanSettingView.updateComboxModel_scanAreaSize()
+        scanSettingView.updateComboxModel_dpi()
+        scanSettingView.updateComboxModel_mediaType()
+        scanSettingView.updateRadio_multiFeed()
     }
 
     JKBusyIndicator{

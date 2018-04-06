@@ -100,7 +100,9 @@ Item {
         folder: "file://" + JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
-        onAccepted: textInput3.text = fileUrl.toString().replace("file:///" ,"/")
+        onAccepted: {
+            textInput3.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+        }
     }
 
 
@@ -132,16 +134,16 @@ Item {
             warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
             textInput2.input.focus = true
             return false
-        }else if(!filePath.match(/^[^\\\?\*:<>|\"\(\)\[\]]*$/)){
-//            if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
-            if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
-                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name and File Path")))
-                textInput2.input.focus = true
-            }else{
-                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
-                textInput3.input.focus = true
-            }
-            return false
+//        }else if(!filePath.match(/^[^\\\?\*:<>|\"\(\)\[\]]*$/)){
+////            if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
+//            if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
+//                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name and File Path")))
+//                textInput2.input.focus = true
+//            }else{
+//                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
+//                textInput3.input.focus = true
+//            }
+//            return false
         }else if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
 //        }else if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
             warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name")))

@@ -55,7 +55,7 @@ SettingsLayout {
             }
 
             ListElement {
-                name: qsTr("Scan To Setting")
+                name: qsTr("Scan To Settings")
                 imageSource:"qrc:/Images/setting_img_scan to.png"
                 url:"SettingsPage/ScanParameterView.qml"
             }
@@ -76,7 +76,7 @@ SettingsLayout {
                 url:"SettingsPage/SoftapView.qml"
             }
             ListElement {
-                name: qsTr("Device Setting")
+                name: qsTr("Device Settings")
                 imageSource:"qrc:/Images/setting_img_device setting.png"
                 url:"SettingsPage/DeviceView.qml"
             }

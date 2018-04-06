@@ -165,12 +165,12 @@ ScanToPageLayout {
         nameFilters: JSData.constFileDialogSaveFileType()
         selectExisting:false
         onAccepted: {
-            var setting = fileUrl.toString().replace("file:///" ,"/")
+            var setting = decodeURIComponent(fileUrl).replace("file:///" ,"/")
             setScanToCmd(DeviceStruct.CMD_ScanTo_ToFile ,imageViewer.selectList ,setting)
         }
     }
 //    function saveFile(fileUrl){
-//        jkInterface.setScanToCmd(DeviceStruct.CMD_ScanTo_ToFile ,imageViewer.selectList ,fileUrl.toString().replace("file:///" ,"/"))
+//        jkInterface.setScanToCmd(DeviceStruct.CMD_ScanTo_ToFile ,imageViewer.selectList ,decodeURIComponent(fileUrl).replace("file:///" ,"/"))
 //    }
 
     Connections{

@@ -221,7 +221,7 @@ Item {
         folder: "file://" + JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
-        onAccepted: input_filePath.text = fileUrl.toString().replace("file:///" ,"/")
+        onAccepted: input_filePath.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
     }
     Connections{
         target: button_browser

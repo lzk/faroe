@@ -8,7 +8,7 @@
    2.copy faroeVOP.icns to Resource
    3.copy toemail to Resource
    4.add script
-/Volumes/work/software/Qt5.9.1/5.9.1/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt5.9.1/5.9.1/clang_64/qml
+/Volumes/work/software/Qt5.9.4/5.9.4/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt5.9.4/5.9.4/clang_64/qml
    5.add script
-cp -rf /Volumes/work/software/Qt5.9.1/5.9.1/clang_64/qml/QtGraphicalEffects ${CODESIGNING_FOLDER_PATH}/Contents/Resources/qml/
+cp -rf /Volumes/work/software/Qt5.9.4/5.9.4/clang_64/qml/QtGraphicalEffects ${CODESIGNING_FOLDER_PATH}/Contents/Resources/qml/
    6.signing add other code signing Flags  “-—deep”

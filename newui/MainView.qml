@@ -779,6 +779,9 @@ If you select 'No', the scan job will be canceled!
         case DeviceStruct.ERR_RETSCAN_WIFI_TRANSFERERROR:
             errorWithImage(qsTr("The Device transfering has some error!"))
             break
+        case DeviceStruct.ERR_communication:
+            errorWithImage(qsTr("The device is disconnected, the scanning will be canceled!"))
+            break
         default:
             console.log("err:" ,result)
             errorWithImage(qsTr("Scan Fail!"))

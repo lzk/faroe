@@ -116,7 +116,7 @@ Item {
         nameFilters: ["APP (*.app)"]
 //        selectFolder: true
         onAccepted: {
-            textInput2.text = fileUrl.toString().replace("file:///" ,"/")
+            textInput2.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
         }
         onRejected: {
         }

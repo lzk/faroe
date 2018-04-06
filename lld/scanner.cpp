@@ -849,13 +849,13 @@ int Scanner::adfScan(void *data)
         result = scannerApi->getPowerSupply(sc_powerData);
         switch (sc_powerData.mode) {
         case 2:
-            if(setting->AutoCrop || setting->type > 0 ||parameters.nColPixelNumOrig > 14000)
+            if(setting->type > 0 ||parameters.nColPixelNumOrig > 15000)
                 result = RETSCAN_ERROR_POWER1;
             break;
         case 3:
             if(setting->AutoCrop
                     || setting->type > 0 //mediaType
-                    ||parameters.nColPixelNumOrig > 14000
+                    ||parameters.nColPixelNumOrig > 15000
                     ||setting->ADFMode == SETTING_SCAN_AB_SIDE
                     ||setting->MultiFeed
                     || deviceIO->type() == DeviceIO::Type_net)

@@ -181,12 +181,12 @@ function constQuickScanSid(){
 
 function constQuickScanSettings(){
     return {
-    "Scan To Print" : {"title" : qsTr("Print Setting:") ,"source" : "main_img_print.png"}
-    ,"Scan To File" : {"title" : qsTr("File Setting:") ,"source" : "main_img_file.png"}
-    ,"Scan To Application" : {"title" : qsTr("Application Setting:") ,"source" : "main_img_apps.png"}
-    ,"Scan To Email" : {"title" : qsTr("Email Setting:") ,"source" : "main_img_email.png"}
-    ,"Scan To FTP" : {"title" : qsTr("FTP Setting:") ,"source" : "main_img_ftp.png"}
-    ,"Scan To Cloud" :{"title" : qsTr("Cloud Setting:") ,"source" : "main_img_cloud.png"}
+    "Scan To Print" : {"title" : qsTr("Print Settings:") ,"source" : "main_img_print.png"}
+    ,"Scan To File" : {"title" : qsTr("File Settings:") ,"source" : "main_img_file.png"}
+    ,"Scan To Application" : {"title" : qsTr("Application Settings:") ,"source" : "main_img_apps.png"}
+    ,"Scan To Email" : {"title" : qsTr("Email Settings:") ,"source" : "main_img_email.png"}
+    ,"Scan To FTP" : {"title" : qsTr("FTP Settings:") ,"source" : "main_img_ftp.png"}
+    ,"Scan To Cloud" :{"title" : qsTr("Cloud Settings:") ,"source" : "main_img_cloud.png"}
     }
 }
 

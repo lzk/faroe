@@ -4,6 +4,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDir>
+#include <QDateTime>
 
 #include "../platform/devicemanager.h"
 #include "ImageViewer/imagemodel.h"
@@ -125,7 +126,7 @@ void JKInterface::setCmd(int cmd ,const QString& data)
             return;
         }
         QString fileName = jsonObj.value("fileName").toString();
-        QString fullPath = filePath + "/" + fileName;
+        QString fullPath = filePath + "/" + fileName  + "_" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss");
         int fileType = jsonObj.value("fileType").toInt(0);
         switch (fileType) {
         case 0:     fullPath += ".pdf";    break;

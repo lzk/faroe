@@ -4,7 +4,7 @@ QT += qml quick printsupport
 CONFIG += c++11
 
 TARGET = faroeVOP
-VERSION = 0.0.1
+VERSION = 0.0.7
 ICON = faroeVOP.icns
 
 #UI_HEADERS_DIR = ../build
@@ -150,9 +150,4 @@ SOURCES += ../newui/*.qml \
           ../newui/SettingsPage/ScanSetting/*.qml \
           ../newui/SettingsPage/ScanSetting/*.js \
 }
-
-DISTFILES += \
-    ScanToPage/CloudDialog.qml \
-    ScanToPage/CloudDialog.qml
-
 

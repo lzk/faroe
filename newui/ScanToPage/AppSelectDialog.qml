@@ -115,8 +115,8 @@ JKParaDialog{
 //        nameFilters: JSData.constFileDialogSaveFileType()
 //        selectFolder: true
         onAccepted: {
-            var fullpath = fileUrl.toString().replace("file:///" ,"/")
-            textInput_path.text = fileUrl.toString().replace("file:///" ,"/")
+            var fullpath = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+            textInput_path.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
         }
     }
 

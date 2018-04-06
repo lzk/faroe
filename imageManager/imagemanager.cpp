@@ -8,7 +8,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
-#include <QFtp>
+#include <Qtftp/QFtp>
 #include <QDir>
 #include "../platform/devicestruct.h"
 #include "../newui/jkenums.h"
@@ -50,7 +50,11 @@ void ImageManager::imagesCmdStart(int cmd, QString para ,QStringList)
         ftpStart(para);
         break;
     case DeviceStruct::CMD_QuickScan_ToFile:
+        fileName_ = "";
+        saveToFileStart(para);
+        break;
     case DeviceStruct::CMD_ScanTo_ToFile:
+        fileName_ = "_";
         saveToFileStart(para);
         break;
     case DeviceStruct::CMD_SeperationScan:
@@ -272,11 +276,18 @@ void ImageManager::saveToFileStart(const QString& fileName)
 {
     qDebug()<<"save file name:"<<fileName;
     QFileInfo fileInfo(fileName);
-    if(fileInfo.fileName().length() > 230){
+    QString suffix = fileInfo.suffix();
+    int maxLength = 255;
+    if(suffix == "pdf"){
+    }else if(suffix == "tif"){
+    }else{
+        maxLength = 250;
+    }
+    if(fileInfo.fileName().length() > maxLength){
         emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidFilePath);
         return;
     }
-    QString suffix = fileInfo.suffix();
+
     if(suffix == "pdf"){
         if(QFile::exists(fileName)){
             QFile::remove(fileName);
@@ -298,7 +309,7 @@ void ImageManager::saveToFileEnd(const QString& fileName)
         saveMultiPagePdfImageRelease();
     }else if(suffix == "bmp" || suffix == "jpg"){
         if(currentPage == 1){
-            QString fullFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + "_0." + suffix;
+            QString fullFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + fileName_ + "1." + suffix;
             QFile::rename(fullFileName ,fileName);
         }
     }
@@ -316,7 +327,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
     QString tmpFile = getTempPath() + "/tmp.tif";
     for (int i = 0 ;i < fileList.length() ;i++){
         if(suffix == "jpg"){
-            fullFileName = preFileName + "_" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + QString().sprintf("%d." ,currentPage) +suffix;
+            fullFileName = preFileName + fileName_ + QString().sprintf("%d." ,currentPage + 1) +suffix;
             if(QFile::exists(fullFileName))
                 QFile::remove(fullFileName);
             if(!QFile::copy(fileList[i] ,fullFileName)){
@@ -324,7 +335,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
                 break;
             }
         }else if(suffix == "bmp"){
-            fullFileName = preFileName+ "_" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + QString().sprintf("%d." ,currentPage) +suffix;
+            fullFileName = preFileName + fileName_ + QString().sprintf("%d." ,currentPage + 1) +suffix;
             if(!QImage(fileList[i]).save(fullFileName ,"bmp")){
                 success = false;
                 break;

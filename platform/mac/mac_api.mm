@@ -7,6 +7,8 @@ void saveMultiPageTiffImage(const QString& _tmpPath ,const QString& _imageFilePa
 {
     NSString* tmpPath = _tmpPath.toNSString();
     NSString* imageFilePath = _imageFilePath.toNSString();
+    imageFilePath = [imageFilePath stringByReplacingOccurrencesOfString:@"$" withString:@"\\$"];
+    NSLog(@"image file path:%@" ,imageFilePath);
     NSString *cmd;
     if ([[NSFileManager defaultManager] fileExistsAtPath:imageFilePath isDirectory:nil]) {
         cmd = [NSString stringWithFormat:@"tiffutil -cat \"%@\" \"%@\" -out \"%@\"" ,imageFilePath ,tmpPath, imageFilePath];
