@@ -2,6 +2,7 @@
 #define DEVICESTRUCT_H
 
 #include <QObject>
+#include "jkenums.h"
 
 class DeviceStruct : public QObject {
 
@@ -86,6 +87,7 @@ public:
         ERR_invalid_data,
         ERR_no_logined,
         ERR_no_device,
+        ERR_scanImagesAreAllBlank,
 
         //err scan
         ERR_SCAN = 100,

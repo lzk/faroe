@@ -16,8 +16,11 @@ static void addDeviceInfo(struct_deviceInfo* pDeviceInfo ,void* pData)
 {
     DeviceInfo di;
     di.type = DeviceInfo::Type_usb;
-    strcpy(di.name ,"USB Device");
     sprintf(di.address ,"%02d" ,pDeviceInfo->address);
+    sprintf(di.name ,"USB Device %s" ,di.address);
+    LOG_PARA("usb serial:%s" ,pDeviceInfo->serial);
+    LOG_PARA("usb locationID:%d" ,pDeviceInfo->locationID);
+    LOG_PARA("usb address:%d" ,pDeviceInfo->address);
     struct_searchData* psd = (struct_searchData*)pData;
     if(psd->handler)
         psd->handler(&di ,psd->pData);

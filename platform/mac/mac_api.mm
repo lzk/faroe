@@ -196,3 +196,33 @@ bool iCloudUpload(const QString& fileName)
     return false;
     
 }
+
+#include <AppKit/AppKit.h>
+#include <QWindow>
+void windowShowMinimize(QWindow* window)
+{
+    NSView* view = (NSView*)window->winId();
+
+    NSWindow* wnd = [view window];
+
+    [wnd miniaturize:nil];
+}
+
+void windowSetWindowFrameless(QWindow* window)
+{
+    NSView* view = (NSView*)window->winId();
+
+    NSWindow* wndd = [view window];
+
+    wndd.titlebarAppearsTransparent = YES;
+
+    wndd.titleVisibility = NSWindowTitleHidden;
+
+    wndd.styleMask |= NSFullSizeContentViewWindowMask;
+
+    [[wndd standardWindowButton:NSWindowZoomButton] setHidden:YES];
+
+    [[wndd standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
+
+    [[wndd standardWindowButton:NSWindowCloseButton] setHidden:YES];
+}

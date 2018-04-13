@@ -9,8 +9,7 @@ Item {
     id: root
     width: 495
     height: 460
-    enabled: scanData.deviceStatus
-
+    enabled: scanData.deviceStatus && setting.wifiEnable && setting.powerSupply !== JKEnums.PowerMode_usbBusPower
     ColumnLayout {
         anchors.fill: parent
         anchors.topMargin: 10
@@ -32,26 +31,34 @@ Item {
                 font.pixelSize: 14
             }
 
-            Row{
-                anchors.right: parent.right
-                anchors.rightMargin: 10
+            Local.JKCheckBox {
+                id: checkbox
+                width: 45
+                height: 22
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 5
-                Text{
-                    text: qsTr("Close")
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Local.JKCheckBox {
-                    id: checkbox
-                    width: 45
-                    height: 22
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text{
-                    text: qsTr("Open")
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                anchors.right: parent.right
+                anchors.rightMargin: 5
             }
+//            Row{
+//                anchors.right: parent.right
+//                anchors.rightMargin: 10
+//                anchors.verticalCenter: parent.verticalCenter
+//                spacing: 5
+//                Text{
+//                    text: qsTr("Close")
+//                    anchors.verticalCenter: parent.verticalCenter
+//                }
+//                Local.JKCheckBox {
+//                    id: checkbox
+//                    width: 45
+//                    height: 22
+//                    anchors.verticalCenter: parent.verticalCenter
+//                }
+//                Text{
+//                    text: qsTr("Open")
+//                    anchors.verticalCenter: parent.verticalCenter
+//                }
+//            }
         }
 
         Local.DividingLine{
@@ -130,12 +137,12 @@ Item {
         target: button_apply
         onClicked: {
             if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
-                warningWithImage(qsTr("The network name must be 1 to 32 characters long. Please check and enter again."))
+                warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))
                 input_ssid.input.focus = true
                 return
             }
             if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-                warningWithImage(qsTr("The password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+                warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
                 input_password.input.focus = true
                 return
             }
@@ -148,8 +155,10 @@ Item {
 
     property var setting:{
         "enable":true
+        ,"wifiEnable":true
         ,"ssid":""
         ,"password":""
+        ,"powerSupply":JKEnums.PowerMode_unknown
     }
     Component.onCompleted: {
         setSetterCmd(DeviceStruct.CMD_getSoftap ,setting)
@@ -162,11 +171,23 @@ Item {
                 if(!result){
                     setting = JSON.parse(data)
                     console.log(data)
-                    checkbox.checked = setting.enable
-                    input_ssid.text = setting.ssid
-                    input_password.text = setting.password
+                    if(setting.wifiEnable){
+                        checkbox.checked = setting.enable
+                        input_ssid.text = setting.ssid
+                        input_password.text = setting.password
+                    }else{
+                        checkbox.checked = false
+                        input_ssid.text = ""
+                        input_password.text = ""
+                    }
+                }else{
+                    console.log("fail")
+                    setting.wifiEnable = false
+                    checkbox.checked = false
+                    input_ssid.text = ""
+                    input_password.text = ""
+                    setting = setting
                 }
-
                 break;
             case DeviceStruct.CMD_setSoftap:
                 break

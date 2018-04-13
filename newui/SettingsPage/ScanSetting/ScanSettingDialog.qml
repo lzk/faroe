@@ -7,9 +7,9 @@ import com.liteon.JKInterface 1.0
 JKDialog{
     id: root
     width: 537 + 20
-    height: decodeMode ? 300:638 + 20
+    height: mode === 1 ? 300:638 + 20
 
-    property alias decodeMode: scanSettingView.decodeMode
+    property int mode: 0
 
     property var constPaperSize: JSData.constPaperSize()
     property var constPaperSizeMap: JSData.constPaperSizeMap()
@@ -56,6 +56,7 @@ JKDialog{
         parent: container
         anchors.fill: parent
         enabled: !refresh.visible
+        decodeMode: mode === 1
         item_adfMode.enabled: powerMode !== JKEnums.PowerMode_usbBusPower
         item_colorMode.enabled: !radioButton_autoColorDetection_on.checked
         item_skipBlankPage.enabled: //comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
@@ -73,7 +74,10 @@ JKDialog{
                                          && powerMode !== JKEnums.PowerMode_usbBusPower
 //        item_autoCropDeskew.enabled: comboBox_scanAreaSize.currentIndex < 2
 //                                     && !radioButton_skipBlankPage_on.checked
-        radioButton_autoCropDeskew_on.checked:item_skipBlankPage.enabled
+        radioButton_autoCropDeskew_on.checked:
+                                        radioButton_skipBlankPage_on.checked
+                                        || radioButton_autoColorDetection_on.checked
+                                        || item_skipBlankPage.enabled
 //                                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
 //                                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
 //                                    && powerMode !== JKEnums.PowerMode_usbBusPower
@@ -117,7 +121,8 @@ JKDialog{
             if(comboBox_mediaType.currentText === constMediaTypeMap.normal){
                 index = comboBox_scanAreaSize.currentIndex
                 comboBox_scanAreaSize.model = (powerMode === JKEnums.PowerMode_usbBusPower
-                                                || powerMode === JKEnums.PowerMode_PowerBank) ?constPaperSize_noLongPage :constPaperSize
+                                                || powerMode === JKEnums.PowerMode_PowerBank
+                                               || mode !== 0) ?constPaperSize_noLongPage :constPaperSize
             }else{
                 index = 0
                 comboBox_scanAreaSize.model = constPaperSize_onlyAuto

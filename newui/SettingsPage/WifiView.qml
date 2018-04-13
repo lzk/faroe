@@ -9,7 +9,7 @@ Item {
     id: root
     width: 495
     height: 460
-    enabled: scanData.deviceStatus
+    enabled: scanData.deviceStatus && wifiSetting.powerSupply !== JKEnums.PowerMode_usbBusPower
     property var wifiSetting:{
         "enable":true
         ,"type":0
@@ -19,6 +19,7 @@ Item {
         ,"ssid":""
         ,"password":""
         ,"apList":[]
+        ,"powerSupply":JKEnums.PowerMode_unknown
     }
     property var apSetting:{
         "ssid":""
@@ -351,7 +352,7 @@ Component{
                                     switch(encryption){
                                     case 1:
                                         if(!input_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
-                                            warningWithImage(qsTr("The password must be 5 or 13 ASCII characters or 10 or 16 HEX characters,please check and enter again."))
+                                            warningWithImage(qsTr("The Password must be 5 or 13 ASCII characters or 10 or 16 HEX characters,please check and enter again."))
                                             input_password.input.focus = true
                                             return
                                         }
@@ -359,7 +360,7 @@ Component{
                                     case 3:
                                     case 4:
                                         if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-                                            warningWithImage(qsTr("The password must be 8 to 63 ASCII characters or 64 HEX characters,please check and enter again."))
+                                            warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 HEX characters,please check and enter again."))
                                             input_password.input.focus = true
                                             return
                                         }

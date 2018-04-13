@@ -9,7 +9,7 @@ Item {
     id: root
     width: 495
     height: 460
-    enabled: scanData.deviceStatus
+    enabled: scanData.deviceStatus && setting.powerSupply !== JKEnums.PowerMode_usbBusPower
 
     ColumnLayout {
         anchors.fill: parent
@@ -43,7 +43,7 @@ Item {
                     id:radiobutton_dhcp
                     width:142
                     height: parent.height
-                    text:qsTr("DHCP")
+                    text:qsTr("DHCP/Auto IP")
                     checked: true
                 }
                 JKRadioButton{
@@ -190,6 +190,7 @@ Item {
         ,"gatewayAddress":"127.0.0.1"
         ,"mode":0
         ,"subnetMask":"127.0.0.1"
+        ,"powerSupply":JKEnums.PowerMode_unknown
     }
     Component.onCompleted: {
         setSetterCmd(DeviceStruct.CMD_getIpv4 ,setting)

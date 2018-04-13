@@ -847,22 +847,24 @@ int Scanner::adfScan(void *data)
         calculateParameters(*setting);
         SC_POWER_INFO_T sc_powerData;
         result = scannerApi->getPowerSupply(sc_powerData);
-        switch (sc_powerData.mode) {
-        case 2:
-            if(setting->type > 0 ||parameters.nColPixelNumOrig > 15000)
-                result = RETSCAN_ERROR_POWER1;
-            break;
-        case 3:
-            if(setting->AutoCrop
-                    || setting->type > 0 //mediaType
-                    ||parameters.nColPixelNumOrig > 15000
-                    ||setting->ADFMode == SETTING_SCAN_AB_SIDE
-                    ||setting->MultiFeed
-                    || deviceIO->type() == DeviceIO::Type_net)
-                result = RETSCAN_ERROR_POWER2;
-            break;
-        default:
-            break;
+        if(!result){
+            switch (sc_powerData.mode) {
+            case 2:
+                if(setting->type > 0 ||parameters.nColPixelNumOrig > 15000)
+                    result = RETSCAN_ERROR_POWER1;
+                break;
+            case 3:
+                if(setting->AutoCrop
+                        || setting->type > 0 //mediaType
+                        ||parameters.nColPixelNumOrig > 15000
+                        ||setting->ADFMode == SETTING_SCAN_AB_SIDE
+                        ||setting->MultiFeed
+                        || deviceIO->type() == DeviceIO::Type_net)
+                    result = RETSCAN_ERROR_POWER2;
+                break;
+            default:
+                break;
+            }
         }
     }
     if(!result)

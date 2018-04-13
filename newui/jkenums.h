@@ -55,6 +55,7 @@ public:
         ImageCommandResult_error_ftpLogin,
         ImageCommandResult_error_ftpCd,
         ImageCommandResult_error_ftpPut,
+        ImageCommandResult_error_ftpTimeout,
 
         ImageCommandResult_error_icloudNotLogin,
         ImageCommandResult_error_icloudeUpload,

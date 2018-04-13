@@ -78,7 +78,7 @@ static int cmdParser(int& cmd ,int& direct ,int& data_buffer_size)
     return ret;
 }
 
-int SetterApi::cmd(int cmd ,void* data ,int data_size)
+int SetterApi::_cmd(int cmd ,void* data ,int data_size)
 {
     if(!data)
         return DeviceStruct::ERR_invalid_data;
@@ -131,6 +131,37 @@ int SetterApi::cmd(int cmd ,void* data ,int data_size)
     }else
         err = -1;
     delete [] buffer;
+    return err;
+}
+
+int SetterApi::cmd(int cmd ,void* data ,int data_size)
+{
+    int err;
+    int times = 1;
+    do{
+        err = dio->open(1);
+        if(!err){
+            err = _cmd(cmd ,data ,data_size);
+            dio->close();
+        }
+        if(!err)
+            break;
+        if(--times == 0){
+            break;
+        }else{
+            usleep(500 * 1000);
+        }
+    }while(true);
+//    for(int i = 0 ;i < 1 ;i++){
+//        err = dio->open(1);
+//        if(!err){
+//            err = _cmd(cmd ,data ,data_size);
+//            dio->close();
+//        }
+//        if(!err)
+//            break;
+//        usleep(500 * 1000);
+//    }
     return err;
 }
 

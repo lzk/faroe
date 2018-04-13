@@ -13,6 +13,7 @@ using namespace JK;
 #include "../platform/devicestruct.h"
 #include "../newui/jkenums.h"
 #include "../platform/platform.h"
+#include "../platform/log.h"
 JKInterface::JKInterface(QObject *parent)
     : QObject(parent)
     ,cmd_status(0)
@@ -33,6 +34,7 @@ JKInterface::JKInterface(QObject *parent)
     connect(deviceManager ,&DeviceManager::cmdResult ,this , &JKInterface::deviceCmdResult);
     connect(deviceManager ,&DeviceManager::scanedImage ,this ,&JKInterface::scanedImage);
     connect(deviceManager ,&DeviceManager::progressChanged ,this ,&JKInterface::progressChanged);
+    connect(this ,&JKInterface::init ,deviceManager ,&DeviceManager::init);
 
     imageManager = new ImageManager;
     imageManager->moveToThread(&thread_decode);
@@ -47,7 +49,6 @@ JKInterface::JKInterface(QObject *parent)
 
     thread.start();
     thread_decode.start();
-    emit init();
 }
 
 JKInterface::~JKInterface()
@@ -101,6 +102,31 @@ void JKInterface::updateDeviceStatus(bool status)
 void JKInterface::cmdComplete(int cmd,int result ,const QString& data)
 {
     qDebug()<<"cmd complete data:"<<data;
+    switch (cmd) {
+    case DeviceStruct::CMD_DecodeScan:
+    case DeviceStruct::CMD_SeperationScan:
+    case DeviceStruct::CMD_QuickScan_ToPrint:
+    case DeviceStruct::CMD_QuickScan_ToFile:
+    case DeviceStruct::CMD_QuickScan_ToEmail:
+    case DeviceStruct::CMD_QuickScan_ToApplication:
+    case DeviceStruct::CMD_QuickScan_ToFTP:
+    case DeviceStruct::CMD_QuickScan_ToCloud:
+    case DeviceStruct::CMD_ScanTo_ToPrint:
+    case DeviceStruct::CMD_ScanTo_ToFile:
+    case DeviceStruct::CMD_ScanTo_ToEmail:
+    case DeviceStruct::CMD_ScanTo_ToApplication:
+    case DeviceStruct::CMD_ScanTo_ToCloud:
+    case DeviceStruct::CMD_ScanTo_ToFTP:
+    case DeviceStruct::CMD_ScanTo:
+    case DeviceStruct::CMD_SCAN:
+        if(!result || result == JKEnums::ImageCommandResult_NoError){
+            if(imageModel->rowCount() == 0)
+                result = DeviceStruct::ERR_scanImagesAreAllBlank;
+        }
+        break;
+    default:
+        break;
+    }
     cmdResult(cmd ,result ,data);
     cmd_status = 0;
 }
@@ -186,6 +212,7 @@ void JKInterface::deviceCmdResult(int cmd,int result ,QString data)
     case DeviceStruct::CMD_QuickScan_ToCloud:
         if(!result)
             result = imageCmdResult;
+        emit signal_deviceCmdResult(this->cmd ,result ,data);
         emit imagesCmdEnd(this->cmd ,result);
         break;
     default:
@@ -206,6 +233,8 @@ void JKInterface::scanedImage(QString filename,QSize sourceSize)
     case DeviceStruct::CMD_QuickScan_ToEmail:
     case DeviceStruct::CMD_QuickScan_ToApplication:
     case DeviceStruct::CMD_QuickScan_ToCloud:
+        if(imageCmdResult && imageCmdResult != JKEnums::ImageCommandResult_NoError)
+            break;
         emit imagesCmd(QStringList()<<filename);
         break;
     case DeviceStruct::CMD_QuickScan_ToFTP:
@@ -250,6 +279,7 @@ void JKInterface::imagesCmdResult(int cmd ,int state ,int result)
             case DeviceStruct::CMD_QuickScan_ToCloud:
             case DeviceStruct::CMD_QuickScan_ToFTP:
             default:
+                cmd_state =  JKEnums::ImageCommandState_processing;
                 emit cmdToDevice(DeviceStruct::CMD_SCAN ,cmd_para);
                 break;
             }
@@ -265,9 +295,8 @@ void JKInterface::imagesCmdResult(int cmd ,int state ,int result)
         case DeviceStruct::CMD_ScanTo_ToEmail:
         case DeviceStruct::CMD_ScanTo_ToApplication:
         case DeviceStruct::CMD_ScanTo_ToCloud:
-            emit imagesCmdEnd(cmd ,result);
-            break;
         case DeviceStruct::CMD_ScanTo_ToFTP:
+            emit imagesCmdEnd(cmd ,result);
             break;
         case DeviceStruct::CMD_DecodeScan:
         case DeviceStruct::CMD_SeperationScan:
@@ -361,4 +390,22 @@ QString JKInterface::homeDictory()
 bool JKInterface::pathExist(const QString& filePath)
 {
     return QDir(filePath).exists();
+}
+
+void JKInterface::showMinimize(QWindow* window)
+{
+    windowShowMinimize(window);
+}
+
+void JKInterface::setWindowFrameless(QWindow* window)
+{
+    windowSetWindowFrameless(window);
+}
+
+#include <QSysInfo>
+int JKInterface::macVersion()
+{
+    int version = QSysInfo::macVersion();
+    LOG_PARA("Version:%d" ,version);
+    return version;
 }

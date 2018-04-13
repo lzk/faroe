@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QUrl>
-
 class QFile;
 class QFtp;
+class QTimer;
 #include "decodemanager.h"
 class ImageManager : public QObject
 {
@@ -16,6 +16,7 @@ public:
 signals:
     void imagesCommandResult(int cmd ,int state ,int result);
     void cmdExtraResult(int cmd ,QString para);
+    void abortFTP();
 
 public slots:
     void imagesCmdStart(int cmd, QString ,QStringList fileList = QStringList());
@@ -27,6 +28,7 @@ public slots:
     void init();
 private slots:
     void ftpCommandFinished(int, bool error);
+    void ftpTimeout();
 
 private:
     void ftpStart(const QString&);
@@ -79,6 +81,7 @@ private:
     QList<struct Private_data> ftp_data;
     QList<struct Separation_data> separation_data;
     QList<struct DMDecodeResult> decode_data;
+    QTimer* ftpTimer;
 };
 
 #endif // IMAGEMANAGER_H

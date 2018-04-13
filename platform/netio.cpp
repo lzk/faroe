@@ -140,7 +140,9 @@ int NetIO::read(char *buffer, int bufsize)
     int numRead = 0, numReadTotal = 0;
     do{
         if (!tcpSocket->waitForReadyRead(15000)){
-            LOG_NOPARA("tcp_socket read timeout");
+//            qDebug()<<"tcp error:"<< tcpSocket->error();
+//            qDebug()<< tcpSocket->errorString();
+            LOG_NOPARA(tcpSocket->errorString());
             break;
         }
         bytesAvailable = tcpSocket->bytesAvailable();

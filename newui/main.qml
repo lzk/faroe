@@ -8,7 +8,8 @@ ApplicationWindow {
     width: 850
     height: 638
     title: qsTr("Faroe VOP")
-    flags: Qt.Window | Qt.FramelessWindowHint
+    flags:
+        Qt.Window | Qt.FramelessWindowHint
 
     MainView{
         id:mainview
@@ -20,11 +21,32 @@ ApplicationWindow {
     Connections{
         target: mainview
         onClosed: close()
-        onMinimized: root.visibility = Window.Minimized//showMinimized()//
+        onMinimized: {
+            if(jkInterface.macVersion() > 14){
+                hide()
+                flags = Qt.Window
+                showNormal()
+//                jkInterface.showMinimize(root)
+                showMinimized()//root.visibility = Window.Minimized//
+                flags = Qt.Window | Qt.FramelessWindowHint
+            }else{
+                showMinimized()
+            }
+
+        }
         onMove: {
             root.x += dx
             root.y += dy
         }
     }
 
+//    Component.onCompleted: {
+//        jkInterface.setWindowFrameless(root)
+//    }
+
+//    onVisibilityChanged: {
+//        if(jkInterface.macVersion() > 14){
+//            flags = visibility ===  Window.Minimized ?Qt.Window :Qt.Window | Qt.FramelessWindowHint
+//        }
+//    }
 }

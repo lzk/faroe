@@ -159,7 +159,7 @@ static UInt32 openUSBInterface(IOUSBInterfaceInterface_version **intf ,struct_de
                 printInterpretedError("Could not get endpoint properties", ret);
                 return(0);
             }
-            LOG_PARA("Endpoint %d: %s %s %d, max packet %d, interval %d\n", i, types[transferType], directionStr[direction], number, maxPacketSize, interval);
+//            LOG_PARA("Endpoint %d: %s %s %d, max packet %d, interval %d\n", i, types[transferType], directionStr[direction], number, maxPacketSize, interval);
 
             if (transferType == kUSBBulk && direction == kUSBIn && number == 1)
             {
@@ -686,7 +686,7 @@ int usb_writePipe(IOUSBInterfaceInterface_version **intf ,int outPipeRef ,char *
     if(!intf || !outPipeRef)
         return (-2);//
     IOReturn err;
-    err = (*intf)->WritePipeTO(intf , outPipeRef, buffer, bufsize,5000,5000);
+    err = (*intf)->WritePipeTO(intf , outPipeRef, buffer, bufsize,15000,15000);
 
 //    err = (*intf)->WritePipe(intf , outPipeRef, buffer, bufsize);
     switch (err) {
@@ -767,7 +767,7 @@ int usb_readPipe(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *bu
         return (-2);//
     IOReturn err;
     UInt32 size = bufsize;
-    err = (*intf)->ReadPipeTO(intf , inPipeRef, buffer, &size,10000,5000);
+    err = (*intf)->ReadPipeTO(intf , inPipeRef, buffer, &size,15000,15000);
 
     switch (err) {
     case kIOReturnNoDevice:
@@ -791,7 +791,7 @@ int usb_readPipe(IOUSBInterfaceInterface_version **intf ,int inPipeRef ,char *bu
     return (-1);
 }
 
-//#define TO 1
+#define TO 1
 int usb_intf_write(IOUSBInterfaceInterface_version **intf ,int interface ,char *buffer, size_t bufsize)
 {
     if(!intf)
@@ -810,8 +810,8 @@ int usb_intf_write(IOUSBInterfaceInterface_version **intf ,int interface ,char *
     req.wLength = bufsize; //
     req.pData = buffer;
 #if TO
-    req.completionTimeout = 5000;
-    req.noDataTimeout = 5000;
+    req.completionTimeout = 15000;
+    req.noDataTimeout = 15000;
     err = (*intf)->ControlRequestTO(intf, 0, &req);
 #else
     err = (*intf)->ControlRequest(intf ,0 ,&req);
@@ -855,8 +855,8 @@ int usb_dev_write(IOUSBDeviceInterface_version **dev ,int interface ,char *buffe
     req.wLength = bufsize; //
     req.pData = buffer;
 #if TO
-    req.completionTimeout = 5000;
-    req.noDataTimeout = 5000;
+    req.completionTimeout = 15000;
+    req.noDataTimeout = 15000;
     err = (*dev)->DeviceRequestTO(dev, &req);
 #else
     err = (*dev)->DeviceRequest(dev ,&req);
@@ -900,8 +900,8 @@ int usb_intf_read(IOUSBInterfaceInterface_version **intf ,int interface ,char *b
     req.wLength = bufsize; //
     req.pData = buffer;
 #if TO
-    req.completionTimeout = 5000;
-    req.noDataTimeout = 5000;
+    req.completionTimeout = 15000;
+    req.noDataTimeout = 15000;
     err = (*intf)->ControlRequestTO(intf, 0, &req);
 #else
     err = (*intf)->ControlRequest(intf ,0 ,&req);
@@ -932,8 +932,8 @@ int usb_dev_read(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer
     req.wLength = bufsize; //
     req.pData = buffer;
 #if TO
-    req.completionTimeout = 5000;
-    req.noDataTimeout = 5000;
+    req.completionTimeout = 15000;
+    req.noDataTimeout = 15000;
     err = (*dev)->DeviceRequestTO(dev, &req);
 #else
     err = (*dev)->DeviceRequest(dev ,&req);

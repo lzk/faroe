@@ -34,7 +34,7 @@ Item{
                         text:qsTr("Find and join the Wi-Fi")
                     }
                     JKText{
-                        text:qsTr("Enter SSID and security type.")
+                        text:qsTr("Enter SSID and Encryption.")
                         font.pixelSize: 12
                     }
                 }
@@ -189,7 +189,7 @@ Item{
                     text.text: qsTr("Connect")
                     onClicked: {
                         if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
-                            warningWithImage(qsTr("The network name must be 1 to 32 characters long. Please check and enter again."))
+                            warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))
                             input_ssid.input.focus = true
                             return
                         }
@@ -197,7 +197,7 @@ Item{
                         switch(encryption){
                         case 1:
                             if(!input_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
-                                warningWithImage(qsTr("The password must be 5 or 13 ASCII characters or 10 or 26 hex characters,please check and enter again."))
+                                warningWithImage(qsTr("The Password must be 5 or 13 ASCII characters or 10 or 26 hex characters,please check and enter again."))
                                 input_password.input.focus = true
                                 return
                             }
@@ -205,7 +205,7 @@ Item{
                         case 3:
                         case 4:
                             if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-                                warningWithImage(qsTr("The password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+                                warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
                                 input_password.input.focus = true
                                 return
                             }

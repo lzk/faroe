@@ -34,6 +34,7 @@ public:
 
     typedef struct{
         bool enable;
+        bool wifiEnable;
         char ssid[32];
         char password[64];
     }

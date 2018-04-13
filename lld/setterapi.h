@@ -73,6 +73,7 @@ private:
     DeviceIO* dio;
     int writeThenRead(char* wrBuffer ,int wrSize ,char* rdBuffer ,int rdSize);
     int write(char* wrBuffer ,int wrSize);
+    int _cmd(int cmd ,void* data ,int data_size);
 };
 
 }

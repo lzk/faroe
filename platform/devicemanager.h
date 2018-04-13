@@ -5,6 +5,7 @@
 #include <QSize>
 #include <QList>
 #include <QTimer>
+#include <QJsonObject>
 #include "../lld/device.h"
 #include "netio.h"
 #include "appqt.h"
@@ -51,6 +52,7 @@ public slots:
     void connectDevice(int);
 
     void cmdToDevice(int ,QString);
+    void init();
 
 private slots:
     void watchDevice();
@@ -62,6 +64,7 @@ private:
     int cancelSearch;
     int currentCmd;
     QStringList m_deviceList;
+    QString currentDeviceName;
     QList<DeviceInfo> deviceList;
     NetIO netIO;
 #ifdef Q_OS_MAC
@@ -76,17 +79,17 @@ private:
     Setter::struct_wifiSetting parseUiWifiSetting(const QString&);
     QString parseUiPassword(const QString&);
     int parseUiSaveTime(const QString&);
-    QString uiParseSaveTime(int);
+    void uiParseSaveTime(QJsonObject& ,int);
     int parseUiOffTime(const QString&);
-    QString uiParseOffTime(int);
+    void uiParseOffTime(QJsonObject& ,int);
     Setter::struct_deviceSetting parseUiDeviceSetting(const QString&);
-    QString uiParseDeviceSetting(Scanner::struct_deviceSetting);
-    QString uiParseWifiInfo(Setter::struct_wifiInfo);
-    QString uiParseIpv4(Setter::struct_ipv4);
+    void uiParseDeviceSetting(QJsonObject& ,Scanner::struct_deviceSetting);
+    void uiParseWifiInfo(QJsonObject& ,Setter::struct_wifiInfo);
+    void uiParseIpv4(QJsonObject& ,Setter::struct_ipv4);
     Setter::struct_ipv4 parseUiIpv4(const QString&);
-    QString uiParseSoftap(Setter::struct_softAp);
+    void uiParseSoftap(QJsonObject& ,Setter::struct_softAp);
     Setter::struct_softAp parseUiSoftap(const QString&);
-    QString uiParsePowerSupply(int);
+    void uiParsePowerSupply(QJsonObject& ,int);
     Scanner::struct_deviceSetting parseUiPowerSaveTime(const QString&);
 
     void connectDeviceInfo(DeviceInfo*);

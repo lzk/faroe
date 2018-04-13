@@ -10,6 +10,8 @@
 #include <QDebug>
 #include <Qtftp/QFtp>
 #include <QDir>
+#include <QTimer>
+#include "../platform/log.h"
 #include "../platform/devicestruct.h"
 #include "../newui/jkenums.h"
 #include "../platform/platform.h"
@@ -18,15 +20,15 @@
 ImageManager::ImageManager(QObject *parent)
     : QObject(parent)
     ,cmd_status(0)
+    ,ftp(NULL)
     ,decodeManager(new DecodeManager(this))
 {
 }
 
 void ImageManager::init()
 {
-    ftp = new QFtp(this);
-    connect(ftp, SIGNAL(commandFinished(int,bool)),
-            this, SLOT(ftpCommandFinished(int,bool)));
+    ftpTimer = new QTimer(this);
+    connect(ftpTimer ,&QTimer::timeout ,this ,&ImageManager::ftpTimeout);
 }
 
 void ImageManager::imagesCmdStart(int cmd, QString para ,QStringList)
@@ -223,7 +225,6 @@ bool ImageManager::toPrint(const QStringList& fileList ,const QString& data)
     QPrinter _printer(QPrinterInfo::printerInfo(printerName));
     QPrinter* printer = &_printer;
     QPainter painter;
-    cmd_state = JKEnums::ImageCommandState_processing;
     if(!printer->isValid() || !painter.begin(printer)){
         return false;
     }
@@ -248,6 +249,8 @@ bool ImageManager::toPrint(const QStringList& fileList ,const QString& data)
 
 void ImageManager::toEmail(const QString& para)
 {
+    if(fileList.isEmpty())
+        return;
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
     int fileType = jsonObj.value("fileType").toInt(0);
     QString subject =  jsonObj.value("subject").toString();
@@ -359,7 +362,7 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
     return success;
 }
 
-#include <QTcpSocket>
+//#include <QTcpSocket>
 void ImageManager::ftpStart(const QString& para)
 {
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
@@ -374,18 +377,18 @@ void ImageManager::ftpStart(const QString& para)
     }else{
         host = serverAddress;
     }
-    QTcpSocket socket;
-    socket.connectToHost(host,21);
-    if(!socket.waitForConnected(5000))
-    {
-        qDebug()<<"ftp tcp error:"<< socket.error();
-        qDebug()<< socket.errorString();
-        socket.close();
-        result = JKEnums::ImageCommandResult_error_ftpConnect;
-        cmdResult(cmd ,result);
-        return;
-    }
-    socket.close();
+//    QTcpSocket socket;
+//    socket.connectToHost(host,21);
+//    if(!socket.waitForConnected(5000))
+//    {
+//        qDebug()<<"ftp tcp error:"<< socket.error();
+//        qDebug()<< socket.errorString();
+//        socket.close();
+//        result = JKEnums::ImageCommandResult_error_ftpConnect;
+//        cmdResult(cmd ,result);
+//        return;
+//    }
+//    socket.close();
 
     ftpUrl = QUrl(serverAddress);
     ftpUrl.setScheme("ftp");
@@ -394,20 +397,35 @@ void ImageManager::ftpStart(const QString& para)
     ftpUrl.setPassword(password);
     ftpUrl.setPath(targetPath);
 
+    if(ftp){
+        ftp->deleteLater();
+    }
+    ftp = new QFtp(this);
+    connect(this ,&ImageManager::abortFTP ,ftp ,&QFtp::abort);
+    connect(ftp, SIGNAL(commandFinished(int,bool)),
+            this, SLOT(ftpCommandFinished(int,bool)));
 //    ftp->connectToHost(ftpUrl.host());
+
     ftp->connectToHost(host);
+    ftpTimer->start(5000);
+//    ftpTimer->singleShot(5000 ,this ,&ImageManager::ftpTimeout);
 }
 
 void ImageManager::ftpEnd()
 {
-    if(ftp->state() != QFtp::Closing)
+    if(result && result != JKEnums::ImageCommandResult_NoError){
+        cmdResult(cmd ,result);
+    }else
+    if(ftp && ftp->state() != QFtp::Closing){
         ftp->close();
+    }
 }
 
 void ImageManager::ftpUpload(const QString& fileName)
 {
-    if(fileName.isEmpty())
+    if(fileName.isEmpty() || !ftp)
         return;
+    LOG_NOPARA("ftp upload file:" + fileName);
     QString remoteFileName = QFileInfo(fileName).fileName();
     struct Private_data ftpData;
     ftpData.file = new QFile(fileName);
@@ -415,19 +433,40 @@ void ImageManager::ftpUpload(const QString& fileName)
 //    if(ftpData.file->open(QIODevice::ReadOnly)){
         ftpData.id = ftp->put(ftpData.file ,remoteFileName);
         ftp_data << ftpData;
+        if(!ftpTimer->isActive()){
+            LOG_NOPARA("start upload timer");
+            ftpTimer->start(15000);
+        }
+//        ftpTimer->singleShot(5000 ,this ,&ImageManager::ftpTimeout);
 //    }
+}
+
+void ImageManager::ftpTimeout()
+{
+    LOG_PARA("ftp current command:%d" ,ftp->currentCommand());
+//    abortFTP();
+    disconnect(ftp, SIGNAL(commandFinished(int,bool)),
+            this, SLOT(ftpCommandFinished(int,bool)));
+    ftpTimer->stop();
+    result = JKEnums::ImageCommandResult_error_ftpTimeout;
+    emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_ftpTimeout);
+    LOG_NOPARA("timer out");
 }
 
 void ImageManager::ftpCommandFinished(int id ,bool error)
 {
+    LOG_PARA("ftp command finished current command:%d" ,ftp->currentCommand());
+    ftpTimer->stop();
     switch (ftp->currentCommand()) {
     case QFtp::ConnectToHost:
         if(!error){
             qDebug()<<"connect to host finished";
             qDebug()<<"user name:"<<ftpUrl.userName() <<" password:" << ftpUrl.password();
-            if (!ftpUrl.userName().isEmpty())
+            if (!ftpUrl.userName().isEmpty()){
                 ftp->login(QUrl::fromPercentEncoding(ftpUrl.userName().toLatin1()), ftpUrl.password());
-            else{
+                ftpTimer->start(5000);
+//                ftpTimer->singleShot(5000 ,this ,&ImageManager::ftpTimeout);
+            }else{
                 result = JKEnums::ImageCommandResult_error_ftpLogin;
                 emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_ftpLogin);
             }
@@ -440,6 +479,8 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
         if(!error){
             qDebug()<<"login finished";
             ftp->mkdir(ftpUrl.path());
+            ftpTimer->start(5000);
+//            ftpTimer->singleShot(5000 ,this ,&ImageManager::ftpTimeout);
         }else{
             result = JKEnums::ImageCommandResult_error_ftpLogin;
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_ftpLogin);
@@ -448,11 +489,12 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
     case QFtp::Mkdir:
         qDebug()<<"mkdir finished error:"<<error;
         ftp->cd(ftpUrl.path());
+        ftpTimer->start(5000);
+//        ftpTimer->singleShot(5000 ,this ,&ImageManager::ftpTimeout);
         break;
     case QFtp::Cd:
         if(!error){
             qDebug()<<"cd finished";
-            cmd_state = JKEnums::ImageCommandState_start;
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
         }else{
             result = JKEnums::ImageCommandResult_error_ftpCd;
@@ -467,9 +509,10 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
             }
         }
         qDebug()<<"put finished error:"<<error;
-        cmd_state = JKEnums::ImageCommandState_processing;
         if(!error){
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+            if(ftp->hasPendingCommands())
+                ftpTimer->start(15000);
         }else{
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_ftpPut);
             result = JKEnums::ImageCommandResult_error_ftpPut;
@@ -487,6 +530,8 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
 
 void ImageManager::toApplication(const QString& para,const QStringList& fileList)
 {
+    if(fileList.isEmpty())
+        return;
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
 //    int fileType = jsonObj.value("fileType").toInt(0);
 //    QString fileName;
@@ -509,7 +554,6 @@ void ImageManager::cloudStart(const QString& para)
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
     QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
     if(!cloudTypeText.compare("iCloud")){
-        cmd_state = JKEnums::ImageCommandState_start;
         QString str;
         if(iCloudCheckLogin(str)){
             emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
@@ -521,7 +565,6 @@ void ImageManager::cloudStart(const QString& para)
 
 void ImageManager::toCloud(const QStringList& fileList,const QString& para)
 {
-    cmd_state = JKEnums::ImageCommandState_processing;
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
     QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
     if(!cloudTypeText.compare("iCloud")){
@@ -574,6 +617,8 @@ void ImageManager::separationScanDecode(const QStringList& fileList)
 
 void ImageManager::separationScanDecodeEnd()
 {
+    if(fileList.isEmpty())
+        return;
     QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
     int fileType = jsonObj.value("fileType").toInt(0);
     QString filePath = jsonObj.value("filePath").toString();
@@ -639,6 +684,8 @@ void ImageManager::decodeScanDecode(const QStringList& fileList)
 
 void ImageManager::decodeScanEnd()
 {
+    if(fileList.isEmpty())
+        return;
     QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
     QString fileName = jsonObj.value("fileName").toString();
     QString tmppath = getTempPath();

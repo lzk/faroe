@@ -233,7 +233,7 @@ Item {
         anchors.fill: parent
         text.text: qsTr("Settings...")
         onClicked: {
-            openScanSettingDialog(decodeSetting.scanSetting ,true)
+            openScanSettingDialog(decodeSetting.scanSetting ,1)
         }
     }
     JKTextButton{
@@ -241,7 +241,7 @@ Item {
         anchors.fill: parent
         text.text: qsTr("Settings...")
         onClicked: {
-            openScanSettingDialog(separationSetting.scanSetting)
+            openScanSettingDialog(separationSetting.scanSetting ,2)
         }
     }
 

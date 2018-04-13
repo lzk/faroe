@@ -18,4 +18,8 @@ bool iCloudCheckLogin(QString&);
 bool iCloudUpload(const QString& fileName);
 bool iCloudGetFileList(QString& para);
 bool iCouldIsExist(const QString& fileName);
+
+class QWindow;
+void windowShowMinimize(QWindow* window);
+void windowSetWindowFrameless(QWindow* window);
 #endif // PLATFORM_H

@@ -193,8 +193,8 @@ Item {
         return openDialog("ImageViewer/ImagePreviewDialog.qml" ,{} ,init)
     }
 
-    function openScanSettingDialog(setting ,decodeMode){
-        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{"setting":setting ,"decodeMode":decodeMode})
+    function openScanSettingDialog(setting ,mode){
+        dialog = openDialog("SettingsPage/ScanSetting/ScanSettingDialog.qml" ,{"setting":setting ,"mode":mode})
     }
 
     function setCmd(cmd ,setting){
@@ -393,6 +393,7 @@ Item {
             scanSetting.autoCropAndDeskew = false
             scanSetting.skipBlankPage = false
             scanSetting.mediaType = 0
+            scanSetting.autoColorDetection = false
             if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
                 scanSetting.scanAreaSize = 0
             break
@@ -418,28 +419,7 @@ Item {
 
     Connections{
         target: jkInterface
-        onCmdToDevice:{
-            console.log("cmd to device:" ,cmd)
-            switch(cmd){
-            case DeviceStruct.CMD_SCAN:
-            case DeviceStruct.CMD_ScanTo:
-                dialog = openDialog("ScanPage/ScanningDialog.qml" ,{} ,function(dialog){
-                    dialog.cancel.connect(jkInterface.cancelScan)
-                })
-                break
-            case DeviceStruct.CMD_getPowerSupply:
-                break
-            case DeviceStruct.CMD_getIpv4:
-            case DeviceStruct.CMD_getSoftap:
-            case DeviceStruct.CMD_getWifiInfo:
-            case DeviceStruct.CMD_getDeviceSetting:
-            case DeviceStruct.CMD_getOffTime:
-            case DeviceStruct.CMD_getSaveTime:
-            default:
-                dialog = openDialog("component/JKRefresh.qml" ,{})
-                break
-            }
-        }
+
         onImagesCmdStart:{
             console.log("cmd to images:" ,cmd)
             var message = qsTr("processing")
@@ -459,9 +439,72 @@ Item {
                 break
             case DeviceStruct.CMD_ScanTo_ToApplication:
                 break
+
+            case DeviceStruct.CMD_QuickScan_ToFTP:
+                message = qsTr("Connecting to FTP Server...")
+                break
             default:
                 return
             }
+            dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
+        }
+
+        onCmdToDevice:{
+            console.log("cmd to device:" ,cmd)
+            switch(cmd){
+            case DeviceStruct.CMD_SCAN:
+            case DeviceStruct.CMD_ScanTo:
+                if(dialog && dialog.visible)
+                    dialog.close()
+                dialog = openDialog("ScanPage/ScanningDialog.qml" ,{} ,function(dialog){
+                    dialog.cancel.connect(jkInterface.cancelScan)
+                })
+                break
+            case DeviceStruct.CMD_getPowerSupply:
+                break
+            case DeviceStruct.CMD_getIpv4:
+            case DeviceStruct.CMD_getSoftap:
+            case DeviceStruct.CMD_getWifiInfo:
+            case DeviceStruct.CMD_getDeviceSetting:
+            case DeviceStruct.CMD_getOffTime:
+            case DeviceStruct.CMD_getSaveTime:
+            default:
+                dialog = openDialog("component/JKRefresh.qml" ,{})
+                break
+            }
+        }
+
+        onSignal_deviceCmdResult:{
+            console.log("scan over:" ,cmd)
+            if(result && result !== JKEnums.ImageCommandResult_NoError)
+                return
+            var message = qsTr("processing")
+            switch(cmd){
+            case DeviceStruct.CMD_QuickScan_ToFTP:
+            case DeviceStruct.CMD_QuickScan_ToCloud:
+                message = qsTr("Uploading ,please wait...")
+                break
+            case DeviceStruct.CMD_QuickScan_ToPrint:
+                message = qsTr("Printing picture,please wait...")
+                break
+            case DeviceStruct.CMD_QuickScan_ToFile:
+                message = qsTr("Saving picture to file,please wait...")
+                break
+            case DeviceStruct.CMD_QuickScan_ToEmail:
+                message = qsTr("Saving,please wait...")
+                break
+            case DeviceStruct.CMD_QuickScan_ToApplication:
+                break
+
+            case DeviceStruct.CMD_DecodeScan:
+            case DeviceStruct.CMD_SeperationScan:
+                message = qsTr("decoding,please wait...")
+                break
+            default:
+                return
+            }
+            if(dialog && dialog.visible)
+                dialog.close()
             dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
         }
 
@@ -593,6 +636,9 @@ Item {
             case DeviceStruct.CMD_QuickScan_ToFTP:
             case DeviceStruct.CMD_ScanTo_ToFTP:
                 switch(result){
+                case JKEnums.ImageCommandResult_error_ftpTimeout:
+                    warningWithImage(qsTr("Time out.Unable to connet to the remote server."))
+                    break
                 case JKEnums.ImageCommandResult_error_ftpConnect:
                     warningWithImage(qsTr("Upload failed.Unable to connet to the remote server."))
                     break
@@ -726,17 +772,16 @@ Item {
             para1.powerMode = JKEnums.PowerMode_PowerBank
             para1.cmd = cmd
             para1.setting = data
-            informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode do not support the following settings.
+            informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the Power Bank mode does not support the following settings.
 
-\tMediaType:   \tDeposit Book or Card
-\tScan Size:   \tLong Page Mode
+    Media Type:      \tDeposit Book or Card
+    Scan Area Size:  \tLong Page Mode
 
-If you select 'Yes', the scan job will be continue, but the following settings will be changed
-
+If you select 'Yes', the scan job will be continued, but the following settings will be changed
 If you select 'No', the scan job will be canceled!
 
-\tMediaType:   \tNormal
-\tScan Size:   \tAuto")
+    Media Type:      \tNormal
+    Scan Area Size:  \tAuto")
                                         ,"message.horizontalAlignment":Text.AlignLeft
                                         ,"para":JSON.stringify(para1)
                                         ,"height":380
@@ -748,24 +793,27 @@ If you select 'No', the scan job will be canceled!
                 para.powerMode = JKEnums.PowerMode_usbBusPower
                 para.cmd = cmd
                 para.setting = data
-                informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus power mode do not support the follow settings.
-\tADF Mode:   \tTwo Side
-\tMediaType:   \tDeposit Book or Card
-\tScan Size:   \tLong Page Mode
-\tMulti Feed Detection:\tOn
-\tSkip Blank Page:\tOn
-\tAuto Color Detection:\tOn
-If you select 'Yes', the scan job will be continue, but the following settings will be changed
+                informationWithProperty({"message.text":qsTr("The scan job could not be continued, because the USB Bus Power mode does not support the following settings.
+
+    ADF Mode:              \tTwo Side
+    Media Type:            \tDeposit Book or Card
+    Scan Area Size:        \tLong Page Mode
+    Multi Feed Detection:  \tOn
+    Skip Blank Page:       \tOn
+    Auto Color Detection:  \tOn
+
+If you select 'Yes', the scan job will be continued, but the following settings will be changed
 If you select 'No', the scan job will be canceled!
-\tADF Mode:   \tOne Side
-\tMediaType:   \tNormal
-\tScan Size:   \tAuto
-\tMulti Feed Detection:\tOff
-\tSkip Blank Page:\tOff
-\tAuto Color Detection:\tOff")
+
+    ADF Mode:              \tOne Side
+    Media Type:            \tNormal
+    Scan Area Size:        \tAuto
+    Multi Feed Detection:  \tOff
+    Skip Blank Page:       \tOff
+    Auto Color Detection:  \tOff")
                                             ,"message.horizontalAlignment":Text.AlignLeft
                                             ,"para":JSON.stringify(para)
-                                            ,"height":440
+                                            ,"height":480
                                             },callbackScan )
             }else{
                 errorWithImage(qsTr("The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning."))
@@ -779,8 +827,15 @@ If you select 'No', the scan job will be canceled!
         case DeviceStruct.ERR_RETSCAN_WIFI_TRANSFERERROR:
             errorWithImage(qsTr("The Device transfering has some error!"))
             break
+        case DeviceStruct.ERR_RETSCAN_GETINFO_FAIL:
+        case DeviceStruct.ERR_RETSCAN_CREATE_JOB_FAIL:
+        case DeviceStruct.ERR_RETSCAN_ERRORPARAMETER:
+        case DeviceStruct.ERR_RETSCAN_ERROR:
         case DeviceStruct.ERR_communication:
             errorWithImage(qsTr("The device is disconnected, the scanning will be canceled!"))
+            break
+        case DeviceStruct.ERR_scanImagesAreAllBlank:
+            warningWithImage(qsTr("Scan Images are all blank!"))
             break
         default:
             console.log("err:" ,result)

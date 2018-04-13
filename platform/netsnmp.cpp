@@ -117,9 +117,9 @@ static void handlerData(netsnmp_pdu *pdu, void *magic)
             inet_ntop(AF_INET6 ,&to->sin6_addr ,deviceInfo.address ,256);
         }
     }
-
+    strcpy(deviceInfo.name ,deviceInfo.address);
     mystate->addDevice(&deviceInfo ,mystate->pData);
-    qDebug()<<"device info:"<<deviceInfo.name<<"("<<deviceInfo.address<<")";
+    qDebug()<<"device info:"<<deviceInfo.name;
 }
 
 static int  callback(int op,

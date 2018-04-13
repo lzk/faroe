@@ -3,7 +3,6 @@
 #include <QThread>
 #include <QDateTime>
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
 #include "../newui/jkinterface.h"
@@ -21,7 +20,6 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(&platformApp ,SIGNAL(addImage(QString)) ,this ,SLOT(addImage(QString)));
     connect(&platformApp ,SIGNAL(progressChanged(int ,int)) ,this ,SIGNAL(progressChanged(int ,int)));
 
-    QTimer::singleShot(1000, this, SLOT(watchDevice()));
 }
 
 DeviceManager::~DeviceManager()
@@ -32,27 +30,37 @@ DeviceManager::~DeviceManager()
     }
 }
 
+void DeviceManager::init()
+{
+    currentDeviceName = jkInterface->getCurrentDevice();
+    watchDevice();
+}
+
 void DeviceManager::watchDevice()
 {
-    QString currentDevice = jkInterface->getCurrentDevice();
     QString url;
+    if(currentDeviceName.startsWith("USB")){
+        url = "usb://" + currentDeviceName +"?address=" + currentDeviceName.right(2);
+    }else{
+        url = "socket://" + currentDeviceName;
+    }
     if(device){
         QString currentDeviceUrl = device->getCurrentUrl();
         if(currentDeviceUrl.startsWith("usb://")){
-            if(!currentDevice.startsWith("USB") || currentDevice.right(2) != currentDeviceUrl.right(2)){
+            if(!currentDeviceName.startsWith("USB") || !currentDeviceUrl.contains(currentDeviceName)){
                 device->resolveUrl(url.toLatin1().constData());
             }
         }else{
-            if(!currentDeviceUrl.contains(currentDevice)){
-                device->resolveUrl(url.toLatin1().constData());
+            if(!currentDeviceUrl.contains(currentDeviceName)){
+                if(!QHostAddress(currentDeviceName).isNull()){
+                    device->resolveUrl(url.toLatin1().constData());
+                }
             }
         }
     }else{
-        if(currentDevice.startsWith("USB")){
-            url = QString("usb://") + "USB Device " + "?address=" + currentDevice.right(2);
+        if(currentDeviceName.startsWith("USB")){
             device = new Device(url.toLatin1().data() ,&usbIO ,(PlatformApp*)&platformApp);
-        }else if(!QHostAddress(currentDevice).isNull()){
-            url = QString("socket://") + currentDevice;
+        }else if(!QHostAddress(currentDeviceName).isNull()){
             device = new Device(url.toLatin1().data() ,&netIO ,(PlatformApp*)&platformApp);
         }
     }
@@ -60,7 +68,7 @@ void DeviceManager::watchDevice()
     bool connected = false;
     if(device){
         connected = device->checkConnection();
-        if(!connected && currentDevice.startsWith("USB")){
+        if(!connected && currentDeviceName.startsWith("USB")){
             Device::searchUsbDevices(addUsbDevice ,this);
             if(device)
                 connected = device->checkConnection();
@@ -90,18 +98,16 @@ void DeviceManager::connectDeviceInfo(DeviceInfo* deviceInfo)
         delete device;
         device = NULL;
     }
-    QString uiName;
     QString url;
     if(deviceInfo->type == DeviceInfo::Type_usb){
         url = QString("usb://") + deviceInfo->name + "?address=" + deviceInfo->address;
         device = new Device(url.toLatin1().data() ,&usbIO ,(PlatformApp*)&platformApp);
-        uiName = QString(deviceInfo->name) + QString(" ") + QString(deviceInfo->address);
     }else{
         url = QString("socket://") + QString(deviceInfo->address);
         device = new Device(url.toLatin1().data() ,&netIO ,(PlatformApp*)&platformApp);
-        uiName = deviceInfo->address;
     }
-    emit deviceConnected(uiName);
+    currentDeviceName = deviceInfo->name;
+    emit deviceConnected(currentDeviceName);
     emit updateDeviceStatus(device->checkConnection());
 }
 
@@ -121,14 +127,15 @@ void DeviceManager::addDeviceInfo(DeviceInfo* deviceInfo ,int count)
 {
     QString str;
     for(int i = 0 ;i < count ;i++){
-        if(deviceInfo[i].type == DeviceInfo::Type_usb)
-            str = QString(deviceInfo[i].name) + QString(" ") + QString(deviceInfo[i].address);
-        else
-            str = deviceInfo[i].address;
-
+        str = deviceInfo[i].name;
         if(!m_deviceList.contains(str)){
-            m_deviceList << str;
-            deviceList << deviceInfo[i];
+            if(!currentDeviceName.compare(str)){
+                m_deviceList.prepend(str);
+                deviceList.prepend(deviceInfo[i]);
+            }else{
+                m_deviceList << str;
+                deviceList << deviceInfo[i];
+            }
         }
         emit updateDeviceList( m_deviceList);
     }
@@ -140,24 +147,19 @@ void DeviceManager::searchDeviceList()
     deviceList.clear();
     m_deviceList.clear();
     Device::searchDevices(addDevice ,this);
-    QString currentDevice = jkInterface->getCurrentDevice();
-    int index = 0;
-    for (int i = 0; i < deviceList.count() ;i++) {
-        if(deviceList[i].type == DeviceInfo::Type_usb){
-
-        }else{
-
-        }
-        if(!currentDevice.compare(deviceList[i].address)){
-            index = i;
-            if(i != 0){
-                m_deviceList.move(i ,0);
-                emit updateDeviceList(m_deviceList);
-            }
-        }
-    }
-    if(index != 0)
-        deviceList.move(index ,0);
+//    QString currentDevice = jkInterface->getCurrentDevice();
+//    int index = 0;
+//    for (int i = 0; i < deviceList.count() ;i++) {
+//        if(!currentDevice.compare(deviceList[i].name)){
+//            index = i;
+//            if(i != 0){
+//                m_deviceList.move(i ,0);
+//                emit updateDeviceList(m_deviceList);
+//            }
+//        }
+//    }
+//    if(index != 0)
+//        deviceList.move(index ,0);
     emit searchComplete();
 }
 
@@ -230,6 +232,7 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
 {
     int err = 0;
     QString value = obj;
+    QJsonObject jsonObj;
 //    qDebug()<<"cmd:"<<cmd;
 //    qDebug()<<"data:"<<obj;
 #if TEST
@@ -272,6 +275,16 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         return;
     }
     void* data = NULL;
+    int powerSupply = JKEnums::PowerMode_unknown;
+    {
+        data = (void*)&powerSupply;
+        err = device->deviceCmd(Device::CMD_getPowerSupply ,data);
+        uiParsePowerSupply(jsonObj ,powerSupply);
+        if(err){
+            emit cmdResult(cmd ,DeviceStruct::ERR_communication ,value);
+            return;
+        }
+    }
     switch (cmd) {
     case DeviceStruct::CMD_ScanTo:
     case DeviceStruct::CMD_SCAN:
@@ -315,7 +328,8 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         int para;
         data = (void*)&para;
         err = device->deviceCmd(Device::CMD_getSaveTime ,data);
-        value = uiParseSaveTime(para);
+        uiParseSaveTime(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_setOffTime:
@@ -330,7 +344,9 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         int para;
         data = (void*)&para;
         err = device->deviceCmd(Device::CMD_getOffTime ,data);
-        value = uiParseOffTime(para);
+//        value = uiParseOffTime(para);
+        uiParseOffTime(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_getDeviceSetting:
@@ -338,53 +354,74 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
         Scanner::struct_deviceSetting para;
         data = (void*)&para;
         err = device->deviceCmd(Device::CMD_getDeviceSetting ,data);
-        value = uiParseDeviceSetting(para);
+//        value = uiParseDeviceSetting(para);
+        uiParseDeviceSetting(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_getWifiInfo:
     {
         Setter::struct_wifiInfo para;
         data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_getWifiInfo ,data);
-        value = uiParseWifiInfo(para);
+        memset(data ,0 ,sizeof(para));
+        if(powerSupply != JKEnums::PowerMode_usbBusPower){
+            err = device->deviceCmd(Device::CMD_getWifiInfo ,data);
+        }
+//        value = uiParseWifiInfo(para);
+        uiParseWifiInfo(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_getIpv4:
     {
         Setter::struct_ipv4 para;
         data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_getIpv4 ,data);
-        value = uiParseIpv4(para);
+        memset(data ,0 ,sizeof(para));
+        if(powerSupply != JKEnums::PowerMode_usbBusPower){
+            err = device->deviceCmd(Device::CMD_getIpv4 ,data);
+        }
+//        value = uiParseIpv4(para);
+        uiParseIpv4(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_setIpv4:
     {
-        Setter::struct_ipv4 para = parseUiIpv4(obj);
-        data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_setIpv4 ,data);
+        if(powerSupply != JKEnums::PowerMode_usbBusPower){
+            Setter::struct_ipv4 para = parseUiIpv4(obj);
+            data = (void*)&para;
+            err = device->deviceCmd(Device::CMD_setIpv4 ,data);
+        }
         break;
     }
     case DeviceStruct::CMD_setSoftap:
     {
-        Setter::struct_softAp para = parseUiSoftap(obj);
-        data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_setSoftap ,data);
+        if(powerSupply != JKEnums::PowerMode_usbBusPower){
+            Setter::struct_softAp para = parseUiSoftap(obj);
+            data = (void*)&para;
+            err = device->deviceCmd(Device::CMD_setSoftap ,data);
+        }
         break;
     }
     case DeviceStruct::CMD_getSoftap:
     {
         Setter::struct_softAp para;
         data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_getSoftap ,data);
-        value = uiParseSoftap(para);
+        memset(data ,0 ,sizeof(para));
+        if(powerSupply != JKEnums::PowerMode_usbBusPower){
+            err = device->deviceCmd(Device::CMD_getSoftap ,data);
+        }
+        uiParseSoftap(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_getPowerSupply:
     {
-        int para;
-        data = (void*)&para;
-        err = device->deviceCmd(Device::CMD_getPowerSupply ,data);
-        value = uiParsePowerSupply(para);
+//        int para;
+//        data = (void*)&para;
+//        err = device->deviceCmd(Device::CMD_getPowerSupply ,data);
+//        uiParsePowerSupply(jsonObj ,para);
+        value = QString(QJsonDocument(jsonObj).toJson());
         break;
     }
     case DeviceStruct::CMD_setPowerSaveTime:
@@ -497,7 +534,7 @@ Setter::struct_wifiSetting DeviceManager::parseUiWifiSetting(const QString& obj)
     return para;
 }
 
-QString DeviceManager::uiParseWifiInfo(Setter::struct_wifiInfo wifiInfo)
+void DeviceManager::uiParseWifiInfo(QJsonObject& obj ,Setter::struct_wifiInfo wifiInfo)
 {
     QJsonArray jarray;
     for(int i = 0;i < 10 ;i++){
@@ -516,18 +553,26 @@ QString DeviceManager::uiParseWifiInfo(Setter::struct_wifiInfo wifiInfo)
     char password[65];
     memset(password ,0 ,65);
     memcpy(password ,wifiInfo.wifiSetting.password ,64);
-    QJsonObject obj{
-        {"enable",wifiInfo.wifiSetting.enable}
-        ,{"type",wifiInfo.wifiSetting.type}
-        ,{"encryption",wifiInfo.wifiSetting.encryption}
-        ,{"wepKeyId",wifiInfo.wifiSetting.wepKeyId}
-        ,{"channel",wifiInfo.wifiSetting.channel}
-        ,{"ssid",QString(ssid)}
-        ,{"password",QString(password)}
-        ,{"apList",jarray}
-    };
+//    QJsonObject obj{
+//        {"enable",wifiInfo.wifiSetting.enable}
+//        ,{"type",wifiInfo.wifiSetting.type}
+//        ,{"encryption",wifiInfo.wifiSetting.encryption}
+//        ,{"wepKeyId",wifiInfo.wifiSetting.wepKeyId}
+//        ,{"channel",wifiInfo.wifiSetting.channel}
+//        ,{"ssid",QString(ssid)}
+//        ,{"password",QString(password)}
+//        ,{"apList",jarray}
+//    };
+    obj.insert("enable",QJsonValue(wifiInfo.wifiSetting.enable));
+    obj.insert("type",QJsonValue(wifiInfo.wifiSetting.type));
+    obj.insert("encryption",QJsonValue(wifiInfo.wifiSetting.encryption));
+    obj.insert("wepKeyId",QJsonValue(wifiInfo.wifiSetting.wepKeyId));
+    obj.insert("channel",QJsonValue(wifiInfo.wifiSetting.channel));
+    obj.insert("ssid",QJsonValue(ssid));
+    obj.insert("password",QJsonValue(password));
+    obj.insert("apList",QJsonValue(jarray));
 
-    return QString(QJsonDocument(obj).toJson());
+//    return QString(QJsonDocument(obj).toJson());
 }
 
 QString DeviceManager::parseUiPassword(const QString&)
@@ -544,13 +589,14 @@ int DeviceManager::parseUiSaveTime(const QString& obj)
     return para;
 }
 
-QString DeviceManager::uiParseSaveTime(int para)
+void DeviceManager::uiParseSaveTime(QJsonObject& obj ,int para)
 {
-    QJsonObject obj{
-        {"saveTime",para}
-    };
+//    QJsonObject obj{
+//        {"saveTime",para}
+//    };
+    obj.insert("saveTime",QJsonValue(para));
 
-    return QString(QJsonDocument(obj).toJson());
+//    return QString(QJsonDocument(obj).toJson());
 }
 int DeviceManager::parseUiOffTime(const QString& obj)
 {
@@ -560,13 +606,14 @@ int DeviceManager::parseUiOffTime(const QString& obj)
     return para;
 }
 
-QString DeviceManager::uiParseOffTime(int para)
+void DeviceManager::uiParseOffTime(QJsonObject& obj ,int para)
 {
-    QJsonObject obj{
-        {"offTime",para}
-    };
+//    QJsonObject obj{
+//        {"offTime",para}
+//    };
+    obj.insert("offTime",QJsonValue(para));
 
-    return QString(QJsonDocument(obj).toJson());
+//    return QString(QJsonDocument(obj).toJson());
 }
 
 Setter::struct_deviceSetting DeviceManager::parseUiDeviceSetting(const QString& obj)
@@ -579,20 +626,25 @@ Setter::struct_deviceSetting DeviceManager::parseUiDeviceSetting(const QString& 
     return para;
 }
 
-QString DeviceManager::uiParseDeviceSetting(Scanner::struct_deviceSetting para)
+void DeviceManager::uiParseDeviceSetting(QJsonObject& obj ,Scanner::struct_deviceSetting para)
 {
-    QJsonObject obj{
-        {"saveTime",para.saveTime}
-        ,{"offTime",para.offTime}
-        ,{"rollerCount",para.rollerCount}
-        ,{"acmCount",para.acmCount}
-        ,{"scanCount",para.scanCount}
-    };
+//    QJsonObject obj{
+//        {"saveTime",para.saveTime}
+//        ,{"offTime",para.offTime}
+//        ,{"rollerCount",para.rollerCount}
+//        ,{"acmCount",para.acmCount}
+//        ,{"scanCount",para.scanCount}
+//    };
+    obj.insert("saveTime",QJsonValue(para.saveTime));
+    obj.insert("offTime",QJsonValue(para.offTime));
+    obj.insert("rollerCount",QJsonValue(para.rollerCount));
+    obj.insert("acmCount",QJsonValue(para.acmCount));
+    obj.insert("scanCount",QJsonValue(para.scanCount));
 
-    return QString(QJsonDocument(obj).toJson());
+//    return QString(QJsonDocument(obj).toJson());
 }
 
-QString DeviceManager::uiParseIpv4(Setter::struct_ipv4 para)
+void DeviceManager::uiParseIpv4(QJsonObject& obj ,Setter::struct_ipv4 para)
 {
     QString address = QString().sprintf("%d.%d.%d.%d"
                 ,para.address[0] ,para.address[1] ,para.address[2] ,para.address[3]);
@@ -600,15 +652,20 @@ QString DeviceManager::uiParseIpv4(Setter::struct_ipv4 para)
                 ,para.subnetMask[0] ,para.subnetMask[1] ,para.subnetMask[2] ,para.subnetMask[3]);
     QString gatewayAddress = QString().sprintf("%d.%d.%d.%d"
                 ,para.gatewayAddress[0] ,para.gatewayAddress[1] ,para.gatewayAddress[2] ,para.gatewayAddress[3]);
-    QJsonObject obj{
-        {"address",address}
-        ,{"addressMode",para.addressMode}
-        ,{"gatewayAddress",gatewayAddress}
-        ,{"mode",para.mode}
-        ,{"subnetMask",subnetMask}
-    };
+//    QJsonObject obj{
+//        {"address",address}
+//        ,{"addressMode",para.addressMode}
+//        ,{"gatewayAddress",gatewayAddress}
+//        ,{"mode",para.mode}
+//        ,{"subnetMask",subnetMask}
+//    };
+    obj.insert("address",QJsonValue(address));
+    obj.insert("addressMode",QJsonValue(para.addressMode));
+    obj.insert("gatewayAddress",QJsonValue(gatewayAddress));
+    obj.insert("mode",QJsonValue(para.mode));
+    obj.insert("subnetMask",QJsonValue(subnetMask));
 
-    return QString(QJsonDocument(obj).toJson());
+//    return QString(QJsonDocument(obj).toJson());
 }
 
 #include <QHostAddress>
@@ -636,7 +693,7 @@ Setter::struct_ipv4 DeviceManager::parseUiIpv4(const QString& obj)
     return para;
 }
 
-QString DeviceManager::uiParseSoftap(Setter::struct_softAp para)
+void DeviceManager::uiParseSoftap(QJsonObject& obj ,Setter::struct_softAp para)
 {
     char ssid[33];
     memset(ssid ,0 ,33);
@@ -644,18 +701,17 @@ QString DeviceManager::uiParseSoftap(Setter::struct_softAp para)
     char password[65];
     memset(password ,0 ,65);
     memcpy(password ,para.password ,64);
-    QJsonObject obj{
-        {"enable",para.enable}
-        ,{"ssid",QString(ssid)}
-        ,{"password",QString(password)}
-    };
-
 //    QJsonObject obj{
 //        {"enable",para.enable}
-//        ,{"ssid",para.ssid}
-//        ,{"password",para.password}
+//        ,{"ssid",QString(ssid)}
+//        ,{"password",QString(password)}
+//        ,{"wifiEnable",para.wifiEnable}
 //    };
-    return QString(QJsonDocument(obj).toJson());
+    obj.insert("enable",QJsonValue(para.enable));
+    obj.insert("ssid",QJsonValue(ssid));
+    obj.insert("password",QJsonValue(password));
+    obj.insert("wifiEnable",QJsonValue(para.wifiEnable));
+//    return QString(QJsonDocument(obj).toJson());
 }
 
 Setter::struct_softAp DeviceManager::parseUiSoftap(const QString& obj)
@@ -688,12 +744,13 @@ Setter::struct_softAp DeviceManager::parseUiSoftap(const QString& obj)
     return para;
 }
 
-QString DeviceManager::uiParsePowerSupply(int para)
+void DeviceManager::uiParsePowerSupply(QJsonObject& obj ,int para)
 {
-    QJsonObject obj{
-        {"powerSupply",para}
-    };
-    return QString(QJsonDocument(obj).toJson());
+    obj.insert("powerSupply" ,QJsonValue(para));
+//    QJsonObject obj{
+//        {"powerSupply",para}
+//    };
+//    return QString(QJsonDocument(obj).toJson());
 }
 
 Scanner::struct_deviceSetting DeviceManager::parseUiPowerSaveTime(const QString& obj)

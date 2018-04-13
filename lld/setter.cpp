@@ -231,7 +231,7 @@ int Setter::getWifi(void* data)
         cmdst_wifi_get para;
         err = setterApi->cmd(CMD_CODE_getWifiInfo ,&para ,sizeof(para));
         if(!err){
-            wifiInfo->wifiSetting.enable = para.wifiEnable;
+            wifiInfo->wifiSetting.enable = para.wifiEnable & 1 == 1;
             wifiInfo->wifiSetting.channel = para.channel;
             wifiInfo->wifiSetting.encryption = para.encryption;
             wifiInfo->wifiSetting.type = para.netType;
@@ -276,7 +276,7 @@ int Setter::setSoftAp(void* data)
 
     cmdst_softap para;
     memset(&para ,0 ,sizeof(para));
-    para.wifiEnable = softap->enable;
+    para.wifiEnable = softap->enable ?0x06 :0;
     memcpy(para.ssid ,softap->ssid ,32);
     memcpy(para.pwd ,softap->password ,64);
     err = setterApi->cmd(CMD_CODE_set_softAp ,&para ,sizeof(para));
@@ -289,12 +289,22 @@ int Setter::getSoftAp(void* data)
         return DeviceStruct::ERR_invalid_data;
     struct_softAp* softap = (struct_softAp*)data;
     int err;
-    cmdst_softap para;
-    err = setterApi->cmd(CMD_CODE_get_softAp ,&para ,sizeof(para));
-    if(!err){
-        softap->enable = para.wifiEnable;
-        memcpy(softap->ssid ,para.ssid ,32);
-        memcpy(softap->password ,para.pwd ,64);
+    {
+        cmdst_wifi_get para;
+        err = setterApi->cmd(CMD_CODE_getWifiInfo ,&para ,sizeof(para));
+        if(!err){
+            softap->wifiEnable = para.wifiEnable & 1 == 1;
+        }else
+            return err;
+    }
+    {
+        cmdst_softap para;
+        err = setterApi->cmd(CMD_CODE_get_softAp ,&para ,sizeof(para));
+        if(!err){
+            softap->enable = para.wifiEnable == 7;
+            memcpy(softap->ssid ,para.ssid ,32);
+            memcpy(softap->password ,para.pwd ,64);
+        }
     }
     return err;
 }

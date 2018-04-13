@@ -29,6 +29,9 @@ public:
     Q_INVOKABLE bool pathExist(const QString& filePath);
     Q_INVOKABLE void setScanDataHandle(QObject* scanData);
     Q_INVOKABLE QString homeDictory();
+    Q_INVOKABLE void showMinimize(QWindow*);
+    Q_INVOKABLE void setWindowFrameless(QWindow*);
+    Q_INVOKABLE int macVersion();
 signals:
     void searchDeviceList();
     void searchComplete();
@@ -37,6 +40,7 @@ signals:
     void cmdToDevice(int cmd ,QString data);
     void progressChanged(int progress ,int page);
     void cmdResult(int cmd,int result ,QString data=QString());
+    void signal_deviceCmdResult(int cmd,int result ,QString data=QString());
 
     void imagesCmdStart(int cmd, QString data ,QStringList fileList = QStringList());
     void imagesCmd(QStringList fileList = QStringList());

@@ -23,7 +23,7 @@ JKAbstractButton {
 
     Column{
         id: column
-        width: 310
+        width: 400
         spacing: 10
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -40,23 +40,22 @@ JKAbstractButton {
             id: name
             text:"1.Scan to Print"
             anchors.horizontalCenter: parent.horizontalCenter
-            font.pointSize: 15
+            font.pointSize: 20
             font.bold: true
 
         }
 
         Grid {
             id: grid
-            anchors.left: parent.left
-            anchors.leftMargin: 100
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 5
+            spacing: 10
             columns: 2
 
             Text {
                 id: adfTitle
-                text: qsTr("ADF:")
+                text: qsTr("ADF Mode:")
                 font.pixelSize: 12
+                width: 90
             }
 
             Text {
@@ -67,7 +66,7 @@ JKAbstractButton {
 
             Text {
                 id: dpiTitle
-                text: qsTr("DPI:")
+                text: qsTr("Resolution:")
                 font.pixelSize: 12
             }
 
@@ -79,7 +78,7 @@ JKAbstractButton {
 
             Text {
                 id: modeTitle
-                text: qsTr("Mode:")
+                text: qsTr("Color Mode:")
                 font.pixelSize: 12
             }
 

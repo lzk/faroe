@@ -38,5 +38,6 @@ int main(int argc, char *argv[])
 //    QObject* scanData = rootObject->findChild<QObject*>("scanData");
 //    if(scanData)
 //        jki.setScanDataHandle(scanData);
+    jki.init();
     return app.exec();
 }

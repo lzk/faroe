@@ -73,113 +73,126 @@ int Device::deviceCmd(int cmd ,void* data)
         err = scanner->ADFScan(data);
         if(err > 0)
             err += DeviceStruct::ERR_SCAN;
+        else if(err < 0){
+            err = DeviceStruct::ERR_communication;
+        }
         break;
+    case CMD_doCalibration:
+    {
+        err = scanner->doCalibration();
+        if(err > 0)
+            err += DeviceStruct::ERR_SCAN;
+        else if(err < 0){
+            err = DeviceStruct::ERR_communication;
+        }
+        break;
+    }
     case CMD_setWifi:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->setWifi(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_setPassword:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->setPassword(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_confirmPassword:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->confirmPassword(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_setSaveTime:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->setSaveTime(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_getSaveTime:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->getSaveTime(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_getWifiInfo:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->getWifi(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_getIpv4:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->getIpV4(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_setIpv4:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->setIpV4(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_setSoftap:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->setSoftAp(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_getSoftap:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->getSoftAp(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_setOffTime:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->setOffTime(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_getOffTime:
     {
-        err =deviceIO->open(1);
-        if(!err){
+//        err =deviceIO->open(1);
+//        if(!err){
             err = setter->getOffTime(data);
-            deviceIO->close();
-        }
+//            deviceIO->close();
+//        }
         break;
     }
     case CMD_setPowerSaveTime:
@@ -205,13 +218,6 @@ int Device::deviceCmd(int cmd ,void* data)
     case CMD_clearACMCount:
     {
         err = scanner->clearACMCount();
-        break;
-    }
-    case CMD_doCalibration:
-    {
-        err = scanner->doCalibration();
-        if(err > 0)
-            err += DeviceStruct::ERR_SCAN;
         break;
     }
     default:
