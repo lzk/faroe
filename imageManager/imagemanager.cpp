@@ -35,7 +35,7 @@ void ImageManager::imagesCmdStart(int cmd, QString para ,QStringList)
 {
     cmd_state = JKEnums::ImageCommandState_start;
     if(cmd_status){//processing
-        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_noProcessing);
+//        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_noProcessing);
         return;
     }
     qDebug()<<"image cmd:"<<cmd;
@@ -47,8 +47,8 @@ void ImageManager::imagesCmdStart(int cmd, QString para ,QStringList)
     cmd_para =  para;
     currentPage = 0;
     switch (cmd) {
-    case DeviceStruct::CMD_QuickScan_ToFTP:
     case DeviceStruct::CMD_ScanTo_ToFTP:
+    case DeviceStruct::CMD_QuickScan_ToFTP:
         ftpStart(para);
         break;
     case DeviceStruct::CMD_QuickScan_ToFile:
@@ -87,7 +87,7 @@ void ImageManager::cmdResult(int cmd ,int result)
 {
     cmd_state = JKEnums::ImageCommandState_end;
     if(cmd_status == 0){
-        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_noProcessing);
+//        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_noProcessing);
         return;
     }
     cmd_status = 0;
@@ -98,8 +98,8 @@ void ImageManager::imagesCmdEnd(int cmd ,int result)
 {
     this->result = result;
     switch (cmd) {
-    case DeviceStruct::CMD_QuickScan_ToFTP:
     case DeviceStruct::CMD_ScanTo_ToFTP:
+    case DeviceStruct::CMD_QuickScan_ToFTP:
         ftpEnd();
         break;
     case DeviceStruct::CMD_QuickScan_ToFile:
@@ -152,7 +152,7 @@ void ImageManager::imagesCmd(QStringList fileList)
         return;
     cmd_state = JKEnums::ImageCommandState_processing;
     if(cmd_status == 0){
-        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_noProcessing);
+//        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_noProcessing);
         return;
     }
 
@@ -187,7 +187,7 @@ void ImageManager::imagesCmd(QStringList fileList)
         foreach (QString filename, fileList) {
             ftpUpload(filename);
         }
-        ftpEnd();
+        ftp->close();
         break;
     case DeviceStruct::CMD_QuickScan_ToFTP:
         foreach (QString filename, fileList) {
@@ -413,11 +413,11 @@ void ImageManager::ftpStart(const QString& para)
 
 void ImageManager::ftpEnd()
 {
-    if(result && result != JKEnums::ImageCommandResult_NoError){
-        cmdResult(cmd ,result);
-    }else
-    if(ftp && ftp->state() != QFtp::Closing){
-        ftp->close();
+    cmdResult(cmd ,result);
+    if(ftp){
+        ftp->abort();
+        ftp->deleteLater();
+        ftp = NULL;
     }
 }
 
@@ -510,7 +510,7 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
         }
         qDebug()<<"put finished error:"<<error;
         if(!error){
-            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+//            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
             if(ftp->hasPendingCommands())
                 ftpTimer->start(15000);
         }else{
@@ -521,7 +521,8 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
         break;
     case QFtp::Close:
         qDebug()<<"ftp close error:"<<error;
-        cmdResult(cmd ,result);
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+//        cmdResult(cmd ,result);
         break;
     default:
         break;

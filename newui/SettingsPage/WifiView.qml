@@ -105,7 +105,7 @@ Item {
                             JKTextButton{
                                 width: 120
                                 height: 35
-                                text.text: qsTr("Manual Wi-Fi...")
+                                text: qsTr("Manual Wi-Fi...")
                                 anchors.right: parent.right
                                 anchors.rightMargin: 5
                                 onClicked: {
@@ -144,9 +144,6 @@ Item {
 
                             Column{
                                 id:column3
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-
                                 width: parent.width
                                 Item {
                                     id: item5
@@ -154,6 +151,7 @@ Item {
                                     width: parent.width
                                     JKText {
                                         id: text4
+                                        x:5
                                         text: qsTr("WLAN Network")
                                         anchors.verticalCenter: parent.verticalCenter
                                         font.pixelSize: 14
@@ -218,6 +216,7 @@ Component{
             }
             JKText{
                 id:text_ssid
+                x:10
                 font.pixelSize: 15
                 text:model.modelData.ssid
             }
@@ -225,6 +224,7 @@ Component{
                 width: parent.width
                 height: 20
                 JKText{
+                    x:10
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                     text:getEncryptionString(model.modelData.encryption)
@@ -334,7 +334,7 @@ Component{
                                 anchors.fill: parent
                                 anchors.margins: 5
                                 anchors.centerIn: parent
-                                text.text: qsTr("Cancel")
+                                text: qsTr("Cancel")
                                 onClicked:
                                     displayDetail = false
                             }
@@ -346,7 +346,7 @@ Component{
                                 anchors.fill: parent
                                 anchors.margins: 5
                                 anchors.centerIn: parent
-                                text.text: qsTr("Connect")
+                                text: qsTr("Connect")
                                 onClicked: {
                                     var encryption = model.modelData.encryption % 4
                                     switch(encryption){

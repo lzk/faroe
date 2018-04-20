@@ -426,7 +426,7 @@ Item {
             switch(cmd){
             case DeviceStruct.CMD_ScanTo_ToFTP:
             case DeviceStruct.CMD_ScanTo_ToCloud:
-                message = qsTr("Upload,please wait!")
+                message = qsTr("Uploading ,please wait...")
                 break
             case DeviceStruct.CMD_ScanTo_ToPrint:
                 message = qsTr("Printing picture,please wait...")
@@ -536,7 +536,7 @@ Item {
                     errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
                     break
                 default:
-                    errorWithImage(qsTr("Configure Failed!"))
+                    errorWithImage(qsTr("Configuration Failed.Please check your setting and device,then try again."))
                     break
                 }
                 break
@@ -549,10 +549,10 @@ Item {
             case DeviceStruct.CMD_clearRollerCount:
                 switch(result){
                 case DeviceStruct.ERR_ACK:
-                    information_1button(qsTr("Configure Successed!"))
+                    information_1button(qsTr("Configuration completed!Please restart device to apply settings."))
                     break
                 default:
-                    errorWithImage(qsTr("Configure Failed!"))
+                    errorWithImage(qsTr("Configuration Failed.Please check your setting and device,then try again."))
                     break
                 }
                 break

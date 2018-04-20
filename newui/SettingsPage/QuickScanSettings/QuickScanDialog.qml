@@ -72,7 +72,7 @@ JKParaDialog{
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
-        text.text: qsTr("OK")
+        text: qsTr("OK")
         onClicked: {
             if(settingLoader.item.ok()){
                 if(mode === 1){

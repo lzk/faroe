@@ -44,11 +44,17 @@ JKDialog{
         text.font.bold: true
     }
 
-    Image{
-        parent: background
+    Rectangle{
+        parent:background
         anchors.fill: parent
-        source: "qrc:/Images/popup_gnd_scan settings.png"
+        color: "white"
     }
+
+//    Image{
+//        parent: background
+//        anchors.fill: parent
+//        source: "qrc:/Images/popup_gnd_scan settings.png"
+//    }
 
 
     ScanSettingView{
@@ -59,12 +65,16 @@ JKDialog{
         decodeMode: mode === 1
         item_adfMode.enabled: powerMode !== JKEnums.PowerMode_usbBusPower
         item_colorMode.enabled: !radioButton_autoColorDetection_on.checked
-        item_skipBlankPage.enabled: //comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+        item_skipBlankPage.enabled:
+//                                    comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
                                     (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
                                     || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
 //                                    && radioButton_autoCropDeskew_on.checked
                                     && powerMode !== JKEnums.PowerMode_usbBusPower
-        item_autoColorDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+        item_autoColorDetection.enabled:
+//                                      comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
+                                         (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+                                         || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
                                         && radioButton_color.checked
                                         && powerMode !== JKEnums.PowerMode_usbBusPower
         item_multiFeedDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
@@ -83,11 +93,10 @@ JKDialog{
 //                                    && powerMode !== JKEnums.PowerMode_usbBusPower
 
         spin_gamma{
-            slider{
-                from: 1
-                to:50
-            }
-            text:Math.floor(spin_gamma.value) / 10
+            from: 1
+            to: 50
+            decimals: 1
+//            text:Math.floor(spin_gamma.value) / 10
         }
         function updateComboxModel_dpi(){
             var index = comboBox_dpi.currentIndex
@@ -137,9 +146,34 @@ JKDialog{
                     && comboBox_mediaType.currentText === constMediaTypeMap.normal){
                 radioButton_multiFeedDetection_on.checked = lastMultiFeed
             }else{
-                if(radioButton_multiFeedDetection_on.checked)
+//                if(radioButton_multiFeedDetection_on.checked)
                     lastMultiFeed = radioButton_multiFeedDetection_on.checked
                 radioButton_multiFeedDetection_on.checked = false
+            }
+        }
+        property bool lastSkipBlank: false
+        function updateRadio_skipBlank(){
+            if(comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+              || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed
+                    ){
+                radioButton_skipBlankPage_on.checked = lastSkipBlank
+            }else{
+//                if(radioButton_skipBlankPage_on.checked)
+                    lastSkipBlank = radioButton_skipBlankPage_on.checked
+                radioButton_skipBlankPage_on.checked = false
+            }
+        }
+        property bool lastAutoColorDetection: false
+        function updateRadio_autoColorDetection(){
+            if((comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+              || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
+              && radioButton_color.checked === true
+                    ){
+                radioButton_autoColorDetection_on.checked = lastAutoColorDetection
+            }else{
+//                if(radioButton_autoColorDetection_on.checked)
+                    lastAutoColorDetection = radioButton_autoColorDetection_on.checked
+                radioButton_autoColorDetection_on.checked = false
             }
         }
     }
@@ -147,7 +181,7 @@ JKDialog{
     JKTextButton{
         parent: scanSettingView.item_btnDefault
         anchors.fill: parent
-        text.text: qsTr("Default")
+        text: qsTr("Default")
         onClicked: {
             scanSetting = JSData.defaultScanSetting()
             root.update()
@@ -157,7 +191,7 @@ JKDialog{
     JKTextButton{
         parent: scanSettingView.item_btnOK
         anchors.fill: parent
-        text.text: qsTr("OK")
+        text: qsTr("OK")
         onClicked: {
             confirm()
         }
@@ -198,6 +232,9 @@ JKDialog{
             scanSettingView.updateComboxModel_dpi()
             scanSettingView.updateComboxModel_mediaType()
             scanSettingView.updateRadio_multiFeed()
+            scanSettingView.updateRadio_skipBlank()
+            scanSettingView.updateRadio_autoColorDetection()
+
         }
     }
 
@@ -238,6 +275,8 @@ JKDialog{
         scanSettingView.updateComboxModel_dpi()
         scanSettingView.updateComboxModel_mediaType()
         scanSettingView.updateRadio_multiFeed()
+        scanSettingView.updateRadio_skipBlank()
+        scanSettingView.updateRadio_autoColorDetection()
     }
 
     JKBusyIndicator{

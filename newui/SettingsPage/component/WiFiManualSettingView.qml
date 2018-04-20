@@ -25,11 +25,14 @@ Item{
 
             Row{
                 height: 60
-                spacing: 5
+                spacing: 20
                 Image{
+                    anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/Images/Wifi.png"
                 }
                 Column{
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 10
                     JKText{
                         text:qsTr("Find and join the Wi-Fi")
                     }
@@ -40,11 +43,12 @@ Item{
                 }
             }
 
-            Item {
+            Row {
                 height: 30
                 width: parent.width
                 JKText {
                     id: text3
+                    width: 100
                     text: qsTr("SSID")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
@@ -54,8 +58,6 @@ Item{
                     id: input_ssid
                     width: 275
                     height: 30
-                    anchors.right: parent.right
-                    anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[^\s]{0,32}/
@@ -63,7 +65,7 @@ Item{
                 }
             }
 
-            Item {
+            Row {
                 height: 30
                 width: parent.width
                 enabled: combobox.currentIndex !== 0
@@ -71,6 +73,7 @@ Item{
 
                 JKText {
                     id: text4
+                    width: 100
                     text: qsTr("Password")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
@@ -80,8 +83,6 @@ Item{
                     id: input_password
                     width: 275
                     height: 30
-                    anchors.right: parent.right
-                    anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp:  combobox.currentIndex === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
@@ -93,6 +94,7 @@ Item{
 
             CheckBox{
                 id:checkbox_input
+                x: input_password.x
                 text: qsTr("Display Password")
                 enabled: combobox.currentIndex !== 0
                 indicator: Rectangle {
@@ -114,10 +116,11 @@ Item{
                 }
             }
 
-            Item {
+            Row {
                 width: parent.width
                 height: 30
                 JKText {
+                    width: 100
                     text: qsTr("Encryption")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
@@ -127,8 +130,6 @@ Item{
                     id:combobox
                     width: 275
                     height: 30
-                    anchors.right: parent.right
-                    anchors.rightMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     model: [qsTr("No Security")
                         ,qsTr("WEP")
@@ -143,29 +144,34 @@ Item{
                 width: parent.width
                 Row{
                     visible:combobox.currentIndex === 1
-                    anchors.horizontalCenter: parent.horizontalCenter
+//                    anchors.horizontalCenter: parent.horizontalCenter
                     height: 25
                     spacing: 2
                     JKText {
                         text: qsTr("WEP KeyID")
+                        width: 100
                         anchors.verticalCenter: parent.verticalCenter
                         font.pixelSize: 12
                     }
                     JKRadioButton{
                         id:radio0
+                        anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Key1")
                         checked: true
                     }
                     JKRadioButton{
                         id:radio1
+                        anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Key2")
                     }
                     JKRadioButton{
                         id:radio2
+                        anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Key3")
                     }
                     JKRadioButton{
                         id:radio3
+                        anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Key4")
                     }
                 }
@@ -179,14 +185,14 @@ Item{
                 JKTextButton{
                     width: root.width / 2 - 20
                     height: parent.height
-                    text.text: qsTr("Return")
+                    text: qsTr("Return")
                     onClicked: returnClicked()
                 }
 
                 JKTextButton{
                     width: root.width / 2 - 20
                     height: parent.height
-                    text.text: qsTr("Connect")
+                    text: qsTr("Connect")
                     onClicked: {
                         if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
                             warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))

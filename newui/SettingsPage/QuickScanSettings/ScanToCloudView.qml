@@ -52,7 +52,7 @@ Item {
 
                 JKTextButton {
                     id: button_reset
-                    text.text: qsTr("Reset")
+                    text: qsTr("Reset")
                     width: 100
                     height: 35
                     anchors.right: parent.right
@@ -151,7 +151,7 @@ Item {
 
                          JKTextButton {
                              id: button_browse
-                             text.text: qsTr("Browser...")
+                             text: qsTr("Browser...")
                              width: 100
                              height: 30
                              anchors.right: parent.right

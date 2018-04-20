@@ -66,55 +66,65 @@ Item {
             width: parent.width
         }
 
-        Item {
-            id: item2
-            height: 80
+        Item{
             width: parent.width
-            enabled: checkbox.checked
-            opacity: enabled ?1 :0.3
-            JKText {
-                id: text3
-                text: qsTr("SSID")
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 12
+            height: 40
+        }
+
+        Column{
+            height: 120
+            width: parent.width
+            Row {
+                id: item2
+                height: 60
+                width: parent.width
+                enabled: checkbox.checked
+                opacity: enabled ?1 :0.3
+                JKText {
+                    id: text3
+                    width: 100
+                    text: qsTr("SSID")
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 12
+                }
+
+                JKTextInput {
+                    id: input_ssid
+                    width: 275
+                    height: 30
+                    anchors.verticalCenter: parent.verticalCenter
+                    validator: RegExpValidator{
+                        regExp: /^[\x20-\x7e]{1,32}$/
+                    }
+                }
             }
 
-            JKTextInput {
-                id: input_ssid
-                width: 275
-                height: 30
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                validator: RegExpValidator{
-                    regExp: /^[\x20-\x7e]{1,32}$/
+            Row {
+                id: item5
+                height: 60
+                width: parent.width
+                enabled: checkbox.checked
+                opacity: enabled ?1 :0.3
+                JKText {
+                    id: text4
+                    width: 100
+                    text: qsTr("Password")
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 12
+                }
+
+                JKTextInput {
+                    id: input_password
+                    width: 275
+                    height: 30
+                    anchors.verticalCenter: parent.verticalCenter
+                    validator: RegExpValidator{
+                        regExp: /^(?:.{8,63}|[0-9a-fA-F]{64})$/
+                    }
                 }
             }
         }
 
-        Item {
-            id: item5
-            height: 60
-            width: parent.width
-            enabled: checkbox.checked
-            opacity: enabled ?1 :0.3
-            JKText {
-                id: text4
-                text: qsTr("Password")
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 12
-            }
-
-            JKTextInput {
-                id: input_password
-                width: 275
-                height: 30
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                validator: RegExpValidator{
-                    regExp: /^(?:.{8,63}|[0-9a-fA-F]{64})$/
-                }
-            }
-        }
         Item{
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -124,7 +134,7 @@ Item {
             height: 60
             JKTextButton {
                 id: button_apply
-                text.text: qsTr("Apply")
+                text: qsTr("Apply")
                 width: 150
                 height: 35
                 anchors.centerIn: parent

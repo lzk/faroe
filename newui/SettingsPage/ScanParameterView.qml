@@ -86,7 +86,7 @@ Item {
 
             JKTextButton {
                 id: button_reset
-                text.text: qsTr("Reset")
+                text: qsTr("Reset")
                 visible: comboBox_cloudType.currentText !== JSData.supportCloudType().icloud
                 width: 100
                 height: 35
@@ -136,7 +136,7 @@ Item {
     JKTextButton{
         parent: item_btnSettings
         anchors.fill: parent
-        text.text: qsTr("Settings...")
+        text: qsTr("Settings...")
         onClicked: {
             openScanSettingDialog(scanToParameter.scanSetting)
         }

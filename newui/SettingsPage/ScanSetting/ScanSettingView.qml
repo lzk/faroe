@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
 import "../component"
+import "../../component"
 
 Item {
     id: item9
@@ -100,9 +101,9 @@ Item {
                     text: qsTr("Resolution")
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    ComboBox {
+                    JKComboBox {
                         id: comboBox_dpi
-                        width: 145
+                        width: 180
                         height: 24
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
@@ -114,9 +115,9 @@ Item {
                     height: 80
                     text: qsTr("Media Type")
                     anchors.horizontalCenter: parent.horizontalCenter
-                    ComboBox {
+                    JKComboBox {
                         id: comboBox_mediaType
-                        width: 145
+                        width: 180
                         height: 24
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
@@ -128,9 +129,9 @@ Item {
                     height: 80
                     text: qsTr("Scan Area Size")
                     anchors.horizontalCenter: parent.horizontalCenter
-                    ComboBox {
+                    JKComboBox {
                         id: comboBox_scanAreaSize
-                        width: 145
+                        width: 180
                         height: 24
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter

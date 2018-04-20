@@ -199,7 +199,7 @@ Item {
                         height: 55
                         JKTextButton {
                             id: button_browser
-                            text.text: qsTr("Browser...")
+                            text: qsTr("Browser...")
                             width: 100
                             height: 35
                             anchors.right: parent.right
@@ -231,7 +231,7 @@ Item {
     JKTextButton{
         parent: item_btnSettings_decode
         anchors.fill: parent
-        text.text: qsTr("Settings...")
+        text: qsTr("Settings...")
         onClicked: {
             openScanSettingDialog(decodeSetting.scanSetting ,1)
         }
@@ -239,7 +239,7 @@ Item {
     JKTextButton{
         parent: item_btnSettings_separation
         anchors.fill: parent
-        text.text: qsTr("Settings...")
+        text: qsTr("Settings...")
         onClicked: {
             openScanSettingDialog(separationSetting.scanSetting ,2)
         }

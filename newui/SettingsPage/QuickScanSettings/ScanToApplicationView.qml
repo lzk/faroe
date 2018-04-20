@@ -56,7 +56,7 @@ Item {
 
             JKTextButton {
                 id: button_browse
-                text.text: qsTr("Browser...")
+                text: qsTr("Browser...")
                 width: 100
                 height: 30
                 anchors.right: parent.right

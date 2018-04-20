@@ -1,13 +1,17 @@
 import QtQuick 2.0
-
-Item {
-    property bool selected: false
+import QtQuick.Controls 2.2
+ItemDelegate {
+    id:root
+    property alias selected: root.checked
     property alias image: image
-    property alias text: text1
+//    property alias text: text1
 
     signal close
-    signal doubleClick
-    signal click
+//    signal doubleClick
+//    signal click
+    background:Item{}
+
+    contentItem:
     Rectangle {
         id: rectangle
         anchors.fill: parent
@@ -22,11 +26,11 @@ Item {
             anchors.topMargin: 25
             anchors.bottomMargin: 25
 
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
+//            MouseArea {
+//                id: mouseArea
+//                anchors.fill: parent
 
-            }
+//            }
         }
 
         Image {
@@ -53,7 +57,7 @@ Item {
 
             Text {
                 id: text1
-                text: qsTr("1")
+                text: root.text
                 font.italic: true
                 anchors.centerIn: parent
                 font.pixelSize: 15
@@ -62,14 +66,14 @@ Item {
         }
     }
 
-    Connections {
-        target: mouseArea
-        onClicked: click()
-        onDoubleClicked: {
-            doubleClick()
-//            mouse.accepted = false
-        }
-    }
+//    Connections {
+//        target: mouseArea
+//        onClicked: click()
+//        onDoubleClicked: {
+//            doubleClick()
+////            mouse.accepted = false
+//        }
+//    }
 
     Connections {
         target: mouseArea_close

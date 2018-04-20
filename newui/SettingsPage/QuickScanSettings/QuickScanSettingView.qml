@@ -65,7 +65,7 @@ Item {
     JKTextButton{
         parent: item_btnSettings
         anchors.fill: parent
-        text.text: qsTr("Settings...")
+        text: qsTr("Settings...")
         onClicked: {
             openScanSettingDialog(setting.scanSetting)
         }

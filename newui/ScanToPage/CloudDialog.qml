@@ -131,7 +131,7 @@ JKDialog {
                 width: 100
                 height: 35
                 anchors.centerIn: parent
-                text.text:setting.okButtonText
+                text:setting.okButtonText
             }
         }
     }

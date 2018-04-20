@@ -409,3 +409,8 @@ int JKInterface::macVersion()
     LOG_PARA("Version:%d" ,version);
     return version;
 }
+ bool JKInterface::validate(const QValidator* validator ,QString& text)
+ {
+     int pos;
+     return validator->validate(text ,pos) != QValidator::Invalid;
+ }

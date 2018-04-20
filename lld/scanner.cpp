@@ -249,13 +249,10 @@ bool isLittleEndian()
 }
 void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
 {
-    bool littleEndian = isLittleEndian();
-    qDebug()<<"gamma:"<<gamma <<"litten?"<<littleEndian;
+//    bool littleEndian = isLittleEndian();
+//    qDebug()<<"gamma:"<<gamma <<"litten?"<<littleEndian;
     if(gamma < 0.1)
         gamma = 0.1;
-//    unsigned int Red[65536];
-//    unsigned int Green[65536];
-//    unsigned int Blue[65536];
     unsigned int* Red = new unsigned int [65536];
 //    unsigned int* Green =  new unsigned int [65536];
 //    unsigned int* Blue =  new unsigned int [65536];
@@ -281,29 +278,34 @@ void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
     for (i = 0; i<256; i++)
     {
         if (i<255) {
-            if(littleEndian){
-                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
-                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
-//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
-//                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
-//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
-//                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
-            }else{
-                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | (pbyRed[(i+1)*256] & 0x0000ffff << 16);
-//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | (pbyGreen[(i+1)*256] & 0x0000ffff << 16);
-//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | (pbyBlue[(i+1)*256] & 0x0000ffff << 16);
-            }
-        }
-        else {
-            if(littleEndian){
-                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
-//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
-//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
-            }else{
-                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
-//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
-//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
-            }
+            GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
+//            GLGamma[i] = ((unsigned short)pbyRed[i*256])
+//                    + ((pbyRed[(i+1)*256]) << 16);
+//            if(littleEndian){
+//                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | ((pbyGreen[(i+1)*256] & 0x0000ffff) << 16);
+////                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | ((pbyBlue[(i+1)*256] & 0x0000ffff) << 16);
+//            }else{
+//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
+//                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
+////                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
+////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
+////                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
+//            }
+        }else{
+            GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
+//            GLGamma[i] = ((unsigned short)pbyRed[i*256])
+//                    + 65536 * 65535;
+//            if(littleEndian){
+//                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
+////                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
+//            }else{
+//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
+////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
+//            }
         }
         GLGamma[i + 256] = GLGamma[i];
         GLGamma[i + 512] = GLGamma[i];
@@ -744,34 +746,54 @@ int Scanner::scanner_cmd(int cmd ,void* data)
             }
         }
         {
-            unsigned char dt[4];
-            result = scannerApi->nvram_read(0x48 ,4 ,dt);
+            int value;
+            unsigned char* p = (unsigned char*) &value;
+            result = scannerApi->nvram_read(0x48 ,4 ,p);
             if(!result){
-                pData->rollerCount = dt[0]
-                        |(dt[1] & 0xff00)
-                        |(dt[2] & 0xff0000)
-                        |(dt[3] & 0xff000000);
+                pData->rollerCount = value;
             }else{
                 return -1;
             }
-            result = scannerApi->nvram_read(0x4c ,4 ,dt);
+            result = scannerApi->nvram_read(0x4c ,4 ,p);
             if(!result){
-                pData->acmCount = dt[0]
-                        |(dt[1] & 0xff00)
-                        |(dt[2] & 0xff0000)
-                        |(dt[3] & 0xff000000);
+                pData->acmCount = value;
             }else{
                 return -1;
             }
-            result = scannerApi->nvram_read(0x00 ,4 ,dt);
+            result = scannerApi->nvram_read(0x00 ,4 ,p);
             if(!result){
-                pData->scanCount = dt[0]
-                        |(dt[1] & 0xff00)
-                        |(dt[2] & 0xff0000)
-                        |(dt[3] & 0xff000000);
+                pData->scanCount = value;
             }else{
                 return -1;
             }
+//            unsigned char dt[4];
+//            result = scannerApi->nvram_read(0x48 ,4 ,dt);
+//            if(!result){
+//                pData->rollerCount = dt[0]
+//                        |(dt[1] & 0xff00)
+//                        |(dt[2] & 0xff0000)
+//                        |(dt[3] & 0xff000000);
+//            }else{
+//                return -1;
+//            }
+//            result = scannerApi->nvram_read(0x4c ,4 ,dt);
+//            if(!result){
+//                pData->acmCount = dt[0]
+//                        |(dt[1] & 0xff00)
+//                        |(dt[2] & 0xff0000)
+//                        |(dt[3] & 0xff000000);
+//            }else{
+//                return -1;
+//            }
+//            result = scannerApi->nvram_read(0x00 ,4 ,dt);
+//            if(!result){
+//                pData->scanCount = dt[0]
+//                        |(dt[1] & 0xff00)
+//                        |(dt[2] & 0xff0000)
+//                        |(dt[3] & 0xff000000);
+//            }else{
+//                return -1;
+//            }
         }
         break;
     }

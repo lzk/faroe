@@ -99,7 +99,7 @@ DelegateModel{
     delegate: ImageDelegate{
         width: GridView.view.cellWidth
         height: GridView.view.cellHeight
-        text.text: sn//selected ?sn :""
+        text: sn//selected ?sn :""
         selected: DelegateModel.inSelected
 //            image.source: "image://async/" + getThumbnailFilename(url)
         image.source: "file:///" +  getThumbnailFilename(url)
@@ -107,9 +107,10 @@ DelegateModel{
             visualModel.currentIndex = index
             information(qsTr("Do you want to delete the selected image?") ,deleteDialogClose)
         }
-        onDoubleClick: {
+        onDoubleClicked: {
             if(image.status === Image.Ready){
-
+                console.log("double")
+                DelegateModel.inSelected = !DelegateModel.inSelected
                 openPreviewDialog(function(dialog){
 //                    dialog.image.source = "file:///" + url
 //                    dialog.sourceSize = sourceSize
@@ -119,7 +120,8 @@ DelegateModel{
                 })
             }
         }
-        onClick: {
+        onToggled: {
+            console.log("single")
             DelegateModel.inSelected = !DelegateModel.inSelected
         }
 

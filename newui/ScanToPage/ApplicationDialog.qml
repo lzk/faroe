@@ -159,7 +159,7 @@ JKDialog{
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
-        text.text: qsTr("OK")
+        text: qsTr("OK")
         onClicked: {
             switch(listView.currentIndex){
             case 0:

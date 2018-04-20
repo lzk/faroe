@@ -34,7 +34,7 @@ JKDialog {
             anchors.right: parent.right
             anchors.rightMargin: 15
             anchors.bottom: parent.bottom
-            text.text: qsTr("Cancel")
+            text: qsTr("Cancel")
             onClicked: cancelClick()
         }
     }

@@ -6,6 +6,7 @@
 #include <QMutex>
 #include <QThread>
 #include <QImage>
+#include <QValidator>
 class DeviceManager;
 class ImageModel;
 class ImageManager;
@@ -32,6 +33,7 @@ public:
     Q_INVOKABLE void showMinimize(QWindow*);
     Q_INVOKABLE void setWindowFrameless(QWindow*);
     Q_INVOKABLE int macVersion();
+    Q_INVOKABLE bool validate(const QValidator* ,QString& text);
 signals:
     void searchDeviceList();
     void searchComplete();

@@ -104,7 +104,7 @@ Item {
             width: 150
             height: 35
             anchors.horizontalCenter: parent.horizontalCenter
-            text.text: qsTr("Connect")
+            text: qsTr("Connect")
             enabled: listview.count > 0
             onClicked: connectToDevice(listview.currentIndex)
         }

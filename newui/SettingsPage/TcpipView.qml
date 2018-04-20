@@ -68,12 +68,14 @@ Item {
         Column{
             width: parent.width
             enabled: radiobutton_static.checked
-            Item {
+            Row {
                 id: item2
                 height: 60
                 width: parent.width
+//                spacing: 20
                 JKText {
                     id: text3
+                    width: 100
                     text: qsTr("IP Address")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
@@ -83,7 +85,6 @@ Item {
                     id: input_ipAddress
                     width: 250
                     height: 30
-                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
@@ -91,12 +92,14 @@ Item {
                 }
             }
 
-            Item {
+            Row {
                 id: item5
                 height: 60
                 width: parent.width
+//                spacing: 20
                 JKText {
                     id: text4
+                    width: 100
                     text: qsTr("Submask")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
@@ -106,7 +109,6 @@ Item {
                     id: input_submask
                     width: 250
                     height: 30
-                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
@@ -114,12 +116,14 @@ Item {
                 }
             }
 
-            Item {
+            Row {
                 id: item6
                 height: 60
                 width: parent.width
+//                spacing: 20
                 JKText {
                     id: text5
+                    width: 100
                     text: qsTr("Gateway")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
@@ -129,7 +133,6 @@ Item {
                     id: input_gateway
                     width: 250
                     height: 30
-                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
@@ -147,7 +150,7 @@ Item {
             height: 60
             JKTextButton {
                 id: button_apply
-                text.text: qsTr("Apply")
+                text: qsTr("Apply")
                 width: 150
                 height: 35
                 anchors.centerIn: parent

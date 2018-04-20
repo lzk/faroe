@@ -1,10 +1,15 @@
 import QtQuick 2.7
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.2
 
-JKAbstractButton{
+Button{
+//JKAbstractButton{
     id: root
     property alias container: container
 
+    background:Item{}
+
+    contentItem:
     Item{
         id:container
         anchors.fill: parent
@@ -28,7 +33,8 @@ JKAbstractButton{
     states:[
         State {
             name: "normal"
-            when: root.enabled && !mouseArea.containsMouse
+//            when: root.enabled && !mouseArea.containsMouse
+            when: root.enabled && !root.hovered
             PropertyChanges {
                 target: blur
                 scale: 1.0
@@ -43,7 +49,8 @@ JKAbstractButton{
         },
         State {
             name: "pressed"
-            when: root.enabled && mouseArea.pressed
+//            when: root.enabled && mouseArea.pressed
+            when: root.enabled && root.pressed
             PropertyChanges {
                 target: shadow
                 samples: 11
@@ -73,7 +80,8 @@ JKAbstractButton{
         },
         State {
             name: "enter"
-            when: root.enabled && mouseArea.containsMouse
+//            when: root.enabled && mouseArea.containsMouse
+            when: root.enabled && root.hovered
             PropertyChanges {
                 target: shadow
                 samples: 11

@@ -67,12 +67,10 @@ Item {
                                 anchors.fill: parent
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20
-                                slider{
-                                    visible: false
-                                    from: 1
-                                    to: 60
-                                    value: 0
-                                }
+                                slider.visible: false
+                                from: 1
+                                to:60
+                                value: 0
                             }
                         }
                         JKText {
@@ -109,11 +107,9 @@ Item {
                                 anchors.fill: parent
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20
-                                slider{
-                                    visible: false
-                                    to: 4
-                                    value: 0
-                                }
+                                slider.visible: false
+                                to :4
+                                value :0
                             }
                         }
                         JKText {
@@ -169,7 +165,7 @@ Item {
                             Layout.fillWidth: true
                             JKTextButton{
                                 id:button_clearRollerCount
-                                text.text: qsTr("Clear")
+                                text: qsTr("Clear")
                                 width: 100
                                 height: 24
                                 anchors.verticalCenter: parent.verticalCenter
@@ -206,7 +202,7 @@ Item {
                             Layout.fillWidth: true
                             JKTextButton{
                                 id:button_clearACMCount
-                                text.text: qsTr("Clear")
+                                text: qsTr("Clear")
                                 width: 100
                                 height: 24
                                 anchors.verticalCenter: parent.verticalCenter
@@ -258,7 +254,7 @@ Item {
                 id: button_apply
                 enabled:((Math.floor(spin_saveTime.value) !== setting.saveTime)
                          ||(Math.floor(spin_offTime.value) !== setting.offTime))
-                text.text: qsTr("Apply")
+                text: qsTr("Apply")
                 width: 150
                 height: 35
                 anchors.centerIn: parent
@@ -270,7 +266,7 @@ Item {
     JKTextButton{
         parent: item_btnCalibration
         anchors.fill: parent
-        text.text: qsTr("Calibration")
+        text: qsTr("Calibration")
         onClicked: {
             setSetterCmd(DeviceStruct.CMD_doCalibration ,setting)
         }
@@ -347,13 +343,20 @@ Item {
     Connections{
         target: button_clearACMCount
         onClicked:{
-            setSetterCmd(DeviceStruct.CMD_clearACMCount ,setting)
+            information(qsTr("Do you want to clear this count?") ,clearACMCount)
         }
+    }
+    function clearACMCount(){
+        setSetterCmd(DeviceStruct.CMD_clearACMCount ,setting)
+    }
+
+    function clearRollerCount(){
+        setSetterCmd(DeviceStruct.CMD_clearRollerCount ,setting)
     }
     Connections{
         target: button_clearRollerCount
         onClicked:{
-            setSetterCmd(DeviceStruct.CMD_clearRollerCount ,setting)
+            information(qsTr("Do you want to clear this count?") ,clearRollerCount)
         }
     }
 }

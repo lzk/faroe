@@ -90,7 +90,7 @@ JKDialog{
         JKTextButton{
             parent: ip.item_return
             anchors.fill: parent
-            text.text: qsTr("Return")
+            text: qsTr("Return")
             onClicked: {
                 toolbar.close()
             }
