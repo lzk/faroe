@@ -187,7 +187,7 @@ Item {
 
                         JKTextInput {
                             id: input_filePath
-                            enabled: false
+                            input.readOnly: true
                             width: 200
                             height: 30
                             anchors.right: parent.right

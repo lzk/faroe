@@ -6,7 +6,7 @@ JKButton{
 //Button{
     id:root
 //    property alias text: text1.text
-    property int fontSize: 16
+    property int fontSize: 14
     Text{
         id: text1
         parent:rectangle

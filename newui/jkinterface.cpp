@@ -66,7 +66,15 @@ void JKInterface::setScanDataHandle(QObject *scanData)
 
 QStringList JKInterface::getPrinterName()
 {
-    return QPrinterInfo::availablePrinterNames();
+    QStringList sl;
+    foreach (QPrinterInfo pi, QPrinterInfo::availablePrinters()) {
+//        qDebug()<<pi.printerName();
+//        qDebug()<<pi.makeAndModel();
+//        qDebug()<<pi.description();
+        sl << pi.description();
+    }
+    return sl;
+//    return QPrinterInfo::availablePrinterNames();
 }
 
 void JKInterface::updateDeviceList(QStringList deviceList)

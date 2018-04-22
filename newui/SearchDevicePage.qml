@@ -162,6 +162,7 @@ Item {
     function connectToDevice(index){
         if(index < 0)
             return
+        jkInterface.cancelSearch()
         jkInterface.connectDevice(index)
         button_connect.enabled = false
     }

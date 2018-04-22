@@ -70,7 +70,7 @@ Item {
 
             JKTextInput {
                 id: textInput3
-                enabled: false
+                input.readOnly: true
                 width: 250
                 height: 30
                 anchors.right: parent.right

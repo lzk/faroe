@@ -175,11 +175,13 @@ int NetIO::readCommand(char *buffer, int bufsize)
     return read(buffer ,bufsize);
 }
 
+bool snmpGetResponse(char* ip);
 bool NetIO::isConnected()
 {
-    if(openPort(23011) >= 0){
-        close();
-        return true;
-    }
-    return false;
+//    if(openPort(23011) >= 0){
+//        close();
+//        return true;
+//    }
+//    return false;
+    return snmpGetResponse(hostAddress.toString().toLatin1().data());
 }

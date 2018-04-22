@@ -360,3 +360,42 @@ void snmpCancelSearch()
 //    qDebug()<<"cancel search";
 //    udpSocket.writeDatagram("cancel search",11,QHostAddress::LocalHost, 59230);
 }
+
+bool snmpGetResponse(char* ip)
+{
+    bool ret = true;
+    netsnmp_session session;
+    init_snmp ("snmp");
+    snmp_sess_init (&session);
+    session.version = SNMP_VERSION_2c;
+    session.community = (u_char*)"public";
+    session.community_len = strlen ((const char*)session.community);
+    session.peername = ip;//被监控主机的IP地址
+    session.timeout = TimeOutSecond *1000 * 1000;
+    netsnmp_session *ss;
+    netsnmp_pdu *pdu;
+    ss = snmp_open (&session);
+    if (ss == NULL){
+        snmp_sess_perror ("snmp_open", &session);
+        return (1);
+    }
+
+    int new_length=sizeofOidName;
+    pdu = snmp_pdu_create (SNMP_MSG_GET);
+    snmp_add_null_var (pdu, oidName, new_length);
+
+    netsnmp_pdu *response;
+    int status = snmp_synch_response (ss, pdu, &response);
+    if (status != STAT_SUCCESS || !response){
+        snmp_sess_perror ("snmp_synch_response", ss);
+        ret = false;
+    }else{
+        if (response->errstat != SNMP_ERR_NOERROR){
+            fprintf (stderr, "snmp: Error in packet: %s\n",snmp_errstring (response->errstat));
+            ret = false;
+        }
+        snmp_free_pdu (response);
+    }
+    snmp_close (ss);
+    return ret;
+}

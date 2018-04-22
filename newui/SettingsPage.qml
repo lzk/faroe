@@ -23,11 +23,10 @@ SettingsLayout {
         anchors.fill: parent
         snapMode:ListView.SnapOneItem
         interactive :false
-        delegate: JKAbstractButton {
+        delegate: ItemDelegate {
             id:delegate
             width: ListView.view.width
             height: ListView.view.height / 7
-//            enabled: index !== 6
             Image {
                 anchors.fill: parent
                 source: delegate.ListView.isCurrentItem ?imageSource:"qrc:/Images/setting_img_disable.png"
@@ -37,6 +36,22 @@ SettingsLayout {
                     font.pixelSize: 14
                     anchors.verticalCenter: parent.verticalCenter
                     color: delegate.ListView.isCurrentItem ?"white":"black"
+                }
+                Label{
+                    text:qsTr("Decode/Separation Settings")
+                    x:5
+                    padding: 5
+
+                    font.family: "Verdana"
+                    font.pixelSize: 14
+//                    color: delegate.ListView.isCurrentItem ?"white":"black"
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: index === 1 && delegate.hovered
+
+                    background: Rectangle{
+                        color: "white"
+                        border.color: "gray"
+                    }
                 }
             }
             onClicked:ListView.view.currentIndex = index
