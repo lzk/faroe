@@ -417,8 +417,42 @@ int JKInterface::macVersion()
     LOG_PARA("Version:%d" ,version);
     return version;
 }
- bool JKInterface::validate(const QValidator* validator ,QString& text)
- {
-     int pos;
-     return validator->validate(text ,pos) != QValidator::Invalid;
- }
+
+bool JKInterface::validate(const QValidator* validator ,QString& text)
+{
+    int pos;
+    return validator->validate(text ,pos) != QValidator::Invalid;
+}
+
+#include <QHostAddress>
+bool JKInterface::isSubmask(const QString& submask)
+{
+    QHostAddress address(submask);
+    int ipv4 = address.toIPv4Address();
+    if(ipv4 == 0)
+        return true;
+    int index = 0;
+    for(;index < 32 ;index++){
+        if(0 != (ipv4 & (0x80000000 >> index)))
+            continue;
+        else
+            break;
+    }
+    if(index == 32)
+        return false;
+    for(;index < 32 ;index ++){
+        if(0 == (ipv4 & (0x80000000 >> index)))
+            continue;
+        else
+            break;
+    }
+    return index == 32;
+}
+
+bool JKInterface::isIpv4(const QString& ip)
+{
+    QHostAddress address(ip);
+    int ipv4 = address.toIPv4Address();
+    int val0 = (ipv4 >> 24);
+    return val0 != 127 && val0 < 224;
+}

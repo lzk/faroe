@@ -82,12 +82,20 @@ Item {
                 }
 
                 JKTextInput {
-                    id: input_ipAddress
+                    id: textInput_ipAddress
                     width: 250
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
+                    }
+                    tooltip.text: text.match(regExp) && jkInterface.isIpv4(text)  ?"" :qsTr("Invalid IP address.Please check and enter again.")
+                    onFocusChanged: {
+                        if(!focus){
+                            if(tooltip.text !== ""){
+                                text = "0.0.0.0"
+                            }
+                        }
                     }
                 }
             }
@@ -106,12 +114,20 @@ Item {
                 }
 
                 JKTextInput {
-                    id: input_submask
+                    id: textInput_submask
                     width: 250
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
+                    }
+                    tooltip.text: text.match(regExp) && jkInterface.isSubmask(text) ?"" :qsTr("Invalid subnet mask.Please check and enter again.")
+                    onFocusChanged: {
+                        if(!focus){
+                            if(tooltip.text !== ""){
+                                text = "255.255.255.0"
+                            }
+                        }
                     }
                 }
             }
@@ -130,12 +146,20 @@ Item {
                 }
 
                 JKTextInput {
-                    id: input_gateway
+                    id: textInput_gateway
                     width: 250
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
+                    }
+                    tooltip.text: text.match(regExp) && jkInterface.isIpv4(text) ?"" :qsTr("Invalid Gateway address.Please check and enter again.")
+                    onFocusChanged: {
+                        if(!focus){
+                            if(tooltip.text !== ""){
+                                text = "0.0.0.0"
+                            }
+                        }
                     }
                 }
             }
@@ -154,6 +178,9 @@ Item {
                 width: 150
                 height: 35
                 anchors.centerIn: parent
+                enabled: textInput_ipAddress.tooltip.text === ""
+                      && textInput_submask.tooltip.text === ""
+                      && textInput_gateway.tooltip.text === ""
             }
         }
 
@@ -162,30 +189,33 @@ Item {
     Connections{
         target: button_apply
         onClicked: {
-            var regExp = /^((2[0-4]\d)|(25[0-5])|([01]\d{2})|(\d{1,2}))(\.((2[0-4]\d)|(25[0-5])|([01]\d{2})|(\d{1,2}))){3}$/
-            if(!input_ipAddress.text.match(regExp)){
+            if(!textInput_ipAddress.text.match(regExp)){
                 warningWithImage(qsTr("Invalid IP address.Please check and enter again."))
-                input_ipAddress.input.focus = true
+                textInput_ipAddress.forceActiveFocus()
+//                textInput_ipAddress.focus = true
                 return
             }
-            if(!input_submask.text.match(regExp)){
+            if(!textInput_submask.text.match(regExp)){
                 warningWithImage(qsTr("Invalid subnet mask.Please check and enter again."))
-                input_submask.input.focus = true
+                textInput_submask.forceActiveFocus()
+//                textInput_submask.focus = true
                 return
             }
-            if(!input_gateway.text.match(regExp)){
-                warningWithImage(qsTr("Invalid Gateway.Please check and enter again."))
-                input_gateway.input.focus = true
+            if(!textInput_gateway.text.match(regExp)){
+                warningWithImage(qsTr("Invalid Gateway address.Please check and enter again."))
+                textInput_gateway.forceActiveFocus()
+//                textInput_gateway.focus = true
                 return
             }
-            setting.gatewayAddress = input_gateway.text
-            setting.address = input_ipAddress.text
-            setting.subnetMask = input_submask.text
+            setting.gatewayAddress = textInput_gateway.text
+            setting.address = textInput_ipAddress.text
+            setting.subnetMask = textInput_submask.text
             setting.addressMode = radiobutton_dhcp.checked ?3 :4
             setSetterCmd(DeviceStruct.CMD_setIpv4 ,setting)
         }
     }
 
+    property var regExp : /^((2[0-4]\d)|(25[0-5])|([01]\d{2})|(\d{1,2}))(\.((2[0-4]\d)|(25[0-5])|([01]\d{2})|(\d{1,2}))){0,3}$/
     property var setting:{
         "enable":true
         ,"address":"127.0.0.1"
@@ -206,9 +236,12 @@ Item {
                 if(!result){
                     setting = JSON.parse(data)
                     console.log(data)
-                    input_gateway.text = setting.gatewayAddress
-                    input_ipAddress.text = setting.address
-                    input_submask.text = setting.subnetMask
+                    textInput_gateway.text = setting.gatewayAddress
+                    textInput_gateway.cursorPosition = 0
+                    textInput_ipAddress.text = setting.address
+                    textInput_ipAddress.cursorPosition = 0
+                    textInput_submask.text = setting.subnetMask
+                    textInput_submask.cursorPosition = 0
 //                    if(setting.addressMode === 4)
 //                        radiobutton_static.checked = true
 //                    else
@@ -216,9 +249,9 @@ Item {
 //                        radiobutton_dhcp.checked = true
                     radiobutton_dhcp.checked = setting.addressMode !== 4
                 }else{
-                    input_gateway.text = "0.0.0.0"
-                    input_ipAddress.text = "0.0.0.0"
-                    input_submask.text = "0.0.0.0"
+                    textInput_gateway.text = "0.0.0.0"
+                    textInput_ipAddress.text = "0.0.0.0"
+                    textInput_submask.text = "0.0.0.0"
                     radiobutton_dhcp.checked = true
                 }
 

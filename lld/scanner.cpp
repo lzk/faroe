@@ -249,8 +249,8 @@ bool isLittleEndian()
 }
 void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
 {
-//    bool littleEndian = isLittleEndian();
-//    qDebug()<<"gamma:"<<gamma <<"litten?"<<littleEndian;
+    bool littleEndian = isLittleEndian();
+    qDebug()<<"gamma:"<<gamma <<"litten?"<<littleEndian;
     if(gamma < 0.1)
         gamma = 0.1;
     unsigned int* Red = new unsigned int [65536];
@@ -278,34 +278,28 @@ void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
     for (i = 0; i<256; i++)
     {
         if (i<255) {
-            GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
-//            GLGamma[i] = ((unsigned short)pbyRed[i*256])
-//                    + ((pbyRed[(i+1)*256]) << 16);
-//            if(littleEndian){
-//                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
-////                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | ((pbyGreen[(i+1)*256] & 0x0000ffff) << 16);
-////                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | ((pbyBlue[(i+1)*256] & 0x0000ffff) << 16);
-//            }else{
-//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
-//                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
-////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
-////                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
-////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
-////                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
-//            }
+            if(littleEndian){
+                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | ((pbyGreen[(i+1)*256] & 0x0000ffff) << 16);
+//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | ((pbyBlue[(i+1)*256] & 0x0000ffff) << 16);
+            }else{
+                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
+                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
+//                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
+//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
+//                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
+            }
         }else{
-            GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
-//            GLGamma[i] = ((unsigned short)pbyRed[i*256])
-//                    + 65536 * 65535;
-//            if(littleEndian){
-//                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
-////                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
-////                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
-//            }else{
-//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
-////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
-////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
-//            }
+            if(littleEndian){
+                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
+//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
+            }else{
+                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
+//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
+            }
         }
         GLGamma[i + 256] = GLGamma[i];
         GLGamma[i + 512] = GLGamma[i];

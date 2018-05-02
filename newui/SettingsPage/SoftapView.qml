@@ -89,7 +89,7 @@ Item {
                 }
 
                 JKTextInput {
-                    id: input_ssid
+                    id: textInput_ssid
                     width: 275
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
@@ -114,7 +114,7 @@ Item {
                 }
 
                 JKTextInput {
-                    id: input_password
+                    id: textInput_password
                     width: 275
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
@@ -146,19 +146,21 @@ Item {
     Connections{
         target: button_apply
         onClicked: {
-            if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
+            if(!textInput_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
                 warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))
-                input_ssid.input.focus = true
+                textInput_ssid.forceActiveFocus()
+//                textInput_ssid.focus = true
                 return
             }
-            if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+            if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
                 warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
-                input_password.input.focus = true
+                textInput_password.forceActiveFocus()
+//                textInput_password.focus = true
                 return
             }
             setting.enable = checkbox.checked
-            setting.ssid = input_ssid.text
-            setting.password = input_password.text
+            setting.ssid = textInput_ssid.text
+            setting.password = textInput_password.text
             setSetterCmd(DeviceStruct.CMD_setSoftap ,setting)
         }
     }
@@ -183,19 +185,20 @@ Item {
                     console.log(data)
                     if(setting.wifiEnable){
                         checkbox.checked = setting.enable
-                        input_ssid.text = setting.ssid
-                        input_password.text = setting.password
+                        textInput_ssid.text = setting.ssid
+                        textInput_ssid.cursorPosition = 0
+                        textInput_password.text = setting.password
                     }else{
                         checkbox.checked = false
-                        input_ssid.text = ""
-                        input_password.text = ""
+                        textInput_ssid.text = ""
+                        textInput_password.text = ""
                     }
                 }else{
                     console.log("fail")
                     setting.wifiEnable = false
                     checkbox.checked = false
-                    input_ssid.text = ""
-                    input_password.text = ""
+                    textInput_ssid.text = ""
+                    textInput_password.text = ""
                     setting = setting
                 }
                 break;

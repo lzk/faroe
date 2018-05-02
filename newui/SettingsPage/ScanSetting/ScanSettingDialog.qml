@@ -274,9 +274,6 @@ JKDialog{
         scanSettingView.updateComboxModel_scanAreaSize()
         scanSettingView.updateComboxModel_dpi()
         scanSettingView.updateComboxModel_mediaType()
-        scanSettingView.updateRadio_multiFeed()
-        scanSettingView.updateRadio_skipBlank()
-        scanSettingView.updateRadio_autoColorDetection()
     }
 
     JKBusyIndicator{

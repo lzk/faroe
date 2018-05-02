@@ -39,6 +39,10 @@ Item {
             Layout.maximumWidth: 32
             Layout.minimumWidth: 32
             source: "qrc:/Images/VOPicon.png"
+            MouseArea{
+                anchors.fill: parent
+                onClicked: openDialog("About.qml" ,{})
+            }
         }
 
         Text {
@@ -95,6 +99,7 @@ Item {
             information(qsTr("Do you want to exit the VOP?") ,toexit)
         }
     }
+
     function toexit(){
         closed()
         jkImageModel.removeAll()
@@ -134,8 +139,12 @@ Item {
     property int centerx:originCenterX
     property int centery:originCenterY
     function moveDialogToCenter(dialog){
-        dialog.x = centerx - dialog.width / 2
-        dialog.y = centery - dialog.height / 2
+        var x = centerx - dialog.width / 2
+        var y = centery - dialog.height / 2
+//        dialog.x = root.width / 2 - dialog.width / 2
+//        dialog.y = root.height / 2 - dialog.height / 2
+        dialog.x = x
+        dialog.y = y
     }
 
     property var dialog
@@ -179,13 +188,19 @@ Item {
     function openDialog(source ,properties ,init){
         var component = Qt.createComponent(source)
         var dialog = component.createObject(window ,properties)
-        dialog.dialog = dialog
+//        dialog.dialog = dialog
+        if(!dialog){
+            console.log("fail to create object")
+        }
+
         if(typeof(init) === "function"){
             init(dialog)
         }
         dialog.open()
-        if(!window)
-            moveDialogToCenter(dialog)
+//        if(window){
+//            moveDialogToCenter(dialog)
+//        }
+
         return dialog
     }
 

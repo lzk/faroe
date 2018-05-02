@@ -95,18 +95,22 @@ Item {
     function init(){
         comboBox.currentIndex = setting.fileType
         textInput2.text = setting.recipient
+        textInput2.cursorPosition = 0
         textInput3.text = setting.subject
+        textInput3.cursorPosition = 0
     }
     function ok(){
         var regExp = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.([a-zA-Z0-9]{1,}\.)*[a-zA-Z]{2,}$/
 //        var regExp = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+(([a-zA-Z0-9]*\.)*[a-zA-Z]{2,15})*$/
         if(textInput2.text === ""){
             warningWithImage(qsTr("The Recipient cannot be empty!"))
-            textInput2.input.focus = true
+            textInput2.forceActiveFocus()
+//            textInput2.focus = true
             return false
         }else if(!textInput2.text.match(regExp)){
             warningWithImage(qsTr("The E-mail address format is incorrect,Please check your E-mail address and enter again."))
-            textInput2.input.focus = true
+//            textInput2.focus = true
+            textInput2.forceActiveFocus()
             return false
         }
 

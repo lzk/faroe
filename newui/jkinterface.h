@@ -34,6 +34,8 @@ public:
     Q_INVOKABLE void setWindowFrameless(QWindow*);
     Q_INVOKABLE int macVersion();
     Q_INVOKABLE bool validate(const QValidator* ,QString& text);
+    Q_INVOKABLE bool isSubmask(const QString& submask);
+    Q_INVOKABLE bool isIpv4(const QString& ip);
 signals:
     void searchDeviceList();
     void searchComplete();

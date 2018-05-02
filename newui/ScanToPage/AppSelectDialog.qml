@@ -117,6 +117,7 @@ JKParaDialog{
         onAccepted: {
             var fullpath = decodeURIComponent(fileUrl).replace("file:///" ,"/")
             textInput_path.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+            textInput_path.cursorPosition = 0
         }
     }
 
@@ -125,7 +126,9 @@ JKParaDialog{
 //    function init(){
     function update(){
         textInput_fileName.text = setting.fileName
+        textInput_fileName.cursorPosition = 0
         textInput_path.text = setting.filePath
+        textInput_path.cursorPosition = 0
     }
     function ok(){
         setting.fileName = textInput_fileName.text

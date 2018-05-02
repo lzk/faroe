@@ -70,7 +70,7 @@ Item {
 
             JKTextInput {
                 id: textInput3
-                input.readOnly: true
+                readOnly: true
                 width: 250
                 height: 30
                 anchors.right: parent.right
@@ -102,6 +102,7 @@ Item {
         selectFolder: true
         onAccepted: {
             textInput3.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+            textInput3.cursorPosition = 0
         }
     }
 
@@ -114,7 +115,9 @@ Item {
     function init(){
         comboBox.currentIndex = setting.fileType
         textInput2.text = setting.fileName
+        textInput2.cursorPosition = 0
         textInput3.text = setting.filePath
+        textInput3.cursorPosition = 0
 //        .replace("~" ,jkInterface.homeDictory())
     }
     function ok(){
@@ -124,30 +127,36 @@ Item {
         if(filePath === ""){
             if(fileName === ""){
                 warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path and File Name")))
-                textInput2.input.focus = true
+                textInput2.forceActiveFocus()
+//                textInput2.focus = true
             }else{
                 warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
-                textInput3.input.focus = true
+                textInput3.forceActiveFocus()
+//                textInput3.focus = true
             }
             return false
         }else if(fileName === ""){
             warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
-            textInput2.input.focus = true
+            textInput2.forceActiveFocus()
+//            textInput2.focus = true
             return false
 //        }else if(!filePath.match(/^[^\\\?\*:<>|\"\(\)\[\]]*$/)){
 ////            if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
 //            if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
 //                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name and File Path")))
-//                textInput2.input.focus = true
+//                textInput2.forceActiveFocus()
+////                textInput2.focus = true
 //            }else{
 //                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
-//                textInput3.input.focus = true
+//                textInput3.forceActiveFocus()
+////                textInput3.focus = true
 //            }
 //            return false
         }else if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
 //        }else if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
             warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name")))
-            textInput2.input.focus = true
+            textInput2.forceActiveFocus()
+//            textInput2.focus = true
             return false
         }
         setting.fileType = fileType

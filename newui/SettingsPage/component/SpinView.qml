@@ -108,27 +108,32 @@ Item {
                 }
 
                 text: root.value
-                onCursorVisibleChanged: {
-                    console.log("cursor visible" ,cursorVisible)
+//                onCursorVisibleChanged: {
+//                    console.log("cursor visible" ,cursorVisible)
+//                    root.value = Number.fromLocaleString(Qt.locale(), text)
+//                    text = Qt.binding(function(){return root.value})
+//                }
+
+//                onFocusChanged: {
+//                    console.log("focus changed" ,focus)
+//                    root.value = Number.fromLocaleString(Qt.locale(), text)
+//                    text = Qt.binding(function(){return root.value})
+//                }
+                onActiveFocusChanged: {
                     root.value = Number.fromLocaleString(Qt.locale(), text)
                     text = Qt.binding(function(){return root.value})
                 }
 
-                onFocusChanged: {
-                    console.log("focus changed" ,focus)
-                    root.value = Number.fromLocaleString(Qt.locale(), text)
-                    text = Qt.binding(function(){return root.value})
-                }
                 onEditingFinished: {
                     console.log("editing finished")
                     root.value = Number.fromLocaleString(Qt.locale(), text)
                     text = Qt.binding(function(){return root.value})
 
                 }
-                onTextChanged: {
-                    console.log("text changed:" ,text)
+//                onTextChanged: {
+//                    console.log("text changed:" ,text)
 //                    root.value = Number.fromLocaleString(Qt.locale(), text)
-                }
+//                }
             }
         }
 

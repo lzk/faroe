@@ -108,6 +108,7 @@ Item {
             settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
         }else{
             textInput.text = setting.name
+            textInput.cursorPosition = 0
             comboBox.currentIndex = scanData.constQuickScanSids.indexOf(setting.sid)
             settings[comboBox.currentIndex] = JSApi.deepCopy(setting)
         }

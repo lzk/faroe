@@ -270,6 +270,7 @@ Item {
         onClicked: {
             setSetterCmd(DeviceStruct.CMD_doCalibration ,setting)
         }
+        enabled: scanData.currentDevice.match(/^usb+/i) && setting.powerSupply === JKEnums.PowerMode_ACPower
     }
     Connections{
         target: button_apply
@@ -296,7 +297,8 @@ Item {
         "offTime":0,
         "rollerCount":0,
         "acmCount": 0,
-        "scanCount": 0
+        "scanCount": 0,
+        "powerSupply": JKEnums.PowerMode_ACPower
     }
     Component.onCompleted: {
         setSetterCmd(DeviceStruct.CMD_getDeviceSetting ,setting)

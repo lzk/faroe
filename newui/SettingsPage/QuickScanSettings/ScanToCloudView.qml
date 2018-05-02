@@ -173,7 +173,9 @@ Item {
     function init(){
         comboBox.currentIndex = JSData.constCloudType().indexOf(setting.cloudTypeText)
         textInput31.text = setting.noteTitle
+        textInput31.cursorPosition = 0
         textInput32.text = setting.noteContent
+        textInput32.cursorPosition = 0
         var filePath = ""
         switch(setting.cloudTypeText){
         case cloudTypes.dropbox:
@@ -186,6 +188,7 @@ Item {
             break;
         }
         textInput41.text = filePath
+        textInput41.cursorPosition = 0
     }
     function ok(){
         setting.cloudTypeText = comboBox.currentText
@@ -218,6 +221,7 @@ Item {
 
     function accepted(setting){
         textInput41.text = setting.filePath
+        textInput41.cursorPosition = 0
         setting.dialog.close()
     }
 

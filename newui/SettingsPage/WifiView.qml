@@ -109,8 +109,9 @@ Item {
                                 anchors.right: parent.right
                                 anchors.rightMargin: 5
                                 onClicked: {
-                                    pitem_manual.input_password.text = wifiSetting.password
-                                    pitem_manual.input_ssid.text = wifiSetting.ssid
+                                    pitem_manual.textInput_password.text = wifiSetting.password
+                                    pitem_manual.textInput_ssid.text = wifiSetting.ssid
+                                    pitem_manual.textInput_ssid.cursorPosition = 0
                                     var encryption = wifiSetting.encryption % 4
                                     switch(encryption){
                                     case 0:
@@ -260,7 +261,7 @@ Component{
                         }
 
                          JKTextInput{
-                             id:input_password
+                             id:textInput_password
                              width: parent.width - 100
                              height: 30
                              anchors.verticalCenter: parent.verticalCenter
@@ -351,17 +352,19 @@ Component{
                                     var encryption = model.modelData.encryption % 4
                                     switch(encryption){
                                     case 1:
-                                        if(!input_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
+                                        if(!textInput_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
                                             warningWithImage(qsTr("The Password must be 5 or 13 ASCII characters or 10 or 16 HEX characters,please check and enter again."))
-                                            input_password.input.focus = true
+//                                            textInput_password.focus = true
+                                            textInput_password.forceActiveFocus()
                                             return
                                         }
                                         break;
                                     case 3:
                                     case 4:
-                                        if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+                                        if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
                                             warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 HEX characters,please check and enter again."))
-                                            input_password.input.focus = true
+//                                            textInput_password.focus = true
+                                            textInput_password.forceActiveFocus()
                                             return
                                         }
                                         break;
@@ -374,7 +377,7 @@ Component{
                                     setting.type = 0
                                     setting.channel = 0
                                     setting.ssid = text_ssid.text
-                                    setting.password = input_password.text
+                                    setting.password = textInput_password.text
                                     setting.encryption = encryption
                                     if(radio0.checked){
                                         setting.wepKeyId = 0

@@ -37,7 +37,7 @@ Item {
                 border.color: "black"
                 opacity:0.3
             }
-            activeFocusOnTab: false
+//            activeFocusOnTab: false
 
             ListView{
                 id:listview
@@ -56,7 +56,7 @@ Item {
                     id:wrapper
                     height:76
                     width: ListView.view.width
-                    activeFocusOnTab: ListView.isCurrentItem
+//                    activeFocusOnTab: ListView.isCurrentItem
                     dashRectange.z: 2
                     Rectangle{
                         anchors.fill: parent
@@ -80,7 +80,7 @@ Item {
                         }
                         Text {
                             text:qsTr("Connected")
-                            x:200
+                            x:300
                             visible: modelData === scanData.currentDevice
                             color:"green"
                             font.pixelSize: 14
@@ -94,8 +94,8 @@ Item {
                         hoverEnabled: true
                         onClicked: wrapper.ListView.view.currentIndex = index
                     }
-                    onFocusChanged:
-                        activeFocusOnTab = focus
+//                    onFocusChanged:
+//                        activeFocusOnTab = focus
                 }
             }
         }

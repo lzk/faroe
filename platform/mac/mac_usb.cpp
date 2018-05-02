@@ -38,7 +38,7 @@ UInt32 system, sub, code;
     }
 }
 
-static bool get_serial(IOUSBDeviceInterface_version  **dev ,char* serial)
+static bool usb_getSerial(IOUSBDeviceInterface_version  **dev ,char* serial)
 {
     kern_return_t            kr;
 //    UInt16                   vendor;
@@ -100,6 +100,10 @@ static bool get_serial(IOUSBDeviceInterface_version  **dev ,char* serial)
     return false;
 }
 
+static bool get_serial(IOUSBDeviceInterface_version  **dev ,char* serial)
+{
+    return nvram_readSerialNumber(dev ,serial) == 0;
+}
 
 void useUSBInterface(IOUSBInterfaceInterface_version **intf  ,struct_deviceInterface* pDeviceInterface)
 {
@@ -479,8 +483,8 @@ static int _getUsbDeviceList(IOUSBDeviceInterface_version** dev ,void* pData)
     pDevice->address = (int)uda;
     pData_deviceList->length += 1;
     if(pData_deviceList->length >= pData_deviceList->maxLength)
-        return 0;
-    return 1;
+        return -1;
+    return 0;
 }
 
 static CFMutableDictionaryRef getUsbDeviceDict(int vid ,int pid)
@@ -596,6 +600,14 @@ int usb_getDeviceWithSerial(int vid ,int pid ,const char* serial ,usbDeviceHandl
     return ret;
 }
 
+int usb_getAddress(IOUSBDeviceInterface_version** dev)
+{
+    if(!dev)
+        return -1;
+    USBDeviceAddress address = -1;
+    (*dev)->GetDeviceAddress(dev ,&address);
+    return (int)address;
+}
 
 static int _getUsbDeviceWithAddress(IOUSBDeviceInterface_version** dev ,void* pData)
 {
@@ -944,4 +956,53 @@ int usb_dev_read(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer
         return req.wLenDone;
     }
     return (-1);
+}
+
+int nvram_read(IOUSBDeviceInterface_version** dev, unsigned char addr, unsigned int len, unsigned char *data){
+
+    struct_deviceInterface di;
+    di.interface = -1;
+    if(usb_open(dev ,&di)){
+        return -1;
+    }
+    IOUSBInterfaceInterface_version **intf = di.intf;
+    int inPipeRef = di.inPipeRef;
+    int outPipeRef = di.outPipeRef;
+
+    char cmd[8] = { 'R','E','E','P' ,0,0,0,0};
+    char status[8] = { 0 };
+    cmd[4] = addr;
+    cmd[5] = len;
+
+    int result = usb_writePipe(intf ,outPipeRef ,(char*)cmd, sizeof(cmd));
+    if(result>=0){
+        result = usb_readPipe(intf ,inPipeRef ,(char*)status, sizeof(status));
+    }
+    char* code = (char*)status;
+    if(result <= 0
+       ||(code[0] != 'S' || code[1] != 'T' || code[2] != 'A')
+            || code[4] != 'A'
+            ){
+        result = -1;
+    }
+    if(result>=0){
+        result = usb_readPipe(intf ,inPipeRef ,(char*)data, len);
+    }
+//    usb_close(dev ,di.intf);
+
+    (*intf)->USBInterfaceClose(intf);
+    (*intf)->Release(intf);
+    (*dev)->USBDeviceClose(dev);
+    return result<0?-1:0;
+}
+
+int nvram_readSerialNumber(IOUSBDeviceInterface_version **dev, char *serial)
+{
+    unsigned char data[16];
+    memset(data ,0 ,16);
+    if(!nvram_read(dev ,0xB1 ,15 ,data)){
+        strcpy(serial ,(char*)data);
+        return 0;
+    }
+    return -1;
 }

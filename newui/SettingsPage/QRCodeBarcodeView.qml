@@ -7,7 +7,7 @@ import QtQuick.Dialogs 1.2
 import "../ScanData.js" as JSData
 import "../JSApi.js" as JSApi
 
-Item {
+FocusScope {
     id: item1
     width: 495
     height: 460
@@ -97,11 +97,12 @@ Item {
                         }
 
                         JKTextInput {
-                            id: input_fileName
+                            id: textInput_fileName
                             width: 200
                             height: 30
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
+                            focus: true
                         }
                     }
                 }
@@ -186,8 +187,8 @@ Item {
                         }
 
                         JKTextInput {
-                            id: input_filePath
-                            input.readOnly: true
+                            id: textInput_filePath
+                            readOnly: true
                             width: 200
                             height: 30
                             anchors.right: parent.right
@@ -221,7 +222,7 @@ Item {
         folder: "file://" + JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
-        onAccepted: input_filePath.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+        onAccepted: textInput_filePath.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
     }
     Connections{
         target: button_browser
@@ -250,16 +251,18 @@ Item {
     Component.onCompleted: {
 //        console.log("qrcode on Component")
         comboBox_codeType.currentIndex = decodeSetting.codeType
-        input_fileName.text = decodeSetting.fileName
+        textInput_fileName.text = decodeSetting.fileName
+        textInput_fileName.cursorPosition = 0
         comboBox_saveFileType.currentIndex = separationSetting.fileType
-        input_filePath.text = separationSetting.filePath
+        textInput_filePath.text = separationSetting.filePath
+        textInput_filePath.cursorPosition = 0
 //        .replace("~" ,jkInterface.homeDictory())
     }
     Component.onDestruction: {
 //        console.log("qrcode on Destruction")
         decodeSetting.codeType = comboBox_codeType.currentIndex
-        decodeSetting.fileName = input_fileName.text
+        decodeSetting.fileName = textInput_fileName.text
         separationSetting.fileType = comboBox_saveFileType.currentIndex
-        separationSetting.filePath = input_filePath.text
+        separationSetting.filePath = textInput_filePath.text
     }
 }

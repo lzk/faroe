@@ -6,14 +6,15 @@ Item{
     signal doubleClicked
     property alias mouseArea: mouseArea
     property alias dashRectange: dashRectange
-    activeFocusOnTab: true
+//    activeFocusOnTab: true
+//    focus:true
 
     JKDashRectange{
         id: dashRectange
         color: "black"   //"Transparent"
         anchors.fill: parent
         anchors.margins: -1
-        visible: false //root.activeFocus
+        visible: false//root.activeFocus
     }
 
     MouseArea {

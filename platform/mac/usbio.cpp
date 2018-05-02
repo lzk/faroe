@@ -16,7 +16,8 @@ static void addDeviceInfo(struct_deviceInfo* pDeviceInfo ,void* pData)
 {
     DeviceInfo di;
     di.type = DeviceInfo::Type_usb;
-    sprintf(di.address ,"%02d" ,pDeviceInfo->address);
+//    sprintf(di.address ,"%02d" ,pDeviceInfo->address);
+    strcpy(di.address ,pDeviceInfo->serial);
     sprintf(di.name ,"USB Device %s" ,di.address);
     LOG_PARA("usb serial:%s" ,pDeviceInfo->serial);
     LOG_PARA("usb locationID:%d" ,pDeviceInfo->locationID);
@@ -63,6 +64,7 @@ int devHandler(IOUSBDeviceInterface_version** dev,void* pData)
 int UsbIO::open(int)
 {
     dev = NULL;
+//    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
     usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
     if(!dev){
         return -2;
@@ -117,11 +119,18 @@ int UsbIO::readCommand(char *buffer, int bufsize)
 
 int UsbIO::resolveUrl(const char* url)
 {
-    bool ok;
-    address = QUrlQuery(QUrl(url)).queryItemValue("address").toInt(&ok);
-    if(!ok){
+//    bool ok;
+//    address = QUrlQuery(QUrl(url)).queryItemValue("address").toInt(&ok);
+//    if(!ok){
+//        return -1;
+//    }
+    strcpy(serial ,QUrlQuery(QUrl(url)).queryItemValue("address").toLatin1().data());
+    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
+    if(!dev){
+        address = -1;
         return -1;
     }
+    address = usb_getAddress(dev);
     return 0;
 }
 
@@ -130,6 +139,7 @@ bool UsbIO::isConnected()
     bool connected = true;
     dev = NULL;
     usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
+//    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
     if(!dev){
         connected = false;
     }

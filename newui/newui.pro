@@ -4,8 +4,7 @@ QT += qml quick printsupport
 CONFIG += c++11
 
 TARGET = faroeVOP
-VERSION = 0.0.7
-ICON = faroeVOP.icns
+VERSION = 0.0.10
 
 #UI_HEADERS_DIR = ../build
 #UI_SOURCES_DIR = ../build
@@ -115,7 +114,9 @@ DEPENDPATH += $$PWD/../libs/zxing-cpp/include
 LIBS += $$PWD/../libs/zxing-cpp/lib/libzxing.a
 #PRE_TARGETDEPS += $$PWD/libs/zxing-cpp/lib/libzxing.a
 
-#  QMAKE_INFO_PLIST = ../mac/Info.plist
+    ICON = faroeVOP.icns
+#    ICON = ../../mac/faroeVOP.icns
+#    QMAKE_INFO_PLIST = ../mac/Info.plist
 }else{
     windows{
     #LIBS += -LC:/usr/lib/ -lnetsnmp

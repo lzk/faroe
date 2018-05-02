@@ -5,8 +5,8 @@ Item{
     id:root
     signal returnClicked
     signal connectClicked(var setting)
-    property alias input_ssid: input_ssid
-    property alias input_password: input_password
+    property alias textInput_ssid: textInput_ssid
+    property alias textInput_password: textInput_password
     property alias combox_index: combobox.currentIndex
     Image {
         source: "qrc:/Images/setting_wifilist panel.png"
@@ -55,7 +55,7 @@ Item{
                 }
 
                 JKTextInput {
-                    id: input_ssid
+                    id: textInput_ssid
                     width: 275
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
@@ -80,7 +80,7 @@ Item{
                 }
 
                 JKTextInput {
-                    id: input_password
+                    id: textInput_password
                     width: 275
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
@@ -94,7 +94,7 @@ Item{
 
             CheckBox{
                 id:checkbox_input
-                x: input_password.x
+                x: textInput_password.x
                 text: qsTr("Display Password")
                 enabled: combobox.currentIndex !== 0
                 indicator: Rectangle {
@@ -194,25 +194,28 @@ Item{
                     height: parent.height
                     text: qsTr("Connect")
                     onClicked: {
-                        if(!input_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
+                        if(!textInput_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
                             warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))
-                            input_ssid.input.focus = true
+//                            textInput_ssid.focus = true
+                            textInput_ssid.forceActiveFocus()
                             return
                         }
                         var encryption = combobox.currentIndex > 1 ?combobox.currentIndex + 1 :combobox.currentIndex
                         switch(encryption){
                         case 1:
-                            if(!input_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
+                            if(!textInput_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
                                 warningWithImage(qsTr("The Password must be 5 or 13 ASCII characters or 10 or 26 hex characters,please check and enter again."))
-                                input_password.input.focus = true
+//                                textInput_password.focus = true
+                                textInput_password.forceActiveFocus()
                                 return
                             }
                             break;
                         case 3:
                         case 4:
-                            if(!input_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+                            if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
                                 warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
-                                input_password.input.focus = true
+//                                textInput_password.focus = true
+                                textInput_password.forceActiveFocus()
                                 return
                             }
                             break;
@@ -223,8 +226,8 @@ Item{
                         setting.enable = true
                         setting.type = 0
                         setting.channel = 0
-                        setting.ssid = input_ssid.text
-                        setting.password = input_password.text
+                        setting.ssid = textInput_ssid.text
+                        setting.password = textInput_password.text
                         setting.encryption = encryption
                         if(radio0.checked){
                             setting.wepKeyId = 0

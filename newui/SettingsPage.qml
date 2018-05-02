@@ -23,6 +23,21 @@ SettingsLayout {
         anchors.fill: parent
         snapMode:ListView.SnapOneItem
         interactive :false
+        focus:true
+        KeyNavigation.right: loader.item
+//        Keys.onPressed: {
+//            switch(event.key){
+//            case Qt.Key_Up:
+//                if(currentIndex > 0)
+//                    currentIndex --
+//                break
+//            case Qt.Key_Down:
+//                if(currentIndex < 6)
+//                    currentIndex ++
+//                break
+//            }
+//        }
+
         delegate: ItemDelegate {
             id:delegate
             width: ListView.view.width
@@ -54,7 +69,10 @@ SettingsLayout {
                     }
                 }
             }
-            onClicked:ListView.view.currentIndex = index
+            onClicked:{
+                ListView.view.currentIndex = index
+                delegate.forceActiveFocus()
+            }
         }
         model: ListModel {
             ListElement {
@@ -98,19 +116,15 @@ SettingsLayout {
         }
     }
 
-    onFocusChanged: {
-        console.log("root focus:" ,focus)
-    }
-
     Loader{
         id:loader
         parent:root.item_view
         source: listView.model.get(listView.currentIndex).url
-        focus: true
-        onFocusChanged: {
-            console.log("loader focus:" ,focus)
-        }
     }
+    Component.onCompleted: {
+        listView.forceActiveFocus()
+    }
+
     Component.onDestruction: {
         loader.source = ""
     }

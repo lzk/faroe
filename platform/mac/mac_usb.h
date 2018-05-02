@@ -36,6 +36,7 @@ typedef struct struct_deviceInterface{
 typedef void (* addUsbDevice)(struct_deviceInfo* ,void*);
 typedef int (* usbDeviceHandler)(IOUSBDeviceInterface_version** ,void*);
 
+int usb_getAddress(IOUSBDeviceInterface_version** dev);
 
 int usb_getDeviceList(int vid ,int pid ,addUsbDevice addDevice ,void*);
 int usb_getDeviceWithLocationID(int vid ,int pid ,int locationID ,usbDeviceHandler handler ,void*);
@@ -50,4 +51,7 @@ int usb_intf_write(IOUSBInterfaceInterface_version **intf ,int interface ,char *
 int usb_dev_write(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer, size_t bufsize);
 int usb_intf_read(IOUSBInterfaceInterface_version **intf ,int interface ,char *buffer, size_t bufsize);
 int usb_dev_read(IOUSBDeviceInterface_version **dev ,int interface ,char *buffer, size_t bufsize);
+
+static int nvram_read(IOUSBDeviceInterface_version** dev, unsigned char addr, unsigned int len, unsigned char *data);
+static int nvram_readSerialNumber(IOUSBDeviceInterface_version **dev, char *serial);
 #endif // MAC_USB_H

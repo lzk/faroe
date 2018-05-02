@@ -40,6 +40,10 @@ ApplicationWindow {
         }
     }
 
+    onClosing: {
+        console.log("closing")
+    }
+
 //    Component.onCompleted: {
 //        jkInterface.setWindowFrameless(root)
 //    }

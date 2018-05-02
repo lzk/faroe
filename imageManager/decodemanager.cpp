@@ -4,7 +4,7 @@
 #include <zxing/multi/GenericMultipleBarcodeReader.h>
 #include <zxing/MultiFormatReader.h>
 #include <zxing/DecodeHints.h>
-#include <zxing/common/GlobalHistogramBinarizer.h>
+#include <zxing/common/HybridBinarizer.h>
 using std::vector;
 #include <zxing/oned/MultiFormatOneDReader.h>
 #include <zxing/qrcode/QRCodeReader.h>
@@ -146,7 +146,7 @@ struct DMDecodeResult DecodeManager::decodeMulti(const QString& fileName ,zxing:
     ciw = WrapperQImage::Factory(image, 999, 999, true);
     try{
         Ref<LuminanceSource> imageRef(ciw);
-        Ref<GlobalHistogramBinarizer> binz( new GlobalHistogramBinarizer(imageRef) );
+        Ref<HybridBinarizer> binz( new HybridBinarizer(imageRef) );
         Ref<BinaryBitmap> bb( new BinaryBitmap(binz) );
 
         bool hasSucceded = false;
@@ -233,7 +233,7 @@ struct DMDecodeResult DecodeManager::decode(const QString& fileName ,zxing::Read
 //    ciw = WrapperQImage::Factory(image);
     try{
         Ref<LuminanceSource> imageRef(ciw);
-        Ref<GlobalHistogramBinarizer> binz( new GlobalHistogramBinarizer(imageRef) );
+        Ref<HybridBinarizer> binz( new HybridBinarizer(imageRef) );
         Ref<BinaryBitmap> bb( new BinaryBitmap(binz) );
 
         bool hasSucceded = false;

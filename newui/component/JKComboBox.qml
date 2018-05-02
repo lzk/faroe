@@ -105,7 +105,7 @@ ComboBox {
         width: control.width
         implicitHeight: contentItem.implicitHeight
         padding: 1
-
+        clip: true
         contentItem: ListView {
             id:listview
             clip: false

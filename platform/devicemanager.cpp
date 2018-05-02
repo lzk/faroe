@@ -40,7 +40,7 @@ void DeviceManager::watchDevice()
 {
     QString url;
     if(currentDeviceName.startsWith("USB")){
-        url = "usb://" + currentDeviceName +"?address=" + currentDeviceName.right(2);
+        url = "usb://" + currentDeviceName +"?address=" + currentDeviceName.mid(11);// currentDeviceName.section(' ',-1);
     }else{
         url = "socket://" + currentDeviceName;
     }

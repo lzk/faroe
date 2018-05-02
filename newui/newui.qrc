@@ -81,6 +81,7 @@
         <file>SettingsPage/ScanSetting/MediaTypePrompt.qml</file>
         <file>ScanToPage/CloudDialog.qml</file>
         <file>ScanToPage/FilelistDelegate.qml</file>
+        <file>About.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/background3.png</file>

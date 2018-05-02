@@ -46,7 +46,7 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 visible: comboBox.currentIndex === 1
-                input.readOnly:true
+                readOnly:true
             }
         }
         Item {
@@ -92,6 +92,7 @@ Item {
 //        comboBox.currentIndex = index
         comboBox.currentIndex = setting.fileType >= 1 ?1 :0
         textInput2.text = setting.fullFileName
+        textInput2.cursorPosition = 0
     }
     function ok(){
         if(comboBox.currentIndex !== 0){
@@ -117,6 +118,7 @@ Item {
 //        selectFolder: true
         onAccepted: {
             textInput2.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+            textInput2.cursorPosition = 0
         }
         onRejected: {
         }

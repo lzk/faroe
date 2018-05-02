@@ -39,5 +39,6 @@ int main(int argc, char *argv[])
 //    if(scanData)
 //        jki.setScanDataHandle(scanData);
     jki.init();
+
     return app.exec();
 }
