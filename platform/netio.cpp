@@ -84,6 +84,8 @@ int NetIO::openPort(int port)
         qDebug()<< tcpSocket->errorString();
         return -1;
     }
+    tcpSocket->setSocketOption(QAbstractSocket::LowDelayOption ,1);
+    qDebug()<<"option:"<<tcpSocket->socketOption(QAbstractSocket::LowDelayOption);
     return 0;
 
 }

@@ -278,28 +278,28 @@ void Scanner::getGammaTable(float gamma ,unsigned int* GLGamma)
     for (i = 0; i<256; i++)
     {
         if (i<255) {
-            if(littleEndian){
+//            if(littleEndian){
                 GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
 //                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | ((pbyGreen[(i+1)*256] & 0x0000ffff) << 16);
 //                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | ((pbyBlue[(i+1)*256] & 0x0000ffff) << 16);
-            }else{
-                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
-                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
-//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
-//                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
-//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
-//                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
-            }
+//            }else{
+//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
+//                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
+////                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
+////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
+////                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
+//            }
         }else{
-            if(littleEndian){
+//            if(littleEndian){
                 GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
 //                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
 //                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
-            }else{
-                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
-//                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
-//                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
-            }
+//            }else{
+//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
+////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
+//            }
         }
         GLGamma[i + 256] = GLGamma[i];
         GLGamma[i + 512] = GLGamma[i];
@@ -541,9 +541,10 @@ void Scanner::getScanParameters(const Setting& setting ,SC_PAR_DATA_T* para)
 
     para->acquire = ((setting.MultiFeed ? 1 : 0) * ACQ_ULTRA_SONIC)
             | ((setting.AutoCrop ? 1 : 0) * ACQ_CROP_DESKEW)
-            | ACQ_PICK_SS
+//            | ACQ_PICK_SS
             |(setting.bColorDetect ?1 :0) * ACQ_DETECT_COLOR
-            |(setting.bSkipBlankPage ?1 :0) * ACQ_SKIP_BLANKPAGE;
+            |(setting.bSkipBlankPage ?1 :0) * ACQ_SKIP_BLANKPAGE
+            | ACQ_NO_GAMMA;
 
     if(SETTING_SCAN_ADF == setting.source){
         para->source = CODE_ADF;
