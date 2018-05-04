@@ -22,39 +22,38 @@ int CMDIO_BulkReadEx(int pipe, void *buffer, unsigned int dwLen)
     return usbio->read((char*)buffer ,dwLen) >= 0;
 }
 
-bool isLittleEndian();
+//bool isLittleEndian();
 int GammaTransLTCtoGL(unsigned int *pbyRed, unsigned int *pbyGreen, unsigned int *pbyBlue, unsigned int *GLGamma)
 {
-
+//    bool littleEndian = isLittleEndian();
     for (int i = 0; i<256; i++)
     {
         if (i<255) {
-            if(isLittleEndian()){
-                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
-                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
-                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
-                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
-                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
-                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
-            }else{
-                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | (pbyRed[(i+1)*256] & 0x0000ffff << 16);
-                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | (pbyGreen[(i+1)*256] & 0x0000ffff << 16);
-                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | (pbyBlue[(i+1)*256] & 0x0000ffff << 16);
-            }
-        }
-        else {
-            if(isLittleEndian()){
-                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
-                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
-                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
-            }else{
+//            if(littleEndian){
+                GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | ((pbyRed[(i+1)*256] & 0x0000ffff) << 16);
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | ((pbyGreen[(i+1)*256] & 0x0000ffff) << 16);
+//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | ((pbyBlue[(i+1)*256] & 0x0000ffff) << 16);
+//            }else{
+//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000)
+//                        | ((pbyRed[(i+1)*256] & 0xffff0000) >> 16);
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000)
+////                        | ((pbyGreen[(i+1)*256] & 0xffff0000) >> 16);
+////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000)
+////                        | ((pbyBlue[(i+1)*256] & 0xffff0000) >> 16);
+//            }
+        }else{
+//            if(littleEndian){
                 GLGamma[i] = (pbyRed[i*256] & 0x0000ffff) | 0xffff0000;
-                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
-                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
-            }
+//                GLGamma[i + 256] = (pbyGreen[i*256] & 0x0000ffff) | 0xffff0000;
+//                GLGamma[i + 256 * 2] = (pbyBlue[i*256] & 0x0000ffff) | 0xffff0000;
+//            }else{
+//                GLGamma[i] = (pbyRed[i*256] & 0xffff0000) | 0x0000ffff;
+////                GLGamma[i + 256] = (pbyGreen[i*256] & 0xffff0000) | 0x0000ffff;
+////                GLGamma[i + 512] = (pbyBlue[i*256] & 0xffff0000) | 0x0000ffff;
+//            }
         }
-//        GLGamma[i + 256] = GLGamma[i];
-//        GLGamma[i + 512] = GLGamma[i];
+        GLGamma[i + 256] = GLGamma[i];
+        GLGamma[i + 512] = GLGamma[i];
     }
 }
 
@@ -116,7 +115,7 @@ extern Scan_RET ScannerStatusCheck_(char stage);
 
  int DoCalibration()
 {
-    Scan_RET nResult = RETSCAN_OK;
+    int nResult = RETSCAN_OK;
 
     read_from_ini();
 
@@ -138,23 +137,24 @@ extern Scan_RET ScannerStatusCheck_(char stage);
 
     if (nResult == RETSCAN_OK)
     {
-        int nCalibration = FALSE;
-        nCalibration = job_Calibration(&sc_par);
+        nResult = job_Calibration(&sc_par);
+//        int nCalibration = RETSCAN_OK;
+//        nCalibration = job_Calibration(&sc_par);
 
-        if (nCalibration == TRUE)
-        {
-            nResult = RETSCAN_OK;
-        }
-        else
-        {
-            if (sc_par.acquire & ACQ_NO_PP_SENSOR) {
+//        if (!nCalibration)
+//        {
+//            nResult = RETSCAN_OK;
+//        }
+//        else
+//        {
+//            if (sc_par.acquire & ACQ_NO_PP_SENSOR) {
 
-            }
-            else {
-                nResult = ScannerStatusCheck_(SCANNING_STAGE);
-                //	nResult = RETSCAN_CANCEL;
-            }
-        }
+//            }
+//            else {
+//                nResult = ScannerStatusCheck_(SCANNING_STAGE);
+//                //	nResult = RETSCAN_CANCEL;
+//            }
+//        }
     }
 
     CMDIO_CloseDevice();

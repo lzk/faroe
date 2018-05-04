@@ -219,7 +219,7 @@ FocusScope {
     FileDialog {
         id: fileDialog
         title: qsTr("Save As")
-        folder: "file://" + JSData.defaultFilePath()
+        folder: "file://" + textInput_filePath.text//JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
         onAccepted: textInput_filePath.text = decodeURIComponent(fileUrl).replace("file:///" ,"/")
@@ -254,9 +254,9 @@ FocusScope {
         textInput_fileName.text = decodeSetting.fileName
         textInput_fileName.cursorPosition = 0
         comboBox_saveFileType.currentIndex = separationSetting.fileType
-        textInput_filePath.text = separationSetting.filePath
+        textInput_filePath.text = separationSetting.filePath === ""?jkInterface.homeDictory() + "/Pictures" :separationSetting.filePath
+//        textInput_filePath.text.replace("~" ,jkInterface.homeDictory())
         textInput_filePath.cursorPosition = 0
-//        .replace("~" ,jkInterface.homeDictory())
     }
     Component.onDestruction: {
 //        console.log("qrcode on Destruction")

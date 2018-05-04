@@ -1,6 +1,6 @@
 .pragma library
 function defaultFilePath(){
-    return "/Users/Shared/Pictures"
+    return ""
 }
 
 function constDPIName() {

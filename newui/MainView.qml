@@ -475,6 +475,11 @@ Item {
                     dialog.cancel.connect(jkInterface.cancelScan)
                 })
                 break
+            case DeviceStruct.CMD_doCalibration:
+                if(dialog && dialog.visible)
+                    dialog.close()
+                dialog = openDialog("ScanPage/ScanningDialog.qml" ,{"text":qsTr("Calibrating...") ,"canCancel":false})
+                break
             case DeviceStruct.CMD_getPowerSupply:
                 break
             case DeviceStruct.CMD_getIpv4:
@@ -551,7 +556,7 @@ Item {
                     errorWithImage(qsTr("Wi-Fi not enabled ,please enable first"))
                     break
                 default:
-                    errorWithImage(qsTr("Configuration Failed.Please check your setting and device,then try again."))
+                    errorWithImage(qsTr("Configuration Failed.Please check and try again."))
                     break
                 }
                 break
@@ -588,7 +593,7 @@ Item {
                             dialog.showExtra = true
                             dialog.index = 0
                             dialog.save = false
-                            dialog.name = qsTr("Print completed")
+                            dialog.name = qsTr("Scan to Print completed")
                             dialog.requestImage(0 ,0)
                         })
                     }
@@ -624,7 +629,8 @@ Item {
                     }
                     break
                 default:
-                    scanResult(cmd ,result ,data)
+                    if(!scanResult(cmd ,result ,data))
+                        errorWithImage(qsTr("Scan Fail!"))
                     break
                 }
                 break
@@ -638,13 +644,14 @@ Item {
                             dialog.showExtra = true
                             dialog.index = 0
                             dialog.save = false
-                            dialog.name = qsTr("Send Email completed")
+                            dialog.name = qsTr("Scan to Email completed")
                             dialog.requestImage(0 ,0)
                         })
                     }
                     break
                 default:
-                    scanResult(cmd ,result ,data)
+                    if(!scanResult(cmd ,result ,data))
+                        errorWithImage(qsTr("Scan Fail!"))
                     break
                 }
                 break
@@ -683,7 +690,8 @@ Item {
                     }
                     break
                 default:
-                    scanResult(cmd ,result ,data)
+                    if(!scanResult(cmd ,result ,data))
+                        errorWithImage(qsTr("Scan Fail!"))
                     break
                 }
                 break
@@ -714,17 +722,20 @@ Item {
                     }
                     break
                 default:
-                    scanResult(cmd ,result ,data)
+                    if(!scanResult(cmd ,result ,data))
+                        errorWithImage(qsTr("Scan Fail!"))
                     break
                 }
                 break
             case DeviceStruct.CMD_doCalibration:
                 switch(result){
                 case DeviceStruct.ERR_ACK:
-                    information_1button(qsTr("Calibration completed!"))
+                    information_1button(qsTr("Calibration completed! Please restart your device."))
                     break
+
                 default:
-                    scanResult(cmd ,result ,data)
+                    if(!scanResult(cmd ,result ,data))
+                        errorWithImage(qsTr("Calibration Failed!"))
                     break
                 }
                 break
@@ -736,22 +747,22 @@ Item {
             case DeviceStruct.CMD_SCAN:
             case DeviceStruct.CMD_ScanTo://handler in ScanPage.qml too
             default:
-                scanResult(cmd ,result ,data)
+                if(!scanResult(cmd ,result ,data))
+                    errorWithImage(qsTr("Scan Fail!"))
                 break
             }
         }
     }
 
     function scanResult(cmd ,result ,data){
+        var ret = true
         switch(result){
         case DeviceStruct.ERR_ACK:
         case JKEnums.ImageCommandResult_NoError:
             break
         case DeviceStruct.ERR_RETSCAN_OPENFAIL:
-            errorWithImage(qsTr("The Device is not ready!"))
-            break
         case DeviceStruct.ERR_RETSCAN_OPENFAIL_NET:
-            errorWithImage(qsTr("The Device is not ready!"))
+            errorWithImage(qsTr("The Device is not ready! Please check your computer setting or power on and plug in your device."))
             break
         case DeviceStruct.ERR_RETSCAN_BUSY:
         case DeviceStruct.ERR_RETSCAN_JOB_GOGING:
@@ -853,10 +864,11 @@ If you select 'No', the scan job will be canceled!
             warningWithImage(qsTr("Scan Images are all blank!"))
             break
         default:
+            ret = false
             console.log("err:" ,result)
-            errorWithImage(qsTr("Scan Fail!"))
+//            errorWithImage(qsTr("Scan Fail!"))
             break;
         }
-
+        return ret
     }
 }

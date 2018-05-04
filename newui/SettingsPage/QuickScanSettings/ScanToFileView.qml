@@ -97,7 +97,7 @@ Item {
         id: fileDialog
         title: qsTr("Save As")
 //        folder: shortcuts.pictures
-        folder: "file://" + JSData.defaultFilePath()
+        folder: "file://" + textInput3.text//JSData.defaultFilePath()
         nameFilters: JSData.constFileDialogSaveFileType()
         selectFolder: true
         onAccepted: {
@@ -116,9 +116,9 @@ Item {
         comboBox.currentIndex = setting.fileType
         textInput2.text = setting.fileName
         textInput2.cursorPosition = 0
-        textInput3.text = setting.filePath
+        textInput3.text = setting.filePath === ""?jkInterface.homeDictory() + "/Pictures" :setting.filePath
+//        textInput3.text.replace(/~/ ,jkInterface.homeDictory())
         textInput3.cursorPosition = 0
-//        .replace("~" ,jkInterface.homeDictory())
     }
     function ok(){
         var fileType = comboBox.currentIndex

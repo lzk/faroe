@@ -5,7 +5,8 @@ import "../ScanData.js" as JSData
 FileDialog {
     id: fileDialog
     title: qsTr("Save As")
-    folder: "file://" + JSData.defaultFilePath()
+//    folder: "file://" + JSData.defaultFilePath()
+    folder: shortcuts.pictures
     nameFilters: JSData.constFileDialogSaveFileType()
     selectExisting:false
     property var dialog

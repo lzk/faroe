@@ -112,7 +112,7 @@ Item {
                                     pitem_manual.textInput_password.text = wifiSetting.password
                                     pitem_manual.textInput_ssid.text = wifiSetting.ssid
                                     pitem_manual.textInput_ssid.cursorPosition = 0
-                                    var encryption = wifiSetting.encryption % 4
+                                    var encryption = wifiSetting.encryption % 5
                                     switch(encryption){
                                     case 0:
                                     case 1:
@@ -252,7 +252,7 @@ Component{
                     Item{
                         width: parent.width
                         height: 30
-                        enabled:model.modelData.encryption % 4 !== 0
+                        enabled:model.modelData.encryption % 5 !== 0
                         opacity: enabled ?1 :0.3
                         JKText{
                             text: qsTr("Password")
@@ -269,7 +269,7 @@ Component{
                              anchors.rightMargin: 5
                              echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
                              validator: RegExpValidator{
-                                 regExp:  model.modelData.encryption % 4 === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
+                                 regExp:  model.modelData.encryption % 5 === 1 ?/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/
                                                                    :/^(?:.{8,63}|[0-9a-fA-F]{64})$/
                              }
                          }
@@ -279,7 +279,7 @@ Component{
                     CheckBox{
                         id:checkbox_input
                         text: qsTr("Display Password")
-                        enabled:model.modelData.encryption % 4 !== 0
+                        enabled:model.modelData.encryption % 5 !== 0
                         indicator: Rectangle {
                             implicitWidth: 26
                             implicitHeight: 26
@@ -299,7 +299,7 @@ Component{
                         }
                     }
                     Row{
-                        visible: model.modelData.encryption % 4 === 1
+                        visible: model.modelData.encryption % 5 === 1
                         anchors.horizontalCenter: parent.horizontalCenter
                         height: 30
                         spacing: 2
@@ -349,7 +349,7 @@ Component{
                                 anchors.centerIn: parent
                                 text: qsTr("Connect")
                                 onClicked: {
-                                    var encryption = model.modelData.encryption % 4
+                                    var encryption = model.modelData.encryption % 5
                                     switch(encryption){
                                     case 1:
                                         if(!textInput_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
@@ -445,7 +445,7 @@ Component{
         var str;
         if(encryption > 127)
             return qsTr("Connected")
-        var _encryption = encryption % 4
+        var _encryption = encryption % 5
         switch(_encryption){
         case 0:
             str = qsTr("No Security")

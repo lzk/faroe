@@ -7,6 +7,7 @@ Window {
     flags: Qt.Dialog | Qt.FramelessWindowHint
     color: "transparent"
     property alias text: text1.text
+    property alias canCancel: button_cancel.visible
     modality: Qt.ApplicationModal // Qt.WindowModal
     id:root
     width: 850
@@ -77,11 +78,13 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 20
+                text : qsTr("Scanning...")
             }
         }
     }
 
     JKAbstractButton{
+        id:button_cancel
         width: 50
         height: 50
         anchors.horizontalCenter: parent.horizontalCenter
@@ -101,7 +104,6 @@ Window {
 
     }
     function open(){
-        text1.text = qsTr("Scanning...")
         show()        
     }
     Connections{

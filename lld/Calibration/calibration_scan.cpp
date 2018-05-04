@@ -18,7 +18,7 @@ SC_PAR_T_ k_scan_par;
 //-------------------------
 extern int ScanMenuItem[];
 //-------------------------
-U8 JobID = 0;
+U8 JobID = 0xf;//0;
 //--Scan-----------------------
 
 static IMG_FILE_T ImgFile[2] = {{k_scan_par.img,0},{k_scan_par.img,0}};
@@ -66,10 +66,10 @@ int Scan_CloseDevice()
 int Scan_JobCreate(char job)
 {
   int result;
-  U8 cmd[8] = {'J','O','B',0, (U8)job,0,0,0};
+  U8 cmd[8] = {'J','O','B',0, (U8)job,0,0,JobID};
   U8 status[8];
 
-  cmd[7] = JOB_PULL_SCAN;
+//  cmd[7] = JOB_PULL_SCAN;
 
   result = CMDIO_BulkWriteEx(USB_PIPE, cmd, sizeof(cmd)) &&
       CMDIO_BulkReadEx(USB_PIPE, status, sizeof(status)) &&
@@ -94,7 +94,7 @@ int Scan_JobEnd()
   result = CMDIO_BulkWriteEx(USB_PIPE, cmd, sizeof(cmd)) &&
       CMDIO_BulkReadEx(USB_PIPE, status, sizeof(status)) &&
       (M32(&status[0])==I3('STA')) && (status[4]=='A');
-  JobID = 0;
+//  JobID = 0;
 
   if(!result)
     _show_err_msg("Job End", status[7]);
@@ -477,6 +477,9 @@ int _scan_info()
     (!(k_scan_par.duplex & 2) || Info.ImgStatus[1].EndScan))
     return -1;
  
+  if(Info.ErrorStatus.scan_canceled_err || (!Info.JobID))
+      return 0;
+
   return 1;
 }
 
@@ -531,6 +534,8 @@ int _scan_stop()
 int job_Scan(void)
 {
   int data_ready;
+  if(!_scan_info())
+      goto CANCEL;
   if(!_scan_start())
     goto EXIT;
 LOOP:
@@ -538,11 +543,14 @@ LOOP:
   if(data_ready < 0)
     goto EXIT;
   if(data_ready == 0)
-    goto LOOP;
+    goto CANCEL;
   _scan_image();
   goto LOOP;
 EXIT:
   return _scan_stop();
+CANCEL:
+  _scan_stop();
+  return FALSE;
 }
 
 int Scan_EnableSaveFile(int enable)

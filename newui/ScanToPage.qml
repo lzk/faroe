@@ -160,8 +160,8 @@ ScanToPageLayout {
     FileDialog {
         id: fileDialog
         title: qsTr("Save As")
-        folder: "file://" + JSData.defaultFilePath()
-//        folder: shortcuts.pictures
+//        folder: "file://" + JSData.defaultFilePath()
+        folder: shortcuts.pictures
         nameFilters: JSData.constFileDialogSaveFileType()
         selectExisting:false
         onAccepted: {

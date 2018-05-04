@@ -590,37 +590,6 @@ int waitJobFinish(int job, int wait_motor_stop)
 //    return 1;
 //}
 
-enum Scan_RET
-{
-	RETSCAN_OK = 0,
-	RETSCAN_ERRORDLL = 1,
-	RETSCAN_OPENFAIL = 2,
-	RETSCAN_ERRORPARAMETER = 3,
-	RETSCAN_NO_ENOUGH_SPACE = 5,
-	RETSCAN_ERROR_PORT = 6,
-	RETSCAN_CANCEL = 7,
-	RETSCAN_BUSY = 8,
-	RETSCAN_ERROR = 9,
-	RETSCAN_OPENFAIL_NET = 10,
-	RETSCAN_PAPER_JAM = 11,
-	RETSCAN_COVER_OPEN = 12,
-	RETSCAN_PAPER_NOT_READY = 13,
-	RETSCAN_CREATE_JOB_FAIL = 14,
-	RETSCAN_ADFCOVER_NOT_READY = 15,
-	RETSCAN_HOME_NOT_READY = 16,
-	RETSCAN_ULTRA_SONIC = 17,
-	RETSCAN_ERROR_POWER1 = 18,
-	RETSCAN_ERROR_POWER2 = 19,
-	RETSCAN_JOB_MISSING = 20,
-	RETSCAN_JOB_GOGING = 21,
-	RETSCAN_TIME_OUT = 22,
-	RETSCAN_USB_TRANSFERERROR = 23,
-	RETSCAN_WIFI_TRANSFERERROR = 24,
-	RETSCAN_ADFPATH_NOT_READY = 25,
-	RETSCAN_ADFDOC_NOT_READY = 26,
-	RETSCAN_GETINFO_FAIL = 27,
-};
-
 #define START_STAGE					0x1
 #define SCANNING_STAGE				0x2
 #define PUSH_TRANSFER_STAGE		0x3
@@ -638,12 +607,14 @@ Scan_RET ScannerStatusCheck_(char stage)
 			if (stage == START_STAGE) {
 				printf("Last job not finish!!\n");
 				result = RETSCAN_JOB_GOGING;
+                return result;
 			}
 		}
 		else {
 			if (stage == SCANNING_STAGE) {
 				printf("Scan job missing!!\n");
 				result = RETSCAN_JOB_MISSING;
+                return result;
 			}
 		}
 
@@ -652,31 +623,38 @@ Scan_RET ScannerStatusCheck_(char stage)
 			if (stage != PUSH_TRANSFER_STAGE) {
 				printf("COVER_OPEN_ERR\n");
 				result = RETSCAN_COVER_OPEN;
+                return result;
 			}
 		}
 		if (sc_info.ErrorStatus.scan_jam_err) {
 			printf("SCAN_JAM_ERR\n");
 			result = RETSCAN_PAPER_JAM;
+            return result;
 		}
 		if (sc_info.ErrorStatus.scan_canceled_err) {
 			printf("SCAN_CANCELED_ERR\n");
 			result = RETSCAN_CANCEL;
+            return result;
 		}
 		if (sc_info.ErrorStatus.scan_timeout_err) {
 			printf("SCAN_TIMEOUT_ERR\n");
 			result = RETSCAN_TIME_OUT;
+            return result;
 		}
 		if (sc_info.ErrorStatus.multi_feed_err) {
 			printf("MULTI_FEED_ERR\n");
 			result = RETSCAN_ULTRA_SONIC;
+            return result;
 		}
 		if (sc_info.ErrorStatus.usb_transfer_err) {
 			printf("USB_TRANSFER_ERR\n");
 			result = RETSCAN_USB_TRANSFERERROR;
+            return result;
 		}
 		if (sc_info.ErrorStatus.wifi_transfer_err) {
 			printf("WiFi_TRANSFER_ERR\n");
 			result = RETSCAN_WIFI_TRANSFERERROR;
+            return result;
 		}
 		//if(sc_info.ErrorStatus.usb_disk_transfer_err) {
 		//	printf("USBDISK_TRANSFER_ERR\n");
@@ -696,14 +674,17 @@ Scan_RET ScannerStatusCheck_(char stage)
 			if (sc_info.SensorStatus.adf_document_sensor) {
 				printf("ADF document not ready.\n");
 				result = RETSCAN_ADFDOC_NOT_READY;
+                return result;
 			}
 			if (sc_info.SensorStatus.adf_paper_sensor) {
 				printf("ADF path not ready.\n");
 				result = RETSCAN_ADFPATH_NOT_READY;
+                return result;
 			}
 			if (sc_info.SensorStatus.cover_sensor) {
 				printf("ADF cover not ready.\n");
 				result = RETSCAN_ADFCOVER_NOT_READY;
+                return result;
 			}
 		}
 	}

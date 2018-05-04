@@ -1998,11 +1998,12 @@ int cal_save_me_flash(CALIBRATION_SET_T_ *set)
 
 extern int Scan_JobCreate(char job);
 extern int Scan_JobEnd();
-
+extern Scan_RET ScannerStatusCheck_(char stage);
 #if 1
 int job_Calibration(SC_PAR_T_ *_par)
 {
   int i;
+  int nRet = RETSCAN_OK;
 
   int CalibrationMode[] = {300,600};
   //int CalibrationMode[] = {300};
@@ -2027,8 +2028,10 @@ int job_Calibration(SC_PAR_T_ *_par)
 
   SCAN_DOC_SIZE = DOC_K_PRNU;
 
-  if(!Scan_JobCreate(JOB_ADF))
-	goto NG;
+  if(!Scan_JobCreate(JOB_ADF)){
+      nRet = RETSCAN_CREATE_JOB_FAIL;
+      goto NG;
+  }
 
   K_BatchNum++;
   K_PageNum=0;
@@ -2045,8 +2048,10 @@ int job_Calibration(SC_PAR_T_ *_par)
 #else
 	if(k_scan_par.source == I3('ADF')/* && (k_scan_par.img.dpi.x == 300)*/) {
 		//ADF prefeed calibration
-		if(!cal_prefeed(&K_Cap, &K_Set))
-		  goto NG;
+        if(!cal_prefeed(&K_Cap, &K_Set)){
+            nRet = ScannerStatusCheck_(2);
+            goto NG;
+        }
 
 		#ifdef Show_Time_Cost
 		  //GetSystemTime(&lt);
@@ -2060,6 +2065,11 @@ int job_Calibration(SC_PAR_T_ *_par)
 
 for(i=0 ; i<CalibrationTimes;i++)
 {
+    nRet = ScannerStatusCheck_(2);
+
+    if(nRet != RETSCAN_OK)
+        goto NG;
+
 	k_scan_par.img.dpi.x = CalibrationMode[i];
 	k_scan_par.img.dpi.y = CalibrationMode[i];
 
@@ -2089,12 +2099,16 @@ if(bCalibrationMode) {
 	////Full calibration
 
 	//Get AFE / Calibration capability
-    if(!cal_set_def(&K_Cap, &K_Set))
-      goto NG;
+    if(!cal_set_def(&K_Cap, &K_Set)){
+        nRet = RETSCAN_ERRORPARAMETER;
+        goto NG;
+    }
 
     //AFE offset
-    if(!cal_AFE_offset(&K_Cap, &K_Set))
-      goto NG;
+    if(!cal_AFE_offset(&K_Cap, &K_Set)){
+        nRet = RETSCAN_ERRORPARAMETER;
+        goto NG;
+    }
 
 	#ifdef Show_Time_Cost
 		//GetSystemTime(&lt);
@@ -2104,8 +2118,10 @@ if(bCalibrationMode) {
 	#endif
     
     //exposure time
-    if(!cal_exposure_time(&K_Cap, &K_Set))
-      goto NG;
+        if(!cal_exposure_time(&K_Cap, &K_Set)){
+            nRet = RETSCAN_ERRORPARAMETER;
+            goto NG;
+        }
 
 	#ifdef Show_Time_Cost
 		ct = lt;
@@ -2116,8 +2132,10 @@ if(bCalibrationMode) {
 	#endif
 
     //AFE gain
-    if(!cal_AFE_gain(&K_Cap, &K_Set))
-      goto NG;
+        if(!cal_AFE_gain(&K_Cap, &K_Set)){
+            nRet = RETSCAN_ERRORPARAMETER;
+            goto NG;
+        }
 
 	#ifdef Show_Time_Cost
 		ct = lt;
@@ -2128,8 +2146,10 @@ if(bCalibrationMode) {
 	#endif
 
 	//exposure balance
-    if(!cal_exposure_balance(&K_Cap, &K_Set))
-      goto NG;
+        if(!cal_exposure_balance(&K_Cap, &K_Set)){
+            nRet = RETSCAN_ERRORPARAMETER;
+            goto NG;
+        }
 
 	#ifdef Show_Time_Cost
 		ct = lt;
@@ -2140,8 +2160,10 @@ if(bCalibrationMode) {
 	#endif
 
     //white shading
-    if(!cal_white_shading(&K_Cap, &K_Set))
-      goto NG;
+        if(!cal_white_shading(&K_Cap, &K_Set)){
+            nRet = RETSCAN_ERRORPARAMETER;
+            goto NG;
+        }
 
     #ifdef Show_Time_Cost
 		ct = lt;
@@ -2158,8 +2180,10 @@ if(bCalibrationMode) {
 #endif
 
     //dark shading
-    if(!cal_dark_shading(&K_Cap, &K_Set))
-      goto NG;
+      if(!cal_dark_shading(&K_Cap, &K_Set)){
+          nRet = RETSCAN_ERRORPARAMETER;
+          goto NG;
+      }
 
 	#ifdef Show_Time_Cost
 		ct = lt;
@@ -2198,8 +2222,10 @@ Sleep(1000);
 #else
 	if(k_scan_par.source == I3('ADF')/* && (k_scan_par.img.dpi.x == 300)*/) {
 		//ADF postfeed calibration
-		if(!cal_postfeed(&K_Cap, &K_Set))
-		  goto NG;
+        if(!cal_postfeed(&K_Cap, &K_Set)){
+            nRet = RETSCAN_ERROR;
+            goto NG;
+        }
 
 		#ifdef Show_Time_Cost
 			ct = lt;
@@ -2240,17 +2266,19 @@ if(k_scan_par.source == I3('ADF')) {
 //		goto NG;
 
 	  // 0. Pickup Home
-	  if(!job_ResetHome(k_scan_par.source, 0))
-		goto NG;
+    if(!job_ResetHome(k_scan_par.source, 0)){
+        nRet = RETSCAN_ERROR;
+        goto NG;
+    }
 	#endif
 #endif
 }
 	
-  return TRUE;
+  return 0;
 NG:
   bCalibration = FALSE;
   printf("Calibration fail.");
-  return FALSE;
+  return nRet;
 }
 #endif
 
