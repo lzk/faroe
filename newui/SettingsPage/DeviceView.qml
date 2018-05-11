@@ -10,6 +10,7 @@ Item {
     width: 495
     height: 460
     enabled: scanData.deviceStatus
+    opacity: enabled ?1 :0.3
 
     ColumnLayout {
         anchors.fill: parent

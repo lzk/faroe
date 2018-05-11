@@ -10,6 +10,7 @@ Item {
     width: 495
     height: 460
     enabled: scanData.deviceStatus && setting.wifiEnable && setting.powerSupply !== JKEnums.PowerMode_usbBusPower
+    opacity: enabled ?1 :0.3
     ColumnLayout {
         anchors.fill: parent
         anchors.topMargin: 10
@@ -38,6 +39,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 5
+                opacity: enabled || !root.enabled ?1 :0.3
             }
 //            Row{
 //                anchors.right: parent.right
@@ -79,7 +81,7 @@ Item {
                 height: 60
                 width: parent.width
                 enabled: checkbox.checked
-                opacity: enabled ?1 :0.3
+                opacity: enabled || !root.enabled ?1 :0.3
                 JKText {
                     id: text3
                     width: 100
@@ -104,7 +106,8 @@ Item {
                 height: 60
                 width: parent.width
                 enabled: checkbox.checked
-                opacity: enabled ?1 :0.3
+                opacity: enabled || !root.enabled ?1 :0.3
+                visible: false
                 JKText {
                     id: text4
                     width: 100
@@ -152,12 +155,12 @@ Item {
 //                textInput_ssid.focus = true
                 return
             }
-            if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-                warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
-                textInput_password.forceActiveFocus()
-//                textInput_password.focus = true
-                return
-            }
+//            if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
+//                warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+//                textInput_password.forceActiveFocus()
+////                textInput_password.focus = true
+//                return
+//            }
             setting.enable = checkbox.checked
             setting.ssid = textInput_ssid.text
             setting.password = textInput_password.text
@@ -187,7 +190,7 @@ Item {
                         checkbox.checked = setting.enable
                         textInput_ssid.text = setting.ssid
                         textInput_ssid.cursorPosition = 0
-                        textInput_password.text = setting.password
+                        textInput_password.text = ""//setting.password
                     }else{
                         checkbox.checked = false
                         textInput_ssid.text = ""

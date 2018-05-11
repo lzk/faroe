@@ -310,7 +310,8 @@ int ScannerAPI::getInfo(SC_INFO_DATA_T& sc_infodata)
     char* code = (char*)&sc_infodata.code;
     if(result <= 0
        ||(code[0] != 'I' || code[1] != 'D' || code[2] != 'A' || code[3] != 'T')
-       || sc_infodata.ErrorStatus.scan_canceled_err){
+//       || sc_infodata.ErrorStatus.scan_canceled_err
+            ){
         result = -1;
     }
     return result<0?-1:0;

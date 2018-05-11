@@ -16,10 +16,11 @@ DecodeManager::DecodeManager(QObject *parent) : QObject(parent)
 
 struct DMDecodeResult DecodeManager::decodeMultiQrcode(const QString& fileName)
 {
+    qDebug()<<"decode multi qrcode";
     DecodeHints hints = DecodeHints::QR_CODE_HINT;
     hints.setTryHarder(true);
-//    zxing::qrcode::QRCodeReader reader;
-    zxing::MultiFormatReader reader;
+    zxing::qrcode::QRCodeReader reader;
+//    zxing::MultiFormatReader reader;
     return decodeMulti(fileName ,&reader ,hints);
 }
 
@@ -27,17 +28,18 @@ struct DMDecodeResult DecodeManager::decodeMultiOneD(const QString& fileName)
 {
     DecodeHints hints = DecodeHints::ONED_HINT;
     hints.setTryHarder(true);
-//    zxing::oned::MultiFormatOneDReader reader(hints);
-    zxing::MultiFormatReader reader;
+    zxing::oned::MultiFormatOneDReader reader(hints);
+//    zxing::MultiFormatReader reader;
     return decodeMulti(fileName ,&reader ,hints);
+//    return decode(fileName ,&reader ,hints);
 }
 
 QString DecodeManager::decodeOneD(const QString& fileName)
 {
     DecodeHints hints = DecodeHints::ONED_HINT;
     hints.setTryHarder(true);
-//    zxing::oned::MultiFormatOneDReader reader(hints);
-    zxing::MultiFormatReader reader;
+    zxing::oned::MultiFormatOneDReader reader(hints);
+//    zxing::MultiFormatReader reader;
     struct DMDecodeResult dr = decode(fileName ,&reader ,hints);
     if(dr.result.count() > 0)
         return dr.result.at(0).text;
@@ -54,7 +56,7 @@ struct DMDecodeResult DecodeManager::decodeMultiAll(const QString& fileName)
     | DecodeHints::ASSUME_GS1;
     hints.setTryHarder(true);
     zxing::MultiFormatReader reader;
-    return decodeMulti(fileName ,&reader ,hints);
+    return decodeMulti(fileName ,&reader ,hints ,4);
 }
 
 
@@ -85,16 +87,25 @@ QRectF getTagRect(const ArrayRef<Ref<ResultPoint> > &resultPoints, const Ref<Bit
                 xMax = x;
         }
 
-        qreal yMin = resultRectPoints[0]->getY();
+        qreal yMin = resultPoints[0]->getY();
         qreal yMax = yMin;
-        for (unsigned int i = 1; i < resultRectPoints.size(); ++i) {
-            qreal y = resultRectPoints[i]->getY();
+        for (unsigned int i = 1; i < resultPoints->size(); ++i) {
+            qreal y = resultPoints[i]->getY();
             if (y < yMin)
                 yMin = y;
             if (y > yMax)
                 yMax = y;
         }
-
+        qreal offset = (xMax - xMin) > (yMax - yMin) ?(xMax -xMin) :(yMax - yMin);
+        offset /= 5;
+        xMin -= offset;
+        yMin -= offset;
+        xMax += offset;
+        yMax += offset;
+        xMin = xMin > 0?xMin :0;
+        yMin = yMin > 0?yMin :0;
+        xMax = xMax < matrixWidth?xMax :matrixWidth;
+        yMax = yMax < matrixHeight?yMax :matrixHeight;
         return QRectF(QPointF(xMin / matrixWidth, yMin / matrixHeight), QPointF(xMax / matrixWidth, yMax / matrixHeight));
     }
 
@@ -116,14 +127,23 @@ QRectF getTagRect(const ArrayRef<Ref<ResultPoint> > &resultPoints, const Ref<Bit
             if (y > yMax)
                 yMax = y;
         }
-
+        qreal offset = (xMax - xMin) > (yMax - yMin) ?(xMax -xMin) :(yMax - yMin);
+        offset /= 5;
+        xMin -= offset;
+        yMin -= offset;
+        xMax += offset;
+        yMax += offset;
+        xMin = xMin > 0?xMin :0;
+        yMin = yMin > 0?yMin :0;
+        xMax = xMax < matrixWidth?xMax :matrixWidth;
+        yMax = yMax < matrixHeight?yMax :matrixHeight;
         return QRectF(QPointF(xMin / matrixWidth, yMin / matrixHeight), QPointF(xMax / matrixWidth, yMax / matrixHeight));
     }
 
     return QRectF();
 }
 
-struct DMDecodeResult DecodeManager::decodeMulti(const QString& fileName ,zxing::Reader* reader ,DecodeHints hints)
+struct DMDecodeResult DecodeManager::decodeMulti(const QString& fileName ,zxing::Reader* reader ,DecodeHints hints ,int angle)
 {
     struct DMDecodeResult dr;
     QImage image(fileName);
@@ -138,10 +158,91 @@ struct DMDecodeResult DecodeManager::decodeMulti(const QString& fileName ,zxing:
     QString string;
     QString format;
     QString charSet;
-    QTextCodec *codec;
+//    QTextCodec *codec;
     QRectF rect;
-
     WrapperQImage *ciw;
+#if 1
+    QFileInfo fileInfo(fileName);
+    QString preFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName();
+
+    dr.fileName = fileName;
+    dr.width = image.width();
+    dr.height = image.height();
+    qDebug()<<"origin widthxheight:"<<image.width()<<"x"<<image.height();
+    int index = 0;
+    int fmt;
+    QRect dRect;
+    for(int i = 0 ;i < angle ;i++){
+        for(int j = 0 ;j < 2 ;j++){
+            switch (j) {
+            case 0:
+                ciw = WrapperQImage::Factory(image, 999, 999, true);
+                break;
+            case 1:
+                ciw = WrapperQImage::Factory(image);
+                break;
+            case 2:
+            default:
+                ciw = WrapperQImage::Factory(image, 2000, 2000, true);
+                break;
+            }
+            Ref<LuminanceSource> imageRef(ciw);
+            Ref<HybridBinarizer> binz( new HybridBinarizer(imageRef) );
+            Ref<BinaryBitmap> bb( new BinaryBitmap(binz) );
+            try {
+                resList = decoder->decodeMultiple(bb, hints);
+            }catch(zxing::Exception &e){
+                qDebug()<<"decode error:"<<i*90<<"-"<<j<<":"<<e.what();
+            }
+            for (auto res:resList){
+                string = QString(res->getText()->getText().c_str());
+                qDebug()<<"decode angle:"<<i*90 <<"-"<<j <<" string:"<<string;
+                if(string.isEmpty())
+                    continue;
+                bool exist = false;
+                for(auto result_already :dr.result){
+                    if(result_already.text == string){
+                        exist = true;
+                    }
+                }
+                if(exist)
+                    continue;
+                fmt = res->getBarcodeFormat().value;
+                format = decoderFormatToString(1 << fmt);
+    //                charSet = QString::fromStdString(res->getCharSet());
+    //                if (!charSet.isEmpty()) {
+    //                    codec = QTextCodec::codecForName(res->getCharSet().c_str());
+    //                    if (codec)
+    //                        string = codec->toUnicode(res->getText()->getText().c_str());
+    //                }
+                try{
+                    rect = getTagRect(res->getResultPoints(), binz->getBlackMatrix());
+                    dRect = QRect(QPoint(rect.topLeft().x() * image.width() ,rect.topLeft().y() * image.height())
+                                   ,QPoint(rect.bottomRight().x() * image.width() ,rect.bottomRight().y() * image.height()));
+
+                }catch(zxing::Exception &e){
+                    qDebug()<<"get tag rect error:"<<i*90<<"-"<<j<<":"<<e.what();
+                }
+                result.format = format;
+                result.charSet = charSet;
+                result.text = string;
+
+                result.width = i % 2 ?dRect.height() :dRect.width();
+                result.height = i % 2 ?dRect.width() :dRect.height();
+                if(!dRect.isEmpty()){
+                    result.fileName = preFileName + QString().sprintf("_%d.jpg" ,index++);
+                    image.copy(dRect).transformed(QTransform().rotate(-90*i)).save(result.fileName ,"jpg");
+                    qDebug()<<"filename:"<<result.fileName;
+                }
+                dr.result << result;
+            }
+//            delete ciw;
+        }
+        if(i < 3){
+            image = image.transformed(QTransform().rotate(90));
+        }
+    }
+#else
 //    ciw = WrapperQImage::Factory(image);
     ciw = WrapperQImage::Factory(image, 999, 999, true);
     try{
@@ -206,29 +307,118 @@ struct DMDecodeResult DecodeManager::decodeMulti(const QString& fileName ,zxing:
         }
     } catch(zxing::Exception &e) {
         qDebug()<<"zxing error:"<<QString(e.what());
+        delete ciw;
         return dr;
     }
+#endif
     return dr;
 }
 
-struct DMDecodeResult DecodeManager::decode(const QString& fileName ,zxing::Reader* decoder ,DecodeHints hints)
+struct DMDecodeResult DecodeManager::decode(const QString& fileName ,zxing::Reader* decoder ,DecodeHints hints ,int angle)
 {
     struct DMDecodeResult dr;
     QImage image(fileName);
     if(image.isNull())
         return dr;
 
-    bool tryHarder_ = true;
     Ref<Result> res;
 
     struct DMResult result;
     QString string;
     QString format;
-//    QString charSet;
+    QString charSet;
 //    QTextCodec *codec;
     QRectF rect;
 
     WrapperQImage *ciw;
+#if 1
+    QFileInfo fileInfo(fileName);
+    QString preFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName();
+
+    dr.fileName = fileName;
+    dr.width = image.width();
+    dr.height = image.height();
+    qDebug()<<"origin widthxheight:"<<image.width()<<"x"<<image.height();
+    int index = 0;
+    int fmt;
+    QRect dRect;
+    for(int i = 0 ;i < angle ;i++){
+        for(int j = 0 ;j < 3 ;j++){
+            switch (j) {
+            case 0:
+                ciw = WrapperQImage::Factory(image, 999, 999, true);
+                break;
+            case 1:
+                ciw = WrapperQImage::Factory(image, 2000, 2000, true);
+                break;
+            case 2:
+            default:
+                ciw = WrapperQImage::Factory(image);
+                break;
+            }
+            Ref<LuminanceSource> imageRef(ciw);
+            Ref<HybridBinarizer> binz( new HybridBinarizer(imageRef) );
+            Ref<BinaryBitmap> bb( new BinaryBitmap(binz) );
+
+            bool hasSucceded = false;
+            try {
+                res = decoder->decode(bb, hints);
+                hasSucceded = true;
+            }catch(zxing::Exception &e){
+                qDebug()<<"decode error:"<<i*90<<"-"<<j<<":"<<e.what();
+            }
+            if(!hasSucceded)
+                continue;
+//            for (auto res:resList){
+                string = QString(res->getText()->getText().c_str());
+                qDebug()<<"decode angle:"<<i*90 <<"-"<<j <<" string:"<<string;
+                if(string.isEmpty())
+                    continue;
+//                bool exist = false;
+//                for(auto result_already :dr.result){
+//                    if(result_already.text == string){
+//                        exist = true;
+//                    }
+//                }
+//                if(exist)
+//                    continue;
+                fmt = res->getBarcodeFormat().value;
+                format = decoderFormatToString(1 << fmt);
+    //                charSet = QString::fromStdString(res->getCharSet());
+    //                if (!charSet.isEmpty()) {
+    //                    codec = QTextCodec::codecForName(res->getCharSet().c_str());
+    //                    if (codec)
+    //                        string = codec->toUnicode(res->getText()->getText().c_str());
+    //                }
+                try{
+                    rect = getTagRect(res->getResultPoints(), binz->getBlackMatrix());
+                    dRect = QRect(QPoint(rect.topLeft().x() * image.width() ,rect.topLeft().y() * image.height())
+                                   ,QPoint(rect.bottomRight().x() * image.width() ,rect.bottomRight().y() * image.height()));
+
+                }catch(zxing::Exception &e){
+                    qDebug()<<"get tag rect error:"<<i*90<<"-"<<j<<":"<<e.what();
+                }
+                result.format = format;
+                result.charSet = charSet;
+                result.text = string;
+
+                result.width = dRect.width();
+                result.height = dRect.height();
+                if(!dRect.isEmpty()){
+                    result.fileName = preFileName + QString().sprintf("_%d.jpg" ,index++);
+                    image.copy(dRect).transformed(QTransform().rotate(-90*i)).save(result.fileName ,"jpg");
+                }
+                dr.result << result;
+//            }
+                goto EXIT;
+        }
+        if(i < 3){
+            image = image.transformed(QTransform().rotate(90));
+        }
+    }
+EXIT:
+#else
+    bool tryHarder_ = true;
     ciw = WrapperQImage::Factory(image, 999, 999, true);
 //    ciw = WrapperQImage::Factory(image);
     try{
@@ -301,6 +491,7 @@ struct DMDecodeResult DecodeManager::decode(const QString& fileName ,zxing::Read
         struct DMDecodeResult dd;
         return dd;
     }
+#endif
     return dr;
 }
 

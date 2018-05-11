@@ -10,6 +10,7 @@ Item {
     width: 495
     height: 460
     enabled: scanData.deviceStatus && setting.powerSupply !== JKEnums.PowerMode_usbBusPower
+    opacity: enabled ?1 :0.3
 
     ColumnLayout {
         anchors.fill: parent
@@ -45,6 +46,7 @@ Item {
                     height: parent.height
                     text:qsTr("DHCP/Auto IP")
                     checked: true
+                    opacity: enabled || !root.enabled ? 1.0 : 0.3
                 }
                 JKRadioButton{
                     id:radiobutton_static
@@ -52,6 +54,7 @@ Item {
                     height: parent.height
                     text:qsTr("Static")
                     checked: !radiobutton_dhcp.checked
+                    opacity: enabled || !root.enabled ? 1.0 : 0.3
                 }
             }
         }

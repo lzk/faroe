@@ -863,6 +863,9 @@ If you select 'No', the scan job will be canceled!
         case DeviceStruct.ERR_scanImagesAreAllBlank:
             warningWithImage(qsTr("Scan Images are all blank!"))
             break
+        case DeviceStruct.ERR_RETSCAN_CANCEL_LAST:
+            errorWithImage(qsTr("The last scan job was canceled. Please clear the ADF of any remaining paper originals, and try again."))
+            break
         default:
             ret = false
             console.log("err:" ,result)

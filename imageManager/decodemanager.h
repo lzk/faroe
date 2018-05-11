@@ -58,8 +58,8 @@ public:
 public slots:
 
 private:
-    struct DMDecodeResult decodeMulti(const QString& fileName ,zxing::Reader* ,zxing::DecodeHints hints);
-    struct DMDecodeResult decode(const QString& fileName ,zxing::Reader* ,zxing::DecodeHints hints);
+    struct DMDecodeResult decodeMulti(const QString& fileName ,zxing::Reader* ,zxing::DecodeHints hints ,int angle = 2);
+    struct DMDecodeResult decode(const QString& fileName ,zxing::Reader* ,zxing::DecodeHints hints ,int angle = 2);
 
     static QString decoderFormatToString(int fmt);
 };

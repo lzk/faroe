@@ -123,6 +123,10 @@ int Scanner::receiveData()
 //            usleep(100 * 1000);
 //            continue;
 //        }
+        if(result == RETSCAN_CANCEL_LAST){
+            result = RETSCAN_CANCEL;
+            break;
+        }
         if(result)
             break;
         if ((!(duplex & 1) || sc_infodata.ImgStatus[0].EndScan)

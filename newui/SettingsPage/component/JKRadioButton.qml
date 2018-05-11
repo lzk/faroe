@@ -6,6 +6,7 @@ import QtQuick 2.7
      text: qsTr("RadioButton")
 //     checked: true
      font.pixelSize: 14
+     opacity: enabled ? 1.0 : 0.3
 
      indicator: Rectangle {
          implicitWidth: 24
@@ -28,7 +29,6 @@ import QtQuick 2.7
      contentItem: Text {
          text: control.text
          font: control.font
-         opacity: enabled ? 1.0 : 0.3
 //         horizontalAlignment: Text.AlignHCenter
          verticalAlignment: Text.AlignVCenter
          leftPadding: control.indicator.width + control.spacing

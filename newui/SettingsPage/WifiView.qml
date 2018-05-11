@@ -10,6 +10,7 @@ Item {
     width: 495
     height: 460
     enabled: scanData.deviceStatus && wifiSetting.powerSupply !== JKEnums.PowerMode_usbBusPower
+    opacity: enabled ?1 :0.3
     property var wifiSetting:{
         "enable":true
         ,"type":0

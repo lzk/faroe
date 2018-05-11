@@ -683,6 +683,7 @@ void ImageManager::decodeScanDecode(const QStringList& fileList)
 
 }
 
+#include <QRegularExpression>
 void ImageManager::decodeScanEnd()
 {
     if(fileList.isEmpty())
@@ -701,7 +702,7 @@ void ImageManager::decodeScanEnd()
     const char* cText;
     bool firstLine;
 
-    fprintf(file ,"<html> <head> <title>QRCode/Barcode Detection Result</title> </head>\n");
+    fprintf(file ,"<html> <head> <meta charset=\"UTF-8\">  <title>QRCode/Barcode Detection Result</title> </head>\n");
     fprintf(file ,"<style> table { font-family: \"Microsoft YaHei\"; font-size:12px } </style>\n");
     fprintf(file ,"<body>\n");
     fprintf(file ,"<H3>Result:</H3>\n");
@@ -777,10 +778,21 @@ void ImageManager::decodeScanEnd()
 
                 if(!result.text.isEmpty()){
                     fprintf(file ,"<td>%s</td>\n" ,result.format.toLatin1().constData());
-                    QString type = result.text.contains("http://") ?"URI" :"TEXT";
-                    cText  = result.text.toLatin1().constData();
+                    bool isurl = false;
+                    QString url = result.text.trimmed();
+                    if(!url.contains(" ")){
+                        QRegularExpression re_with_protocol("^[a-zA-Z][a-zA-Z0-9+-.]+:");
+//                        QRegularExpression re_without_protocol("([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,}"
+//                                                               +QString("(:\\d{1,5})?")
+//                                                               +QString("(/|\\?|$)"));
+                        if(re_with_protocol.match(url).hasMatch())
+                            isurl = true;
+//                        else if(re_without_protocol.match(url).hasMatch())
+//                            isurl = true;
+                    }
+                    cText  = result.text.toUtf8().constData();//result.text.toLocal8Bit().constData();
 //                    if(result.format != "RSS_14"){
-                        if(type == "URI"){
+                        if(isurl){
                             fprintf(file ,"<td>URI</td>\n");
                             fprintf(file ,"<td>  <a href=%s>%s</a> </td>\n" ,cText ,cText);
                         }else{
