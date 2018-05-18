@@ -24,6 +24,7 @@ public:
     Q_INVOKABLE QStringList getPrinterName();
     Q_INVOKABLE void cancelScan();
     Q_INVOKABLE void cancelSearch();
+    Q_INVOKABLE void cancelImageHandle();
     Q_INVOKABLE void setCmd(int cmd ,const QString& data=QString());
     Q_INVOKABLE void setScanToCmd(int cmd ,QList<int> ,const QString& jsonData=QString());
 

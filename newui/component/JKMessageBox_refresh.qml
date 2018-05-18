@@ -5,7 +5,7 @@ JKDialog {
     width: 490 + 20
     height: 168 + 20
     property alias message: messagebox.message
-    property bool showCancel: false
+    property bool showCancel: true
     signal cancelClick
     toolbar{
         color: "#FF67A1CF"

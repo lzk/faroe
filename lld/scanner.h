@@ -128,6 +128,7 @@ private:
     int _scan(Setting* setting);
     int _ADFScan(Setting* setting);
     int checkStatus(int stage ,struct SC_INFO_DATA_STRUCT* sc_infodata);
+    int checkScanningStatus(struct SC_INFO_DATA_STRUCT* sc_infodata);
     void getGammaTable(float gamma ,unsigned int*);
     int doScannerJob(int,void*);
     int scanner_cmd(int cmd ,void* data);

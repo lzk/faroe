@@ -33,6 +33,7 @@ public:
     struct DMDecodeResult decodeMultiOneD(const QString& fileName);
     struct DMDecodeResult decodeMultiAll(const QString& fileName);
 
+    void cancel(bool iscancel);
 public:
     enum DecoderFormat {
         DecoderFormat_None = 0,
@@ -62,6 +63,7 @@ private:
     struct DMDecodeResult decode(const QString& fileName ,zxing::Reader* ,zxing::DecodeHints hints ,int angle = 2);
 
     static QString decoderFormatToString(int fmt);
+    bool m_cancel;
 };
 
 #endif // DECODEMANAGER_H

@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
+import QtQuick.Controls 1.4
 
 FocusScope{
     property alias input: input
@@ -31,12 +32,12 @@ FocusScope{
                 cursorPosition = 0
             }
         }
-            onTextChanged: {
-                if(!activeFocus){
-                    cursorPosition = 0
-    //                ensureVisible(0)
-                }
+        onTextChanged: {
+            if(!activeFocus){
+                cursorPosition = 0
+//                ensureVisible(0)
             }
+        }
     }
 
     ToolTip{
@@ -45,6 +46,55 @@ FocusScope{
         background: Rectangle{
             color: "#9adbc8"
         }
+        closePolicy:Popup.NoAutoClose
+    }
+
+    MouseArea{
+        parent:input
+        anchors.fill: input
+        acceptedButtons:  Qt.RightButton
+
+        onClicked: {
+            if (!input.readOnly && mouse.button === Qt.RightButton) {
+                contentMenu.popup()
+            }
+        }
+    }
+
+    Menu{ // 右键菜单
+        //title: "Edit"
+        id: contentMenu
+
+        MenuItem {
+            text: "Cut"
+            shortcut: "Ctrl+X"
+            enabled: input.selectedText !== "" && input.echoMode === TextInput.Normal
+            onTriggered:{
+                console.log("cut")
+                input.cut()
+            }
+        }
+
+        MenuItem {
+            text: "Copy"
+            shortcut: "Ctrl+C"
+            enabled: input.selectedText !== "" && input.echoMode === TextInput.Normal
+            onTriggered: {
+                console.log("copy")
+                input.copy()
+            }
+        }
+
+        MenuItem {
+            text: "Paste"
+            shortcut: "Ctrl+V"
+            enabled: input.canPaste
+            onTriggered:{
+                console.log("paste")
+                input.paste()
+            }
+        }
+
     }
 }
 

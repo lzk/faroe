@@ -461,7 +461,9 @@ Item {
             default:
                 return
             }
-            dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
+            dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message} ,function(dialog){
+                dialog.cancelClick.connect(jkInterface.cancelImageHandle)
+            })
         }
 
         onCmdToDevice:{
@@ -525,7 +527,9 @@ Item {
             }
             if(dialog && dialog.visible)
                 dialog.close()
-            dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message})
+            dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":message} ,function(dialog){
+                dialog.cancelClick.connect(jkInterface.cancelImageHandle)
+            })
         }
 
         onCmdResult:{
@@ -757,6 +761,9 @@ Item {
     function scanResult(cmd ,result ,data){
         var ret = true
         switch(result){
+        case JKEnums.ImageCommandResult_error_cancel:
+            console.log("image handle cancel")
+            break
         case DeviceStruct.ERR_ACK:
         case JKEnums.ImageCommandResult_NoError:
             break

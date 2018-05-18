@@ -1,7 +1,7 @@
 1. git clone qtftp.git
 2. Open qtftp/qtftp.pro and build release
 3. Open newui/newui.pro
-4. Build new
+4. Build Release
 5. Open build/mac/faroeVOP.xcodeproj
 6. Config 
    1.iCloud Mac develop/distribute
@@ -9,7 +9,7 @@
    3.copy mac/faroeVOP.icns to Resource
    4.copy mac/toemail to Resource
    5.add script
-/Volumes/work/software/Qt5.9.4/5.9.4/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt5.9.4/5.9.4/clang_64/qml
+/Applications/Qt5.9.5/5.9.5/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Applications/Qt5.9.5/5.9.5/clang_64/qml
    
 
 

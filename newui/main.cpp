@@ -7,6 +7,7 @@
 #include "jkinterface.h"
 #include "../platform/devicestruct.h"
 
+#include <QMenuBar>
 int main(int argc, char *argv[])
 {
 //    QGuiApplication app(argc, argv);
@@ -40,5 +41,13 @@ int main(int argc, char *argv[])
 //        jki.setScanDataHandle(scanData);
     jki.init();
 
+
+    //1. 获取菜单栏
+    QMenuBar* menuBar = new QMenuBar(0);
+    //2. 给菜单栏添加菜单
+    QMenu *wnd = menuBar->addMenu("Window");
+    //3. 给菜单添加菜单项
+    wnd->addSeparator();
+    menuBar->setVisible(false);
     return app.exec();
 }

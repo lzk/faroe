@@ -62,6 +62,7 @@ public:
 
         ImageCommandResult_error_invalidPrinter,
 
+        ImageCommandResult_error_cancel,
     };
     enum PowerMode{
         PowerMode_unknown,

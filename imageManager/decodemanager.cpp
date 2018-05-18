@@ -14,6 +14,11 @@ DecodeManager::DecodeManager(QObject *parent) : QObject(parent)
 {
 }
 
+void DecodeManager::cancel(bool iscancel)
+{
+    m_cancel = iscancel;
+}
+
 struct DMDecodeResult DecodeManager::decodeMultiQrcode(const QString& fileName)
 {
     qDebug()<<"decode multi qrcode";
@@ -174,6 +179,8 @@ struct DMDecodeResult DecodeManager::decodeMulti(const QString& fileName ,zxing:
     QRect dRect;
     for(int i = 0 ;i < angle ;i++){
         for(int j = 0 ;j < 2 ;j++){
+            if(m_cancel)
+                break;
             switch (j) {
             case 0:
                 ciw = WrapperQImage::Factory(image, 999, 999, true);
@@ -344,6 +351,8 @@ struct DMDecodeResult DecodeManager::decode(const QString& fileName ,zxing::Read
     QRect dRect;
     for(int i = 0 ;i < angle ;i++){
         for(int j = 0 ;j < 3 ;j++){
+            if(m_cancel)
+                break;
             switch (j) {
             case 0:
                 ciw = WrapperQImage::Factory(image, 999, 999, true);

@@ -25,7 +25,7 @@ JKDialog {
 
             JKText{
                 font.pixelSize: pixelSize
-                text: qsTr("Faroe Virtual Panel 0.0.12")
+                text: qsTr("Faroe Virtual Panel 0.0.13")
                 color: textColor
             }
 

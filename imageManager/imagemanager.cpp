@@ -19,10 +19,17 @@
 
 ImageManager::ImageManager(QObject *parent)
     : QObject(parent)
-    ,cmd_status(0)
     ,ftp(NULL)
+    ,cmd_status(0)
+    ,m_cancel(false)
     ,decodeManager(new DecodeManager(this))
 {
+}
+
+void ImageManager::cancel(bool iscancel)
+{
+    m_cancel = iscancel;
+    decodeManager->cancel(iscancel);
 }
 
 void ImageManager::init()
@@ -91,6 +98,10 @@ void ImageManager::cmdResult(int cmd ,int result)
         return;
     }
     cmd_status = 0;
+    if(!result || result == JKEnums::ImageCommandResult_NoError){
+        if(m_cancel)
+            result = JKEnums::ImageCommandResult_error_cancel;
+    }
     emit imagesCommandResult(cmd ,cmd_state ,result);
 }
 
@@ -169,17 +180,17 @@ void ImageManager::imagesCmd(QStringList fileList)
     case DeviceStruct::CMD_QuickScan_ToFile:
     case DeviceStruct::CMD_ScanTo_ToFile:
         if(saveToFile(fileList ,cmd_para)){
-            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
-        }else{
-            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_saveFile);
+//            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+//        }else{
+//            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_saveFile);
         }
         break;
     case DeviceStruct::CMD_ScanTo_ToPrint:
     case DeviceStruct::CMD_QuickScan_ToPrint:
         if(toPrint(fileList ,cmd_para)){
-            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
-        }else{
-            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidPrinter);
+//            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+//        }else{
+//            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidPrinter);
         }
         break;
 
@@ -220,18 +231,24 @@ bool ImageManager::toPrint(const QStringList& fileList ,const QString& data)
 
     QStringList printerList = QPrinterInfo::availablePrinterNames();
     if(printerList.isEmpty() || !printerList.contains(printerName)){
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidPrinter);
         return false;
     }
     QPrinter _printer(QPrinterInfo::printerInfo(printerName));
     QPrinter* printer = &_printer;
     QPainter painter;
     if(!printer->isValid() || !painter.begin(printer)){
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_invalidPrinter);
         return false;
     }
     QRect rect = painter.viewport();
     QPixmap pixmap;
     QSize size;
     for(int i = 0 ;i < fileList.length() ;i++) {
+        if(m_cancel){
+            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_cancel);
+            break;
+        }
         pixmap = QPixmap(fileList.at(i)).scaled(rect.size() ,Qt::KeepAspectRatio);
         size = pixmap.size();
         if(!size.isValid())
@@ -244,6 +261,7 @@ bool ImageManager::toPrint(const QStringList& fileList ,const QString& data)
         painter.drawPixmap(rect.x() + (rect.width() - size.width()) / 2,
                            rect.y() + (rect.height() - size.height()) / 2,pixmap);
     }
+    emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
     return true;
 }
 
@@ -261,11 +279,14 @@ void ImageManager::toEmail(const QString& para)
         saveMultiPagePdfImageInit(filename);
         bool first = true;
         foreach (QString tmpFileName, fileList) {
+            if(m_cancel)
+                break;
             saveMultiPagePdfImage(tmpFileName ,first);
             first = false;
         }
         saveMultiPagePdfImageRelease();
-        openEmail(subject ,recipient ,QStringList()<<filename);
+        if(!m_cancel)
+            openEmail(subject ,recipient ,QStringList()<<filename);
     }
         break;
     case JKEnums::EmailFileType_JPG:
@@ -311,6 +332,8 @@ void ImageManager::saveToFileEnd(const QString& fileName)
     if(suffix == "pdf"){
         saveMultiPagePdfImageRelease();
     }else if(suffix == "bmp" || suffix == "jpg"){
+        if(m_cancel)
+            return;
         if(currentPage == 1){
             QString fullFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + fileName_ + "1." + suffix;
             QFile::rename(fullFileName ,fileName);
@@ -329,6 +352,10 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
 
     QString tmpFile = getTempPath() + "/tmp.tif";
     for (int i = 0 ;i < fileList.length() ;i++){
+        if(m_cancel){
+            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_cancel);
+            return false;
+        }
         if(suffix == "jpg"){
             fullFileName = preFileName + fileName_ + QString().sprintf("%d." ,currentPage + 1) +suffix;
             if(QFile::exists(fullFileName))
@@ -358,6 +385,11 @@ bool ImageManager::saveToFile(const QStringList& fileList ,const QString& fileNa
             }
         }
         currentPage++;
+    }
+    if(success){
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+    }else{
+        emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_saveFile);
     }
     return success;
 }
@@ -511,6 +543,11 @@ void ImageManager::ftpCommandFinished(int id ,bool error)
         qDebug()<<"put finished error:"<<error;
         if(!error){
 //            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_NoError);
+            if(m_cancel){
+                emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_cancel);
+                ftp->clearPendingCommands();
+                break;
+            }
             if(ftp->hasPendingCommands())
                 ftpTimer->start(15000);
         }else{
@@ -570,6 +607,10 @@ void ImageManager::toCloud(const QStringList& fileList,const QString& para)
     QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
     if(!cloudTypeText.compare("iCloud")){
         foreach (QString fileName, fileList) {
+            if(m_cancel){
+                emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_cancel);
+                return;
+            }
             if(!iCloudUpload(fileName)){
                 emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_icloudeUpload);
                 return;
@@ -596,6 +637,10 @@ void ImageManager::separationScanDecode(const QStringList& fileList)
     QString str;
     bool found;
     foreach (QString filename, fileList) {
+        if(m_cancel){
+            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_cancel);
+            break;
+        }
         str = decodeManager->decodeOneD(filename);
         found = false;
         for(int i = 0 ;i < separation_data.count() ;i++){
@@ -627,6 +672,9 @@ void ImageManager::separationScanDecodeEnd()
     QString fullFileName;
     int i=0 ,j=0;
     foreach (struct Separation_data sd, separation_data) {
+        if(m_cancel){
+            break;
+        }
         fullFileName = filePath + QString().sprintf("/separation_%d.pdf" ,i);
         if(QFile::exists(fullFileName))
             QFile::remove(fullFileName);
@@ -664,6 +712,10 @@ void ImageManager::decodeScanDecode(const QStringList& fileList)
     int decodeType = jsonObj.value("codeType").toInt(0);
     struct DMDecodeResult dr;
     foreach (QString filename, fileList) {
+        if(m_cancel){
+            emit imagesCommandResult(cmd ,cmd_state ,JKEnums::ImageCommandResult_error_cancel);
+            break;
+        }
         switch (decodeType) {
         case JKEnums::DecodeType_Qrcode:
             dr = decodeManager->decodeMultiQrcode(filename);
@@ -686,6 +738,9 @@ void ImageManager::decodeScanDecode(const QStringList& fileList)
 #include <QRegularExpression>
 void ImageManager::decodeScanEnd()
 {
+    if(m_cancel){
+        return;
+    }
     if(fileList.isEmpty())
         return;
     QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();

@@ -4,7 +4,7 @@ QT += qml quick printsupport
 CONFIG += c++11
 
 TARGET = faroeVOP
-VERSION = 0.0.10
+VERSION = 0.0.13
 
 #UI_HEADERS_DIR = ../build
 #UI_SOURCES_DIR = ../build
@@ -89,14 +89,16 @@ mac{
 SOURCES += \
     ../platform/mac/mac_usb.cpp \
     ../platform/mac/usbio.cpp \
-   ../platform/mac/mac_api.mm
+   ../platform/mac/mac_api.mm \
+    ../platform/mac/MacDelegate.mm
 
-OBJECTIVE_SOURCES +=
-   ../platform/mac/mac_api.mm
+#OBJECTIVE_SOURCES +=
+#   ../platform/mac/mac_api.mm \
 
 HEADERS += \
     ../platform/mac/mac_usb.h \
-    ../platform/mac/usbio.h
+    ../platform/mac/usbio.h \
+    ../platform/mac/MacDelegate.h
 
 LIBS += -framework IOKit \
         -framework CoreFoundation \
@@ -151,4 +153,6 @@ SOURCES += ../newui/*.qml \
           ../newui/SettingsPage/ScanSetting/*.qml \
           ../newui/SettingsPage/ScanSetting/*.js \
 }
+
+DISTFILES +=
 

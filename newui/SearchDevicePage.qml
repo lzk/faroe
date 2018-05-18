@@ -142,7 +142,7 @@ Item {
 
     property var dialog
     function openRefreshDialog(){
-        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"showCancel":true} ,function(dialog){
+        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":qsTr("Searching,please wait...")} ,function(dialog){
             dialog.cancelClick.connect(jkInterface.cancelSearch)
         })
     }

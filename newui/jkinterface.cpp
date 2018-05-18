@@ -150,6 +150,7 @@ void JKInterface::setCmd(int cmd ,const QString& data)
     qDebug()<<"cmd para"<<data;
 
     deviceManager->cancelScan(false);
+    imageManager->cancel(false);
     switch (cmd) {
     //quick scan and decode sepearation check first.
     case DeviceStruct::CMD_QuickScan_ToFile:{
@@ -333,6 +334,7 @@ void JKInterface::imagesCmdResult(int cmd ,int state ,int result)
 void JKInterface::cancelScan()
 {
     deviceManager->cancelScan(true);
+    imageManager->cancel(true);
 }
 
 void JKInterface::cancelSearch()
@@ -340,6 +342,10 @@ void JKInterface::cancelSearch()
     deviceManager->cancelSearchDeviceList();
 }
 
+void JKInterface::cancelImageHandle()
+{
+    imageManager->cancel(true);
+}
 
 #include <QPrintDialog>
 #include <QPrinter>

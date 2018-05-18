@@ -118,7 +118,8 @@ int Scanner::receiveData()
     memset(&para ,0 ,sizeof(para));
 
     while (!m_cancel){
-        result = checkStatus(SCANNING_STAGE ,&sc_infodata);
+        result = checkScanningStatus(&sc_infodata);
+//        result = checkStatus(SCANNING_STAGE ,&sc_infodata);
 //        if(result == RETSCAN_GETINFO_FAIL){
 //            usleep(100 * 1000);
 //            continue;
@@ -359,7 +360,45 @@ int Scanner::_scan(Setting* setting)
     return result;
 }
 
-int Scanner::checkStatus(int stage ,SC_INFO_DATA_T* sc_infodata)
+int Scanner::checkScanningStatus(struct SC_INFO_DATA_STRUCT* sc_infodata)
+{
+    int result = 0;
+    result = scannerApi->getInfo(*sc_infodata);
+    if (!result){
+        if(!sc_infodata->JobID){
+            result = RETSCAN_JOB_MISSING;
+        }
+        if(sc_infodata->ErrorStatus.cover_open_err)
+            result = RETSCAN_COVER_OPEN;
+
+        if(sc_infodata->ErrorStatus.scan_jam_err)
+            result = RETSCAN_PAPER_JAM;
+
+        if(sc_infodata->ErrorStatus.scan_canceled_err){
+            result = RETSCAN_CANCEL_LAST;
+            return result;
+        }
+        if(sc_infodata->ErrorStatus.scan_timeout_err)
+            result = RETSCAN_TIME_OUT;
+
+        if(sc_infodata->ErrorStatus.multi_feed_err)
+            result = RETSCAN_ULTRA_SONIC;
+
+        if(sc_infodata->ErrorStatus.usb_transfer_err)
+            result = RETSCAN_USB_TRANSFERERROR;
+
+        if(sc_infodata->ErrorStatus.wifi_transfer_err)
+            result = RETSCAN_WIFI_TRANSFERERROR;
+
+        if(sc_infodata->ErrorStatus.memory_full_err)
+            result = RETSCAN_MEMORY_FULL;
+    }else{
+        result = RETSCAN_GETINFO_FAIL;
+    }
+    return result;
+}
+
+int Scanner::checkStatus(int stage ,struct SC_INFO_DATA_STRUCT* sc_infodata)
 {
     int result = 0;
     result = scannerApi->getInfo(*sc_infodata);

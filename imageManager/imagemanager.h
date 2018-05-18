@@ -13,6 +13,7 @@ class ImageManager : public QObject
 public:
     explicit ImageManager(QObject *parent = nullptr);
 
+    void cancel(bool iscancel);
 signals:
     void imagesCommandResult(int cmd ,int state ,int result);
     void cmdExtraResult(int cmd ,QString para);
@@ -73,6 +74,7 @@ private:
     int cmd_state;
     int currentPage;
     int result;//for ftp
+    bool m_cancel;
     DecodeManager* decodeManager;
     QString cmd_para;
     QStringList fileList;
