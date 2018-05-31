@@ -67,10 +67,12 @@ void JKInterface::setScanDataHandle(QObject *scanData)
 QStringList JKInterface::getPrinterName()
 {
     QStringList sl;
+    printerNameList = QStringList();
     foreach (QPrinterInfo pi, QPrinterInfo::availablePrinters()) {
 //        qDebug()<<pi.printerName();
 //        qDebug()<<pi.makeAndModel();
 //        qDebug()<<pi.description();
+        printerNameList << pi.printerName();
         sl << pi.description();
     }
     return sl;
@@ -178,6 +180,11 @@ void JKInterface::setCmd(int cmd ,const QString& data)
     {
         QJsonObject jsonObj = QJsonDocument::fromJson(cmd_para.toLatin1()).object();
         QString printerName = jsonObj.value("printerName").toString();
+        foreach (QPrinterInfo pi, QPrinterInfo::availablePrinters()) {
+            if(!printerName.compare(pi.description())){
+                printerName = pi.printerName();
+            }
+        }
         QStringList printerList = QPrinterInfo::availablePrinterNames();
         if(printerList.isEmpty() || !printerList.contains(printerName)){
             cmdComplete(cmd ,JKEnums::ImageCommandResult_error_invalidPrinter);

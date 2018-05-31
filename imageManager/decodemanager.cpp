@@ -111,6 +111,8 @@ QRectF getTagRect(const ArrayRef<Ref<ResultPoint> > &resultPoints, const Ref<Bit
         yMin = yMin > 0?yMin :0;
         xMax = xMax < matrixWidth?xMax :matrixWidth;
         yMax = yMax < matrixHeight?yMax :matrixHeight;
+        xMax = xMax - 1 > xMin ? xMax :xMin + 1;
+        yMax = yMax - 1 > yMin ? yMax :yMin + 1;
         return QRectF(QPointF(xMin / matrixWidth, yMin / matrixHeight), QPointF(xMax / matrixWidth, yMax / matrixHeight));
     }
 
@@ -142,6 +144,8 @@ QRectF getTagRect(const ArrayRef<Ref<ResultPoint> > &resultPoints, const Ref<Bit
         yMin = yMin > 0?yMin :0;
         xMax = xMax < matrixWidth?xMax :matrixWidth;
         yMax = yMax < matrixHeight?yMax :matrixHeight;
+        xMax = xMax - 1 > xMin ? xMax :xMin + 1;
+        yMax = yMax - 1 > yMin ? yMax :yMin + 1;
         return QRectF(QPointF(xMin / matrixWidth, yMin / matrixHeight), QPointF(xMax / matrixWidth, yMax / matrixHeight));
     }
 

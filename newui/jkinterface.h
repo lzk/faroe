@@ -78,6 +78,7 @@ private:
     QString cmd_para;
     int imageCmdResult;
     QStringList fileList;
+    QStringList printerNameList;
     QMutex mutex;
     QThread thread;
     QThread thread_decode;
