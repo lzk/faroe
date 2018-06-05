@@ -14,22 +14,20 @@ ComboBox {
             verticalAlignment: Text.AlignVCenter
         }
         highlighted: control.highlightedIndex === index
-        Rectangle{
-            z:2
-//            y:parent.height
+        ToolTip{
+            id:tooltip
             visible: parent.hovered
-            color: "lightblue"
-            width:  parent.width
-            height: text1.height > parent.height ?text1.height :parent.height
-            Text{
-                id:text1
-                x:text.x
-                y:text.y
-                text:modelData
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width - 2* x
+            text:modelData
+            contentItem: Text {
+                text:tooltip.text
+                font: tooltip.font
                 wrapMode: Text.WrapAnywhere
             }
+
+            background: Rectangle{
+                color: "lightblue"//"#9adbc8"
+            }
+            closePolicy:Popup.NoAutoClose
         }
     }
 
@@ -78,8 +76,8 @@ ComboBox {
         z:2
 //            y:parent.height
         width: /*hovered ?parent.width :*/parent.width - parent.indicator.width
-        height: text2.height > parent.height ?text2.height :parent.height
-        color: hovered ?"lightblue" :"transparent"
+        height:  parent.height//text2.height > parent.height ?text2.height :parent.height
+        color: "transparent"//hovered ?"lightblue" :"transparent"
         Text{
             id:text2
             x:5
@@ -87,9 +85,24 @@ ComboBox {
             text:control.displayText
             font: control.font
             width: parent.width - x
-            elide: hovered ?Text.ElideNone :Text.ElideRight
-            wrapMode: hovered ?Text.WrapAnywhere :Text.NoWrap
+            elide: Text.ElideMiddle
+//            wrapMode: hovered ?Text.WrapAnywhere :Text.NoWrap
         }
+    }
+    ToolTip{
+        id:tooltip2
+        visible: hovered
+        text:control.displayText
+        contentItem: Text {
+            text:tooltip2.text
+            font: tooltip2.font
+            wrapMode: Text.WrapAnywhere
+        }
+
+        background: Rectangle{
+            color: "lightblue"//"#9adbc8"
+        }
+        closePolicy:Popup.NoAutoClose
     }
 
     background: Rectangle {
