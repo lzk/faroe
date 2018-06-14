@@ -41,7 +41,7 @@ Item {
             source: "qrc:/Images/VOPicon.png"
             MouseArea{
                 anchors.fill: parent
-                onClicked: openDialog("About.qml" ,{})
+                onClicked: about()
             }
         }
 
@@ -96,8 +96,15 @@ Item {
     Connections{
         target: button_close
         onClicked:{
-            information(qsTr("Do you want to exit the VOP?") ,toexit)
+            quit()
         }
+    }
+
+    function about(){
+        openDialog("About.qml" ,{})
+    }
+    function quit(){
+        information(qsTr("Do you want to exit the VOP?") ,toexit)
     }
 
     function toexit(){

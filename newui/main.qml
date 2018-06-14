@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
+import QtQuick.Controls 1.4
 
 ApplicationWindow {
     id:root
@@ -23,6 +24,7 @@ ApplicationWindow {
         onClosed: close()
         onMinimized: {
             if(jkInterface.macVersion() > 14){
+                //macos 10.13 need normal(not frameless) before minimize
                 hide()
                 flags = Qt.Window
                 showNormal()
@@ -40,10 +42,26 @@ ApplicationWindow {
         }
     }
 
-    onClosing: {
-        console.log("closing")
-    }
+    menuBar: MenuBar {
+        Menu {
+//            MenuItem{
+//                text:"About"
+//                onTriggered: mainview.about()
+////                shortcut: "Ctrl+A"
+////                visible: false
+//            }
 
+            MenuItem {
+                text: "Quit"
+                shortcut: StandardKey.Quit
+                onTriggered: mainview.quit()
+            }
+        }
+
+    }
+//    onClosing: {
+//        console.log("closing")
+//    }
 //    Component.onCompleted: {
 //        jkInterface.setWindowFrameless(root)
 //    }
