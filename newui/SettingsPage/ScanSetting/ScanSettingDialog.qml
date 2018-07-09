@@ -77,6 +77,7 @@ JKDialog{
                                          || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
                                         && radioButton_color.checked
                                         && powerMode !== JKEnums.PowerMode_usbBusPower
+                                         && powerMode !== JKEnums.PowerMode_PowerBank
         item_multiFeedDetection.enabled: comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
                                          && comboBox_scanAreaSize.currentText !== constPaperSizeMap.autoNoMultiFeed
                                          && comboBox_scanAreaSize.currentText !== constPaperSizeMap.A6

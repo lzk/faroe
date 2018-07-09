@@ -6,7 +6,7 @@
 #include "jkenums.h"
 #include "jkinterface.h"
 #include "../platform/devicestruct.h"
-
+#include <QtQml>
 #include <QMenuBar>
 int main(int argc, char *argv[])
 {

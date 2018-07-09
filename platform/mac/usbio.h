@@ -27,6 +27,8 @@ private:
     int outPipeRef;
     int interface;
     int address;
+    int vid;
+    int pid;
     char serial[256];
     IOUSBInterfaceInterface_version **intf;
     IOUSBDeviceInterface_version** dev;

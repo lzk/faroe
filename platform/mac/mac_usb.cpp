@@ -404,16 +404,16 @@ static IOUSBDeviceInterface_version **getUSBDevice(io_object_t usbDevice)
         return(nil);
     }
 
-#if VERBOSE
-    {
-    UInt16 VID, PID, REL;
-        err = (*dev)->GetDeviceVendor(dev, &VID);
-        err = (*dev)->GetDeviceProduct(dev, &PID);
-        err = (*dev)->GetDeviceReleaseNumber(dev, &REL);
+//#if VERBOSE
+//    {
+//    UInt16 VID, PID, REL;
+//        err = (*dev)->GetDeviceVendor(dev, &VID);
+//        err = (*dev)->GetDeviceProduct(dev, &PID);
+//        err = (*dev)->GetDeviceReleaseNumber(dev, &REL);
 
-        LOG_PARA("Found device VID 0x%04X (%d), PID 0x%04X (%d), release %d\n", VID, VID, PID, PID, REL);
-    }
-#endif
+//        LOG_PARA("Found device VID 0x%04X (%d), PID 0x%04X (%d), release %d\n", VID, VID, PID, PID, REL);
+//    }
+//#endif
 
     return(dev);
 }

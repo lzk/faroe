@@ -4,11 +4,28 @@
 #include <string.h>
 #include <QUrlQuery>
 #include "../log.h"
-#define USB_VID 0x05e3
-#define USB_PID 0x0118
+
+typedef struct struct_product{
+    int vid;
+    int pid;
+}
+    struct_product;
+
+static const struct_product products_list[] = {
+    {0x05e3 ,0x0118},//faroe
+    {0x2e5a ,0xf130},//Q250
+    {0x2e5a ,0xf133},//Q2130
+    {0x2e5a ,0xf137},//Q2135
+    {0x2e5a ,0xf13a},//all A
+    {0x2e5a ,0xf13b},//all B
+    {0x2e5a ,0xf13c},//all C
+};
+static int num_of_products = sizeof(products_list) / sizeof(products_list[0]);
+
 typedef struct struct_searchData{
     addDeviceHandler handler;
     void* pData;
+    int product_index;
 }
     struct_searchData;
 
@@ -23,6 +40,8 @@ static void addDeviceInfo(struct_deviceInfo* pDeviceInfo ,void* pData)
     LOG_PARA("usb locationID:%d" ,pDeviceInfo->locationID);
     LOG_PARA("usb address:%d" ,pDeviceInfo->address);
     struct_searchData* psd = (struct_searchData*)pData;
+    di.vid = products_list[psd->product_index].vid;
+    di.pid = products_list[psd->product_index].pid;
     if(psd->handler)
         psd->handler(&di ,psd->pData);
 }
@@ -32,13 +51,19 @@ void usbSearchDevices(addDeviceHandler handler,void* pData)
     struct_searchData sd;
     sd.handler = handler;
     sd.pData = pData;
-    usb_getDeviceList(USB_VID ,USB_PID ,addDeviceInfo ,&sd);
+    for(int i = 0 ;i < num_of_products ;i++){
+        LOG_PARA("searching device VID 0x%04X (%d), PID 0x%04X (%d)", products_list[i].vid, products_list[i].vid, products_list[i].pid, products_list[i].pid);
+        sd.product_index = i;
+        usb_getDeviceList(products_list[i].vid ,products_list[i].pid ,addDeviceInfo ,&sd);
+    }
 }
 
 UsbIO::UsbIO() :
     inPipeRef(0)
   ,outPipeRef(0)
   ,address(-1)
+  ,vid(-1)
+  ,pid(-1)
   ,intf(NULL)
   ,dev(NULL)
 {
@@ -65,7 +90,7 @@ int UsbIO::open(int)
 {
     dev = NULL;
 //    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
-    usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
+    usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
     if(!dev){
         return -2;
     }
@@ -125,20 +150,30 @@ int UsbIO::resolveUrl(const char* url)
 //        return -1;
 //    }
     strcpy(serial ,QUrlQuery(QUrl(url)).queryItemValue("address").toLatin1().data());
-    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
-    if(!dev){
-        address = -1;
-        return -1;
+
+    vid = -1;
+    pid = -1;
+    address = -1;
+    for(int i = 0 ;i < num_of_products ;i++){
+        usb_getDeviceWithSerial(products_list[i].vid ,products_list[i].pid ,serial ,devHandler ,this);
+        if(dev){
+            address = usb_getAddress(dev);
+            vid = products_list[i].vid;
+            pid = products_list[i].pid;
+            LOG_PARA("Found device VID 0x%04X (%d), PID 0x%04X (%d), release %s", vid, vid, pid, pid, serial);
+            return 0;
+        }
     }
-    address = usb_getAddress(dev);
-    return 0;
+    return -1;
 }
 
 bool UsbIO::isConnected()
 {
+    if(vid == -1 || pid == -1 || address == -1)
+        return false;
     bool connected = true;
     dev = NULL;
-    usb_getDeviceWithAddress(USB_VID ,USB_PID ,address ,devHandler ,this);
+    usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
 //    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
     if(!dev){
         connected = false;

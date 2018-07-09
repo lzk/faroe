@@ -424,6 +424,7 @@ Item {
 //            scanSetting.adfMode = false
 //            scanSetting.autoCropAndDeskew = false
             scanSetting.mediaType = 0
+            scanSetting.autoColorDetection = false
             if(scanSetting.scanAreaSize === constPaperSize.indexOf(constPaperSizeMap.longPage))
                 scanSetting.scanAreaSize = 0
             break

@@ -22,7 +22,8 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
         foreach (QNetworkAddressEntry entry, entrylist) {
             QHostAddress address = entry.ip();
             if(address.protocol() == QAbstractSocket::IPv4Protocol){
-                if(!address.isLoopback() && entry.netmask().isEqual(QHostAddress("255.255.255.0"))){
+                if(!address.isLoopback() && entry.netmask() == QHostAddress("255.255.255.0")){
+//                if(!address.isLoopback() && entry.netmask().isEqual(QHostAddress("255.255.255.0"))){
                     broadcast = entry.broadcast();
                     strcpy(broadcast_ip ,broadcast.toString().toLatin1().constData());
                     qDebug()<<"search:"<<broadcast;
@@ -37,16 +38,19 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
 }
 
 
-#define SYSOBJECTID_OID               "1.3.6.1.2.1.1.2.0"
-#define SYSNAME_OID                      "1.3.6.1.2.1.1.5.0"
-#define PVT_DEVICEID_OID   "1.3.6.1.4.1.26266.86.10.1.1.1.1.0"
-static const oid sysObjectID[] = {1,3,6,1,2,1,1,2,0};
-static const oid sysNameID[] = {1,3,6,1,2,1,1,5,0};
-static const oid deviceID[] = {1,3,6,1,4,1,26266,86,10,1,1,1,1,0};
-static const oid oidName[] = {1,3,6,1,2,1,1,2,0};
+//#define SYSOBJECTID_OID               "1.3.6.1.2.1.1.2.0"
+//#define SYSNAME_OID                      "1.3.6.1.2.1.1.5.0"
+//#define PVT_DEVICEID_OID   "1.3.6.1.4.1.26266.86.10.1.1.1.1.0"
+//static const oid sysObjectID[] = {1,3,6,1,2,1,1,2,0};
+//static const oid sysNameID[] = {1,3,6,1,2,1,1,5,0};
+//static const oid deviceID[] = {1,3,6,1,4,1,26266,86,10,1,1,1,1,0};
+////static const oid oidName[] = {1,3,6,1,4,1,2699,1,2,1,2,1,1,2,1};
+//static const oid oidDeviceID[]={1,3,6,1,4,1,2699,1,2,1,2,1,1,3,1};
+
+
 static const oid objectID[] = {1,3,6,1,4,1,26266,86,10,2,1};
-//static const oid oidName[] = {1,3,6,1,4,1,2699,1,2,1,2,1,1,2,1};
-static const oid oidDeviceID[]={1,3,6,1,4,1,2699,1,2,1,2,1,1,3,1};
+static const oid objectID_unis[] = {1,3,6,1,4,1,26266,86,10,10,1};
+static const oid oidName[] = {1,3,6,1,2,1,1,2,0};
 static const size_t sizeofOidName = sizeof(oidName)/sizeof(oidName[0]);
 
 struct My_synch_state{
@@ -86,6 +90,9 @@ static void handlerData(netsnmp_pdu *pdu, void *magic)
 //        memcpy(str ,vars->val.string ,vars->val_len);
         if(ASN_OBJECT_ID == vars->type){
             if(!memcmp(vars->val.objid ,objectID ,vars->val_len)){
+                found = true;
+                break;
+            }else if(!memcmp(vars->val.objid ,objectID_unis ,vars->val_len)){
                 found = true;
                 break;
             }

@@ -40,6 +40,8 @@ typedef struct DeviceInfo{
     }
         Type;
     Type type;
+    int vid;
+    int pid;
     char name[256];
     char address[256];
 }

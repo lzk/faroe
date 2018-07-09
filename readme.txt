@@ -8,26 +8,26 @@
    shadow build dir: ../build/debug
    qmake (default)
    make (default)
-   cp ../../mac/tomail faroeVOP.app/Contoents/Resources
+   cp ../../mac/toemail faroeVOP.app/Contents/Resources
    macdeployqt faroeVOP.app -qmldir=${QTDIR}/qml
 
 
 3. Release - only make Xcode project
-   shadow build dir: ../build/mac
-   qmake -spec macx-xcode %{sourceDir}/newui.pro.  (%{buildDir})
+   shadow build dir: ../build/release
+   qmake -spec macx-xcode %{sourceDir}/newui.pro  (%{buildDir})
    cp -rf ../../mac/* .   (%{buildDir})
 
 4. Build Release to get Xcode project
 
 Xcode build
-1. Open build/mac/faroeVOP.xcodeproj
+1. Open build/release/faroeVOP.xcodeproj
 2. Config 
    1.iCloud Mac develop/distribute
    2.signing add other code signing Flags  “-—deep”
    3.copy mac/faroeVOP.icns to Resource
    4.copy mac/toemail to Resource
    5.add script
-/Applications/Qt5.9.5/5.9.5/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Applications/Qt5.9.5/5.9.5/clang_64/qml
+/Volumes/work/software/Qt/latest/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt/latest/clang_64/qml
    
 
 
