@@ -3,7 +3,7 @@ import QtQuick 2.7
 
  RadioButton {
      id: control
-     text: qsTr("RadioButton")
+//     text: qsTr("RadioButton")
 //     checked: true
      font.pixelSize: 14
      opacity: enabled ? 1.0 : 0.3

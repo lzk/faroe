@@ -9,7 +9,7 @@ JKDialog {
     property color textColor: "#222222"
 
     toolbar{
-        text.text: qsTr("About")
+        text.text: qsTr("ResStr_About")
         text.color: "White"
         color: "#FF203144"
     }
@@ -25,7 +25,7 @@ JKDialog {
 
             JKText{
                 font.pixelSize: pixelSize
-                text: qsTr("Faroe Virtual Panel 0.0.15")
+                text: qsTr("ResStr_DocScan") + " 0.0.15"
                 color: textColor
             }
 
@@ -36,17 +36,17 @@ JKDialog {
 
             JKText{
                 font.pixelSize: pixelSize
-                text: qsTr("Copyright (C) (2018)")
+                text: qsTr("ResStr_CopyRight")
                 color: textColor
             }
             JKText{
                 font.pixelSize: pixelSize
-                text: qsTr("Liteon Limited.")
+                text: qsTr("ResStr_Company")
                 color: textColor
             }
             JKText{
                 font.pixelSize: pixelSize
-                text: qsTr("All Rights Reserved")
+                text: qsTr("ResStr_AllRight")
                 color: textColor
             }
         }

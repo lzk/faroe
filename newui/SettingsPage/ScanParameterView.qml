@@ -21,7 +21,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Scan Settings:")
+                text: qsTr("ResStr_DocScan_scan_setting")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -54,7 +54,7 @@ Item {
 
             JKText {
                 id: text2
-                text: qsTr("Cloud Type:")
+                text: qsTr("ResStr_Cloud_Type")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -76,7 +76,7 @@ Item {
 
 //            JKText {
 //                id: text3
-//                text: qsTr("Reset access token in cacle:")
+//                text: qsTr("ResStr_Reset_Access")
 //                font.bold: true
 //                anchors.left: parent.left
 //                anchors.leftMargin: 30
@@ -86,7 +86,7 @@ Item {
 
             JKTextButton {
                 id: button_reset
-                text: qsTr("Reset")
+                text: qsTr("ResStr_Reset")
                 visible: comboBox_cloudType.currentText !== JSData.supportCloudType().icloud
                 width: 100
                 height: 35
@@ -110,7 +110,7 @@ Item {
 
             JKText {
                 id: text4
-                text: qsTr("Email Attachment File Type:")
+                text: qsTr("ResStr_Email_Attachment_File_Type")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -136,7 +136,7 @@ Item {
     JKTextButton{
         parent: item_btnSettings
         anchors.fill: parent
-        text: qsTr("Settings...")
+        text: qsTr("ResStr_Setting")
         onClicked: {
             openScanSettingDialog(scanToParameter.scanSetting)
         }

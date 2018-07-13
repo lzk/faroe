@@ -58,6 +58,7 @@ Item {
                     width: ListView.view.width
 //                    activeFocusOnTab: ListView.isCurrentItem
                     dashRectange.z: 2
+                    property var currentDevice : JSON.parse(modelData)
                     Rectangle{
                         anchors.fill: parent
                         anchors.margins: 1
@@ -70,7 +71,7 @@ Item {
                                                        : "LightSteelBlue"
 
                         Text {
-                            text: modelData
+                            text: wrapper.currentDevice.type ?wrapper.currentDevice.address :qsTr("ResStr_Faore_USBDevice") + " " + wrapper.currentDevice.address
                             x:50
                             font.bold: true
                             font.pixelSize: 16
@@ -79,9 +80,9 @@ Item {
                             anchors.verticalCenterOffset: -2
                         }
                         Text {
-                            text:qsTr("Connected")
+                            text:qsTr("ResStr_Connected")
                             x:300
-                            visible: modelData === scanData.currentDevice
+                            visible: scanData.currentDevice.indexOf(wrapper.currentDevice.address) !== -1
                             color:"green"
                             font.pixelSize: 14
                             anchors.verticalCenter: parent.verticalCenter
@@ -104,7 +105,7 @@ Item {
             width: 150
             height: 35
             anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Connect")
+            text: qsTr("ResStr_Connect")
             enabled: listview.count > 0
             onClicked: connectToDevice(listview.currentIndex)
         }
@@ -142,7 +143,7 @@ Item {
 
     property var dialog
     function openRefreshDialog(){
-        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":qsTr("Searching,please wait...")} ,function(dialog){
+        dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":qsTr("ResStr_DocScan_search_dev")} ,function(dialog){
             dialog.cancelClick.connect(jkInterface.cancelSearch)
         })
     }

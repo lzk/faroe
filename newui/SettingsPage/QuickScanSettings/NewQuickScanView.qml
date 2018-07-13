@@ -21,7 +21,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Name:")
+                text: qsTr("ResStr_DocScan_Name")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
@@ -44,7 +44,7 @@ Item {
 
             JKText {
                 id: text2
-                text: qsTr("Type:")
+                text: qsTr("ResStr_DocScan_Type")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
@@ -66,7 +66,7 @@ Item {
 
             JKText {
                 id: text5
-                text: qsTr("Scan Settings:")
+                text: qsTr("ResStr_DocScan_scan_setting")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 12
@@ -85,7 +85,7 @@ Item {
     JKTextButton{
         parent: item_btnSettings
         anchors.fill: parent
-        text: qsTr("Settings...")
+        text: qsTr("ResStr_Setting")
         onClicked: {
             openModifyQuickScanSettingDialog(settings[comboBox.currentIndex])
         }
@@ -121,10 +121,10 @@ Item {
 //                    ,"showImage": true
 //                    ,"width": 520
 //                    ,"height": 200})
-            warningWithImage(qsTr("The Name cannot be empty!"))
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_Name1")))
             return false
         }else if(text.match(/^[\s]+$/)){
-            warningWithImage(qsTr("The Name cannot be all space!"))
+            warningWithImage(qsTr("ResStr_could_not_be_all_space").arg(qsTr("ResStr_DocScan_Name1")))
             return false
         }else{
             var texts = /\s*(.+?)\s*$/.exec(text)
@@ -143,7 +143,7 @@ Item {
         }
         if(verify){
             if(!scanData.verifyQuickScanSettingName(settings[comboBox.currentIndex].name)){
-                warning({"message.text":qsTr("Quick Scan item name already exists.change to another name!")
+                warning({"message.text":qsTr("ResStr_Quick_Scan_Exist")
                         ,"showImage": true
                         ,"width": 520
                         ,"height": 200})

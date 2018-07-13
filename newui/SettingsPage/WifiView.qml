@@ -106,7 +106,7 @@ Item {
                             JKTextButton{
                                 width: 120
                                 height: 35
-                                text: qsTr("Manual Wi-Fi...")
+                                text: qsTr("ResStr_Manual_Wi_Fi")
                                 anchors.right: parent.right
                                 anchors.rightMargin: 5
                                 onClicked: {
@@ -154,7 +154,7 @@ Item {
                                     JKText {
                                         id: text4
                                         x:5
-                                        text: qsTr("WLAN Network")
+                                        text: qsTr("ResStr_WLAN_Network")
                                         anchors.verticalCenter: parent.verticalCenter
                                         font.pixelSize: 14
                                     }
@@ -256,7 +256,7 @@ Component{
                         enabled:model.modelData.encryption % 5 !== 0
                         opacity: enabled ?1 :0.3
                         JKText{
-                            text: qsTr("Password")
+                            text: qsTr("ResStr_Password")
                             font.pixelSize: 12
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -279,7 +279,7 @@ Component{
 
                     CheckBox{
                         id:checkbox_input
-                        text: qsTr("Display Password")
+                        text: qsTr("ResStr_Display_Password")
                         enabled:model.modelData.encryption % 5 !== 0
                         indicator: Rectangle {
                             implicitWidth: 26
@@ -336,7 +336,7 @@ Component{
                                 anchors.fill: parent
                                 anchors.margins: 5
                                 anchors.centerIn: parent
-                                text: qsTr("Cancel")
+                                text: qsTr("ResStr_Cancel")
                                 onClicked:
                                     displayDetail = false
                             }
@@ -348,13 +348,13 @@ Component{
                                 anchors.fill: parent
                                 anchors.margins: 5
                                 anchors.centerIn: parent
-                                text: qsTr("Connect")
+                                text: qsTr("ResStr_Connect")
                                 onClicked: {
                                     var encryption = model.modelData.encryption % 5
                                     switch(encryption){
                                     case 1:
                                         if(!textInput_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
-                                            warningWithImage(qsTr("The Password must be 5 or 13 ASCII characters or 10 or 16 HEX characters,please check and enter again."))
+                                            warningWithImage(qsTr("ResStr_Msg_2"))
 //                                            textInput_password.focus = true
                                             textInput_password.forceActiveFocus()
                                             return
@@ -363,7 +363,7 @@ Component{
                                     case 3:
                                     case 4:
                                         if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-                                            warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 HEX characters,please check and enter again."))
+                                            warningWithImage(qsTr("ResStr_Msg_3"))
 //                                            textInput_password.focus = true
                                             textInput_password.forceActiveFocus()
                                             return
@@ -445,23 +445,23 @@ Component{
     function getEncryptionString(encryption){
         var str;
         if(encryption > 127)
-            return qsTr("Connected")
+            return qsTr("ResStr_Connected")
         var _encryption = encryption % 5
         switch(_encryption){
         case 0:
-            str = qsTr("No Security")
+            str = qsTr("ResStr_No_Security")
             break
         case 1:
-            str = qsTr("Protected by WEP")
+            str = qsTr("ResStr_Protected_by_WEP")
             break
         case 4:
-            str = qsTr("Protected by Mixed Mode PSK")
+            str = qsTr("ResStr_Protected_by_Mixed_Mode_PSK")
             break
         case 3:
-            str = qsTr("Protected by WPA2")
+            str = qsTr("ResStr_Protected_by_WPA2")
             break
         default:
-            str = qsTr("")
+            str = ""
             break
         }
         return str;

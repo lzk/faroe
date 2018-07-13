@@ -68,7 +68,7 @@ Item {
                     width: 220
                     height: 75
                     visible: !decodeMode
-                    text: qsTr("ADF Mode")
+                    text: qsTr("ResStr_DocScan_ADF")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Row{
@@ -78,7 +78,7 @@ Item {
                             id: radioButton_twoSide
                             width: 90
                             height: 20
-                            text: qsTr("Two Side")
+                            text: qsTr("ResStr_DocScan_2side")
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -86,7 +86,7 @@ Item {
                             id: radioButton_oneSide
                             width: 90
                             height: 20
-                            text: qsTr("One Side")
+                            text: qsTr("ResStr_DocScan_1side")
                             checked: !radioButton_twoSide.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -98,7 +98,7 @@ Item {
                     width: 220
                     height: 80
                     visible: !decodeMode
-                    text: qsTr("Resolution")
+                    text: qsTr("ResStr_DPI")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     JKComboBox {
@@ -113,7 +113,7 @@ Item {
                 ScanSettingBackground {
                     width: 220
                     height: 80
-                    text: qsTr("Media Type")
+                    text: qsTr("ResStr_Type")
                     anchors.horizontalCenter: parent.horizontalCenter
                     JKComboBox {
                         id: comboBox_mediaType
@@ -127,7 +127,7 @@ Item {
                 ScanSettingBackground {
                     width: 220
                     height: 80
-                    text: qsTr("Scan Area Size")
+                    text: qsTr("ResStr_Scan_Size")
                     anchors.horizontalCenter: parent.horizontalCenter
                     JKComboBox {
                         id: comboBox_scanAreaSize
@@ -143,7 +143,7 @@ Item {
                     width: 220
                     height: 75
                     visible: !decodeMode
-                    text: qsTr("Skip Blank Page")
+                    text: qsTr("ResStr_Skip_Blank_Page")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Row{
@@ -153,7 +153,7 @@ Item {
                             id: radioButton_skipBlankPage_on
                             width: 90
                             height: 20
-                            text: qsTr("On")
+                            text: qsTr("ResStr_On")
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -161,7 +161,7 @@ Item {
                             id: radioButton_skipBlankPage_off
                             width: 90
                             height: 20
-                            text: qsTr("Off")
+                            text: qsTr("ResStr_Off")
                             checked: !radioButton_skipBlankPage_on.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -173,7 +173,7 @@ Item {
                     width: 220
                     height: 75
                     visible: !decodeMode
-                    text: qsTr("Auto Color Detection")
+                    text: qsTr("ResStr_Auto_Color_Detect")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Row{
@@ -183,7 +183,7 @@ Item {
                             id: radioButton_autoColorDetection_on
                             width: 90
                             height: 20
-                            text: qsTr("On")
+                            text: qsTr("ResStr_On")
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -191,7 +191,7 @@ Item {
                             id: radioButton_autoColorDetection_off
                             width: 90
                             height: 20
-                            text: qsTr("Off")
+                            text: qsTr("ResStr_Off")
                             checked: !radioButton_autoColorDetection_on.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -203,7 +203,7 @@ Item {
                     width: 220
                     height: 75
                     visible: false
-                    text: qsTr("Auto Crop&Deskew")
+                    text: qsTr("ResStr_DocScan_autocrop")
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -214,7 +214,7 @@ Item {
                             id: radioButton_autoCropDeskew_on
                             width: 90
                             height: 20
-                            text: qsTr("On")
+                            text: qsTr("ResStr_On")
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -222,7 +222,7 @@ Item {
                             id: radioButton_autoCropDeskew_off
                             width: 90
                             height: 20
-                            text: qsTr("Off")
+                            text: qsTr("ResStr_Off")
                             checked: !radioButton_autoCropDeskew_on.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -241,7 +241,7 @@ Item {
                     width: 220
                     height: 75
                     visible: !decodeMode
-                    text: qsTr("Color Mode")
+                    text: qsTr("ResStr_Color_Mode")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Row{
@@ -291,7 +291,7 @@ Item {
                     width: 220
                     height: 120
                     visible: !decodeMode
-                    text: qsTr("Constract")
+                    text: qsTr("ResStr_Contrast")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Column {
@@ -320,7 +320,7 @@ Item {
                     width: 220
                     height: 120
                     visible: !decodeMode
-                    text: qsTr("Brightness")
+                    text: qsTr("ResStr_Brightness")
                     anchors.horizontalCenter: parent.horizontalCenter
                     Column {
                         id: column3
@@ -348,7 +348,7 @@ Item {
                     width: 220
                     height: 110
                     visible: !decodeMode
-                    text: qsTr("Gamma")
+                    text: qsTr("ResStr_Gamma")
                     anchors.horizontalCenter: parent.horizontalCenter
                     SpinView{
                         id: spin_gamma
@@ -361,7 +361,7 @@ Item {
                     id: item_multiFeedDetection
                     width: 220
                     height: 75
-                    text: qsTr("Multi Feed Detection")
+                    text: qsTr("ResStr_DocScan_multifeed")
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Row{
@@ -371,7 +371,7 @@ Item {
                             id: radioButton_multiFeedDetection_on
                             width: 90
                             height: 20
-                            text: qsTr("On")
+                            text: qsTr("ResStr_On")
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -379,7 +379,7 @@ Item {
                             id: radioButton_multiFeedDetection_off
                             width: 90
                             height: 20
-                            text: qsTr("Off")
+                            text: qsTr("ResStr_Off")
                             checked: !radioButton_multiFeedDetection_on.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }

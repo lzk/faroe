@@ -7,7 +7,7 @@ JKParaDialog{
     width: 500 + 20
     height: 250 + 20
 //    toolbar{
-//        text.text:qsTr("To FTP")
+//        text.text:qsTr("ResStr_DocScan_To_FTP")
 //        text.font.pixelSize: 15
 //        text.color: "black"
 //        text.font.bold: true
@@ -36,7 +36,7 @@ JKParaDialog{
 
                 JKText {
                     id: text1
-                    text: qsTr("AP Name:")
+                    text: qsTr("ResStr_DocScan_AP_Name")
                     font.bold: true
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -58,7 +58,7 @@ JKParaDialog{
 
                 JKText {
                     id: text2
-                    text: qsTr("AP Path:")
+                    text: qsTr("ResStr_DocScan_AP_Path")
                     font.bold: true
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -81,7 +81,7 @@ JKParaDialog{
 
                 JKTextButton {
                     id: button_browse
-                    text: qsTr("Browser...")
+                    text: qsTr("ResStr_DocScan_Browse")
                     width: 100
                     height: 30
                     anchors.right: parent.right
@@ -139,7 +139,7 @@ JKParaDialog{
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
-        text: qsTr("OK")
+        text: qsTr("ResStr_OK")
         onClicked: {
             ok()
             root.accepted()

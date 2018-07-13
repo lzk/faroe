@@ -3,28 +3,11 @@ function defaultFilePath(){
     return ""
 }
 
-function constDPIName() {
-    return [
-            "150DPI" ,
-            "200DPI" ,
-            "300DPI" ,
-            "600DPI" ,
-            ]
-}
-function constDPI() {
-    return [
-            "150 x 150dpi",
-            "200 x 200dpi",
-            "300 x 300dpi",
-            "600 x 600dpi",
-            ]
-}
-
 function constMediaTypeMap(){
     return {
-        "normal":qsTr("Normal"),
-        "depositBook":qsTr("Deposit Book"),
-        "card":qsTr("Card"),
+        "normal":qsTr("ResStr_Type_Normal"),
+        "depositBook":qsTr("ResStr_Bankbook"),
+        "card":qsTr("ResStr_Card"),
     }
 }
 
@@ -39,15 +22,15 @@ function constMediaType(){
 
 function constPaperSizeMap(){
     return {
-        "auto":"Auto",
-        "autoNoMultiFeed":"Auto(No Multi-Feed)",
+        "auto":qsTr("ResStr_DocScan_ScanSize_Auto"),
+        "autoNoMultiFeed":qsTr("ResStr_DocScan_ScanSize_AutoNo"),
         "A4":"A4(210 x 297mm)",
         "A5":"A5(148 x 210mm)",
         "B5":"B5(182 x 257mm)",
         "A6":"A6(105 x 148mm)",
         "Letter":"Letter(8.5 x 11\")",
         "Legal":"Legal(8.5 x 14\")",
-        "longPage":"Long Page",
+        "longPage":qsTr("ResStr_LongPage_"),
     }
 }
 
@@ -64,14 +47,6 @@ function constPaperSize(){
                 map.Legal,
                 map.longPage,
             ]
-}
-
-function constColorMode(){
-    return [qsTr("Color") ,qsTr("GrayScale")]
-}
-
-function constAdfMode(){
-    return [qsTr("Two Side") ,qsTr("One Side")]
 }
 
 function constCloudType(){
@@ -179,17 +154,6 @@ function constQuickScanSid(){
 //            ,"Scan To Email" ,"Scan To FTP" ,"Scan To Cloud"]
 }
 
-function constQuickScanSettings(){
-    return {
-    "Scan To Print" : {"title" : qsTr("Print Settings:") ,"source" : "main_img_print.png"}
-    ,"Scan To File" : {"title" : qsTr("File Settings:") ,"source" : "main_img_file.png"}
-    ,"Scan To Application" : {"title" : qsTr("Application Settings:") ,"source" : "main_img_apps.png"}
-    ,"Scan To Email" : {"title" : qsTr("Email Settings:") ,"source" : "main_img_email.png"}
-    ,"Scan To FTP" : {"title" : qsTr("FTP Settings:") ,"source" : "main_img_ftp.png"}
-    ,"Scan To Cloud" :{"title" : qsTr("Cloud Settings:") ,"source" : "main_img_cloud.png"}
-    }
-}
-
 function defaultQuickScanSettings(){
     return [
             defaultQuickScanSetting_toPrint(),
@@ -204,7 +168,6 @@ function defaultQuickScanSettings(){
 function newQuickScanObject() {
     var ob = {
         "sid" : "Scan To Print" ,
-        "name" : "Scan To Print" ,
         "scanSetting" : defaultScanSetting()
     }
     return ob
@@ -213,16 +176,17 @@ function newQuickScanObject() {
 function defaultQuickScanSetting_toPrint() {
     var ob = newQuickScanObject()
     ob.printerName = ""
+    ob.name = ob.sid
     return ob
 }
 
 function defaultQuickScanSetting_toFile() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To File"
-    ob.name = "Scan To File"
     ob.fileType = 0
     ob.fileName = "ScanPictures"
     ob.filePath = defaultFilePath()
+    ob.name = ob.sid
     return ob
 }
 
@@ -238,11 +202,11 @@ function defaultApplicationSettings(){
 function defaultQuickScanSetting_toApplication() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Application"
-    ob.name = "Scan To Application"
     ob.fileType = 0
     ob.fileName = "Preview.app"
     ob.filePath = "/Application"
     ob.fullFileName = "/Applications/Preview.app"
+    ob.name = ob.sid
     return ob
 }
 
@@ -257,10 +221,10 @@ function defaultEmailSettings(){
 function defaultQuickScanSetting_toEmail() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Email"
-    ob.name = "Scan To Email"
     ob.fileType = 0
     ob.recipient = ""
     ob.subject = "Scan Pictures"
+    ob.name = ob.sid
     return ob
 }
 
@@ -276,8 +240,8 @@ function defaultFTPSettings(){
 function defaultQuickScanSetting_toFTP() {
     var ob = defaultFTPSettings()
     ob.sid = "Scan To FTP"
-    ob.name = "Scan To FTP"
     ob.scanSetting = defaultScanSetting()
+    ob.name = ob.sid
     return ob
 }
 
@@ -290,7 +254,6 @@ function defaultCloudSettings(){
 function defaultQuickScanSetting_toCloud() {
     var ob = newQuickScanObject()
     ob.sid = "Scan To Cloud"
-    ob.name = "Scan To Cloud"
     ob.cloudTypeText = supportCloudType().icloud
     ob.dropboxAccessToken = ""
     ob.dropboxFilePath = ""
@@ -299,6 +262,7 @@ function defaultQuickScanSetting_toCloud() {
     ob.noteAccessToken = ""
     ob.noteTitle = ""
     ob.noteContent = ""
+    ob.name = ob.sid
     return ob
 }
 

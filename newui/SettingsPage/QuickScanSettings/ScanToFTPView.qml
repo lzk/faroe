@@ -13,7 +13,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Server Address:")
+                text: qsTr("ResStr_DocScan_server_addr")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -37,7 +37,7 @@ Item {
 
             JKText {
                 id: text2
-                text: qsTr("User Name:")
+                text: qsTr("ResStr_DocScan_username")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -60,7 +60,7 @@ Item {
 
             JKText {
                 id: text3
-                text: qsTr("Password:")
+                text: qsTr("ResStr_Password_")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -84,7 +84,7 @@ Item {
 
             JKText {
                 id: text4
-                text: qsTr("Target Path:")
+                text: qsTr("ResStr_DocScan_targetPath")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -124,32 +124,32 @@ Item {
         var password = textInput3.text
         var targetPath = textInput4.text
         if(serverAddress === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Server Address")))
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_server_addr1")))
             textInput1.forceActiveFocus()
 //            textInput1.focus = true
             return false
         }else if(userName === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("User Name")))
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_username1")))
             textInput2.forceActiveFocus()
 //            textInput2.focus = true
             return false
         }else if(password === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Password")))
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_password1")))
             textInput3.forceActiveFocus()
 //            textInput3.focus = true
             return false
         }else if(targetPath === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Target Path")))
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_targetPath1")))
             textInput4.forceActiveFocus()
 //            textInput4.focus = true
             return false
         }else if(!serverAddress.match(/ftp:\/\/[^\s]+$/i)){
-            warningWithImage(qsTr("The %1 format is incorrect, Please check your %1 and enter again.").arg(qsTr("Server Address")))
+            warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_DocScan_server_addr1")))
             textInput1.forceActiveFocus()
 //            textInput1.focus = true
             return false
         }else if(!targetPath.match(/\/[^\\\?\s\*:<>|\"]*$/)){
-            warningWithImage(qsTr("The %1 format is incorrect, Please check your %1 and enter again.").arg(qsTr("Target Path")))
+            warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_DocScan_targetPath1")))
             textInput4.forceActiveFocus()
 //            textInput4.focus = true
             return false

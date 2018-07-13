@@ -16,7 +16,7 @@ JKDialog {
         parent: container
         anchors.fill: parent
         item_button.visible: showCancel
-        message.text: qsTr("Searching,please wait...")
+        message.text: ""
         item_image.width: 90
         item_image.height: 90
 
@@ -34,7 +34,7 @@ JKDialog {
             anchors.right: parent.right
             anchors.rightMargin: 15
             anchors.bottom: parent.bottom
-            text: qsTr("Cancel")
+            text: qsTr("ResStr_Cancel")
             onClicked: cancelClick()
         }
     }

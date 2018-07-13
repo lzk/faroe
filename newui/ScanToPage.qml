@@ -51,7 +51,7 @@ ScanToPageLayout {
         anchors.bottom: parent.bottom
         anchors.rightMargin: 5
         anchors.bottomMargin: 5
-        text:qsTr("Select All")
+        text:qsTr("ResStr_Select_All")
         checked: imageViewer.allSelected
         enabled: !imageViewer.empty
     }
@@ -63,7 +63,7 @@ ScanToPageLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 70
         height: 100
-        jktext.text: qsTr("To Print")
+        jktext.text: qsTr("ResStr_To_Print")
         jktext.font.pixelSize: 12
         source_normal: "qrc:/Images/ScanToPrint.png"
         source_press: "qrc:/Images/ScanToPrint.png"
@@ -75,7 +75,7 @@ ScanToPageLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 70
         height: 100
-        jktext.text: qsTr("To Email")
+        jktext.text: qsTr("ResStr_To_Email")
         jktext.font.pixelSize: 12
         source_normal: "qrc:/Images/ScanToEmail.png"
         source_press: "qrc:/Images/ScanToEmail.png"
@@ -87,7 +87,7 @@ ScanToPageLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 70
         height: 100
-        jktext.text: qsTr("To File")
+        jktext.text: qsTr("ResStr_To_File")
         jktext.font.pixelSize: 12
         source_normal: "qrc:/Images/ScanToFile.png"
         source_press: "qrc:/Images/ScanToFile.png"
@@ -100,7 +100,7 @@ ScanToPageLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 70
         height: 100
-        jktext.text: qsTr("To FTP")
+        jktext.text: qsTr("ResStr_DocScan_To_FTP")
         jktext.font.pixelSize: 12
         source_normal: "qrc:/Images/ScanToFtp.png"
         source_press: "qrc:/Images/ScanToFtp.png"
@@ -112,7 +112,7 @@ ScanToPageLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 70
         height: 100
-        jktext.text: qsTr("To Application")
+        jktext.text: qsTr("ResStr_DocScan_To_Application")
         jktext.font.pixelSize: 12
         source_normal: "qrc:/Images/ScanToProgram.png"
         source_press: "qrc:/Images/ScanToProgram.png"
@@ -124,7 +124,7 @@ ScanToPageLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 70
         height: 100
-        jktext.text: qsTr("To Cloud")
+        jktext.text: qsTr("ResStr_To_Cloud")
         jktext.font.pixelSize: 12
         source_normal: "qrc:/Images/ScanToCloud.png"
         source_press: "qrc:/Images/ScanToCloud.png"
@@ -243,7 +243,7 @@ ScanToPageLayout {
                 var setting ={}
                 setting.cloudTypeText = scanData.scanToParameter.cloudTypeText
                 setting.callback = toCloud
-                setting.okButtonText = qsTr("Upload")
+                setting.okButtonText = qsTr("ResStr_DocScan_Upload")
                 setCmdExtra(DeviceStruct.CMD_Cloud_getFileList ,setting)
             }
         }
@@ -270,12 +270,12 @@ ScanToPageLayout {
     Connections{
         target: button_back
         onClicked:{
-            information(qsTr("Do you want leave this page ,if you exit ,all the images will be deleted?") ,back)
+            information(qsTr("ResStr_Do_You_Want_to_Delete_All_Images") ,back)
         }
     }
 
     function warning_noSelectedFiles(){
-        information_1button(qsTr("please select one or more pictures to process!"))
+        information_1button(qsTr("ResStr_Select_Pictures_to_process"))
     }
 
     property var dialog

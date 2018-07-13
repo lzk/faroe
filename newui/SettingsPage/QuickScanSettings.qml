@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import "../component"
+import "../ScanData.js" as JSData
 Item {
     id: root
     width: 495
@@ -20,7 +21,7 @@ Item {
 
             Text {
                 id: text1
-                text: qsTr("Quick Scan List:")
+                text: qsTr("ResStr_DocScan_quick_match")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -184,7 +185,7 @@ Item {
         source_disable: "qrc:/Images/delete_disable.png"
         enabled: listview.currentIndex >= 0 ?!scanData.checkQuickScanSettingreadOnly(root.settings[listview.currentIndex]) :false
         onClicked: {
-            information(qsTr("Are you sure to delete the Quick Scan Setting") ,del)
+            information(qsTr("ResStr_Are_you_sure_to_delete_the_quick_scan") ,del)
         }
     }
     JKImageButton{
@@ -214,7 +215,7 @@ Item {
                 anchors.fill: parent
                 color: delegate.ListView.isCurrentItem ?"LightBlue":delegate.mouseArea.containsMouse ?"#FFCCEBF5":"white"
                 JKText {
-                    text: (index+1)+". " + model.modelData.name
+                    text: (index+1)+". " + getSidText(model.modelData.name)
                     x:5
                     font.pixelSize: 11
                     anchors.verticalCenter: parent.verticalCenter
@@ -226,6 +227,18 @@ Item {
     }
     property var settings:scanData.quickScanSettings
     property int mode: 0
+    property var constScanIds: JSData.constScanIds()
+    function getSidText(name){
+        switch(name){
+        case constScanIds.scanToPrint:          return qsTr("ResStr_DocScan_Scan_Print")
+        case constScanIds.scanToFile:           return qsTr("ResStr_DocScan_Scan_File")
+        case constScanIds.scanToApplication:    return qsTr("ResStr_DocScan_Scan_App")
+        case constScanIds.scanToEmail:          return qsTr("ResStr_DocScan_Scan_Email")
+        case constScanIds.scanToFTP:            return qsTr("ResStr_DocScan_Scan_FTP")
+        case constScanIds.scanToCloud:          return qsTr("ResStr_DocScan_Scan_Cloud")
+        default:                                return name
+        }
+    }
 
     Component.onCompleted: {
 

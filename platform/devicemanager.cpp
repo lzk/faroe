@@ -126,10 +126,13 @@ void DeviceManager::addDevice(DeviceInfo* deviceInfo ,void* pData)
 void DeviceManager::addDeviceInfo(DeviceInfo* deviceInfo ,int count)
 {
     QString str;
+    QJsonObject jsonObj;
     for(int i = 0 ;i < count ;i++){
-        str = deviceInfo[i].name;
-        if(!m_deviceList.contains(str)){
-            if(!currentDeviceName.compare(str)){
+        jsonObj.insert("type" ,deviceInfo[i].type);
+        jsonObj.insert("address" ,deviceInfo[i].address);
+        str = QString(QJsonDocument(jsonObj).toJson());
+        if(!m_deviceList.contains(deviceInfo[i].address)){
+            if(!currentDeviceName.compare(deviceInfo[i].name)){
                 m_deviceList.prepend(str);
                 deviceList.prepend(deviceInfo[i]);
             }else{
@@ -137,6 +140,7 @@ void DeviceManager::addDeviceInfo(DeviceInfo* deviceInfo ,int count)
                 deviceList << deviceInfo[i];
             }
         }
+
         emit updateDeviceList( m_deviceList);
     }
 }

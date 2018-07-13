@@ -78,7 +78,7 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 20
-                text : qsTr("Scanning...")
+                text : qsTr("ResStr_Scanning")
             }
         }
     }
@@ -111,13 +111,13 @@ Window {
         onProgressChanged:{
             switch(progress){
             case DeviceStruct.ScanningProgress_Start:
-                text1.text = qsTr("Scanning...")
+                text1.text = qsTr("ResStr_Scanning")
                 break
             case DeviceStruct.ScanningProgress_Upload:
-                text1.text = qsTr("Uploading...")
+                text1.text = qsTr("ResStr_Uploading")
                 break
             case DeviceStruct.ScanningProgress_Completed:
-                text1.text = qsTr("Page %1 finished.").arg(page + 1)
+                text1.text = qsTr("ResStr_Paper_Finished").arg(page + 1)
                 break
 
             }

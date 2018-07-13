@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: 850
     height: 638
-    title: qsTr("Faroe VOP")
+//    title: qsTr("Faroe VOP")
     flags:
         Qt.Window | Qt.FramelessWindowHint
 

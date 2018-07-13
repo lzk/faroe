@@ -9,7 +9,7 @@ JKDialog {
     property alias message: text_message
 
     toolbar{
-        text.text: qsTr("Warning")
+        text.text: qsTr("ResStr_Warning")
         text.color: "black"
         color: "#FF67A1CF"
     }
@@ -54,7 +54,7 @@ JKDialog {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
 
-                        text: qsTr("Please switch to the Card mode on the machine!")
+                        text: qsTr("ResStr_DocScan_Mediatype_Info")
                     }
 
                 }

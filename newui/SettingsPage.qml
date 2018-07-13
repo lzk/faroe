@@ -46,14 +46,19 @@ SettingsLayout {
                 anchors.fill: parent
                 source: delegate.ListView.isCurrentItem ?imageSource:"qrc:/Images/setting_img_disable.png"
                 JKText {
+                    id:tt
                     text: name
                     x:5
+                    width: delegate.width - 10
                     font.pixelSize: 14
                     anchors.verticalCenter: parent.verticalCenter
                     color: delegate.ListView.isCurrentItem ?"white":"black"
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    maximumLineCount : 1
                 }
                 Label{
-                    text:qsTr("Decode/Separation Settings")
+                    text:name
                     x:5
                     padding: 5
 
@@ -61,7 +66,7 @@ SettingsLayout {
                     font.pixelSize: 14
 //                    color: delegate.ListView.isCurrentItem ?"white":"black"
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: index === 1 && delegate.hovered
+                    visible: delegate.hovered && tt.truncated //&& index === 1
 
                     background: Rectangle{
                         color: "white"
@@ -76,40 +81,40 @@ SettingsLayout {
         }
         model: ListModel {
             ListElement {
-                name: qsTr("Quick Scan Settings")
+                name: qsTr("ResStr_QuickScanSettings")
                 imageSource:"qrc:/Images/setting_img_quick scan.png"
                 url:"SettingsPage/QuickScanSettings.qml"
             }
 
             ListElement {
-                name: qsTr("Decode/Separation...")
+                name: qsTr("ResStr_DecodeSettings")
                 imageSource:"qrc:/Images/setting_img_qrcode barcode.png"
                 url:"SettingsPage/QRCodeBarcodeView.qml"
             }
 
             ListElement {
-                name: qsTr("Scan To Settings")
+                name: qsTr("ResStr_ScanToSettings")
                 imageSource:"qrc:/Images/setting_img_scan to.png"
                 url:"SettingsPage/ScanParameterView.qml"
             }
 
             ListElement {
-                name: qsTr("Wi-Fi")
+                name: qsTr("ResStr_Printer_Wi_Fi")
                 imageSource:"qrc:/Images/setting_img_wifi.png"
                 url:"SettingsPage/WifiView.qml"
             }
             ListElement {
-                name: qsTr("TCP/IPv4")
+                name: qsTr("ResStr_TCP_IPv4")
                 imageSource:"qrc:/Images/setting_img_IPv4.png"
                 url:"SettingsPage/TcpipView.qml"
             }
             ListElement {
-                name: qsTr("Soft AP")
+                name: qsTr("ResStr_Soft_AP")
                 imageSource:"qrc:/Images/setting_img_softap.png"
                 url:"SettingsPage/SoftapView.qml"
             }
             ListElement {
-                name: qsTr("Device Settings")
+                name: qsTr("ResStr_Device")
                 imageSource:"qrc:/Images/setting_img_device setting.png"
                 url:"SettingsPage/DeviceView.qml"
             }

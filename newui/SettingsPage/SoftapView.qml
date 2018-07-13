@@ -26,7 +26,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Soft AP:")
+                text: qsTr("ResStr_Faore_SoftAP")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -47,7 +47,7 @@ Item {
 //                anchors.verticalCenter: parent.verticalCenter
 //                spacing: 5
 //                Text{
-//                    text: qsTr("Close")
+//                    text: qsTr("ResStr_Close")
 //                    anchors.verticalCenter: parent.verticalCenter
 //                }
 //                Local.JKCheckBox {
@@ -57,7 +57,7 @@ Item {
 //                    anchors.verticalCenter: parent.verticalCenter
 //                }
 //                Text{
-//                    text: qsTr("Open")
+//                    text: qsTr("ResStr_Open")
 //                    anchors.verticalCenter: parent.verticalCenter
 //                }
 //            }
@@ -85,7 +85,7 @@ Item {
                 JKText {
                     id: text3
                     width: 100
-                    text: qsTr("SSID")
+                    text: qsTr("ResStr_SSID")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -111,7 +111,7 @@ Item {
                 JKText {
                     id: text4
                     width: 100
-                    text: qsTr("Password")
+                    text: qsTr("ResStr_DocScan_password1")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -137,7 +137,7 @@ Item {
             height: 60
             JKTextButton {
                 id: button_apply
-                text: qsTr("Apply")
+                text: qsTr("ResStr_Apply")
                 width: 150
                 height: 35
                 anchors.centerIn: parent
@@ -150,13 +150,13 @@ Item {
         target: button_apply
         onClicked: {
             if(!textInput_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
-                warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))
+                warningWithImage(qsTr("ResStr_Msg_9"))
                 textInput_ssid.forceActiveFocus()
 //                textInput_ssid.focus = true
                 return
             }
 //            if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-//                warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+//                warningWithImage(qsTr("ResStr_Msg_3"))
 //                textInput_password.forceActiveFocus()
 ////                textInput_password.focus = true
 //                return

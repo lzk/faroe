@@ -7,7 +7,6 @@ QtObject {
     id:root    
 
     property var constQuickScanSids:JSData.constQuickScanSid()
-    property var constQuickScanSettings:JSData.constQuickScanSettings()
     property var quickScanSettings:JSData.defaultQuickScanSettings()
     property var scanToParameter:JSData.defaultScanToSetting()
     property var decodeSetting:JSData.defaultDecodeSetting()
@@ -172,21 +171,13 @@ QtObject {
         return quickScanSettings[index]
     }
 
-    function getQuickScanSource(sid){
-        return constQuickScanSettings[sid].source
-    }
-
     function checkQuickScanSettingreadOnly(setting){
-//        return constQuickScanSids.includes(setting.name)
-        return setting.name === "Scan To Print"
-                || setting.name === "Scan To File"
-                || setting.name === "Scan To Application"
-                || setting.name === "Scan To Email"
-                || setting.name === "Scan To FTP"
-                || setting.name === "Scan To Cloud"
-    }
-
-    function getQuickScanSettingTitle(setting){
-        return  setting !== undefined ?constQuickScanSettings[setting.sid].title :""
+        return setting.name === setting.sid
+//        return setting.name === "Scan To Print"
+//                || setting.name === "Scan To File"
+//                || setting.name === "Scan To Application"
+//                || setting.name === "Scan To Email"
+//                || setting.name === "Scan To FTP"
+//                || setting.name === "Scan To Cloud"
     }
 }

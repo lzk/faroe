@@ -8,7 +8,7 @@ JKParaDialog{
     width: 550 + 20
     height: 450 + 20
     toolbar{
-        text.text:qsTr("To FTP")
+        text.text:qsTr("ResStr_DocScan_To_FTP")
         text.font.pixelSize: 15
         text.color: "black"
         text.font.bold: true
@@ -59,7 +59,7 @@ JKParaDialog{
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
-        text: qsTr("OK")
+        text: qsTr("ResStr_OK")
         onClicked: {
 //            if(settingLoader.item.ok()){
             if(settingLoader.ok()){

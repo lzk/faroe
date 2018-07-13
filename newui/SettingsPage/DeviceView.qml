@@ -54,7 +54,7 @@ Item {
                     font.bold: true
                     font.pixelSize: 12
                     spacing: 0
-                    title: qsTr("Sleep Time")
+                    title: qsTr("ResStr_Sleep_Time")
 
                     Column {
                         anchors.fill: parent
@@ -76,7 +76,7 @@ Item {
                         }
                         JKText {
                             id: text3
-                            text: qsTr("(1-60 Minutes)")
+                            text: qsTr("ResStr_1_60_Minute")
                             anchors.horizontalCenter: parent.horizontalCenter
                             font.pixelSize: 14
                         }
@@ -95,7 +95,7 @@ Item {
                     font.bold: true
                     font.pixelSize: 12
                     spacing: 0
-                    title: qsTr("Auto-Off Time")
+                    title: qsTr("ResStr_AutoOff_Time")
 
                     Column {
                         anchors.fill: parent
@@ -115,7 +115,7 @@ Item {
                         }
                         JKText {
                             id: text4
-                            text: qsTr("(0-4 Hours)")
+                            text: qsTr("ResStr_0_4_Hour")
                             anchors.horizontalCenter: parent.horizontalCenter
                             font.pixelSize: 14
                         }
@@ -134,7 +134,7 @@ Item {
                 font.bold: true
                 font.pixelSize: 12
                 spacing: 0
-                title: qsTr("Life Count")
+                title: qsTr("ResStr_Life_Count")
 
                 Column {
                     anchors.fill: parent
@@ -146,7 +146,7 @@ Item {
                             height: parent.height
                             JKText{
                                 font.pixelSize: 12
-                                text:qsTr("Retard Roller Count:")
+                                text:qsTr("ResStr_Roller_Count")
                                 anchors.verticalCenter: parent.verticalCenter
                                 x:5
                             }
@@ -166,7 +166,7 @@ Item {
                             Layout.fillWidth: true
                             JKTextButton{
                                 id:button_clearRollerCount
-                                text: qsTr("Clear")
+                                text: qsTr("ResStr_Clear")
                                 width: 100
                                 height: 24
                                 anchors.verticalCenter: parent.verticalCenter
@@ -183,7 +183,7 @@ Item {
                             height: parent.height
                             JKText{
                                 font.pixelSize: 12
-                                text:qsTr("ACM Count:")
+                                text:qsTr("ResStr_ACM_Count")
                                 anchors.verticalCenter: parent.verticalCenter
                                 x:5
                             }
@@ -203,7 +203,7 @@ Item {
                             Layout.fillWidth: true
                             JKTextButton{
                                 id:button_clearACMCount
-                                text: qsTr("Clear")
+                                text: qsTr("ResStr_Clear")
                                 width: 100
                                 height: 24
                                 anchors.verticalCenter: parent.verticalCenter
@@ -220,7 +220,7 @@ Item {
                             height: parent.height
                             JKText{
                                 font.pixelSize: 12
-                                text:qsTr("Scan Count:")
+                                text:qsTr("ResStr_Scan_Count")
                                 anchors.verticalCenter: parent.verticalCenter
                                 x:5
                             }
@@ -255,7 +255,7 @@ Item {
                 id: button_apply
                 enabled:((Math.floor(spin_saveTime.value) !== setting.saveTime)
                          ||(Math.floor(spin_offTime.value) !== setting.offTime))
-                text: qsTr("Apply")
+                text: qsTr("ResStr_Apply")
                 width: 150
                 height: 35
                 anchors.centerIn: parent
@@ -267,7 +267,7 @@ Item {
     JKTextButton{
         parent: item_btnCalibration
         anchors.fill: parent
-        text: qsTr("Calibration")
+        text: qsTr("ResStr_Calibration")
         onClicked: {
             setSetterCmd(DeviceStruct.CMD_doCalibration ,setting)
         }
@@ -346,7 +346,7 @@ Item {
     Connections{
         target: button_clearACMCount
         onClicked:{
-            information(qsTr("Do you want to clear this count?") ,clearACMCount)
+            information(qsTr("ResStr_Do_you_want_to_clear") ,clearACMCount)
         }
     }
     function clearACMCount(){
@@ -359,7 +359,7 @@ Item {
     Connections{
         target: button_clearRollerCount
         onClicked:{
-            information(qsTr("Do you want to clear this count?") ,clearRollerCount)
+            information(qsTr("ResStr_Do_you_want_to_clear") ,clearRollerCount)
         }
     }
 }

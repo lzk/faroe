@@ -34,10 +34,10 @@ Item{
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 10
                     JKText{
-                        text:qsTr("Find and join the Wi-Fi")
+                        text:qsTr("ResStr_Find_and_join_the_Wi_Fi")
                     }
                     JKText{
-                        text:qsTr("Enter SSID and Encryption.")
+                        text:qsTr("ResStr_Enter_SSID_and_security_type_")
                         font.pixelSize: 12
                     }
                 }
@@ -49,7 +49,7 @@ Item{
                 JKText {
                     id: text3
                     width: 100
-                    text: qsTr("SSID")
+                    text: qsTr("ResStr_SSID_2")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -74,7 +74,7 @@ Item{
                 JKText {
                     id: text4
                     width: 100
-                    text: qsTr("Password")
+                    text: qsTr("ResStr_DocScan_password1")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -95,7 +95,7 @@ Item{
             CheckBox{
                 id:checkbox_input
                 x: textInput_password.x
-                text: qsTr("Display Password")
+                text: qsTr("ResStr_Display_Password")
                 enabled: combobox.currentIndex !== 0
                 indicator: Rectangle {
                     implicitWidth: 26
@@ -121,7 +121,7 @@ Item{
                 height: 30
                 JKText {
                     width: 100
-                    text: qsTr("Encryption")
+                    text: qsTr("ResStr_Encryption")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -131,7 +131,7 @@ Item{
                     width: 275
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
-                    model: [qsTr("No Security")
+                    model: [qsTr("ResStr_No_Security")
                         ,qsTr("WEP")
 //                        ,qsTr("WPA PSK TKIP")
                         ,qsTr("WPA2-PSK-AES")
@@ -148,7 +148,7 @@ Item{
                     height: 25
                     spacing: 2
                     JKText {
-                        text: qsTr("WEP KeyID")
+                        text: qsTr("ResStr_WEP_KeyID")
                         width: 100
                         anchors.verticalCenter: parent.verticalCenter
                         font.pixelSize: 12
@@ -185,17 +185,17 @@ Item{
                 JKTextButton{
                     width: root.width / 2 - 20
                     height: parent.height
-                    text: qsTr("Return")
+                    text: qsTr("ResStr_Return")
                     onClicked: returnClicked()
                 }
 
                 JKTextButton{
                     width: root.width / 2 - 20
                     height: parent.height
-                    text: qsTr("Connect")
+                    text: qsTr("ResStr_Connected")
                     onClicked: {
                         if(!textInput_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
-                            warningWithImage(qsTr("The SSID must be 1 to 32 characters long. Please check and enter again."))
+                            warningWithImage(qsTr("ResStr_Msg_9"))
 //                            textInput_ssid.focus = true
                             textInput_ssid.forceActiveFocus()
                             return
@@ -204,7 +204,7 @@ Item{
                         switch(encryption){
                         case 1:
                             if(!textInput_password.text.match(/^(?:.{5}|.{13}|[0-9a-fA-F]{10}|[0-9a-fA-F]{26})$/)){
-                                warningWithImage(qsTr("The Password must be 5 or 13 ASCII characters or 10 or 26 hex characters,please check and enter again."))
+                                warningWithImage(qsTr("ResStr_Msg_2"))
 //                                textInput_password.focus = true
                                 textInput_password.forceActiveFocus()
                                 return
@@ -213,7 +213,7 @@ Item{
                         case 3:
                         case 4:
                             if(!textInput_password.text.match(/^(?:.{8,63}|[0-9a-fA-F]{64})$/)){
-                                warningWithImage(qsTr("The Password must be 8 to 63 ASCII characters or 64 hex characters,please check and enter again."))
+                                warningWithImage(qsTr("ResStr_Msg_3"))
 //                                textInput_password.focus = true
                                 textInput_password.forceActiveFocus()
                                 return

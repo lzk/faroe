@@ -11,7 +11,7 @@ JKDialog {
     property string para
 
     toolbar{
-        text.text: qsTr("Infomation")
+        text.text: qsTr("ResStr_DocScan_Info")
         text.color: "black"
         color: "#FF67A1CF"
     }
@@ -27,7 +27,7 @@ JKDialog {
             anchors.margins: 5
         }
 
-        message.text: qsTr("Do you want to delete the selected image?")
+//        message.text: qsTr("Do you want to delete the selected image?")
 
         Row {
             parent: messagebox.item_button
@@ -41,7 +41,7 @@ JKDialog {
                 id: button_yes
                 width: 120
                 height: 30
-                text: qsTr("Yes")
+                text: qsTr("ResStr_Yes")
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked:{
                     root.close()
@@ -53,7 +53,7 @@ JKDialog {
                 id: button_no
                 width: 120
                 height: 30
-                text: qsTr("No")
+                text: qsTr("ResStr_No")
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: {
                     root.close()

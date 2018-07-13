@@ -13,7 +13,7 @@ JKDialog{
     property size sourceSize :index<0?"0x0":model.get(index ,ImageModel.SourceSizeRole)
     property var model:jkImageModel
     property int index:-1
-    property string title: qsTr("Scan To Preview")
+    property string title: qsTr("ResStr_Preview")
     property string name: ""
     width: 648+20
     height: 700+20
@@ -90,7 +90,7 @@ JKDialog{
         JKTextButton{
             parent: ip.item_return
             anchors.fill: parent
-            text: qsTr("Return")
+            text: qsTr("ResStr_Return")
             onClicked: {
                 toolbar.close()
             }
@@ -131,7 +131,7 @@ JKDialog{
         target: toolbar
         onClose:{
             if(save && angle % 4 !== 0){
-                information(qsTr("The scanned image has been changed.Do you want to save changes?")
+                information(qsTr("ResStr_Scanning_image_has_been_changed__please_confirm_whether_save_it_or_not_")
                                         ,returnSave ,root.close)
             }else{
                 close()

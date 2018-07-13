@@ -9,7 +9,7 @@ JKDialog{
 
     property var setting: ScanData.defaultApplicationSettings()
     toolbar{
-        text.text:qsTr("To Application")
+        text.text:qsTr("ResStr_DocScan_To_Application")
         text.font.pixelSize: 15
         text.color: "black"
         text.font.bold: true
@@ -42,7 +42,7 @@ JKDialog{
                 }
                 ListElement{
                     imageSource:"qrc:/Images/others.png"
-                    appName:qsTr("Others")
+                    appName:qsTr("ResStr_DocScan_AP_Others")
                 }
             }
             delegate: FilelistDelegate{
@@ -159,7 +159,7 @@ JKDialog{
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
-        text: qsTr("OK")
+        text: qsTr("ResStr_OK")
         onClicked: {
             switch(listView.currentIndex){
             case 0:

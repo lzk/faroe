@@ -1,0 +1,179 @@
+<!DOCTYPE QPH>
+
+<QPH language="en">
+
+<phrase>
+<source>ResStr_About</source>
+<target>About</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_AP_Name</source>
+<target>Application Name</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_AP_Path</source>
+<target>Path</target>
+</phrase>
+
+<phrase>
+<source>ResStr_Return</source>
+<target>Return</target>
+</phrase>
+
+<phrase>
+<source>ResStr_Preview</source>
+<target>Preview</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_autocrop</source>
+<target>Auto Crop&amp;Deskew</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_Saving_pic_TIFF</source>
+<target>Saving…</target>
+</phrase>
+
+<phrase>
+<source>ResStr_Password_</source>
+<target>Password:</target>
+</phrase>
+
+<phrase>
+<source>ResStr_WEP_KeyID</source>
+<target>Key ID</target>
+</phrase>
+
+
+
+<phrase>
+<source>WEP</source>
+<target>WEP</target>
+</phrase>
+
+<phrase>
+<source>WPA2-PSK-AES</source>
+<target>WPA2-PSK-AES</target>
+</phrase>
+
+<phrase>
+<source>Mixed Mode PSK</source>
+<target>Mixed Mode PSK</target>
+</phrase>
+
+<phrase>
+<source>Key1</source>
+<target>Key1</target>
+</phrase>
+
+<phrase>
+<source>Key2</source>
+<target>Key2</target>
+</phrase>
+
+<phrase>
+<source>Key3</source>
+<target>Key3</target>
+</phrase>
+
+<phrase>
+<source>Key4</source>
+<target>Key4</target>
+</phrase>
+
+<phrase>
+<source>WLAN</source>
+<target>WLAN</target>
+</phrase>
+
+
+
+<phrase>
+<source>Applications</source>
+<target> Applications </target>
+</phrase>
+
+<phrase>
+<source>Not application!</source>
+<target>Not application!</target>
+</phrase>
+
+<phrase>
+<source>File Viewer</source>
+<target>File Viewer</target>
+</phrase>
+
+<phrase>
+<source>iCloud File Viewer</source>
+<target>iCloud File Viewer</target>
+</phrase>
+
+<phrase>
+<source>Save As</source>
+<target>Save As</target>
+</phrase>
+
+<phrase>
+<source>ICloud not login ,please login iCloud on MAC System Settings.</source>
+<target>ICloud not login ,please login iCloud on MAC System Settings.</target>
+</phrase>
+
+<phrase>
+<source>The file is exist ,replace it?</source>
+<target>The file is exist ,replace it?</target>
+</phrase>
+
+<phrase>
+<source>processing</source>
+<target>processing</target>
+</phrase>
+
+<phrase>
+<source>Wi-Fi not enabled ,please enable first</source>
+<target>Wi-Fi not enabled ,please enable first</target>
+</phrase>
+
+<phrase>
+<source>Scan to Email completed</source>
+<target>Scan to Email completed</target>
+</phrase>
+
+<phrase>
+<source>Time out.Unable to connet to the remote server.</source>
+<target>Time out.Unable to connet to the remote server.</target>
+</phrase>
+
+<phrase>
+<source>Upload failed.Unable to connet to the remote server.</source>
+<target>Upload failed.Unable to connet to the remote server.</target>
+</phrase>
+
+<phrase>
+<source>Upload failed.The remote server returned an error:(530) Not logged in.</source>
+<target>Upload failed.The remote server returned an error:(530) Not logged in.</target>
+</phrase>
+
+<phrase>
+<source>Upload failed.The remote server returned an error:(553) File name not allowed.</source>
+<target>Upload failed.The remote server returned an error:(553) File name not allowed.</target>
+</phrase>
+
+<phrase>
+<source>ICloud upload fail.</source>
+<target>ICloud upload fail.</target>
+</phrase>
+
+<phrase>
+<source>Upload complete</source>
+<target>Upload complete</target>
+</phrase>
+
+<phrase>
+<source>Connecting to FTP Server...</source>
+<target>Connecting to FTP Server...</target>
+</phrase>
+
+</QPH>

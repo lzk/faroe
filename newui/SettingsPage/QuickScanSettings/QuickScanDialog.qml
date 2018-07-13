@@ -20,9 +20,9 @@ JKParaDialog{
         case 0:
             return setting ?setting.sid :"";
         case 1:
-            return qsTr("Add Quick Scan Setting");
+            return qsTr("ResStr_DocScan_Add_Quick_SCan_Setting");
         case 2:
-            return qsTr("Edit Quick Scan Setting");
+            return qsTr("ResStr_DocScan_Edit_Quick_SCan_Setting");
         }
     }
     Image{
@@ -72,7 +72,7 @@ JKParaDialog{
     JKTextButton{
         parent: item_btnOK
         anchors.fill: parent
-        text: qsTr("OK")
+        text: qsTr("ResStr_OK")
         onClicked: {
             if(settingLoader.item.ok()){
                 if(mode === 1){

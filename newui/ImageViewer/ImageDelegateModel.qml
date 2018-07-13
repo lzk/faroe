@@ -105,7 +105,7 @@ DelegateModel{
         image.source: "file:///" +  getThumbnailFilename(url)
         onClose:{
             visualModel.currentIndex = index
-            information(qsTr("Do you want to delete the selected image?") ,deleteDialogClose)
+            information(qsTr("ResStr_Are_you_sure_to_delete_the_selected_picture") ,deleteDialogClose)
         }
         onDoubleClicked: {
             if(image.status === Image.Ready){

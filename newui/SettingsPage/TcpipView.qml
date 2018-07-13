@@ -27,7 +27,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("IP Type:")
+                text: qsTr("ResStr_IP_Type")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -44,7 +44,7 @@ Item {
                     id:radiobutton_dhcp
                     width:142
                     height: parent.height
-                    text:qsTr("DHCP/Auto IP")
+                    text:qsTr("ResStr_DHCP")
                     checked: true
                     opacity: enabled || !root.enabled ? 1.0 : 0.3
                 }
@@ -52,7 +52,7 @@ Item {
                     id:radiobutton_static
                     width:143
                     height: parent.height
-                    text:qsTr("Static")
+                    text:qsTr("ResStr_Static")
                     checked: !radiobutton_dhcp.checked
                     opacity: enabled || !root.enabled ? 1.0 : 0.3
                 }
@@ -79,7 +79,7 @@ Item {
                 JKText {
                     id: text3
                     width: 100
-                    text: qsTr("IP Address")
+                    text: qsTr("ResStr_IP_Address")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -92,7 +92,7 @@ Item {
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
                     }
-                    tooltip.text: text.match(regExp) && jkInterface.isIpv4(text)  ?"" :qsTr("Invalid IP address.Please check and enter again.")
+                    tooltip.text: text.match(regExp) && jkInterface.isIpv4(text)  ?"" :qsTr("ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_")
                     onFocusChanged: {
                         if(!focus){
                             if(tooltip.text !== ""){
@@ -111,7 +111,7 @@ Item {
                 JKText {
                     id: text4
                     width: 100
-                    text: qsTr("Submask")
+                    text: qsTr("ResStr_Submask")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -124,7 +124,7 @@ Item {
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
                     }
-                    tooltip.text: text.match(regExp) && jkInterface.isSubmask(text) ?"" :qsTr("Invalid subnet mask.Please check and enter again.")
+                    tooltip.text: text.match(regExp) && jkInterface.isSubmask(text) ?"" :qsTr("ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation")
                     onFocusChanged: {
                         if(!focus){
                             if(tooltip.text !== ""){
@@ -143,7 +143,7 @@ Item {
                 JKText {
                     id: text5
                     width: 100
-                    text: qsTr("Gateway")
+                    text: qsTr("ResStr_Gateway")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
@@ -156,7 +156,7 @@ Item {
                     validator: RegExpValidator{
                         regExp: /[\d.]*/
                     }
-                    tooltip.text: text.match(regExp) && jkInterface.isIpv4(text) ?"" :qsTr("Invalid Gateway address.Please check and enter again.")
+                    tooltip.text: text.match(regExp) && jkInterface.isIpv4(text) ?"" :qsTr("ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_")
                     onFocusChanged: {
                         if(!focus){
                             if(tooltip.text !== ""){
@@ -177,7 +177,7 @@ Item {
             height: 60
             JKTextButton {
                 id: button_apply
-                text: qsTr("Apply")
+                text: qsTr("ResStr_Apply")
                 width: 150
                 height: 35
                 anchors.centerIn: parent
@@ -193,19 +193,19 @@ Item {
         target: button_apply
         onClicked: {
             if(!textInput_ipAddress.text.match(regExp)){
-                warningWithImage(qsTr("Invalid IP address.Please check and enter again."))
+                warningWithImage(qsTr("ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_"))
                 textInput_ipAddress.forceActiveFocus()
 //                textInput_ipAddress.focus = true
                 return
             }
             if(!textInput_submask.text.match(regExp)){
-                warningWithImage(qsTr("Invalid subnet mask.Please check and enter again."))
+                warningWithImage(qsTr("ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation"))
                 textInput_submask.forceActiveFocus()
 //                textInput_submask.focus = true
                 return
             }
             if(!textInput_gateway.text.match(regExp)){
-                warningWithImage(qsTr("Invalid Gateway address.Please check and enter again."))
+                warningWithImage(qsTr("ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_"))
                 textInput_gateway.forceActiveFocus()
 //                textInput_gateway.focus = true
                 return

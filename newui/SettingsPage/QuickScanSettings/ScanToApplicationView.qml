@@ -17,7 +17,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Programs:")
+                text: qsTr("ResStr_DocScan_app_type")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -30,7 +30,7 @@ Item {
                 height: 35
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                model: ["Preview" ,"Other Application"]
+                model: ["Preview" ,qsTr("ResStr_DocScan_AP_Others")]
             }
         }
         Item {
@@ -56,7 +56,7 @@ Item {
 
             JKTextButton {
                 id: button_browse
-                text: qsTr("Browser...")
+                text: qsTr("ResStr_DocScan_Browse")
                 width: 100
                 height: 30
                 anchors.right: parent.right

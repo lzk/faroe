@@ -26,7 +26,7 @@ ScanPageLayout {
             onClicked: root.StackView.view.push("SearchDevicePage.qml")
         }
         Text {
-            text: scanData.deviceStatus ?scanData.currentDevice.match(/^usb+/i) ?"USB" :scanData.currentDevice :qsTr("Disconnected")
+            text: scanData.deviceStatus ?scanData.currentDevice.match(/^usb+/i) ?"USB" :scanData.currentDevice :qsTr("ResStr_disconnet")
             anchors.verticalCenter: parent.verticalCenter
         }
     }
@@ -44,9 +44,9 @@ ScanPageLayout {
 //            width: ListView.view.width
 //            height: ListView.view.height
 //                id:button_quickScan
-//                mode: model.modelData.scanSetting.colorMode === 0 ?qsTr("Color") :qsTr("Black")
+//                mode: model.modelData.scanSetting.colorMode === 0 ?qsTr("ResStr_Color") :qsTr("ResStr_Grayscale")
 //                dpi: model.modelData.scanSetting.dpi === 0 ?qsTr("300DPI") :qsTr("200DPI")
-//                adf: model.modelData.scanSetting.adfMode === 0 ?qsTr("Two Side") :qsTr("One Side")
+//                adf: model.modelData.scanSetting.adfMode === 0 ?qsTr("ResStr_DocScan_2side") :qsTr("ResStr_DocScan_1side")
 //                name: model.modelData.name
 //                source: scanData.getCurrentQuickScanSource(model.modelData.sid)
 //            }
@@ -57,11 +57,11 @@ ScanPageLayout {
         id:button_quickScan
         parent: item_quickscan
         anchors.fill: parent
-        mode: JSData.constColorMode()[currentQuickScanSetting.scanSetting.colorMode ?0 :1]
-        dpi: JSData.constDPIName()[currentQuickScanSetting.scanSetting.dpi]
-        adf: JSData.constAdfMode()[currentQuickScanSetting.scanSetting.adfMode ?0 :1]
-        name: (currentIndex+1)+". " + currentQuickScanSetting.name
-        source: "qrc:/Images/" + scanData.getQuickScanSource(currentQuickScanSetting.sid)
+        index: (currentIndex+1)
+        sid:currentQuickScanSetting.sid
+        adfMode:currentQuickScanSetting.scanSetting.adfMode
+        colorMode: currentQuickScanSetting.scanSetting.colorMode
+        dpi:currentQuickScanSetting.scanSetting.dpi
     }
 
     onVisibleChanged: {
@@ -112,7 +112,7 @@ ScanPageLayout {
         source_disable: "qrc:/Images/Main_btn_decode.png"
         source_normal: "qrc:/Images/Main_btn_decode.png"
         source_press: "qrc:/Images/Main_btn_decode.png"
-        jktext.text:qsTr("Decode")
+        jktext.text:qsTr("ResStr_DocScan_Decode")
     }
     JKFunctionButton{
         id:button_separation
@@ -124,7 +124,7 @@ ScanPageLayout {
         source_disable: "qrc:/Images/main_btn_separation.png"
         source_normal: "qrc:/Images/main_btn_separation.png"
         source_press: "qrc:/Images/main_btn_separation.png"
-        jktext.text:qsTr("Separation")
+        jktext.text:qsTr("ResStr_DocScan_Separation")
     }
     JKFunctionButton{
         id:button_scanto
@@ -136,7 +136,7 @@ ScanPageLayout {
         source_disable: "qrc:/Images/main_btn_scanto.png"
         source_normal: "qrc:/Images/main_btn_scanto.png"
         source_press: "qrc:/Images/main_btn_scanto.png"
-        jktext.text:qsTr("Scan To")
+        jktext.text:qsTr("ResStr_DocScan_ScanTo")
     }
     JKFunctionButton{
         id:button_settings
@@ -148,7 +148,7 @@ ScanPageLayout {
         source_disable: "qrc:/Images/main_btn_settings.png"
         source_normal: "qrc:/Images/main_btn_settings.png"
         source_press: "qrc:/Images/main_btn_settings.png"
-        jktext.text:qsTr("Settings")
+        jktext.text:qsTr("ResStr_Setting_Title")
     }
 
     Connections{

@@ -1,0 +1,375 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String xml:space="preserve" x:Key="ResStr_Print">Print</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scan">Scan</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Setting">Settings...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Setting_Title">Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Ready">Ready</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Busy">Busy</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Sleep">Sleep</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Warning">Warning</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Error">Error</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Offline">Offline</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Printing">Printing</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanning">Scanning...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Calibrating">Calibrating...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Uploading">Uploading...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Paper_Finished">Paper {0} finished.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Cancelling">Canceling...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Residence_Booklet">Residence Booklet</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Marriage_Certificate">Marriage Certificate</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Passport">Passport</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Real_Estate_License">Property Ownership Certificate</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Driving_license">Driving License</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Diploma">Diploma</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Student_ID_card">Student ID Card</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Birth_Certificate">Birth Certificate</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Bank_SocialSecurity_Card">Bank Card/Social Security Card</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_ID_Card">ID Card</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Default">Default</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_OK">OK</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Back">Return</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Delete">Delete</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Cancel">Cancel</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_B5">B5</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DPI">Resolution</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DPI1">Resolution : </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Type">Media Type</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanned_image_size">Scanned image size: </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Color_Mode">Color Mode</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Color_Mode1">Color Mode : </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Color">Color</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Grayscale">Grayscale</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scan_Size">Scan Area Size</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_A4_210_297mm_">A4(210 x 297mm)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_A5_148_x_210mm_">A5(148 x 210mm)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_B5_182_x_257mm_">B5(182 x 257mm)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Letter_8_5_x_11">Letter(8.5 x 11")</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_A6_105_x_148mm_">A6(105 x 148mm)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_4_x_6_">4 x 6"</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Contrast">Contrast</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Brightness">Brightness</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Printer_Wi_Fi">Wi-Fi</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Soft_AP">Soft AP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Device">Device Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_TCP_IP">TCP/IP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_About">About</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_IP_Type">IP Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DHCP">DHCP/Auto IP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Static">Static</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_IP_Address">IP Address</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Gateway">Gateway</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Submask">Submask</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Apply">Apply</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Calibration">Calibration</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_WLAN_Network">WLAN Network</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Protected_by_WPA2">Protected by WPA2</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Protected_by_WEP">Protected by WEP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Protected_by_Mixed_Mode_PSK">Protected by Mixed Mode PSK</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Manual_Wi_Fi">Manual Wi-Fi...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Password_">Password:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Password">Password</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Display_Password">Display Password</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_WEP_KeyID">WEP KeyID</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_SSID">SSID</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_SSID_">SSID:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Encryption">Encryption</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Encryption_">Encryption:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_No_Security">No Security</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_WEP">WEP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_WPA2_PSK_AES">WPA2-PSK-AES</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Mixed_Mode_PSK">Mixed Mode PSK</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Connect">Connect</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Find_and_join_the_Wi_Fi">Find and join the Wi-Fi</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Enter_SSID_and_security_type_">Enter SSID and Encryption.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Power_Save_Time">Power Save Time :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_1_60_Minute">(1-60 Minutes)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_0_4_Hour">(0-4 Hours)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_SSID_2">SSID</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Conn_list">Connected:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Operation_cannot_be_carried_out_due_to_insufficient_memory_or_hard_disk_space_Please_try_again_after_freeing_memory_or_hard_disk_space_">There is insufficient memory or disk space to complete the operation. Please free up some memory or disk space, then try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_0_100__please_confirm_and_enter_again_">The valid range is 0 to 100, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanning_image_has_been_changed__please_confirm_whether_save_it_or_not_">The scanned image has been changed, do you want to save the changes?</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_">The entered IP Address is incorrect, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_">Invalid Gateway address. Please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation">Invalid Submask. Please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_">The valid range is 1 to 60, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_">The valid range is 0 to 4, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_from__6_to_6__please_confirm_and_enter_again_">The valid range is from -6 to 6, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_1__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_">The combination of IP address and subnet mask is invalid. All of the bits in the host address portion of the IP address are set to 1. Please enter a valid combination of IP address and subnet mask.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_0__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_">The combination of IP address and subnet mask is invalid. All of the bits in the host address portion of the IP address are set to 0. Please enter a valid combination of IP address and subnet mask.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Setting_Successfully_">Configuration completed! Please restart device to apply settings.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Setting_Completed">Configuration completed!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Setting_Fail">Configuration failed. Please check your setting and device, then try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_SoftAP">Soft AP :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_Dropbox_UserChanged">The login user has been changed, the current folder is not exist, please login again!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_PUshScan_PC">Scan to PC</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_PUshScan_UD">Scan to USB Disk</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_PUshScan_SMB">Scan to SMB</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_PUshScan_FTP">Scan to FTP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Msg_1">Configuration completed. Restart the device to apply changes.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Msg_2">The Password must be 5 or 13 ASCII characters or 10 or 26 hex characters, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Msg_3">The Password must be 8 to 63 ASCII characters or 64 hex characters, please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Msg_9">The SSID must be 1 to 32 characters long. Please check and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Exit">Exit</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Unable_to_preview">Unable to preview</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Yes">Yes</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_No">No</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_QRCode">QR Code</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_BarCode">Bar Code</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_All">All</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Border_Color">Border Color</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Preview">Scan To Preview</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Quick_Preview">Quick Scan Preview</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Close">Close</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Open">Open</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Return">Return</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Prompt">Information</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Email">Email</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Address">Address</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Are_you_sure_to_delete_the_selected_picture">Do you want to delete the selected image?</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Connected">Connected</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan">DocScan Air</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_CopyRight">Copyright (C) (2018)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Company">Unisplendour Corporation Limited.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_AllRight">All Rights Reserved.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_USBDevice">USB Device </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Email_Format_Error">The E-mail address format is incorrect, Please check you E-mail address and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_On">On</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Off">Off</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Image_file_not_found">Image file cannot be found.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_TCP_IPv4">TCP/IPv4</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Standard">Standard</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Fine">Fine</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_SuperFine">Super Fine</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_HighestQuality">Highest Quality</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_upload_wait">Uploading, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Dropbox_File_Viewer">Dropbox File Viewer</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Upload">Upload</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Folder_Name">Folder Name :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Auth_Dropbox">Authenticate with Dropbox</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Saving_pic_PDF">Saving, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Fail_save_pdf">Fail to save pdf file. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_send_mail_fail">Send Email failed. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_send_mail_ok">Send Email completed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_save_file_ok">Save files completed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Fail_save">Fail to save files. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_upload_ok">Upload completed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_upload_fail">Upload failed. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_server_addr">Server Address :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Viewer">Windows Photo Viewer</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Paint">Paint</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Others">Other Applications</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_username">User Name :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_password">Password :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_targetPath">Target Path :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_print_pic_wait">Printing, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_print_fail">Print failed. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_print_ok">Print completed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting">Scan Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_pushscan_setting">Push Scan Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting1">Scan Settings(AC Power)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting2">Scan Settings(USB Bus Power)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting3">Scan Settings(Power Bank)</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ScanSize_Auto">Auto</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Mediatype_Info">Please switch to the Card mode on the machine!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ScanSize_AutoNo">Auto(No Multi-feed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting4">Scan Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_qr_setting">QRcode settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_quick">Quick</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_quick_match">Quick Scan List :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ADF">ADF Mode</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ADF1">ADF Mode : </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_2side">Two Side</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_1side">One Side</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_multifeed">Multi Feed Detection</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_fileformat">File Format</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_autocrop">Auto Crop&amp;Deskew</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Scan_Print">Scan To Print</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Scan_File">Scan To File</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Scan_App">Scan To Application</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Scan_Email">Scan To Email</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Scan_FTP">Scan To FTP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Scan_Cloud">Scan To Cloud</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_app_setting">Application Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_app_type">Programs :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_cloud_setting">Cloud Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_email_setting">Email Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_file_setting">File Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ftp_setting">FTP Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_print_setting">Print Settings :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_search_dev">Searching, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_open_p_fail">Open program failed, </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_conn_fail">Scanning connection failed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_net_scanner_busy">The Device is currently in use. Confirm that the device is available and try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_GetInfo_Fail">Could not read Status from device. Please wait for a while, then try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_paper_jam">Paper jam!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_cover_open">Cover is opened!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Pick_Roller_Home">ADF pick roller not home!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_paper_not_ready">Paper is not ready!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_adf_not_ready">ADF is not ready!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Cover_Open">Cover (ADF) is opened!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_home_not_ready">Home is not ready!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_multifeed_error">Multi-feed error!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_fail">Scan failed</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_all_blank">Scan Images are all blank!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_calibration_fail">Calibration failed!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_memory_full">Device Memory is full!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Transfer_Error">The Device transfering has some error!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_not_on_line">The computer is not on line!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_not_initial">The device is not initialized, all the parameter are not right, please reset the device registers!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Bankbook">Deposit Book</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_IE_verion">The Internet Explorer verion which is installed on your computer is too low, the login page will not execute well!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Type_Normal">Normal</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Calibration">Calibration:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_SleepMode">Sleep Mode:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AutoSleep">Auto Sleep</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Name">AP Name :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Path">AP Path :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Legal_8_5_x_14">Legal(8.5 x 14")</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Saving_pic_TIFF">Saving, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Device_Disconnected">The device is disconnected, the scanning will be canceled!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Network_fail">The Network is not connected, please check your setting.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Are_you_sure_to_delete_the_quick_scan">Are you sure to delete the Quick Scan Setting?</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Card">Card</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_disconnet">Disconnected</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_LongPage_">Long Page</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Application_Support_Two_Pages">Scan To Application only supports opening two pages at most.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanning_nofile_selected">Please select one file at least, then try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_You_do_not_have_permission">You do not have permission to save to the selected folder.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Do_you_want_to_exit">Do you want to exit the DocScan Air?</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_the_machine_could_not_be_connected">This device could not be connected!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Not_Find_Printer">Not find printer!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Select_Pictures_to_process">Please select one or more pictures to process!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Do_You_Want_to_Delete_All_Images">Do you want to leave this page, if you exit, the all images will be delete?</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanning_is_canceled_on_machine">The scan job has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Initial_Evernote_and_Get_Evernote_fail">Initial Evernote and get EverNote list fail!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Evernote_attachment_files_could_not_more_than_60">The ever note attachment files could not more than 60!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Images_files_Size_too_large">Total image files size are too large, could not upload to EverNote server!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Connect_to_Evernote_server_fail">Connect to EverNote server fail, please confirm you computer setting and your specify user name and password!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Get_EverNote_List_error">Get Ever Note List Error!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Evernote_Tile_could_not_be_empty">The Ever Note Title could not be empty!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Evernote_Title_could_not_be_all_space">The Ever Note Title characters could not be all space!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Upload_files_fail">Upload files fail, </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_could_not_be_empty">The {0} could not be empty!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_specify_incorrect">The {0} format is incorrect, Please check your {0} and enter again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Device_disconnected">Device is diconnected, could not Apply setting!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_Path_and_name_too_long">Your Specify File Path + File Name is too long or not valid, please specify again!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Invalid_xxx">Invalid value in {0}.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Specify_File_Path_not_exist">Your Specify File Path does not exist, please specify again!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Default_Save_Path_could_not_be_empty">The Default Save Path could not be empty!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Folder_Name_exist">The folder Name already exists!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Folder_New_Wait">Updating files and folders, please wait for a moment!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Connect_OneDrive_Fail">Connect to OneDrive server failed!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Connect_googleDrive_Fail">Connect to Google Drive server failed!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Folder_Not_Exist">The folder {0} does not exist, please double check and try again!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_exist_Do_You_overwrite">The some upload files already exist. Do you want to overwrite?</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Update_File_fail">Upload {0} failed!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Not_Find_Outlook">Could not find the outlook, please check you computer!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_Path_and_Name_too_long">You specify the file path and file name is too long, please specify again </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Server_Address_Target_Path_too_long">Your specify the Server Address and Target Path are too long!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Printer_Not_Ready">Printer is not ready!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Printer_Not_Found">Printer could not be found!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Quick_Scan_Exist">Quick Scan item name already exists, please change to another name.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Decoding">Decoding, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Doing_Calibration">Doing Calibration, please wait...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DoCalibration_Completed">Calibration completed!  Please restart your device.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_To_Application">To Application</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Browse">Browse...</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_EverNote_Viewer">EverNote Viewer</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Note_Title">Note Title :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Note_Title1">Note Title. Please specify within a range of 1 to 32 characters</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Note_Content">Note Content :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Default_Path">Default save path :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Default_Path1">Default save path. Please specify within a range of 1 to 255 characters</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_OneDrive_Viewer">OneDrive File Viewer</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_To_FTP">To FTP</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanning_files_not_exist">The scanning files have been removed or deleted from current folder, please try to scan again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Add_Quick_SCan_Setting">Add Quick Scan Setting</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Edit_Quick_SCan_Setting">Edit Quick Scan Setting</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Name">Name :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Type">Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Info">Information</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Decode">Decode</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Separation">Separation</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ScanTo">Scan To</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_QRBar_Code_Decode">QRCode/Barcode Decode</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Code_Type">Code Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Output_Result">Output Result :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Document_Separation">Document Separation</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Save_File_Type">Save File Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_File_Path">File Path :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_File_Path1">File Path</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Cloud_Type">Cloud Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Reset">Switch Login User</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Email_Attachment_File_Type">Email Attachment File Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Reset_Access">Reset access token in cache :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Attachment_File_Type">Attachment File Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Recipient">Recipient :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Recipient1">Recipient</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Subject">Subject :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_Name">File Name :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_Name1">File Name</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_Path_And_Name">File Name and File Path</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Name1">Name</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_server_addr1">Server Address</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_username1">User Name</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_password1">Password</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_targetPath1">Target Path</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Printer_Name">Printer Name :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_WLAN">WLAN</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Select_All">Select All</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_To_Print">To Print</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_To_Email">To Email</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_To_File">To File</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_To_Cloud">To Cloud</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Folder">Folder</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_QuickScanSettings">Quick Scan Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DecodeSettings">Decode/Separation Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_ScanToSettings">Scan To Settings</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_dropbox_fail">Connect to Dropbox server fail!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_dropbox_uplaod_fail">Upload files to Dropbox Server fail!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Folder_Name1">Folder Name </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Folder_Name">The Folder Name could not be empty. Please specify within a range of 1 to 32 characters.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Output_Result">Output Result</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Find_Printer_Error">Could not find the printer. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_EverNote_List">Ever Note List: </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Upload_success">Upload success!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Device_Not_Ready">The Device is not ready! Please check your computer setting or power on and plug in your device.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bank">The scan job could not be continued, because the Power Bank mode does not support the following settings.&#13;&#10;&#09;Media Type: &#09;Deposit Book or Card&#13;&#10;&#09;Scan Size: &#09;Long Page Mode&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;Media Type: &#09;Normal&#13;&#10;&#09;Scan Size: &#09;Auto&#13;&#10;&#09;Auto Color Detection: &#09;Off</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bankds">The scan job could not be continued, because the Power Bank mode does not support the following settings.&#13;&#10;&#09;Media Type: &#09;Deposit Book or Card&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;Media Type: &#09;Normal&#13;&#10;&#09;Auto Color Detection: &#09;Off</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bus">The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;ADF Mode: &#09;&#09;Two Side&#13;&#10;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Scan Size: &#09;&#09;Long Page Mode&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;&#09;Skip Blank Page: &#09;&#09;On&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;ADF Mode: &#09;&#09;One Side&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Scan Size: &#09;&#09;Auto&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;&#09;Skip Blank Page: &#09;&#09;Off&#13;&#10;&#09;Auto Color Detection: &#09;Off&#13;&#10;</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Busd">The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Buss">The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;ADF Mode: &#09;&#09;Two Side&#13;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;&#09;Skip Blank Page: &#09;&#09;On&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;ADF Mode: &#09;&#09;One Side&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;&#09;Skip Blank Page: &#09;&#09;Off&#13;&#10;&#09;Auto Color Detection: &#09;Off&#13;&#10;</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bus_Wifi">The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Gamma">Gamma</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Skip_Blank_Page">Skip Blank Page</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Auto_Color_Detect">Auto Color Detection</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Auth_Google">Authenticate with Google Drive</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_GoogleDrive_Viewer">Google Drive File Viewer</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Create_Folder_fail">Create Folder: {0} fail!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Fail_not_enough">There is insufficient memory or disk space to complete the operation.Please free up some memory or disk space, then try again. </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Clear">Clear</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Fail_not_enough_canceled">There is insufficient memory or disk space to complete the scanning. The scan job has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Roller_Count">Retard Roller Count :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Life_Count">Life Count</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Sleep_Time">Sleep Time</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_AutoOff_Time">Auto-Off Time</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_ACM_Count">ACM Count :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scan_Count">Scan Count :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Clear_Error">The Device is not connected, please check you device and setting, then try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Calibration_Port_error">Calibration only supports USB connection.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Calibration_Power_error">Calibration only supports AC Power.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Network_Disconnected">The Network of your computer is disconnected, please check your setting.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Connect_to_Google_server_fail">Connect to Google Drive server fail, please confirm you computer setting and your specify user name and password!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Push_Scan_Type">Push Scan Type :</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Google_Folder_Deleted">The Default Path you selected has been deleted!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_ScanType_Setting">This Push Scan Type Parameters must be used 'EWS' to setting!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_could_not_be_all_space">The {0} cannot be all space!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Paint_Support_Two_Pages">The Application Paint only supports opening two pages at most on the same time.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Scanning_is_canceled_Last">The last scan job was canceled. Please clear the ADF of any remaining paper originals, and try again.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DoCalibration_Canceled">The Calibration has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Open_Fail">The saving files could be opened on current user mode, please check the files or use another application to open.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Do_you_want_to_clear">Do you want to clear this count?</sys:String>
+</ResourceDictionary>

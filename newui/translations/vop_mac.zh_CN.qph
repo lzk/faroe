@@ -1,0 +1,179 @@
+<!DOCTYPE QPH>
+
+<QPH language="zh_CN">
+
+<phrase>
+<source>ResStr_About</source>
+<target>关于</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_AP_Name</source>
+<target>程序名</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_AP_Path</source>
+<target>路径</target>
+</phrase>
+
+<phrase>
+<source>ResStr_Return</source>
+<target>返回</target>
+</phrase>
+
+<phrase>
+<source>ResStr_Preview</source>
+<target>预览</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_autocrop</source>
+<target>自动裁剪</target>
+</phrase>
+
+<phrase>
+<source>ResStr_DocScan_Saving_pic_TIFF</source>
+<target>文件保存中</target>
+</phrase>
+
+<phrase>
+<source>ResStr_Password_</source>
+<target>密码：</target>
+</phrase>
+
+<phrase>
+<source>ResStr_WEP_KeyID</source>
+<target>Key ID</target>
+</phrase>
+
+
+
+<phrase>
+<source>WEP</source>
+<target>WEP</target>
+</phrase>
+
+<phrase>
+<source>WPA2-PSK-AES</source>
+<target>WPA2-PSK-AES</target>
+</phrase>
+
+<phrase>
+<source>Mixed Mode PSK</source>
+<target>Mixed Mode PSK</target>
+</phrase>
+
+<phrase>
+<source>Key1</source>
+<target>Key1</target>
+</phrase>
+
+<phrase>
+<source>Key2</source>
+<target>Key2</target>
+</phrase>
+
+<phrase>
+<source>Key3</source>
+<target>Key3</target>
+</phrase>
+
+<phrase>
+<source>Key4</source>
+<target>Key4</target>
+</phrase>
+
+<phrase>
+<source>WLAN</source>
+<target>WLAN</target>
+</phrase>
+
+
+
+<phrase>
+<source>Applications</source>
+<target>程序</target>
+</phrase>
+
+<phrase>
+<source>Not application!</source>
+<target>非可执行程序</target>
+</phrase>
+
+<phrase>
+<source>File Viewer</source>
+<target>文件浏览</target>
+</phrase>
+
+<phrase>
+<source>iCloud File Viewer</source>
+<target>iCloud文件浏览</target>
+</phrase>
+
+<phrase>
+<source>Save As</source>
+<target>保存到</target>
+</phrase>
+
+<phrase>
+<source>ICloud not login ,please login iCloud on MAC System Settings.</source>
+<target>未登录icloud ，请先返回系统登录</target>
+</phrase>
+
+<phrase>
+<source>The file is exist ,replace it?</source>
+<target>文件已存在，是否覆盖？</target>
+</phrase>
+
+<phrase>
+<source>processing</source>
+<target>进行中</target>
+</phrase>
+
+<phrase>
+<source>Wi-Fi not enabled ,please enable first</source>
+<target>Wi-Fi没打开，请先打开</target>
+</phrase>
+
+<phrase>
+<source>Scan to Email completed</source>
+<target>扫描到Email完成</target>
+</phrase>
+
+<phrase>
+<source>Time out.Unable to connet to the remote server.</source>
+<target>连接服务器超时</target>
+</phrase>
+
+<phrase>
+<source>Upload failed.Unable to connet to the remote server.</source>
+<target>上传失败。无法连接服务器</target>
+</phrase>
+
+<phrase>
+<source>Upload failed.The remote server returned an error:(530) Not logged in.</source>
+<target>上传失败。服务器错误:(530)未登录</target>
+</phrase>
+
+<phrase>
+<source>Upload failed.The remote server returned an error:(553) File name not allowed.</source>
+<target>上传失败。服务器错误:(553)不可接受文件名</target>
+</phrase>
+
+<phrase>
+<source>ICloud upload fail.</source>
+<target>icloud登录失败</target>
+</phrase>
+
+<phrase>
+<source>Upload complete</source>
+<target>上传成功</target>
+</phrase>
+
+<phrase>
+<source>Connecting to FTP Server...</source>
+<target>FTP服务器连接中…</target>
+</phrase>
+
+</QPH>

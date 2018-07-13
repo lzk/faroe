@@ -34,7 +34,7 @@ FocusScope {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                title: qsTr("QRCode/BarCode Decode")
+                title: qsTr("ResStr_DocScan_QRBar_Code_Decode")
 
                 Column {
                     width: 360
@@ -49,7 +49,7 @@ FocusScope {
 
                         JKText {
                             id: text1
-                            text: qsTr("Scan Settings:")
+                            text: qsTr("ResStr_DocScan_scan_setting")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
                         }
@@ -70,7 +70,7 @@ FocusScope {
 
                         JKText {
                             id: text2
-                            text: qsTr("Code Type:")
+                            text: qsTr("ResStr_DocScan_Code_Type")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
                         }
@@ -91,7 +91,7 @@ FocusScope {
 
                         JKText {
                             id: text3
-                            text: qsTr("Output Result:")
+                            text: qsTr("ResStr_DocScan_Output_Result")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
                         }
@@ -124,7 +124,7 @@ FocusScope {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                title: qsTr("Document Separation")
+                title: qsTr("ResStr_DocScan_Document_Separation")
 
                 Column {
                     width: 360
@@ -139,7 +139,7 @@ FocusScope {
 
                         JKText {
                             id: text4
-                            text: qsTr("Scan Settings:")
+                            text: qsTr("ResStr_DocScan_scan_setting")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
                         }
@@ -160,7 +160,7 @@ FocusScope {
 
                         JKText {
                             id: text5
-                            text: qsTr("Save File Type:")
+                            text: qsTr("ResStr_DocScan_Save_File_Type")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
                         }
@@ -181,7 +181,7 @@ FocusScope {
 
                         JKText {
                             id: text6
-                            text: qsTr("File Path:")
+                            text: qsTr("ResStr_DocScan_File_Path")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
                         }
@@ -200,7 +200,7 @@ FocusScope {
                         height: 55
                         JKTextButton {
                             id: button_browser
-                            text: qsTr("Browser...")
+                            text: qsTr("ResStr_DocScan_Browse")
                             width: 100
                             height: 35
                             anchors.right: parent.right
@@ -232,7 +232,7 @@ FocusScope {
     JKTextButton{
         parent: item_btnSettings_decode
         anchors.fill: parent
-        text: qsTr("Settings...")
+        text: qsTr("ResStr_Setting")
         onClicked: {
             openScanSettingDialog(decodeSetting.scanSetting ,1)
         }
@@ -240,7 +240,7 @@ FocusScope {
     JKTextButton{
         parent: item_btnSettings_separation
         anchors.fill: parent
-        text: qsTr("Settings...")
+        text: qsTr("ResStr_Setting")
         onClicked: {
             openScanSettingDialog(separationSetting.scanSetting ,2)
         }

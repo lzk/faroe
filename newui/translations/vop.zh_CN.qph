@@ -1,1382 +1,2087 @@
-﻿<!DOCTYPE QPH>
+<!DOCTYPE QPH>
 
 <QPH language="zh_CN">
 
-    <phrase>
+<phrase>
 <source>Str_IDResStr_</source>
 <target>SC</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe</source>
+
+
+<phrase>
+<source>ResStr_DocScan</source>
 <target>文件云助手</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_disconnet</source>
 <target>离线</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Scan_Print</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Scan_Print</source>
 <target>扫描到打印机</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Scan_File</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Scan_File</source>
 <target>扫描到文档</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Scan_App</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Scan_App</source>
 <target>扫描到应用程序</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Scan_Email</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Scan_Email</source>
 <target>扫描到邮件</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Scan_FTP</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Scan_FTP</source>
 <target>扫描到FTP</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Scan_Cloud</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Scan_Cloud</source>
 <target>扫描到云盘</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_ADF1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_ADF1</source>
 <target>扫描模式：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DPI1</source>
 <target>分辨率：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Color_Mode1</source>
-<target>颜色模式：</target>
+<target>色彩模式：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Decode</source>
-<target>解码</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Decode</source>
+<target>条码识别</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Separation</source>
-<target>文档分离</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Separation</source>
+<target>文档分隔</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_ScanTo</source>
-<target>扫描</target>
+
+
+<phrase>
+<source>ResStr_DocScan_ScanTo</source>
+<target>扫描到</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Setting_Title</source>
 <target>设置</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_CopyRight</source>
 <target>Copyright © (2018)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Company</source>
-<target>UNIS Limited.</target>
+<target>Unisplendour Corporation Limited.</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_AllRight</source>
 <target>All Rights Reserved.</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_USBDevice</source>
 <target>USB Device </target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Connected</source>
 <target>已连接</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Connect</source>
 <target>连接</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_search_dev</source>
+
+
+<phrase>
+<source>ResStr_DocScan_search_dev</source>
 <target>搜索中，请稍候。。。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Cancel</source>
 <target>取消</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Warning</source>
 <target>警告</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_OK</source>
 <target>确定</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_the_machine_could_not_be_connected</source>
 <target>设备未连接！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_QuickScanSettings</source>
 <target>快捷扫描设置</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_quick_match</source>
+
+
+<phrase>
+<source>ResStr_DocScan_quick_match</source>
 <target>快捷扫描列表</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DecodeSettings</source>
-<target>解码/文档分离设置</target>
+<target>条码识别/文档分隔设置</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_ScanToSettings</source>
 <target>扫描设置</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Printer_Wi_Fi</source>
 <target>Wi-Fi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_TCP_IPv4</source>
 <target>TCP/IPv4</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Soft_AP</source>
 <target>Soft AP</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Device</source>
 <target>设备设置</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_setting</source>
 <target>扫描设置：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Setting</source>
 <target>设置…</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_print_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_print_setting</source>
 <target>打印机设置：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Printer_Name</source>
 <target>打印机名称：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_file_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_file_setting</source>
 <target>文件设置：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Save_File_Type</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Save_File_Type</source>
 <target>存储文件类型：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_PDF</source>
 <target>PDF</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_TIFF</source>
 <target>TIFF</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_JPG</source>
 <target>JPG</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_BMP</source>
 <target>BMP</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_Name</source>
 <target>文件名称：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_Default_Name</source>
 <target>ScanPictures</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_File_Path</source>
+
+
+<phrase>
+<source>ResStr_DocScan_File_Path</source>
 <target>文件路径：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Browse</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Browse</source>
 <target>浏览…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_Path_and_name_too_long</source>
-<target>你输入的文件路径和文件名称总长度太长或者失效，请重新输入！</target>
+<target>你输入的文件路径和文件名称总长度太长或者无效，请重新输入！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_app_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_app_setting</source>
 <target>应用程序设置：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_app_type</source>
+
+
+<phrase>
+<source>ResStr_DocScan_app_type</source>
 <target>程序：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_AP_Viewer</source>
+
+
+<phrase>
+<source>ResStr_DocScan_AP_Viewer</source>
 <target>Windows Photo Viewer</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_AP_Paint</source>
+
+
+<phrase>
+<source>ResStr_DocScan_AP_Paint</source>
 <target>Paint</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_AP_Others</source>
+
+
+<phrase>
+<source>ResStr_DocScan_AP_Others</source>
 <target>其它应用程序</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_email_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_email_setting</source>
 <target>邮件设置：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Attachment_File_Type</source>
 <target>附件类型：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Recipient</source>
 <target>接收者：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Recipient1</source>
 <target>接收者</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Subject</source>
 <target>主题</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Email_Format_Error</source>
 <target>邮件的地址不能为空，请检查您输入的邮件地址，再重新输入。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_could_not_be_empty</source>
-<target>{0}不能为空！</target>
+<target>%1不能为空！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_ftp_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_ftp_setting</source>
 <target>FTP设置：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_server_addr</source>
+
+
+<phrase>
+<source>ResStr_DocScan_server_addr</source>
 <target>服务器地址：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_server_addr1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_server_addr1</source>
 <target>服务器地址</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_username</source>
-<target>用户名称：</target>
+
+
+<phrase>
+<source>ResStr_DocScan_username</source>
+<target>用户名：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_username1</source>
-<target>用户名称</target>
+
+
+<phrase>
+<source>ResStr_DocScan_username1</source>
+<target>用户名</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_password</source>
+
+
+<phrase>
+<source>ResStr_DocScan_password</source>
 <target>密码：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_password1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_password1</source>
 <target>密码</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_targetPath</source>
+
+
+<phrase>
+<source>ResStr_DocScan_targetPath</source>
 <target>目标路径：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_targetPath1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_targetPath1</source>
 <target>目标路径</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_specify_incorrect</source>
-<target>{0}格式错误，请检查{1}并重新输入.</target>
+<target>%1格式错误，请检查{1}并重新输入.</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_cloud_setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_cloud_setting</source>
 <target>云盘设置：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Cloud_Type</source>
 <target>云盘类型：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Reset</source>
 <target>切换用户</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Default_Path</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Default_Path</source>
 <target>默认存储路径：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Auth_Dropbox</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Auth_Dropbox</source>
 <target>获得Dropbox权限</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Auth_Google</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Auth_Google</source>
 <target>获得Google Drive 权限</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Note_Title</source>
-<target>笔记标题：</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Note_Title</source>
+<target>注释标题：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Note_Content</source>
-<target>笔记内容：</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Note_Content</source>
+<target>注释内容：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Dropbox_File_Viewer</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Dropbox_File_Viewer</source>
 <target>Dropbox文件查看</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_OneDrive_Viewer</source>
+
+
+<phrase>
+<source>ResStr_DocScan_OneDrive_Viewer</source>
 <target>OneDrive文件查看</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_EverNote_Viewer</source>
+
+
+<phrase>
+<source>ResStr_DocScan_EverNote_Viewer</source>
 <target>印象笔记查看</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_GoogleDrive_Viewer</source>
+
+
+<phrase>
+<source>ResStr_DocScan_GoogleDrive_Viewer</source>
 <target>Google Drive文件查看</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Folder_Name</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Folder_Name</source>
 <target>文件夹名称：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_EverNote_List</source>
 <target>印象笔记列表</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Upload</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Upload</source>
 <target>上传</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Folder</source>
 <target>文件夹</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Invalid_xxx</source>
-<target>无效的{0}.</target>
+<target>无效的%1.</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Folder_Name</source>
 <target>文件夹名称不能为空。请输入1到32个字符。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Network_Disconnected</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Network_Disconnected</source>
 <target>您的电脑没有连接网络，请检查您的设置。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Evernote_Tile_could_not_be_empty</source>
 <target>印象笔记的标题不能为空！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Evernote_Title_could_not_be_all_space</source>
 <target>印象笔记的标题不能全部为空格！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Evernote_attachment_files_could_not_more_than_60</source>
 <target>印象笔记的附件不能超过60个！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Images_files_Size_too_large</source>
 <target>您要上传的图片文件太大了，无法上传到印象笔记服务器。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Upload_success</source>
 <target>上传成功</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Upload_files_fail</source>
 <target>上传失败，</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Folder_New_Wait</source>
 <target>正在更新文件和文件夹，请稍候！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Folder_Name_exist</source>
 <target>文件夹已经存在!</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Folder_Not_Exist</source>
-<target>文件夹{0}不存在，请重试！</target>
+<target>文件夹%1不存在，请重试！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_dropbox_fail</source>
 <target>连接Dropbox服务器失败！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Connect_OneDrive_Fail</source>
 <target>连接OneDrive服务器失败！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Connect_googleDrive_Fail</source>
 <target>连接Goole Drive服务器失败！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Network_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Network_fail</source>
 <target>网络未连接，请检查您的设置。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_exist_Do_You_overwrite</source>
 <target>您上传的文件已经存在，是否覆盖？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Update_File_fail</source>
-<target>上传文件{0}失败！</target>
+<target>上传文件%1失败！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Create_Folder_fail</source>
-<target>创建文件夹{0}失败！</target>
+<target>创建文件夹%1失败！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_dropbox_uplaod_fail</source>
 <target>上传文件到Dropbox服务器失败！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Initial_Evernote_and_Get_Evernote_fail</source>
 <target>初始化和获取笔记列表失败！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_upload_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_upload_fail</source>
 <target>上传失败！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Google_Folder_Deleted</source>
 <target>您指定的默认文件夹已经被删除！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Add_Quick_SCan_Setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Add_Quick_SCan_Setting</source>
 <target>添加快捷扫描设置</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Name</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Name</source>
 <target>名称：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Name1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Name1</source>
 <target>名称</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Type</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Type</source>
 <target>类型：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_could_not_be_all_space</source>
-<target>{0}不能全部为空格！</target>
+<target>%1不能全部为空格！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Quick_Scan_Exist</source>
-<target>此快捷扫描项目的名称应经存在，请换成其它名称。</target>
+<target>此快捷扫描项目的名称已经存在，请换成其它名称。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Prompt</source>
 <target>提示</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Are_you_sure_to_delete_the_quick_scan</source>
 <target>您确认要删除这个快捷扫描设置吗？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Yes</source>
 <target>是</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_No</source>
 <target>否</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_QRBar_Code_Decode</source>
-<target>二维码/条形码 解码</target>
+
+
+<phrase>
+<source>ResStr_DocScan_QRBar_Code_Decode</source>
+<target>二维码/条形码 识别</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Code_Type</source>
-<target>编码类型：</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Code_Type</source>
+<target>条码类型：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_QRCode</source>
 <target>二维码</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_BarCode</source>
 <target>条形码 </target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_All</source>
 <target>所有</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Output_Result</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Output_Result</source>
 <target>输出结果</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Document_Separation</source>
-<target>文档分离</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Document_Separation</source>
+<target>文档分隔</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_Name1</source>
 <target>文件名称。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_setting4</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_setting4</source>
 <target>扫描设置</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_setting1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_setting1</source>
 <target>扫描设置(AC 电源)</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_setting2</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_setting2</source>
 <target>扫描设置(USB总线电源)</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_setting3</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_setting3</source>
 <target>扫描设置(移动电源)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scan_Size</source>
 <target>扫描区域大小</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_ScanSize_Auto</source>
+
+
+<phrase>
+<source>ResStr_DocScan_ScanSize_Auto</source>
 <target>自动</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_ScanSize_AutoNo</source>
-<target>自动(无多张取纸)</target>
+
+
+<phrase>
+<source>ResStr_DocScan_ScanSize_AutoNo</source>
+<target>自动(无重张侦测)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_A4_210_297mm_</source>
 <target>A4(210 x 297mm)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_A5_148_x_210mm_</source>
 <target>A5(148 x 210mm)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_B5_182_x_257mm_</source>
 <target>B5(182 x 257mm)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_A6_105_x_148mm_</source>
 <target>A6(105 x 148mm)</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Letter_8_5_x_11</source>
 <target>Letter(8.5 x 11")</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Legal_8_5_x_14</source>
 <target>Legal(8.5 x 14")</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Type</source>
 <target>纸张类型</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Type_Normal</source>
 <target>普通</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Bankbook</source>
 <target>存折</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Card</source>
 <target>卡片</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_multifeed</source>
-<target>多页取纸侦测</target>
+
+
+<phrase>
+<source>ResStr_DocScan_multifeed</source>
+<target>重张侦测</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_On</source>
 <target>开启</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Off</source>
 <target>关闭</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Default</source>
 <target>默认</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Email_Attachment_File_Type</source>
 <target>邮件附件类型：</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_ADF</source>
+
+
+<phrase>
+<source>ResStr_DocScan_ADF</source>
 <target>扫描模式</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_2side</source>
+
+
+<phrase>
+<source>ResStr_DocScan_2side</source>
 <target>双面</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_1side</source>
+
+
+<phrase>
+<source>ResStr_DocScan_1side</source>
 <target>单面</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DPI</source>
-<target>分辨率吧</target>
+<target>分辨率</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
+<source>ResStr_IP_Type</source>
+<target>IP 类型 :</target>
+</phrase>
+
+
+<phrase>
 <source>ResStr_DPI_150</source>
 <target>150 x 150dpi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DPI_200</source>
 <target>200 x 200dpi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DPI_300</source>
 <target>300 x 300dpi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DPI_600</source>
 <target>600 x 600dpi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_LongPage_</source>
 <target>长纸</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Skip_Blank_Page</source>
-<target>跳过空白页</target>
+<target>去空白页</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Auto_Color_Detect</source>
-<target>自动颜色侦测</target>
+<target>自动色彩侦测</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Color_Mode</source>
-<target>颜色模式</target>
+<target>色彩模式</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Color</source>
 <target>彩色</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Grayscale</source>
 <target>灰阶</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Contrast</source>
 <target>对比度</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Brightness</source>
 <target>亮度</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Gamma</source>
 <target>Gamma</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Mediatype_Info</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Mediatype_Info</source>
 <target>请在机器上切换到卡片模式</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_valid_range_is_0_100__please_confirm_and_enter_again_</source>
 <target>有效范围值0到100，请检查您的设置并重新输入</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_WLAN</source>
 <target>WLAN</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Manual_Wi_Fi</source>
 <target>手动Wi-Fi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_WLAN_Network</source>
 <target>WLAN网络</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Password</source>
 <target>密码</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Display_Password</source>
 <target>显示密码</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Protected_by_WPA2</source>
 <target>WPA2保护</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Protected_by_WEP</source>
 <target>WEP保护</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Protected_by_Mixed_Mode_PSK</source>
 <target>Mixed Mode PAK保护</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_No_Security</source>
 <target>无密码保护</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Find_and_join_the_Wi_Fi</source>
 <target>找到并连接Wi-Fi</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Enter_SSID_and_security_type_</source>
 <target>输入SSID和安全认证</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_WEP_WEP</source>
 <target>WEP</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_AES_WPA2</source>
 <target>WPA2-PSK-AES</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_PSK_Mixed</source>
 <target>Mixed Mode PSK</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_KEYID_WEP</source>
 <target>WEP KeyID</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Back</source>
 <target>返回</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Msg_9</source>
 <target>SSID只能输入1到32个字符，请检查并重新输入。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Msg_3</source>
 <target>密码只能输入8到63个ASCII字符或者64个十六进制字符，请检查并重新输入</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Msg_1</source>
 <target>设置完成，请重启设备以便应用设置。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Msg_2</source>
 <target>密码只能输入58到13个ASCII字符或者10或者26个十六进制字符，请检查并重新输入</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_SSID</source>
 <target>SSID</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Encryption</source>
 <target>安全认证</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_KEY1_Key1</source>
 <target>Key1</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_KEY2_Key2</source>
 <target>Key2</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_KEY3_Key3</source>
 <target>Key3</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_KEY4_Key4</source>
 <target>Key4</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DHCP</source>
 <target>DHCP/Auto IP</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Static</source>
 <target>静态</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_IP_Address</source>
 <target>IP地址</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Submask</source>
 <target>子网掩码</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Gateway</source>
 <target>网关</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Apply</source>
 <target>应用</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_</source>
 <target>输入的IP地址不正确，请重新输入。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation</source>
 <target>子网掩码不争取， 请重新输入。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_</source>
 <target>网关地址不正确，请重新输入。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_1__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_</source>
 <target>输入的IP地址和子网掩码不正确，请重新输入</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_0__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_</source>
 <target>输入的IP地址和子网掩码不正确，请重新输入</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Setting_Fail</source>
 <target>设置失败，请检查您的设置和设备，然后重试。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_SoftAP</source>
 <target>Soft AP</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Calibration</source>
 <target>校正</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Sleep_Time</source>
 <target>睡眠时间</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_1_60_Minute</source>
 <target>1-60分钟</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_AutoOff_Time</source>
 <target>自动关机时间</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_0_4_Hour</source>
 <target>0-4小时</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Life_Count</source>
-<target>Life计数</target>
+<target>寿命计数</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Roller_Count</source>
-<target>Retard Roller计数</target>
+<target>分页滚轮计数</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_ACM_Count</source>
-<target>ACM计数</target>
+<target>进纸滚轮计数</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scan_Count</source>
-<target>Scan计数</target>
+<target>扫描计数</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Clear</source>
 <target>清空</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Push_Scan_Type</source>
 <target>一键扫描类型</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_PUshScan_PC</source>
 <target>扫描到电脑</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_PUshScan_UD</source>
 <target>扫描到U盘</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_PUshScan_SMB</source>
 <target>扫描到SMB</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Faore_PUshScan_FTP</source>
 <target>扫描到FTP</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_fileformat</source>
+
+
+<phrase>
+<source>ResStr_DocScan_fileformat</source>
 <target>文件格式</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_JPEG_JPEG</source>
 <target>JPEG</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_PDF_PDF</source>
 <target>PDF</target>
 </phrase>
-    <phrase>
-<source>ResStr_ScanType_Setting</source>
-<target>当前的一键扫描参数只能到"EWS"去设置！</target>
+
+
+<phrase>
+<source>ResStr_SSID_2</source>
+<target>SSID</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
+<source>ResStr_Conn_list</source>
+<target>连接设备:</target>
+</phrase>
+
+
+<phrase>
+<source>ResStr_ScanType_Setting</source>
+<target>当前的一键扫描参数只能到"WEB配置工具"去设置！</target>
+</phrase>
+
+
+<phrase>
 <source>ResStr_Do_you_want_to_clear</source>
 <target>您想清空这个计数值吗？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DoCalibration_Completed</source>
 <target>校正完成，请重新启动设备。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Doing_Calibration</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Doing_Calibration</source>
 <target>校正中，请稍候…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_</source>
 <target>有效范围是0到4，请检查并重试.</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_</source>
 <target>有效范围是0到60，请检查并重试.</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Select_All</source>
 <target>全选</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_To_Print</source>
 <target>到打印机</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_To_Email</source>
 <target>到邮件</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_To_File</source>
 <target>到文档</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_To_FTP</source>
+
+
+<phrase>
+<source>ResStr_DocScan_To_FTP</source>
 <target>到FTP</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_To_Application</source>
+
+
+<phrase>
+<source>ResStr_DocScan_To_Application</source>
 <target>到应用程序</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_To_Cloud</source>
 <target>到云盘</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Quick_Preview</source>
 <target>扫描预览</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scanning_image_has_been_changed__please_confirm_whether_save_it_or_not_</source>
 <target>扫描的图片已经改变，是否保存？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Are_you_sure_to_delete_the_selected_picture</source>
 <target>您确认要删除这张选中的图片吗？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Do_You_Want_to_Delete_All_Images</source>
 <target>您确认要离开当前页面吗？如果离开，则所有之前扫描的图片都会被删除？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scanning_files_not_exist</source>
 <target>扫描的图片已经被删除或者移走，请尝试重新扫描。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Image_file_not_found</source>
 <target>图片文件没有发现。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Operation_cannot_be_carried_out_due_to_insufficient_memory_or_hard_disk_space_Please_try_again_after_freeing_memory_or_hard_disk_space_</source>
 <target>内存或者硬盘存储空间不够，请释放内存或者硬盘空间，再重试。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Not_Find_Printer</source>
 <target>没有发现打印机！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Printer_Not_Ready</source>
 <target>打印机没有准备好！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Find_Printer_Error</source>
 <target>没有发现打印机。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_print_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_print_fail</source>
 <target>打印失败。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_print_pic_wait</source>
+
+
+<phrase>
+<source>ResStr_DocScan_print_pic_wait</source>
 <target>打印中，请稍候…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Printer_Not_Found</source>
 <target>没有发现打印机！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Saving_pic_PDF</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Saving_pic_PDF</source>
 <target>正在保存，请稍后…</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Fail_save_pdf</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Fail_save_pdf</source>
 <target>保存到PDF文档失败。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_send_mail_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_send_mail_fail</source>
 <target>发送邮件失败。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Not_Find_Outlook</source>
 <target>没有发现Outlook, 请检查您的电脑。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Select_Pictures_to_process</source>
 <target>请知道选择一个图片操作！</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_Path_and_Name_too_long</source>
 <target>您输入的文件路径和文件名总长度超长，请重试。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_You_do_not_have_permission</source>
 <target>您没有权限存储文件到这个文件夹</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Server_Address_Target_Path_too_long</source>
 <target>您输入的服务器地址和目标路径过长！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_upload_wait</source>
+
+
+<phrase>
+<source>ResStr_DocScan_upload_wait</source>
 <target>上传中，请稍后…</target>
 </phrase>
-    <phrase>
-<source>374ResStr_Faroe_upload_ok</source>
+
+
+<phrase>
+<source>374ResStr_DocScan_upload_ok</source>
 <target>上传完成。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Application_Support_Two_Pages</source>
 <target>扫描到应用程序最多同时打开两个文件。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scanning_nofile_selected</source>
 <target>请至少选择一个文件，然后重试。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_open_p_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_open_p_fail</source>
 <target>打开程序出错，</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_RESULT__Result</source>
 <target>结果：</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_NAME_File</source>
 <target>文件名称</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_BITMAP_Source</source>
 <target>源文件</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_BITMAP_Decode</source>
-<target>解码文件</target>
+<target>识别文件</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_TYPE_Code</source>
 <target>编码类型</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_TYPE_Result</source>
 <target>结果类型</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_CONTENTS_Contents</source>
 <target>内容</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Decoding</source>
-<target>解码中，请稍后…</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Decoding</source>
+<target>识别中，请稍后…</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_print_ok</source>
+
+
+<phrase>
+<source>ResStr_DocScan_print_ok</source>
 <target>打印完成</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_save_file_ok</source>
+
+
+<phrase>
+<source>ResStr_DocScan_save_file_ok</source>
 <target>存储文件完成</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_send_mail_ok</source>
+
+
+<phrase>
+<source>ResStr_DocScan_send_mail_ok</source>
 <target>发送邮件完成</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Do_you_want_to_exit</source>
 <target>您确认要离开吗？</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scanning_is_canceled_on_machine</source>
 <target>扫描工作已经被取消，请将设备上的纸张取走。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Error</source>
 <target>错误</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_adf_not_ready</source>
+
+
+<phrase>
+<source>ResStr_DocScan_adf_not_ready</source>
 <target>ADF未准备好。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_conn_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_conn_fail</source>
 <target>连接扫描仪失败！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Cover_Open</source>
-<target>ADF盖子打开了！</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Cover_Open</source>
+<target>ADF上盖打开了！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_paper_jam</source>
-<target>卡纸了！</target>
+
+
+<phrase>
+<source>ResStr_DocScan_paper_jam</source>
+<target>卡纸！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_multifeed_error</source>
-<target>发生多张取纸错误！</target>
+
+
+<phrase>
+<source>ResStr_DocScan_multifeed_error</source>
+<target>发生重张错误！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_net_scanner_busy</source>
+
+
+<phrase>
+<source>ResStr_DocScan_net_scanner_busy</source>
 <target>设备使用中，请确认设备可以使用再重试。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Device_Disconnected</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Device_Disconnected</source>
 <target>设备未连接，扫描将被取消</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_DoCalibration_Canceled</source>
 <target>校正工作已经被取消，请将之前扫描的纸张从设备上移除。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scanning_is_canceled_Last</source>
 <target>上一次扫描工作被取消，请移除机器上的纸张重试。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Paint_Support_Two_Pages</source>
 <target>这个程序只支持同时最多打开两张图片。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Connect_to_Google_server_fail</source>
 <target>连接Google Drive服务器失败，请检查您的电脑设置，以及用户名和密码。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Calibration_Power_error</source>
 <target>校正只支持AC电源。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Calibration_Port_error</source>
 <target>校正只支持USB连接。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Clear_Error</source>
 <target>设备未连接，无法清除计数，请检查您的设备，再重试。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Fail_not_enough_canceled</source>
-<target>没有足够的内存或者硬盘空间完成扫描工作，当前扫描工作将被取消。请清除设备上的纸张。</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Fail_not_enough_canceled</source>
+<target>没有足够的内存或者硬盘空间完成扫描工作，当前扫描工作将被取消。请移除设备上的纸张。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Fail_not_enough</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Fail_not_enough</source>
 <target>没有足够的内存或者硬盘空间完成当前操作，请释放内存或者硬盘空间，然后再重试。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Transfer_Error</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Transfer_Error</source>
 <target>设备数据传输有错误！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_not_on_line</source>
+
+
+<phrase>
+<source>ResStr_DocScan_not_on_line</source>
 <target>电脑未连接网络！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_not_initial</source>
+
+
+<phrase>
+<source>ResStr_DocScan_not_initial</source>
 <target>设备未被初始化，所有的参数都不正确，请初始化设备后再进行操作！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_memory_full</source>
+
+
+<phrase>
+<source>ResStr_DocScan_memory_full</source>
 <target>设备存储已满！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_GetInfo_Fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_GetInfo_Fail</source>
 <target>无法从设备获取状态，请稍候或者重启设备。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Reset_Access</source>
-<target>复位access token</target>
+<target>复位访问标志</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Edit_Quick_SCan_Setting</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Edit_Quick_SCan_Setting</source>
 <target>编辑快捷扫描设置</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Note_Title1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Note_Title1</source>
 <target>笔记标题。请输入1到32个字符。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Default_Path1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Default_Path1</source>
 <target>默认存储路径。请输入1到255个字符。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Scanning</source>
 <target>扫描中…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Uploading</source>
 <target>上传中…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Paper_Finished</source>
-<target>第{0}张完成。</target>
+<target>第%1张完成。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Cancelling</source>
 <target>取消中…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Folder_Name1</source>
 <target>文件夹名称</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_File_Path_And_Name</source>
 <target>文件名称和文件路径</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_File_Path1</source>
+
+
+<phrase>
+<source>ResStr_DocScan_File_Path1</source>
 <target>文件路径</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Calibrating</source>
 <target>校正中…</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Output_Result</source>
 <target>输出结果</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Info</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Info</source>
 <target>提示</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Connect_to_Evernote_server_fail</source>
 <target>连接印象笔记服务器失败，请确认您的电脑设置，以及您的用户名和密码!</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Get_EverNote_List_error</source>
 <target>获取印象笔记列表失败!</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Specify_File_Path_not_exist</source>
 <target>您输入的路径不存在，请重新输入!</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Device_disconnected</source>
 <target>设备未连接，应用不能设置成功!</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Device_Not_Ready</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Device_Not_Ready</source>
 <target>设备没有准备好，请检查您的电脑设置，或者开启设备电源或者将设备插入电脑</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Power_Bank</source>
-<target>移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;Deposit Book or Card&#13;&#10;&#09;扫描区域大小: &#09;长纸&#13;&#10;如果你选择“是”，扫描将继续进行，但是一下设置将会被更改。如果你选择“否”，扫描将会被取消！.&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;扫描区域大小:&#09;自动</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Power_Bank</source>
+<target>移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;Deposit Book or Card&#13;&#10;&#09;扫描区域大小: &#09;长纸&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！.&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;扫描区域大小:&#09;自动&#13;&#10;&#09;自动色彩侦测: &#09;&#09;关闭</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Power_Bankds</source>
-<target>移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;存折或者卡片&#13;&#10;如果你选择“是”，扫描将继续进行，但是一下设置将会被更改。如果你选择“否”，扫描将会被取消！.&#13;&#10;&#09;纸张类型: &#09;普通</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Power_Bankds</source>
+<target>移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;存折或者卡片&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！.&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;自动色彩侦测: &#09;&#09;关闭</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Power_Bus</source>
-<target>USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;扫描区域大小: &#09;&#09;长纸&#13;&#10;&#09;多页取纸侦测: &#09;开启&#13;&#10;&#09;忽略空白页: &#09;&#09;开启&#13;&#10;&#09;自动颜色侦测: &#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是一下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;扫描区域大小: &#09;&#09;自动&#13;&#10;&#09;多页取纸侦测: &#09;关闭&#13;&#10;&#09;忽略空白页: &#09;&#09;关闭&#13;&#10;&#09;自动颜色侦测: &#09;关闭&#13;&#10;</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Power_Bus</source>
+<target>USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;扫描区域大小: &#09;&#09;长纸&#13;&#10;&#09;多页取纸侦测: &#09;&#09;开启&#13;&#10;&#09;去空白页: &#09;&#09;开启&#13;&#10;&#09;自动色彩侦测:&#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;扫描区域大小: &#09;&#09;自动&#13;&#10;&#09;多页取纸侦测:&#09;&#09;关闭&#13;&#10;&#09;去空白页: &#09;&#09;关闭&#13;&#10;&#09;自动色彩侦测:&#09;&#09;关闭&#13;&#10;</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Power_Busd</source>
-<target>USB供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测: &#09;开启&#13;&#10;&#09;如果你选择“是”，扫描将继续进行，但是一下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测: &#09;关闭&#13;&#10;</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Power_Busd</source>
+<target>USB供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测: &#09;&#09;关闭&#13;&#10;</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Power_Buss</source>
-<target>USB供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测: &#09;开启&#13;&#10;&#09;忽略空白页: &#09;&#09;开启&#13;&#10;&#09;自动颜色侦测: &#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是一下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测: &#09;关闭&#13;&#10;&#09;忽略空白页: &#09;&#09;关闭&#13;&#10;&#09;自动颜色侦测: &#09;关闭&#13;&#10;</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Power_Buss</source>
+<target>USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测:&#09;&#09;开启&#13;&#10;&#09;去空白页: &#09;&#09;开启&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测:&#09;&#09;关闭&#13;&#10;&#09;去空白页: &#09;&#09;关闭&#13;&#10;&#09;自动色彩侦测:&#09;&#09;关闭&#13;&#10;</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Power_Bus_Wifi</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Power_Bus_Wifi</source>
 <target>由于USB总线供电方式不支持WIFI扫描，所以当前扫描工作将被取消。</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_IE_verion</source>
+
+
+<phrase>
+<source>ResStr_DocScan_IE_verion</source>
 <target>您电脑上安装的IE版本过低，登录页面可能会出现错误！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_calibration_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_calibration_fail</source>
 <target>校正失败！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_all_blank</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_all_blank</source>
 <target>扫描到的所有图像都是空白的！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_scan_fail</source>
+
+
+<phrase>
+<source>ResStr_DocScan_scan_fail</source>
 <target>扫描失败</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_home_not_ready</source>
+
+
+<phrase>
+<source>ResStr_DocScan_home_not_ready</source>
 <target>马达未归位!</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_paper_not_ready</source>
+
+
+<phrase>
+<source>ResStr_DocScan_paper_not_ready</source>
 <target>设备上未放纸!</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Pick_Roller_Home</source>
-<target>ADF pick roller 未归位!</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Pick_Roller_Home</source>
+<target>ADF进纸滚轮未归位!</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_cover_open</source>
+
+
+<phrase>
+<source>ResStr_DocScan_cover_open</source>
 <target>盖子打开了!</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_upload_ok</source>
+
+
+<phrase>
+<source>ResStr_DocScan_upload_ok</source>
 <target>上传完成</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Fail_save</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Fail_save</source>
 <target>保存文件失败！</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Standard</source>
-<target>Standard</target>
+
+
+<phrase>
+<source>ResStr_DocScan_Standard</source>
+<target>标准</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_Fine</source>
+
+
+<phrase>
+<source>ResStr_DocScan_Fine</source>
 <target>Fine</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_SuperFine</source>
+
+
+<phrase>
+<source>ResStr_DocScan_SuperFine</source>
 <target>Super Fine</target>
 </phrase>
-    <phrase>
-<source>ResStr_Faroe_HighestQuality</source>
+
+
+<phrase>
+<source>ResStr_DocScan_HighestQuality</source>
 <target>Highest Quality</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Border_Color</source>
 <target>Border Color</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Unable_to_preview</source>
-<target>没有办法预览</target>
+<target>无法预览</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_Setting_Successfully_</source>
 <target>设置完成，请重启设置以应用设置。</target>
 </phrase>
-    <phrase>
+
+
+<phrase>
 <source>ResStr_The_valid_range_is_from__6_to_6__please_confirm_and_enter_again_</source>
 <target>有效范围是-6到6，请检查并重新输入。</target>
 </phrase>
+
 
 </QPH>

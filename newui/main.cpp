@@ -8,6 +8,7 @@
 #include "../platform/devicestruct.h"
 #include <QtQml>
 #include <QMenuBar>
+#include <QLocale>
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -17,6 +18,16 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Faroe VOP");
     QCoreApplication::setOrganizationName("Liteon");
 //    QCoreApplication::setOrganizationDomain("com.liteon");
+
+    QTranslator trans;
+    if(!trans.load(QLocale(QLocale::system().name()) ,"vop" ,"." ,":/translations")){
+        trans.load(QLocale(QLocale::English),"vop" ,"." ,":/translations");
+    }
+    app.installTranslator(&trans);
+
+    QTranslator trans1;
+    trans1.load("qt_" + QLocale::system().name() ,":/translations");
+    app.installTranslator(&trans1);
 
     qmlRegisterType<ImageModel>("com.liteon.JKInterface" ,1,0,"ImageModel");
     qmlRegisterType<JKEnums>("com.liteon.JKInterface" ,1,0,"JKEnums");

@@ -15,7 +15,7 @@ Item {
 
         JKText {
             id: text1
-            text: qsTr("Printer Name:")
+            text: qsTr("ResStr_Printer_Name")
             font.bold: true
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter

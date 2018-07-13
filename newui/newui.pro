@@ -154,5 +154,7 @@ SOURCES += ../newui/*.qml \
           ../newui/SettingsPage/ScanSetting/*.js \
 }
 
-DISTFILES +=
+DISTFILES += \
+    translations/vop.en.qm \
+    translations/vop.zh_CN.qm
 

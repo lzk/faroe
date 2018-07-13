@@ -2,12 +2,13 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import "../../component"
 import "../component"
-import "../../ScanData.js" as ScanData
+import "../../ScanData.js" as JSData
 Item {
     id:root
     width: 477
     height: 425
-    property var setting: ScanData.defaultQuickScanSetting_toPrint()
+    property var setting: JSData.defaultQuickScanSetting_toPrint()
+    property var constScanIds: JSData.constScanIds()
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -19,7 +20,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Scan Settings:")
+                text: qsTr("ResStr_DocScan_scan_setting")
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 14
@@ -65,22 +66,21 @@ Item {
     JKTextButton{
         parent: item_btnSettings
         anchors.fill: parent
-        text: qsTr("Settings...")
+        text: qsTr("ResStr_Setting")
         onClicked: {
             openScanSettingDialog(setting.scanSetting)
         }
     }
 
     function init(){
-        text_title.text = scanData.getQuickScanSettingTitle(setting)
         var source = ""
         switch(setting.sid){
-        case "Scan To Print":   source = "ScanToPrintView.qml";  break
-        case "Scan To File":   source = "ScanToFileView.qml";  break
-        case "Scan To Application":   source = "ScanToApplicationView.qml";  break
-        case "Scan To Email":   source = "ScanToEmailView.qml";  break
-        case "Scan To FTP":   source = "ScanToFTPView.qml";  break
-        case "Scan To Cloud":   source = "ScanToCloudView.qml";  break
+        case constScanIds.scanToPrint:          text_title.text = qsTr("ResStr_DocScan_print_setting") ;source = "ScanToPrintView.qml";  break
+        case constScanIds.scanToFile:           text_title.text = qsTr("ResStr_DocScan_file_setting") ;source = "ScanToFileView.qml";  break
+        case constScanIds.scanToApplication:    text_title.text = qsTr("ResStr_DocScan_app_setting") ;source = "ScanToApplicationView.qml";  break
+        case constScanIds.scanToEmail:          text_title.text = qsTr("ResStr_DocScan_email_setting") ;source = "ScanToEmailView.qml";  break
+        case constScanIds.scanToFTP:            text_title.text = qsTr("ResStr_DocScan_ftp_setting") ;source = "ScanToFTPView.qml";  break
+        case constScanIds.scanToCloud:          text_title.text = qsTr("ResStr_DocScan_cloud_setting") ;source = "ScanToCloudView.qml";  break
         default:
             break
         }

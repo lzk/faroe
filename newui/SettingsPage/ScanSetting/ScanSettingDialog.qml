@@ -16,9 +16,6 @@ JKDialog{
     property var constPaperSize_noLongPage: JSData.constPaperSize().slice(0 ,-1)
     property var constPaperSize_onlyAuto: JSData.constPaperSize().slice(0 ,1)
     property var constPaperSize_onlyAutoNoMultiFeed: JSData.constPaperSize().slice(1 ,2)
-    property var constDPIName: JSData.constDPIName()
-    property var constDPI: JSData.constDPI()
-    property var constDPI_lessThan300: JSData.constDPI().slice(0 ,-1)
     property var constMediaType: JSData.constMediaType()
     property var constMediaTypeMap: JSData.constMediaTypeMap()
     property var constMediaType_onlyNormal: JSData.constMediaType().slice(0 ,-2)
@@ -27,17 +24,25 @@ JKDialog{
     property var scanSetting:JSData.defaultScanSetting()
     property var setting:JSData.defaultScanSetting()
 
+    property var constDPI:
+        [
+        "150 x 150dpi",
+        "200 x 200dpi",
+        "300 x 300dpi",
+        "600 x 600dpi",
+        ]
+    property var constDPI_lessThan300: constDPI.slice(0 ,-1)
     toolbar{
         text.text:{
             if(scanData.deviceStatus){
                     switch(powerMode){
-                        case JKEnums.PowerMode_ACPower:qsTr("Scan Settings(AC Power)");break
-                        case JKEnums.PowerMode_usbBusPower:qsTr("Scan Settings(USB Bus Power)");break
-                        case JKEnums.PowerMode_PowerBank:qsTr("Scan Settings(Power Bank)");break
-                        default: qsTr("Scan Settings");break
+                        case JKEnums.PowerMode_ACPower:qsTr("ResStr_DocScan_scan_setting1");break
+                        case JKEnums.PowerMode_usbBusPower:qsTr("ResStr_DocScan_scan_setting2");break
+                        case JKEnums.PowerMode_PowerBank:qsTr("ResStr_DocScan_scan_setting3");break
+                        default: qsTr("ResStr_DocScan_scan_setting4");break
                     }
             }else
-                qsTr("Scan Settings")
+                qsTr("ResStr_DocScan_scan_setting4")
 }
         text.font.pixelSize: 15
         text.color: "black"
@@ -120,13 +125,6 @@ JKDialog{
             comboBox_mediaType.currentIndex = index
         }
         function updateComboxModel_scanAreaSize(){
-//            var index = comboBox_scanAreaSize.currentIndex
-//            comboBox_scanAreaSize.model= (comboBox_mediaType.currentText === constMediaTypeMap.normal
-//                                          &&!radioButton_autoCropDeskew_on.checked
-//                                          )?
-//                constDPIName[comboBox_dpi.currentIndex] === "600DPI" ?constPaperSize_noLongPage :constPaperSize
-//                :constPaperSize_onlyAuto
-//            comboBox_scanAreaSize.currentIndex = index
             var index = 0
             if(comboBox_mediaType.currentText === constMediaTypeMap.normal){
                 index = comboBox_scanAreaSize.currentIndex
@@ -182,7 +180,7 @@ JKDialog{
     JKTextButton{
         parent: scanSettingView.item_btnDefault
         anchors.fill: parent
-        text: qsTr("Default")
+        text: qsTr("ResStr_Default")
         onClicked: {
             scanSetting = JSData.defaultScanSetting()
             root.update()
@@ -192,7 +190,7 @@ JKDialog{
     JKTextButton{
         parent: scanSettingView.item_btnOK
         anchors.fill: parent
-        text: qsTr("OK")
+        text: qsTr("ResStr_OK")
         onClicked: {
             confirm()
         }

@@ -11,7 +11,7 @@ JKDialog {
     property alias image: image
 
     toolbar{
-        text.text: qsTr("Warning")
+        text.text: qsTr("ResStr_Warning")
         text.color: "black"
         color: "#FF67A1CF"
     }

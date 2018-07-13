@@ -16,7 +16,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Cloud Type:")
+                text: qsTr("ResStr_Cloud_Type")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -43,7 +43,7 @@ Item {
 
                 JKText {
                     id: text2
-                    text: qsTr("Reset access token in cacle:")
+                    text: qsTr("ResStr_Reset_Access")
                     font.bold: true
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -52,7 +52,7 @@ Item {
 
                 JKTextButton {
                     id: button_reset
-                    text: qsTr("Reset")
+                    text: qsTr("ResStr_Reset")
                     width: 100
                     height: 35
                     anchors.right: parent.right
@@ -74,7 +74,7 @@ Item {
 
                          JKText {
                              id: text31
-                             text: qsTr("Note Title:")
+                             text: qsTr("ResStr_DocScan_Note_Title")
                              font.bold: true
                              anchors.left: parent.left
                              anchors.verticalCenter: parent.verticalCenter
@@ -96,7 +96,7 @@ Item {
 
                          JKText {
                              id: text32
-                             text: qsTr("Note Content:")
+                             text: qsTr("ResStr_DocScan_Note_Content")
                              font.bold: true
                              anchors.left: parent.left
                              anchors.verticalCenter: parent.verticalCenter
@@ -129,7 +129,7 @@ Item {
 
                          JKText {
                              id: text41
-                             text: qsTr("Default Save Path:")
+                             text: qsTr("ResStr_DocScan_Default_Path")
                              font.bold: true
                              anchors.left: parent.left
                              anchors.verticalCenter: parent.verticalCenter
@@ -151,7 +151,7 @@ Item {
 
                          JKTextButton {
                              id: button_browse
-                             text: qsTr("Browser...")
+                             text: qsTr("ResStr_DocScan_Browse")
                              width: 100
                              height: 30
                              anchors.right: parent.right
@@ -214,7 +214,7 @@ Item {
             setting.cloudTypeText = root.setting.cloudTypeText
             setting.filePath = textInput41.text
             setting.callback = accepted
-            setting.okButtonText = qsTr("OK")
+            setting.okButtonText = qsTr("ResStr_OK")
             setCmdExtra(DeviceStruct.CMD_Cloud_getFileList ,setting)
         }
     }

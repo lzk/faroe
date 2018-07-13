@@ -15,7 +15,7 @@ Item {
 
             JKText {
                 id: text1
-                text: qsTr("Save File Type:")
+                text: qsTr("ResStr_DocScan_Save_File_Type")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -38,7 +38,7 @@ Item {
 
             JKText {
                 id: text2
-                text: qsTr("File Name:")
+                text: qsTr("ResStr_File_Name")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -61,7 +61,7 @@ Item {
 
             JKText {
                 id: text3
-                text: qsTr("File Path:")
+                text: qsTr("ResStr_DocScan_File_Path")
                 font.bold: true
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -84,7 +84,7 @@ Item {
 
             JKTextButton {
                 id: button_browse
-                text: qsTr("Browser...")
+                text: qsTr("ResStr_DocScan_Browse")
                 width: 100
                 height: 30
                 anchors.right: parent.right
@@ -126,35 +126,35 @@ Item {
         var filePath = textInput3.text
         if(filePath === ""){
             if(fileName === ""){
-                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path and File Name")))
+                warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_File_Path_And_Name")))
                 textInput2.forceActiveFocus()
 //                textInput2.focus = true
             }else{
-                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Path")))
+                warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_File_Path1")))
                 textInput3.forceActiveFocus()
 //                textInput3.focus = true
             }
             return false
         }else if(fileName === ""){
-            warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("File Name")))
+            warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_File_Name1")))
             textInput2.forceActiveFocus()
 //            textInput2.focus = true
             return false
 //        }else if(!filePath.match(/^[^\\\?\*:<>|\"\(\)\[\]]*$/)){
 ////            if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
 //            if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
-//                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name and File Path")))
+//                warningWithImage(qsTr("ResStr_Invalid_xxx").arg(qsTr("ResStr_File_Path_And_Name")))
 //                textInput2.forceActiveFocus()
 ////                textInput2.focus = true
 //            }else{
-//                warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Path")))
+//                warningWithImage(qsTr("ResStr_Invalid_xxx!").arg(qsTr("ResStr_DocScan_File_Path1")))
 //                textInput3.forceActiveFocus()
 ////                textInput3.focus = true
 //            }
 //            return false
         }else if(!fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]*$/)){
 //        }else if(!fileName.match(/^[0-9a-zA-Z\-_.]*$/)){
-            warningWithImage(qsTr("Invalid %1!").arg(qsTr("File Name")))
+            warningWithImage(qsTr("ResStr_Invalid_xxx").arg(qsTr("ResStr_File_Name1")))
             textInput2.forceActiveFocus()
 //            textInput2.focus = true
             return false

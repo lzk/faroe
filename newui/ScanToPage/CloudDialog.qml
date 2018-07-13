@@ -12,7 +12,7 @@ JKDialog {
     signal accepted(var para)
     property var setting: {
         var tmp = JSData.defaultCloudSettings()
-        tmp.okButtonText = qsTr("OK")
+        tmp.okButtonText = qsTr("ResStr_OK")
         tmp.fileList = [{
                             "imageUrl":"qrc:/Images/Folder-icon.png"
                             ,"fileName": "folder"
@@ -85,7 +85,7 @@ JKDialog {
                     JKText{
                         id:text_currentDir
                         anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr("")
+                        text: ""
                     }
                 }
             }

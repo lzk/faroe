@@ -198,5 +198,7 @@
         <file>Images/folder_with_arrow_up.png</file>
         <file>Images/file.png</file>
         <file>Images/Folder-icon.png</file>
+        <file>translations/qt_en.qm</file>
+        <file>translations/qt_zh_CN.qm</file>
     </qresource>
 </RCC>
