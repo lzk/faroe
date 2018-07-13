@@ -12,6 +12,8 @@ class JKEnums : public QObject{
     Q_ENUMS(DecodeType)
     Q_ENUMS(ImageCommandResult)
     Q_ENUMS(PowerMode)
+    Q_ENUMS(CommandPhase)
+    Q_ENUMS(CommandResult)
 
 public:
     enum QuickScanMode{
@@ -63,12 +65,39 @@ public:
         ImageCommandResult_error_invalidPrinter,
 
         ImageCommandResult_error_cancel,
+        ImageCommandResult_error_unknown,
     };
     enum PowerMode{
         PowerMode_unknown,
         PowerMode_ACPower,
         PowerMode_PowerBank,
         PowerMode_usbBusPower,
+    };
+
+    enum CommandPhase{
+        CommandPhase_complelte,
+        CommandPhase_start,
+        CommandPhase_scanning,
+        CommandPhase_processing,
+
+    };
+
+    enum ResultType{
+        ResultType_common,
+        ResultType_scanning,
+        ResultType_processing,
+        ResultType_decode,
+        ResultType_separation,
+        ResultType_ftp,
+        ResultType_icloud,
+    };
+    enum CommandResult{
+        CommandResult_NoError,
+        CommandResult_error,
+        CommandResult_error_cancel,
+        CommandResult_error_unknown,
+
+        CommandResult_error_invalidFilePath,
     };
 };
 

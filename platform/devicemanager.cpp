@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDebug>
-#include "../newui/jkinterface.h"
+//#include "../newui/jkinterface.h"
 #include "../newui/ImageViewer/imagemodel.h"
 #include "../lld/device.h"
 #include "../lld/scanner.h"
@@ -13,8 +13,7 @@
 #include "devicestruct.h"
 #include "platform.h"
 DeviceManager::DeviceManager(QObject *parent)
-    : jkInterface(static_cast<JKInterface*>(parent))
-    ,device(NULL)
+    : device(NULL)
     ,cancelSearch(0)
 {
     connect(&platformApp ,SIGNAL(addImage(QString)) ,this ,SLOT(addImage(QString)));
@@ -30,9 +29,9 @@ DeviceManager::~DeviceManager()
     }
 }
 
-void DeviceManager::init()
+void DeviceManager::init(const QString& currentDevice)
 {
-    currentDeviceName = jkInterface->getCurrentDevice();
+    currentDeviceName = currentDevice;
     watchDevice();
 }
 
@@ -237,8 +236,8 @@ void DeviceManager::cmdToDevice(int cmd ,QString obj)
     int err = 0;
     QString value = obj;
     QJsonObject jsonObj;
-//    qDebug()<<"cmd:"<<cmd;
-//    qDebug()<<"data:"<<obj;
+    qDebug()<<"cmd:"<<cmd;
+    qDebug()<<"data:"<<obj;
 #if TEST
     switch (cmd) {
     case DeviceStruct::CMD_ScanTo:

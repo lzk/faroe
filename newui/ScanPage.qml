@@ -178,26 +178,6 @@ ScanPageLayout {
         }
     }
 
-    Connections{
-        target: jkInterface
-        onCmdResult:{
-            switch(cmd){
-            case DeviceStruct.CMD_ScanTo:
-                switch(result){
-                case DeviceStruct.ERR_ACK:
-                    if(jkImageModel.count > 0)
-                        root.StackView.view.push("ScanToPage.qml")
-                    break;
-                case DeviceStruct.ERR_SCAN_CANCEL:
-                    jkImageModel.removeAll()
-                    break;
-                default:
-                    break
-                }
-                break
-            }
-        }
-    }
     function scanTo(){
         setScanCmd(DeviceStruct.CMD_ScanTo ,scanData.scanToParameter)
     }

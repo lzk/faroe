@@ -180,7 +180,9 @@ Item {
     }
     Connections{
         target: jkInterface
-        onCmdResult:{
+        onCmdResultToUi:{
+            if(phase !== JKEnums.CommandPhase_complelte)
+                return
             switch(cmd){
             case DeviceStruct.CMD_getSoftap:
                 if(!result){

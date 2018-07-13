@@ -23,7 +23,7 @@ enum{
     DEVICE_OTHER
 };
 
-class JKInterface;
+//class JKInterface;
 class DeviceManager : public QObject
 {
     Q_OBJECT
@@ -52,14 +52,14 @@ public slots:
     void connectDevice(int);
 
     void cmdToDevice(int ,QString);
-    void init();
+    void init(const QString&);
 
 private slots:
     void watchDevice();
     void addImage(QString);
 
 private:
-    JKInterface* jkInterface;
+//    JKInterface* jkInterface;
     Device* device;
     int cancelSearch;
     int currentCmd;

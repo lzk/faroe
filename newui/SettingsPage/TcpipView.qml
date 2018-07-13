@@ -233,7 +233,9 @@ Item {
     }
     Connections{
         target: jkInterface
-        onCmdResult:{
+        onCmdResultToUi:{
+            if(phase !== JKEnums.CommandPhase_complelte)
+                return
             switch(cmd){
             case DeviceStruct.CMD_getIpv4:
                 if(!result){

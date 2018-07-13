@@ -165,7 +165,8 @@ ScanToPageLayout {
         nameFilters: JSData.constFileDialogSaveFileType()
         selectExisting:false
         onAccepted: {
-            var setting = decodeURIComponent(fileUrl).replace("file:///" ,"/")
+            var setting = {}
+            setting.fullFileName = decodeURIComponent(fileUrl).replace("file:///" ,"/")
             setScanToCmd(DeviceStruct.CMD_ScanTo_ToFile ,imageViewer.selectList ,setting)
         }
     }

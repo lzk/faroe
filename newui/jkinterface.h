@@ -10,6 +10,7 @@
 class DeviceManager;
 class ImageModel;
 class ImageManager;
+class Worker;
 class JKInterface : public QObject
 {
     Q_OBJECT
@@ -25,8 +26,7 @@ public:
     Q_INVOKABLE void cancelScan();
     Q_INVOKABLE void cancelSearch();
     Q_INVOKABLE void cancelImageHandle();
-    Q_INVOKABLE void setCmd(int cmd ,const QString& data=QString());
-    Q_INVOKABLE void setScanToCmd(int cmd ,QList<int> ,const QString& jsonData=QString());
+    Q_INVOKABLE void setCmd(int cmd ,const QString& data=QString(),QStringList fileList=QStringList());
 
     Q_INVOKABLE bool pathExist(const QString& filePath);
     Q_INVOKABLE void setScanDataHandle(QObject* scanData);
@@ -42,24 +42,16 @@ signals:
     void searchComplete();
     void connectDevice(int);
 
-    void cmdToDevice(int cmd ,QString data);
     void progressChanged(int progress ,int page);
-    void cmdResult(int cmd,int result ,QString data=QString());
-    void signal_deviceCmdResult(int cmd,int result ,QString data=QString());
 
-    void imagesCmdStart(int cmd, QString data ,QStringList fileList = QStringList());
-    void imagesCmd(QStringList fileList = QStringList());
-    void imagesCmdEnd(int cmd ,int result);
-
-    void cmdExtra(int cmd ,QString para);
-    void cmdExtraResult(int cmd ,QString para);
-
-    void init();
+    void init(const QString&);
     void deviceConnectCompleted();
 
+    void cancel(bool);
+    void cmdToWorker(int cmd ,QString data ,QStringList fileList=QStringList());
+    void cmdResultToUi(int cmd ,QString data=QString() ,int result=0 ,int resultType=0 ,int phase = 0);
+
 public slots:
-    void imagesCmdResult(int ,int ,int);
-    void deviceCmdResult(int cmd,int result ,QString data);
     void scanedImage(QString filename,QSize sourceSize);
     void updateDeviceList(QStringList);
     void deviceConnected(QString);
@@ -69,22 +61,12 @@ private:
 
 private:
     QObject* scanData;
-    DeviceManager* deviceManager;
-    ImageManager* imageManager;
     ImageModel* imageModel;
-    int cmd;
-    int cmd_state;
-    int cmd_status;
-    QString cmd_para;
-    int imageCmdResult;
-    QStringList fileList;
+    Worker* worker;
     QStringList printerNameList;
     QMutex mutex;
     QThread thread;
     QThread thread_decode;
-
-    void sendImagesCommand(int cmd, QString ,const QStringList& fileList = QStringList());
-    void cmdComplete(int cmd,int result ,const QString& data=QString());
 };
 
 #endif // JKINTERFACE_H

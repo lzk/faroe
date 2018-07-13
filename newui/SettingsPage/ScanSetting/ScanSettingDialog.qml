@@ -293,7 +293,9 @@ JKDialog{
     }
     Connections{
         target: jkInterface
-        onCmdResult:{
+        onCmdResultToUi:{
+            if(phase !== JKEnums.CommandPhase_complelte)
+                return
             refresh.visible = false
             switch(cmd){
             case DeviceStruct.CMD_getPowerSupply:

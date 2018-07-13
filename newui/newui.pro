@@ -48,7 +48,9 @@ SOURCES += main.cpp \
     ../lld/Calibration/MotorMove.cpp \
     ../lld/Calibration/ScanCMD.cpp \
     ../lld/Calibration/ScanFunction.cpp \
-    ../lld/Calibration/macusbio.cpp
+    ../lld/Calibration/macusbio.cpp \
+    worker.cpp \
+    ../functions/imagefunctions.cpp
 
 HEADERS += \
     jkenums.h \
@@ -78,7 +80,9 @@ HEADERS += \
     ../lld/Calibration/model.h \
     ../lld/Calibration/ScanCMD.h \
     ../lld/Calibration/macusbio.h \
-    ../lld/ImgFile/utype.h
+    ../lld/ImgFile/utype.h \
+    worker.h \
+    ../functions/imagefunctions.h
 
 RESOURCES += \
     ../newui/newui.qrc
