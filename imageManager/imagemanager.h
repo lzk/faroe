@@ -6,7 +6,7 @@
 class QFile;
 class QFtp;
 class QTimer;
-#include "decodemanager.h"
+#include "../barcode/decodemanager.h"
 class ImageManager : public QObject
 {
     Q_OBJECT
