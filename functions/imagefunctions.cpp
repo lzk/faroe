@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QImage>
 ImageFunctions::ImageFunctions(QObject* parent)
     : QObject(parent)
       ,m_cancel(false)

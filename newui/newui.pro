@@ -4,7 +4,7 @@ QT += qml quick printsupport
 CONFIG += c++11
 
 TARGET = faroeVOP
-VERSION = 0.0.13
+VERSION = 0.0.15
 
 #UI_HEADERS_DIR = ../build
 #UI_SOURCES_DIR = ../build
@@ -38,10 +38,8 @@ SOURCES += main.cpp \
     ../lld/setter.cpp \
     ../lld/setterapi.cpp \
     ../imageManager/imagemanager.cpp \
-    ../imageManager/decodemanager.cpp \
     ../platform/mac/macapi.cpp \
     ../platform/platform.cpp \
-    ../imageManager/wrapperqimage.cpp \
     ../lld/Calibration/calibration_flow.cpp \
     ../lld/Calibration/calibration_scan.cpp \
     ../lld/Calibration/EdgeDetect.cpp \
@@ -73,9 +71,7 @@ HEADERS += \
     ../lld/setterstruct.h \
     ../platform/devicestruct.h \
     ../imageManager/imagemanager.h \
-    ../imageManager/decodemanager.h \
     ../platform/platform.h \
-    ../imageManager/wrapperqimage.h \
     ../lld/Calibration/EdgeDetect.h \
     ../lld/Calibration/model.h \
     ../lld/Calibration/ScanCMD.h \
@@ -115,10 +111,35 @@ LIBS += -framework IOKit \
 
 INCLUDEPATH += $$PWD/../qtftp/build/Release/include
 
+DEFINES += ZXING_OBJC
+contains(DEFINES,ZXING_OBJC){
+
+LIBS += -L$$PWD/../libs/zxing-objc/ -lZXingObjC-osx \
+        -framework CoreGraphics
+
+INCLUDEPATH += $$PWD/../libs/zxing-objc/usr/local/include
+DEPENDPATH += $$PWD/../libs/zxing-objc/usr/local/include
+PRE_TARGETDEPS += $$PWD/../libs/zxing-objc/libZXingObjC-osx.a
+HEADERS += $$PWD/../barcode/decodemanager.h
+SOURCES += $$PWD/../barcode/decodemanager.cpp \
+           $$PWD/../barcode/zxingobjc_decode.mm
+
+}else{
+
 INCLUDEPATH += $$PWD/../libs/zxing-cpp/include
 DEPENDPATH += $$PWD/../libs/zxing-cpp/include
 LIBS += $$PWD/../libs/zxing-cpp/lib/libzxing.a
 #PRE_TARGETDEPS += $$PWD/libs/zxing-cpp/lib/libzxing.a
+HEADERS += $$PWD/../barcode/decodemanager.h \
+           $$PWD/../barcode/wrapperqimage.h
+SOURCES += $$PWD/../barcode/decodemanager.cpp \
+           $$PWD/../barcode/zxingqt_decode.cpp \
+           $$PWD/../barcode/wrapperqimage.cpp \
+           $$PWD/../barcode/zxingcpp_decode.cpp \
+
+}
+
+
 
     ICON = faroeVOP.icns
 #    ICON = ../../mac/faroeVOP.icns

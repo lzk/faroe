@@ -20,7 +20,7 @@ protected:
     QStringList m_fileList;
 };
 
-#include "../imageManager/decodemanager.h"
+#include "../barcode/decodemanager.h"
 class ImageFunctions_Separation : public ImageFunctions
 {
 public:

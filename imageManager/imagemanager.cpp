@@ -15,7 +15,7 @@
 #include "../platform/devicestruct.h"
 #include "../newui/jkenums.h"
 #include "../platform/platform.h"
-#include "../imageManager/decodemanager.h"
+#include "../barcode/decodemanager.h"
 
 ImageManager::ImageManager(QObject *parent)
     : QObject(parent)
@@ -675,10 +675,10 @@ void ImageManager::separationScanDecodeEnd()
         if(m_cancel){
             break;
         }
-        fullFileName = filePath + QString().sprintf("/separation_%d.pdf" ,i);
-        if(QFile::exists(fullFileName))
-            QFile::remove(fullFileName);
         if(fileType == JKEnums::SeparationFileType_PDF){
+            fullFileName = filePath + QString().sprintf("/separation_%d.pdf" ,i);
+            if(QFile::exists(fullFileName))
+                QFile::remove(fullFileName);
             saveMultiPagePdfImageInit(fullFileName);
             j = 0;
             foreach (QString filename, sd.fileList) {
@@ -698,7 +698,7 @@ void ImageManager::separationScanDecodeEnd()
             }
         }
         i++;
-        qDebug()<<"decode text:" << sd.barcodeString;
+        qDebug()<<"separation with text:" << sd.barcodeString;
     }
 }
 
@@ -808,7 +808,6 @@ void ImageManager::decodeScanEnd()
                 if(!firstLine){
                     fprintf(file ,"<tr>\n");
                 }
-                qDebug()<<"decode text:"<<result.text;
 
                 if(result.fileName.isEmpty()){
                     fprintf(file ,"<td>Null</td>\n");
@@ -833,25 +832,13 @@ void ImageManager::decodeScanEnd()
 
                 if(!result.text.isEmpty()){
                     fprintf(file ,"<td>%s</td>\n" ,result.format.toLatin1().constData());
-                    bool isurl = false;
-                    QString url = result.text.trimmed();
-                    if(!url.contains(" ")){
-                        QRegularExpression re_with_protocol("^[a-zA-Z][a-zA-Z0-9+-.]+:");
-//                        QRegularExpression re_without_protocol("([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,}"
-//                                                               +QString("(:\\d{1,5})?")
-//                                                               +QString("(/|\\?|$)"));
-                        if(re_with_protocol.match(url).hasMatch())
-                            isurl = true;
-//                        else if(re_without_protocol.match(url).hasMatch())
-//                            isurl = true;
-                    }
                     cText  = result.text.toUtf8().constData();//result.text.toLocal8Bit().constData();
 //                    if(result.format != "RSS_14"){
-                        if(isurl){
+                        if(result.type == "URI"){
                             fprintf(file ,"<td>URI</td>\n");
                             fprintf(file ,"<td>  <a href=%s>%s</a> </td>\n" ,cText ,cText);
                         }else{
-                            fprintf(file ,"<td>TEXT</td>\n");
+                            fprintf(file ,"<td>%s</td>\n" ,result.type.toLatin1().constData());
                             fprintf(file ,"<td>%s</td>\n" ,cText);
                         }
 //                    }else{
