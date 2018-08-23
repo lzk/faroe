@@ -1,6 +1,9 @@
 1—qtftp
 1. git clone qtftp.git
-2. Open qtftp/qtftp.pro and build release
+2. Open qtftp/qtftp.pro 
+3. shadow build dir: ../build/Release
+4. build release
+5. Close project
 
 2-newui Qt project
 1. Open newui/newui.pro
