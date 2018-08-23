@@ -444,7 +444,19 @@ Item {
         var ret = true
         switch(result){
         case JKEnums.ImageCommandResult_error_cancel:
-            console.log("image handle cancel")
+            switch(cmd){
+            case DeviceStruct.CMD_ScanTo_ToPrint:
+            case DeviceStruct.CMD_ScanTo_ToFile:
+            case DeviceStruct.CMD_ScanTo_ToFTP:
+            case DeviceStruct.CMD_ScanTo_ToCloud:
+            case DeviceStruct.CMD_ScanTo_ToEmail:
+            case DeviceStruct.CMD_ScanTo_ToApplication:
+                console.log("image handle cancel")
+                break
+            default:
+                information_1button(qsTr("ResStr_Scanning_is_canceled_on_machine"))
+                break
+            }
             break
         case DeviceStruct.ERR_ACK:
         case JKEnums.ImageCommandResult_NoError:
@@ -480,7 +492,7 @@ Item {
             errorWithImage(qsTr("ResStr_DocScan_multifeed_error"))
             break
         case DeviceStruct.ERR_RETSCAN_CANCEL:
-            information_1button("ResStr_Scanning_is_canceled_on_machine")
+            information_1button(qsTr("ResStr_Scanning_is_canceled_on_machine"))
             break
         case DeviceStruct.ERR_RETSCAN_ERROR_POWER1:
             var para1 = {}
@@ -703,7 +715,8 @@ Item {
                 }
                 break;
             default:
-                scanResult(cmd ,result ,data)
+                if(!scanResult(cmd ,result ,data))
+                    errorWithImage(qsTr("ResStr_DocScan_scan_fail"))
                 break
             }
             break

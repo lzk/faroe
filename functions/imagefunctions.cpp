@@ -43,7 +43,7 @@ int ImageFunctions_Separation::preFunction(const QString& para)
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
     QString filePath = jsonObj.value("filePath").toString();
     if(!filePath.isEmpty() && !QDir(filePath).exists()){
-        return JKEnums::CommandResult_error_invalidFilePath;
+        return JKEnums::ImageCommandResult_error_invalidFilePath;
     }
     return JKEnums::CommandResult_NoError;
 }
@@ -55,7 +55,7 @@ int ImageFunctions_Separation::function(const QStringList& fileList ,const QStri
     bool found;
     foreach (QString filename, fileList) {
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         str = DecodeManager().decodeOneD(filename);
         found = false;
@@ -89,7 +89,7 @@ int ImageFunctions_Separation::postFunction(const QString& para)
     int i=0 ,j=0;
     foreach (struct Separation_data sd, separation_data) {
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         fullFileName = filePath + QString().sprintf("/separation_%d.pdf" ,i);
         if(QFile::exists(fullFileName))
@@ -134,7 +134,7 @@ int ImageFunctions_Decode::function(const QStringList& fileList ,const QString& 
     struct DMDecodeResult dr;
     foreach (QString filename, fileList) {
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         switch (decodeType) {
         case JKEnums::DecodeType_Qrcode:
@@ -159,7 +159,7 @@ int ImageFunctions_Decode::function(const QStringList& fileList ,const QString& 
 int ImageFunctions_Decode::postFunction(const QString& para)
 {
     if(m_cancel){
-        return JKEnums::CommandResult_error_cancel;
+        return JKEnums::ImageCommandResult_error_cancel;
     }
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
     QString fileName = jsonObj.value("fileName").toString();
@@ -170,7 +170,7 @@ int ImageFunctions_Decode::postFunction(const QString& para)
         fileName += ".html";
     FILE* file = fopen(fileName.toLatin1().constData() ,"w");
     if(file == NULL)
-        return JKEnums::CommandResult_error_unknown;
+        return JKEnums::ImageCommandResult_error_unknown;
     const char* cFileName;
     const char* cText;
     bool firstLine;
@@ -324,7 +324,7 @@ int ImageFunctions_ToPrint::function(const QStringList& fileList ,const QString&
     QSize size;
     for(int i = 0 ;i < fileList.length() ;i++) {
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         pixmap = QPixmap(fileList.at(i)).scaled(rect.size() ,Qt::KeepAspectRatio);
         size = pixmap.size();
@@ -440,7 +440,7 @@ int ImageFunctions_ToFile::postFunction(const QString&)
         saveMultiPagePdfImageRelease();
     }else if(suffix == "bmp" || suffix == "jpg"){
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         if(currentPage == 1){
             QString fileName_ = isQuickScan ?"_" :"";
@@ -465,7 +465,7 @@ int ImageFunctions_ToFile::function(const QStringList& fileList ,const QString& 
     QString fileName_ = isQuickScan ?"_" :"";
     for (int i = 0 ;i < fileList.length() ;i++){
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         if(suffix == "jpg"){
             fullFileName = preFileName + fileName_ + QString().sprintf("%d." ,currentPage + 1) +suffix;
@@ -546,7 +546,7 @@ int ImageFunctions_ToCloud::function(const QStringList& fileList,const QString& 
     if(!cloudTypeText.compare("iCloud")){
         foreach (QString fileName, fileList) {
             if(m_cancel){
-                return JKEnums::CommandResult_error_cancel;
+                return JKEnums::ImageCommandResult_error_cancel;
             }
             if(!iCloudUpload(fileName)){
                 return JKEnums::ImageCommandResult_error_icloudeUpload;
@@ -662,13 +662,13 @@ int ImageFunctions_ToFtp::waitForCmd(int cmd ,const QString& para ,int time)
     }
         break;
     default:
-        return JKEnums::CommandResult_error_unknown;
+        return JKEnums::ImageCommandResult_error_unknown;
     }
     done = false;
     LOG_PARA("ftp command:%d" ,cmd);
     for(int i = 0 ;i < time ;i++){
         if(m_cancel){
-            return JKEnums::CommandResult_error_cancel;
+            return JKEnums::ImageCommandResult_error_cancel;
         }
         QCoreApplication::processEvents();
         if(done){

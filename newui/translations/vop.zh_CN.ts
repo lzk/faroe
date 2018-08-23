@@ -305,7 +305,7 @@
     </message>
     <message>
         <location filename="../MainView.qml" line="344"/>
-        <location filename="../MainView.qml" line="810"/>
+        <location filename="../MainView.qml" line="823"/>
         <source>ICloud not login ,please login iCloud on MAC System Settings.</source>
         <translation>未登录icloud ，请先返回系统登录</translation>
     </message>
@@ -315,52 +315,58 @@
         <translation>文件已存在，是否覆盖？</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="454"/>
+        <location filename="../MainView.qml" line="457"/>
+        <location filename="../MainView.qml" line="495"/>
+        <source>ResStr_Scanning_is_canceled_on_machine</source>
+        <translation>扫描工作已经被取消，请将设备上的纸张取走。</translation>
+    </message>
+    <message>
+        <location filename="../MainView.qml" line="466"/>
         <source>ResStr_DocScan_Device_Not_Ready</source>
         <translation>设备没有准备好，请检查您的电脑设置，或者开启设备电源或者将设备插入电脑</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="458"/>
+        <location filename="../MainView.qml" line="470"/>
         <source>ResStr_DocScan_net_scanner_busy</source>
         <translation>设备使用中，请确认设备可以使用再重试。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="461"/>
+        <location filename="../MainView.qml" line="473"/>
         <source>ResStr_DocScan_paper_jam</source>
         <translation>卡纸！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="464"/>
+        <location filename="../MainView.qml" line="476"/>
         <source>ResStr_DocScan_cover_open</source>
         <translation>盖子打开了!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="467"/>
+        <location filename="../MainView.qml" line="479"/>
         <source>ResStr_DocScan_paper_not_ready</source>
         <translation>设备上未放纸!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="471"/>
+        <location filename="../MainView.qml" line="483"/>
         <source>ResStr_DocScan_adf_not_ready</source>
         <translation>ADF未准备好。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="474"/>
+        <location filename="../MainView.qml" line="486"/>
         <source>ResStr_DocScan_Cover_Open</source>
         <translation>ADF上盖打开了！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="477"/>
+        <location filename="../MainView.qml" line="489"/>
         <source>ResStr_DocScan_home_not_ready</source>
         <translation>马达未归位!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="480"/>
+        <location filename="../MainView.qml" line="492"/>
         <source>ResStr_DocScan_multifeed_error</source>
         <translation>发生重张错误！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="490"/>
+        <location filename="../MainView.qml" line="502"/>
         <source>ResStr_DocScan_Power_Bank</source>
         <translation>移动电源供电模式不支持以下设置。
 	纸张类型: 	Deposit Book or Card
@@ -372,7 +378,7 @@
 	自动色彩侦测: 		关闭</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="502"/>
+        <location filename="../MainView.qml" line="514"/>
         <source>ResStr_DocScan_Power_Bus</source>
         <translation>USB供电模式不支持以下设置。
 	扫描模式: 		双面
@@ -391,172 +397,173 @@
 </translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="508"/>
+        <location filename="../MainView.qml" line="520"/>
         <source>ResStr_DocScan_Power_Bus_Wifi</source>
         <translation>由于USB总线供电方式不支持WIFI扫描，所以当前扫描工作将被取消。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="513"/>
+        <location filename="../MainView.qml" line="525"/>
         <source>ResStr_DocScan_memory_full</source>
         <translation>设备存储已满！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="517"/>
+        <location filename="../MainView.qml" line="529"/>
         <source>ResStr_DocScan_Transfer_Error</source>
         <translation>设备数据传输有错误！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="524"/>
+        <location filename="../MainView.qml" line="536"/>
         <source>ResStr_DocScan_Device_Disconnected</source>
         <translation>设备未连接，扫描将被取消</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="527"/>
+        <location filename="../MainView.qml" line="539"/>
         <source>ResStr_DocScan_scan_all_blank</source>
         <translation>扫描到的所有图像都是空白的！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="530"/>
+        <location filename="../MainView.qml" line="542"/>
         <source>ResStr_Scanning_is_canceled_Last</source>
         <translation>上一次扫描工作被取消，请移除机器上的纸张重试。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="566"/>
+        <location filename="../MainView.qml" line="578"/>
         <source>ResStr_Calibrating</source>
         <translation>校正中…</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="595"/>
+        <location filename="../MainView.qml" line="607"/>
         <source>processing</source>
         <translation>进行中</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="602"/>
+        <location filename="../MainView.qml" line="614"/>
         <source>ResStr_DocScan_upload_wait</source>
         <translation>上传中，请稍后…</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="606"/>
+        <location filename="../MainView.qml" line="618"/>
         <source>ResStr_DocScan_print_pic_wait</source>
         <translation>打印中，请稍候…</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="610"/>
-        <location filename="../MainView.qml" line="614"/>
+        <location filename="../MainView.qml" line="622"/>
+        <location filename="../MainView.qml" line="626"/>
         <source>ResStr_DocScan_Saving_pic_TIFF</source>
         <translation>文件保存中</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="622"/>
+        <location filename="../MainView.qml" line="634"/>
         <source>ResStr_DocScan_Decoding</source>
         <translation>识别中，请稍后…</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="655"/>
-        <location filename="../MainView.qml" line="675"/>
+        <location filename="../MainView.qml" line="667"/>
+        <location filename="../MainView.qml" line="687"/>
         <source>ResStr_Setting_Successfully_</source>
         <translation>设置完成，请重启设置以应用设置。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="658"/>
+        <location filename="../MainView.qml" line="670"/>
         <source>Wi-Fi not enabled ,please enable first</source>
         <translation>Wi-Fi没打开，请先打开</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="661"/>
-        <location filename="../MainView.qml" line="678"/>
+        <location filename="../MainView.qml" line="673"/>
+        <location filename="../MainView.qml" line="690"/>
         <source>ResStr_Setting_Fail</source>
         <translation>设置失败，请检查您的设置和设备，然后重试。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="688"/>
+        <location filename="../MainView.qml" line="700"/>
         <source>ResStr_Not_Find_Printer</source>
         <translation>没有发现打印机！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="696"/>
-        <location filename="../MainView.qml" line="727"/>
-        <location filename="../MainView.qml" line="749"/>
-        <location filename="../MainView.qml" line="790"/>
-        <location filename="../MainView.qml" line="823"/>
+        <location filename="../MainView.qml" line="708"/>
+        <location filename="../MainView.qml" line="740"/>
+        <location filename="../MainView.qml" line="762"/>
+        <location filename="../MainView.qml" line="803"/>
+        <location filename="../MainView.qml" line="836"/>
         <source>ResStr_Quick_Preview</source>
         <translation>扫描预览</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="700"/>
+        <location filename="../MainView.qml" line="712"/>
         <source>ResStr_DocScan_print_ok</source>
         <translation>打印完成</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="715"/>
+        <location filename="../MainView.qml" line="728"/>
         <source>ResStr_DocScan_Fail_save</source>
         <translation>保存文件失败！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="718"/>
+        <location filename="../MainView.qml" line="731"/>
         <source>ResStr_Specify_File_Path_not_exist</source>
         <translation>您输入的路径不存在，请重新输入!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="731"/>
+        <location filename="../MainView.qml" line="744"/>
         <source>ResStr_DocScan_save_file_ok</source>
         <translation>存储文件完成</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="738"/>
-        <location filename="../MainView.qml" line="760"/>
-        <location filename="../MainView.qml" line="801"/>
-        <location filename="../MainView.qml" line="834"/>
-        <location filename="../MainView.qml" line="863"/>
-        <location filename="../MainView.qml" line="874"/>
+        <location filename="../MainView.qml" line="719"/>
+        <location filename="../MainView.qml" line="751"/>
+        <location filename="../MainView.qml" line="773"/>
+        <location filename="../MainView.qml" line="814"/>
+        <location filename="../MainView.qml" line="847"/>
+        <location filename="../MainView.qml" line="876"/>
+        <location filename="../MainView.qml" line="887"/>
         <source>ResStr_DocScan_scan_fail</source>
         <translation>扫描失败</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="753"/>
+        <location filename="../MainView.qml" line="766"/>
         <source>Scan to Email completed</source>
         <translation>扫描到Email完成</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="769"/>
+        <location filename="../MainView.qml" line="782"/>
         <source>Time out.Unable to connet to the remote server.</source>
         <translation>连接服务器超时</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="772"/>
+        <location filename="../MainView.qml" line="785"/>
         <source>Upload failed.Unable to connet to the remote server.</source>
         <translation>上传失败。无法连接服务器</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="775"/>
+        <location filename="../MainView.qml" line="788"/>
         <source>Upload failed.The remote server returned an error:(530) Not logged in.</source>
         <translation>上传失败。服务器错误:(530)未登录</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="779"/>
+        <location filename="../MainView.qml" line="792"/>
         <source>Upload failed.The remote server returned an error:(553) File name not allowed.</source>
         <translation>上传失败。服务器错误:(553)不可接受文件名</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="785"/>
-        <location filename="../MainView.qml" line="794"/>
-        <location filename="../MainView.qml" line="818"/>
-        <location filename="../MainView.qml" line="827"/>
+        <location filename="../MainView.qml" line="798"/>
+        <location filename="../MainView.qml" line="807"/>
+        <location filename="../MainView.qml" line="831"/>
+        <location filename="../MainView.qml" line="840"/>
         <source>ResStr_DocScan_upload_ok</source>
         <translation>上传完成</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="813"/>
+        <location filename="../MainView.qml" line="826"/>
         <source>ICloud upload fail.</source>
         <translation>icloud登录失败</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="842"/>
+        <location filename="../MainView.qml" line="855"/>
         <source>ResStr_DoCalibration_Completed</source>
         <translation>校正完成，请重新启动设备。</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="847"/>
+        <location filename="../MainView.qml" line="860"/>
         <source>ResStr_DocScan_calibration_fail</source>
         <translation>校正失败！</translation>
     </message>

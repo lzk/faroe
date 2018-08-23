@@ -258,6 +258,7 @@ void Worker::deviceCmdResult(int,int result ,QString data)
             return;
         }
         if(result){
+            qDebug()<<"scanning err:"<<result;
             cmdComplete(cmd ,data ,result ,JKEnums::ResultType_scanning);
             return;
         }
