@@ -132,7 +132,7 @@ int AppQt::setBrightnessAndContrast(const QString& fileName ,int brightness ,int
     qDebug()<<"image format:"<<image.format();
     switch (image.format()) {
     case QImage::Format_ARGB32:
-    case QImage::QImage::Format_RGB32:
+    case QImage::Format_RGB32:
         for(int y = 0 ;y < height ;y++){
             pixel = line;
             for(int x = 0 ;x < width ;x++){
@@ -154,7 +154,7 @@ int AppQt::setBrightnessAndContrast(const QString& fileName ,int brightness ,int
             line += bytesPerLine;
         }
         break;
-    case QImage::QImage::Format_RGB888:
+    case QImage::Format_RGB888:
         for(int y = 0 ;y < height ;y++){
             pixel = line;
             for(int x = 0 ;x < width ;x++){
