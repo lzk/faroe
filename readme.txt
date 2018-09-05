@@ -27,10 +27,10 @@ Xcode build
 2. Config 
    1.iCloud Mac develop/distribute
    2.signing add other code signing Flags  “-—deep”
-   3.copy faroeVOP.icns to Resource
-   4.copy toemail en.lproj zh_CN.lproj to Resource
-   5.add script
+   3.add script
 /Volumes/work/software/Qt/latest/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt/latest/clang_64/qml
+   4.add script
+cp -rf Resources/* ${CODESIGNING_FOLDER_PATH}/Contents/Resources/
    
 
 
