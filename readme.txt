@@ -11,7 +11,7 @@
    shadow build dir: ../build/debug
    qmake (default)
    make (default)
-   cp ../../mac/toemail faroeVOP.app/Contents/Resources
+   cp -rf ../../mac/Resources/* faroeVOP.app/Contents/Resources
    macdeployqt faroeVOP.app -qmldir=${QTDIR}/qml
 
 

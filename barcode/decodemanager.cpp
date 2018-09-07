@@ -1,7 +1,7 @@
 #include "decodemanager.h"
 #include <QImage>
 #include <QFileInfo>
-#include <QDebug>
+#include "../platform/log.h"
 extern QList<DMResult> zxing_decode(const QImage& image ,int decodeMode ,bool decodeMulti);
 DecodeManager::DecodeManager(QObject *parent) : QObject(parent)
 {
@@ -57,9 +57,10 @@ struct DMDecodeResult DecodeManager::decode(const QString& fileName ,int decodeM
             }
             fx = image.width() * 1.0 / decodeImage.width();
             fy = image.height() * 1.0 / decodeImage.height();
-            qDebug()<<"decode angle:"<<i*90 <<"deep:"<<j;
+            LOG_PARA("decode angle:%d deep:%d" ,i*90 ,j);
             results = zxing_decode(decodeImage ,decodeMode ,decodeMulti);
             for(auto result :results){
+                LOG_NOPARA("decode result:" + result.text);
                 if(!decodeMulti){
                     dr.result << result;
                     return dr;
@@ -72,17 +73,18 @@ struct DMDecodeResult DecodeManager::decode(const QString& fileName ,int decodeM
                 }
                 if(exist)
                     continue;
-                qDebug()<<"decode text:"<<result.text;
-                qDebug()<<"decode type:"<<result.type;
                 rect = result.rect;
                 dRect = QRect(rect.x() * fx, rect.y() * fy, rect.width() * fx, rect.height() * fy);
                 if(!dRect.isEmpty()){
-                    result.width = dRect.width();
-                    result.height = dRect.height();
+                    if(i%2){
+                        result.width = dRect.height();
+                        result.height = dRect.width();
+                    }else{
+                        result.width = dRect.width();
+                        result.height = dRect.height();
+                    }
                     result.fileName = preFileName + QString().sprintf("_%d.jpg" ,index++);
                     image.copy(dRect).transformed(QTransform().rotate(-90*i)).save(result.fileName ,"jpg");
-                    qDebug()<<"decode filename:"<<result.fileName;
-                    qDebug()<<"file size:"<<result.width<<"x"<<result.height;
                 }
                 dr.result << result;
             }

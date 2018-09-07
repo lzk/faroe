@@ -236,7 +236,7 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
     }
 }
 
-void Worker::deviceCmdResult_immediately(int cmd,int ,QString data)
+void Worker::deviceCmdResult_immediately(int /*cmd*/,int ,QString data)
 {
 //    if(cmd == DeviceStruct::CMD_SCAN)
         emit cmdResultToUi(this->cmd ,data ,0 ,0 ,JKEnums::CommandPhase_processing);

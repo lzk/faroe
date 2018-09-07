@@ -33,6 +33,7 @@ private:
         QString barcodeString;
         QStringList fileList;
     };
+    struct Separation_data* current_sd;
     QList<struct Separation_data> separation_data;
 };
 

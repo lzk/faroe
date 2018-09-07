@@ -8,6 +8,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QImage>
+#include <QDateTime>
 ImageFunctions::ImageFunctions(QObject* parent)
     : QObject(parent)
       ,m_cancel(false)
@@ -40,6 +41,7 @@ void ImageFunctions::cancel(bool ccl)
 int ImageFunctions_Separation::preFunction(const QString& para)
 {
     separation_data.clear();
+    current_sd = NULL;
     QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
     QString filePath = jsonObj.value("filePath").toString();
     if(!filePath.isEmpty() && !QDir(filePath).exists()){
@@ -58,21 +60,34 @@ int ImageFunctions_Separation::function(const QStringList& fileList ,const QStri
             return JKEnums::ImageCommandResult_error_cancel;
         }
         str = DecodeManager().decodeOneD(filename);
-        found = false;
-        for(int i = 0 ;i < separation_data.count() ;i++){
-            struct Separation_data sd = separation_data[i];
-            if(sd.barcodeString == str){
-                found = true;
+        if(str.isEmpty()){
+            if(!current_sd){
+                struct Separation_data sd;
+                sd.barcodeString = str;
                 sd.fileList << filename;
-                separation_data[i] = sd;
-                break;
+                separation_data << sd;
+                current_sd = &separation_data.last();
+            }else{
+                current_sd->fileList << filename;
             }
-        }
-        if(!found){
-            struct Separation_data sd;
-            sd.barcodeString = str;
-            sd.fileList << filename;
-            separation_data << sd;
+        }else{
+            found = false;
+            for(int i = 0 ;i < separation_data.count() ;i++){
+                struct Separation_data* sd = &separation_data[i];
+                if(sd->barcodeString == str){
+                    found = true;
+                    sd->fileList << filename;
+                    current_sd = sd;
+                    break;
+                }
+            }
+            if(!found){
+                struct Separation_data sd;
+                sd.barcodeString = str;
+                sd.fileList << filename;
+                separation_data << sd;
+                current_sd = &separation_data.last();
+            }
         }
     }
     return JKEnums::CommandResult_NoError;
@@ -87,14 +102,22 @@ int ImageFunctions_Separation::postFunction(const QString& para)
     QString tmpFile = filePath + "/tmp.tif";
     QString fullFileName;
     int i=0 ,j=0;
+    QString tmp_filename;
+    tmp_filename = filePath + "/img" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss");
     foreach (struct Separation_data sd, separation_data) {
         if(m_cancel){
             return JKEnums::ImageCommandResult_error_cancel;
         }
-        fullFileName = filePath + QString().sprintf("/separation_%d.pdf" ,i);
-        if(QFile::exists(fullFileName))
-            QFile::remove(fullFileName);
+        if(sd.fileList.length() <= 0)
+            continue;
+        fullFileName = tmp_filename + QString().sprintf("%03dA#" ,i+1);
+        if(sd.barcodeString.isEmpty()){
+            fullFileName += "0";
+        }else{
+            fullFileName += sd.barcodeString;
+        }
         if(fileType == JKEnums::SeparationFileType_PDF){
+            fullFileName += ".pdf";
             saveMultiPagePdfImageInit(fullFileName);
             j = 0;
             foreach (QString filename, sd.fileList) {
@@ -103,9 +126,7 @@ int ImageFunctions_Separation::postFunction(const QString& para)
             }
             saveMultiPagePdfImageRelease();
         }else{
-            fullFileName = filePath + QString().sprintf("/separation_%d.tif" ,i);
-            if(QFile::exists(fullFileName))
-                QFile::remove(fullFileName);
+            fullFileName += ".tif";
             foreach (QString filename, sd.fileList) {
                 if(QImage(filename).save(tmpFile ,"tiff")){
                     saveMultiPageTiffImage(tmpFile ,fullFileName);
@@ -114,7 +135,6 @@ int ImageFunctions_Separation::postFunction(const QString& para)
             }
         }
         i++;
-        qDebug()<<"decode text:" << sd.barcodeString;
     }
     return JKEnums::CommandResult_NoError;
 }
@@ -226,7 +246,6 @@ int ImageFunctions_Decode::postFunction(const QString& para)
                 if(!firstLine){
                     fprintf(file ,"<tr>\n");
                 }
-                qDebug()<<"decode text:"<<result.text;
 
                 if(result.fileName.isEmpty()){
                     fprintf(file ,"<td>Null</td>\n");
@@ -245,8 +264,8 @@ int ImageFunctions_Decode::postFunction(const QString& para)
                             height = 100;
                         }
                     }
-                    fprintf(file ,"<td><img src=\"%s\" height=\"%d\" width=\"%d\"></td>\n"
-                                         ,QFileInfo(result.fileName).fileName().toLatin1().constData() ,height ,width);
+                    fprintf(file ,"<td><img src=\"%s\" width=\"%d\" height=\"%d\"></td>\n"
+                                         ,QFileInfo(result.fileName).fileName().toLatin1().constData() ,width ,height);
                 }
 
                 if(!result.text.isEmpty()){
