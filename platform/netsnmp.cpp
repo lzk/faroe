@@ -25,7 +25,7 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
                 if(!address.isLoopback() && entry.netmask() == QHostAddress("255.255.255.0")){
 //                if(!address.isLoopback() && entry.netmask().isEqual(QHostAddress("255.255.255.0"))){
                     broadcast = entry.broadcast();
-                    strcpy(broadcast_ip ,broadcast.toString().toLatin1().constData());
+                    strcpy(broadcast_ip ,broadcast.toString().toUtf8().constData());
                     qDebug()<<"search:"<<broadcast;
                     findAgent(handler ,pData ,broadcast_ip);
                 }

@@ -37,7 +37,6 @@ SOURCES += main.cpp \
     ../platform/log.cpp \
     ../lld/setter.cpp \
     ../lld/setterapi.cpp \
-    ../imageManager/imagemanager.cpp \
     ../platform/mac/macapi.cpp \
     ../platform/platform.cpp \
     ../lld/Calibration/calibration_flow.cpp \
@@ -70,7 +69,6 @@ HEADERS += \
     ../lld/setterapi.h \
     ../lld/setterstruct.h \
     ../platform/devicestruct.h \
-    ../imageManager/imagemanager.h \
     ../platform/platform.h \
     ../lld/Calibration/EdgeDetect.h \
     ../lld/Calibration/model.h \

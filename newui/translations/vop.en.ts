@@ -88,9 +88,14 @@
         <translation>File Viewer</translation>
     </message>
     <message>
-        <location filename="../ScanToPage/CloudDialog.qml" line="15"/>
+        <location filename="../ScanToPage/CloudDialog.qml" line="134"/>
         <source>ResStr_OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../ScanToPage/CloudDialog.qml" line="134"/>
+        <source>ResStr_DocScan_Upload</source>
+        <translation>Upload</translation>
     </message>
     <message>
         <location filename="../ScanToPage/CloudDialog.qml" line="155"/>
@@ -1132,9 +1137,8 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Browse...</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToCloudView.qml" line="217"/>
         <source>ResStr_OK</source>
-        <translation>OK</translation>
+        <translation type="vanished">OK</translation>
     </message>
 </context>
 <context>
@@ -1328,9 +1332,8 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="../ScanToPage.qml" line="247"/>
         <source>ResStr_DocScan_Upload</source>
-        <translation>Upload</translation>
+        <translation type="vanished">Upload</translation>
     </message>
     <message>
         <location filename="../ScanToPage.qml" line="274"/>

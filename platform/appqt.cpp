@@ -23,7 +23,7 @@ QString AppQt::getStillTempFilename(int side)
 const char* AppQt::getTempFilename(int side)
 {
     QString tmppath = getStillTempFilename(side);
-    return tmppath.toLatin1().constData();//
+    return tmppath.toUtf8().constData();//
 }
 
 bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
@@ -53,7 +53,7 @@ bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
         }
     }
     QString scanFileName = getStillTempFilename(para->dup);
-    err = saveJpgFile(scanFileName.toLatin1().constData() ,para);
+    err = saveJpgFile(scanFileName.toUtf8().constData() ,para);
     if(err){
         LOG_NOPARA("save jpg fail");
         return false;

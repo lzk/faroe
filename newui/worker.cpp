@@ -7,6 +7,7 @@
 #include "jkinterface.h"
 #include "../platform/devicestruct.h"
 #include "../platform/devicemanager.h"
+#include "../functions/imagefunctions.h"
 
 Worker::Worker(QObject *parent)
     : jkInterface(static_cast<JKInterface*>(parent))
@@ -50,6 +51,7 @@ Worker::~Worker()
 
 void Worker::cancel(bool ccl)
 {
+    QMutexLocker locker(&mutex);
     if(imageFunctions)
         imageFunctions->cancel(ccl);
     deviceManager->cancelScan(ccl);
@@ -62,7 +64,6 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
 {
     if(cmd_status)
         return;
-    cancel(false);
     cmd_status = 1;
     this->cmd = cmd;
     this->para = data;
@@ -73,14 +74,14 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
     }
     switch (cmd) {
     case DeviceStruct::CMD_DecodeScan:
-        imageFunctions = new ImageFunctions_Decode;
+        imageFunctions = new ImageFunctions_Decode();
         break;
     case DeviceStruct::CMD_SeperationScan:
-        imageFunctions = new ImageFunctions_Separation;
+        imageFunctions = new ImageFunctions_Separation();
         break;
     case DeviceStruct::CMD_QuickScan_ToPrint:
     case DeviceStruct::CMD_ScanTo_ToPrint:
-        imageFunctions = new ImageFunctions_ToPrint;
+        imageFunctions = new ImageFunctions_ToPrint();
         break;
     case DeviceStruct::CMD_QuickScan_ToFile:
     case DeviceStruct::CMD_ScanTo_ToFile:
@@ -88,22 +89,23 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
         break;
     case DeviceStruct::CMD_QuickScan_ToEmail:
     case DeviceStruct::CMD_ScanTo_ToEmail:
-        imageFunctions = new ImageFunctions_ToEmail;
+        imageFunctions = new ImageFunctions_ToEmail();
         break;
     case DeviceStruct::CMD_QuickScan_ToApplication:
     case DeviceStruct::CMD_ScanTo_ToApplication:
-        imageFunctions = new ImageFunctions_ToApplication;
+        imageFunctions = new ImageFunctions_ToApplication();
         break;
     case DeviceStruct::CMD_QuickScan_ToCloud:
     case DeviceStruct::CMD_ScanTo_ToCloud:
-        imageFunctions = new ImageFunctions_ToCloud;
+        imageFunctions = new ImageFunctions_ToCloud();
         break;
     case DeviceStruct::CMD_QuickScan_ToFTP:
     case DeviceStruct::CMD_ScanTo_ToFTP:
-        imageFunctions = new ImageFunctions_ToFtp;
+        imageFunctions = new ImageFunctions_ToFtp();
     default:
         break;
     }
+    cancel(false);
     switch (cmd) {
     case DeviceStruct::CMD_DecodeScan:
     case DeviceStruct::CMD_SeperationScan:
@@ -155,7 +157,7 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
         break;
     case DeviceStruct::CMD_Cloud_isLogin:
     {
-        QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+        QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
         QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
         bool isLogin = false;
         if(!cloudTypeText.compare("iCloud")){
@@ -168,7 +170,7 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
         break;
     case DeviceStruct::CMD_Cloud_getFileList:{
         bool success = true;
-        QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+        QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
         QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
         if(!cloudTypeText.compare("iCloud")){
             if(iCloudCheckLogin(para)){
@@ -179,14 +181,14 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
                 }
             }
         }
-        jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+        jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
         jsonObj.insert("success" ,success);
         cmdComplete(cmd ,QString(QJsonDocument(jsonObj).toJson()));
     }
         break;
     case DeviceStruct::CMD_Cloud_isExist:
     {
-        QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+        QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
         QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
         bool isExist = false;
         if(!cloudTypeText.compare("iCloud")){
@@ -204,7 +206,7 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
         break;
     case DeviceStruct::CMD_Cloud_upload:{
         bool success = true;
-        QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+        QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
         QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
         if(!cloudTypeText.compare("iCloud")){
             QString str;
@@ -223,7 +225,7 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
                     iCloudGetFileList(str);
                 }
             }
-            jsonObj = QJsonDocument::fromJson(str.toLatin1()).object();
+            jsonObj = QJsonDocument::fromJson(str.toUtf8()).object();
             jsonObj.insert("success" ,success);
         }
         cmdComplete(cmd ,QString(QJsonDocument(jsonObj).toJson()));

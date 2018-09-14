@@ -185,5 +185,5 @@ bool NetIO::isConnected()
 //        return true;
 //    }
 //    return false;
-    return snmpGetResponse(hostAddress.toString().toLatin1().data());
+    return snmpGetResponse(hostAddress.toString().toUtf8().data());
 }

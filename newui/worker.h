@@ -4,10 +4,10 @@
 #include <QThread>
 #include <QObject>
 #include <QSize>
-#include "../functions/imagefunctions.h"
+#include <QMutex>
 class JKInterface;
 class DeviceManager;
-class ImageManager;
+class ImageFunctions;
 
 class Worker : public QObject
 {
@@ -32,7 +32,6 @@ private slots:
 private:
     JKInterface* jkInterface;
     DeviceManager* deviceManager;
-    ImageManager* imageManager;
     ImageFunctions* imageFunctions;
 
     int cmd;
@@ -41,6 +40,7 @@ private:
     QString para;
     QString result;
     QThread thread;
+    QMutex mutex;
 
     void cmdComplete(int cmd ,QString data=QString() ,int result=0 ,int resultType=0);
 };

@@ -4,6 +4,7 @@
 #include "../platform/log.h"
 extern QList<DMResult> zxing_decode(const QImage& image ,int decodeMode ,bool decodeMulti);
 DecodeManager::DecodeManager(QObject *parent) : QObject(parent)
+    ,m_cancel(false)
 {
 }
 

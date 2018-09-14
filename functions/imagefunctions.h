@@ -5,9 +5,11 @@
 #include <QObject>
 class ImageFunctions :public QObject
 {
-//    Q_OBJECT
+    Q_OBJECT
 public:
     explicit ImageFunctions(QObject* parent = nullptr);
+    virtual ~ImageFunctions(){}
+
     virtual int preFunction(const QString& para = QString());
     virtual int function(const QStringList& ,const QString& para = QString());
     virtual int postFunction(const QString& para = QString());
@@ -23,10 +25,14 @@ protected:
 #include "../barcode/decodemanager.h"
 class ImageFunctions_Separation : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    virtual int preFunction(const QString&);
-    virtual int function(const QStringList& ,const QString&);
-    virtual int postFunction(const QString&);
+    explicit ImageFunctions_Separation(QObject* parent = nullptr)
+        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_Separation(){}
+    virtual int preFunction(const QString& para = QString());
+    virtual int function(const QStringList& ,const QString& para = QString());
+    virtual int postFunction(const QString& para = QString());
 
 private:
     struct Separation_data{
@@ -39,10 +45,14 @@ private:
 
 class ImageFunctions_Decode : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    virtual int preFunction(const QString&);
-    virtual int function(const QStringList& ,const QString&);
-    virtual int postFunction(const QString&);
+    explicit ImageFunctions_Decode(QObject* parent = nullptr)
+        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_Decode(){}
+    virtual int preFunction(const QString& para = QString());
+    virtual int function(const QStringList& ,const QString& para = QString());
+    virtual int postFunction(const QString& para = QString());
 
 private:
     QList<struct DMDecodeResult> decode_data;
@@ -50,24 +60,40 @@ private:
 
 class ImageFunctions_ToPrint : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    virtual int function(const QStringList& ,const QString&);
+    explicit ImageFunctions_ToPrint(QObject* parent = nullptr)
+        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_ToPrint(){}
+//    virtual int preFunction(const QString& para = QString()){;}
+    virtual int function(const QStringList& ,const QString& para = QString());
+//    virtual int postFunction(const QString& para = QString()){;}
 };
 
 class ImageFunctions_ToEmail : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    virtual int postFunction(const QString&);
+    explicit ImageFunctions_ToEmail(QObject* parent = nullptr)
+        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_ToEmail(){}
+//    virtual int preFunction(const QString& para = QString()){;}
+//    virtual int function(const QStringList& ,const QString& para = QString()){;}
+    virtual int postFunction(const QString& para = QString());
 };
 
 class ImageFunctions_ToFile : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    ImageFunctions_ToFile(bool quickscan);
-    virtual int preFunction(const QString&);
-    virtual int function(const QStringList& ,const QString&);
-    virtual int postFunction(const QString&);
+//    explicit ImageFunctions_ToFile(QObject* parent = nullptr)
+//        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_ToFile(){}
+    virtual int preFunction(const QString& para = QString());
+    virtual int function(const QStringList& ,const QString& para = QString());
+    virtual int postFunction(const QString& para = QString());
 
+    ImageFunctions_ToFile(bool quickscan ,QObject* parent = nullptr);
 private:
     int currentPage;
     bool isQuickScan;
@@ -76,28 +102,41 @@ private:
 
 class ImageFunctions_ToApplication : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    virtual int postFunction(const QString&);
+//    explicit ImageFunctions_ToApplication(QObject* parent = nullptr)
+//        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_ToApplication(){}
+//    virtual int preFunction(const QString& para = QString()){;}
+//    virtual int function(const QStringList& ,const QString& para = QString()){;}
+    virtual int postFunction(const QString& para = QString());
 };
 
 class ImageFunctions_ToCloud : public ImageFunctions
 {
+    Q_OBJECT
 public:
-    virtual int preFunction(const QString&);
-    virtual int function(const QStringList& ,const QString&);
+//    explicit ImageFunctions_ToCloud(QObject* parent = nullptr)
+//        : ImageFunctions(parent){}
+//    virtual ~ImageFunctions_ToCloud(){}
+    virtual int preFunction(const QString& para = QString());
+    virtual int function(const QStringList& ,const QString& para = QString());
+//    virtual int postFunction(const QString& para = QString()){;}
 
 };
 
 #include <QUrl>
-class QFtp;
+#include <Qtftp/QFtp>
+#include <QTimer>
 class ImageFunctions_ToFtp :public ImageFunctions
 {
+    Q_OBJECT
 public:
-    ImageFunctions_ToFtp();
-    ~ImageFunctions_ToFtp();
-    virtual int preFunction(const QString&);
-    virtual int function(const QStringList& ,const QString&);
-    virtual int postFunction(const QString&);
+    explicit ImageFunctions_ToFtp(QObject* parent = nullptr);
+    virtual ~ImageFunctions_ToFtp();
+    virtual int preFunction(const QString& para = QString());
+    virtual int function(const QStringList& ,const QString& para = QString());
+    virtual int postFunction(const QString& para = QString());
 
 //private slots:
 //    void ftpDone(bool);
@@ -114,8 +153,11 @@ private:
     };
     bool done;
     bool error;
+    bool timeout;
     QFtp* ftp;
     QUrl ftpUrl;
-    int waitForCmd(int ,const QString& para = QString() ,int time = 50);
+    QTimer timer;
+    QFtp m_ftp;
+    int waitForCmd(int ,const QString& para = QString() ,int time = 5);
 };
 #endif // IMAGEFUNCTIONS_H

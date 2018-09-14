@@ -88,9 +88,14 @@
         <translation>文件浏览</translation>
     </message>
     <message>
-        <location filename="../ScanToPage/CloudDialog.qml" line="15"/>
+        <location filename="../ScanToPage/CloudDialog.qml" line="134"/>
         <source>ResStr_OK</source>
         <translation>确定</translation>
+    </message>
+    <message>
+        <location filename="../ScanToPage/CloudDialog.qml" line="134"/>
+        <source>ResStr_DocScan_Upload</source>
+        <translation>上传</translation>
     </message>
     <message>
         <location filename="../ScanToPage/CloudDialog.qml" line="155"/>
@@ -1130,9 +1135,8 @@
         <translation>浏览…</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToCloudView.qml" line="217"/>
         <source>ResStr_OK</source>
-        <translation>确定</translation>
+        <translation type="vanished">确定</translation>
     </message>
 </context>
 <context>
@@ -1326,9 +1330,8 @@
         <translation>保存到</translation>
     </message>
     <message>
-        <location filename="../ScanToPage.qml" line="247"/>
         <source>ResStr_DocScan_Upload</source>
-        <translation>上传</translation>
+        <translation type="vanished">上传</translation>
     </message>
     <message>
         <location filename="../ScanToPage.qml" line="274"/>
