@@ -116,10 +116,12 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
     case DeviceStruct::CMD_QuickScan_ToFTP:
     case DeviceStruct::CMD_QuickScan_ToCloud:
         if(imageFunctions){
+            emit cmdResultToUi(cmd ,data ,0 ,0 ,JKEnums::CommandPhase_start);
             err = imageFunctions->preFunction(data);
             if(err == JKEnums::CommandResult_NoError){
                 emit cmdToDevice(DeviceStruct::CMD_SCAN ,data);
-                emit cmdResultToUi(cmd ,data ,0 ,0 ,JKEnums::CommandPhase_start);
+            }else{
+                cmdComplete(cmd ,data ,err ,JKEnums::ResultType_common);
             }
         }
         break;
@@ -152,8 +154,8 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
         }
         break;
     case DeviceStruct::CMD_ScanTo:
-        emit cmdToDevice(DeviceStruct::CMD_ScanTo ,data);
         emit cmdResultToUi(cmd ,data ,0 ,0 ,JKEnums::CommandPhase_start);
+        emit cmdToDevice(DeviceStruct::CMD_ScanTo ,data);
         break;
     case DeviceStruct::CMD_Cloud_isLogin:
     {
@@ -232,16 +234,15 @@ void Worker::cmdFromUi(int cmd ,QString data ,QStringList fileList)
     }
         break;
     default:
-        emit cmdToDevice(cmd ,data);
         emit cmdResultToUi(cmd ,data ,0 ,0 ,JKEnums::CommandPhase_start);
+        emit cmdToDevice(cmd ,data);
         break;
     }
 }
 
 void Worker::deviceCmdResult_immediately(int /*cmd*/,int ,QString data)
 {
-//    if(cmd == DeviceStruct::CMD_SCAN)
-        emit cmdResultToUi(this->cmd ,data ,0 ,0 ,JKEnums::CommandPhase_processing);
+    emit cmdResultToUi(this->cmd ,data ,0 ,0 ,JKEnums::CommandPhase_processing);
 }
 
 void Worker::deviceCmdResult(int,int result ,QString data)
@@ -260,7 +261,6 @@ void Worker::deviceCmdResult(int,int result ,QString data)
             return;
         }
         if(result){
-            qDebug()<<"scanning err:"<<result;
             cmdComplete(cmd ,data ,result ,JKEnums::ResultType_scanning);
             return;
         }

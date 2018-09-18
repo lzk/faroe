@@ -25,7 +25,7 @@ JKDialog {
 
             JKText{
                 font.pixelSize: pixelSize
-                text: qsTr("ResStr_DocScan") + " 0.1.1"
+                text: qsTr("ResStr_DocScan") + " 0.1.2"
                 color: textColor
             }
 
