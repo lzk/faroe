@@ -194,7 +194,7 @@ int Load_ScanParameter(SC_PAR_T_ *par)
 
 	}
 	img->width -= (img->width%8);
-	img->height -= (img->height%8);
+//	img->height -= (img->height%8);
 
 
 

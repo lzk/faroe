@@ -101,6 +101,7 @@ int Scan_JobEnd()
 
   return result;
 }
+////
 
 int Scan_FW_Version()
 {

@@ -94,6 +94,41 @@
 #define JOB_PUSH_FTP			0x05
 #define JOB_PUSH_SMB			0x06
 
+typedef struct LTC_MODEL_INFO_STRUCT {
+    unsigned int model;		//DocScan, Taiga, ...
+    unsigned int biz_model;	//Unis, ...
+    unsigned int sub_model;	//Model_A, Model_B, ...
+
+    struct {
+        unsigned int FB : 1;
+        unsigned int ADF : 1;
+        unsigned int multi_motor : 1;
+        unsigned int e_clutch : 1;
+        unsigned int reserved : 28;
+
+    } cap1;
+
+    struct {
+        unsigned int ultra_sonic : 1;
+        unsigned int wifi : 1;
+        unsigned int u_disk : 1;
+        unsigned int bus_power : 1;
+        unsigned int nfc : 1;
+        unsigned int reserved : 27;
+
+    } cap2;
+
+    struct {
+        unsigned char len;
+        char buf[32];
+    } fw_version;
+
+    struct {
+        unsigned char len;
+        char buf[32];
+    } sub_fw_version;
+
+} LTC_MODEL_INFO_T;
 
 typedef struct MTR_STRUCT_ {
 	U8 drive_target;
@@ -159,6 +194,7 @@ typedef struct SC_GAMMA_STRUCT {
 
 #define ACQ_NO_MIRROR		(0x02)
 #define ACQ_NO_SHADING		(0x04)
+#define ACQ_COLOR_MATRIX_OFF	(0x08)
 
 #define ACQ_GAMMA			(0x10)
 #define ACQ_MULTI_FEED		(0x20)
@@ -223,8 +259,12 @@ typedef struct SC_INFO_STRUCT_ {
 		UINT32 fb_home_sensor: 1;
 		UINT32 adf_paper_sensor: 1;
 		UINT32 cover_sensor: 1;
-		UINT32 reserved: 28;
+        UINT32 pick_home_sensor: 1;
+        UINT32 scan_button : 1;
+        UINT32 reserved : 26;
 	} SensorStatus;
+
+ ///
 
 	struct {
 		UINT32 scanning: 1;

@@ -62,7 +62,7 @@ CALIBRATION_SET_T_ K_Set;
 #define CAL_EXP_MINUS_G		5
 
 //-------AFE gain cal--------
-#define CAL_AFE_WHITE		(175 * 0x100)	//color level
+#define CAL_AFE_WHITE		(220 * 0x100)	//color level
 
 //-----------------------------
 #define DARK_DROP			IMG_K_PRUN_300_DOT_Y/4		
@@ -70,7 +70,7 @@ CALIBRATION_SET_T_ K_Set;
 
 //-------Shading white target---------
 U16 SHD_WHITE_TARGET[2][3]; //For A/B side white shading target R/G/B
-
+#if 0
 #define SHD_WHITE_TARGET_A_R_TYPE1	(233 * 1.078 * 0x100)
 #define SHD_WHITE_TARGET_A_G_TYPE1	(230 * 1.078 * 0x100)
 #define SHD_WHITE_TARGET_A_B_TYPE1	(223 * 1.12 * 0x100)
@@ -78,6 +78,17 @@ U16 SHD_WHITE_TARGET[2][3]; //For A/B side white shading target R/G/B
 #define SHD_WHITE_TARGET_B_R_TYPE1	(233 * 1.078 * 0x100)
 #define SHD_WHITE_TARGET_B_G_TYPE1	(230 * 1.078 * 0x100)
 #define SHD_WHITE_TARGET_B_B_TYPE1	(223 * 1.12 * 0x100)
+#endif
+
+#if 1
+#define SHD_WHITE_TARGET_A_R_TYPE1	(230 * 0x100)
+#define SHD_WHITE_TARGET_A_G_TYPE1	(230 * 0x100)
+#define SHD_WHITE_TARGET_A_B_TYPE1	(230 * 0x100)
+
+#define SHD_WHITE_TARGET_B_R_TYPE1	(230 * 0x100)
+#define SHD_WHITE_TARGET_B_G_TYPE1	(230 * 0x100)
+#define SHD_WHITE_TARGET_B_B_TYPE1	(230 * 0x100)
+#endif
 
 #define SHD_WHITE_TARGET_A_R_TYPE2	(200 * 0x100)
 #define SHD_WHITE_TARGET_A_G_TYPE2	(209 * 0x100)
@@ -91,6 +102,7 @@ U16 SHD_WHITE_TARGET[2][3]; //For A/B side white shading target R/G/B
 //-------Shading dark target---------
 U16 SHD_DARK_TARGET[2][3]; //For A/B side dark shading target R/G/B
 
+#if 0
 #define SHD_DARK_TARGET_A_R_TYPE1	(7 * 0x100)
 #define SHD_DARK_TARGET_A_G_TYPE1	(7 * 0x100)
 #define SHD_DARK_TARGET_A_B_TYPE1	(7 * 0x100)
@@ -98,6 +110,17 @@ U16 SHD_DARK_TARGET[2][3]; //For A/B side dark shading target R/G/B
 #define SHD_DARK_TARGET_B_R_TYPE1	(7 * 0x100)
 #define SHD_DARK_TARGET_B_G_TYPE1	(7 * 0x100)
 #define SHD_DARK_TARGET_B_B_TYPE1	(7 * 0x100)
+#endif
+
+#if 1
+#define SHD_DARK_TARGET_A_R_TYPE1	(2 * 0x100)
+#define SHD_DARK_TARGET_A_G_TYPE1	(2 * 0x100)
+#define SHD_DARK_TARGET_A_B_TYPE1	(2 * 0x100)
+
+#define SHD_DARK_TARGET_B_R_TYPE1	(2 * 0x100)
+#define SHD_DARK_TARGET_B_G_TYPE1	(2 * 0x100)
+#define SHD_DARK_TARGET_B_B_TYPE1	(2 * 0x100)
+#endif
 
 #define SHD_DARK_TARGET_A_R_TYPE2	(7 * 0x100)
 #define SHD_DARK_TARGET_A_G_TYPE2	(7 * 0x100)
@@ -200,13 +223,16 @@ void Save_Shading(SC_PAR_T_ *par, U16 *img_buf, U32 *shd_buf, U32 gain, U8 dup)
 		if(par->acquire & ACQ_LAMP_OFF) {
 
 			/*Offset*/
-			fprintf(fcsv, "dg, offset_r, offset_g, offset_b\n");
+//			fprintf(fcsv, "dg, offset_r, offset_g, offset_b\n");
+            fprintf(fcsv, "dr, dg, db, offset_r, offset_g, offset_b\n");
 			for(i=0;i<dot_x;i++) {
 				if(par->img.mono == IMG_COLOR) {
 					//Color
-					fprintf(fcsv, "%d, %d, %d, %d\n",
-							img_buf[i], (shd_buf[i])&0xffff, (shd_buf[i+dot_x])&0xffff, (shd_buf[i+dot_x*2])&0xffff
-						);
+                    fprintf(fcsv, "%d, %d, %d, %d, %d, %d\n",
+//					fprintf(fcsv, "%d, %d, %d, %d\n",
+//							img_buf[i], (shd_buf[i])&0xffff, (shd_buf[i+dot_x])&0xffff, (shd_buf[i+dot_x*2])&0xffff
+                            img_buf[i], img_buf[i + dot_x], img_buf[i + dot_x], (shd_buf[i]) & 0xffff, (shd_buf[i + dot_x]) & 0xffff, (shd_buf[i + dot_x * 2]) & 0xffff
+                        );
 				}
 				else {
 					//Mono
@@ -383,13 +409,15 @@ void _cal_average_iterate2(U16 *data, int num_x, int num_y, int channel)
 {
   U32 i;
   U32 j = (channel == 0) ? 1:3;
-  U32 k; 
+//  U32 k;
   U32 offset = (channel < 2) ? 0: (channel-1);
 
   //for(i = 0; i < num_x; i+=j, data++)
   //  *data = _cal_min_data(&data[offset + i], num_x, num_y);
-  for(i = 0, k = 0; i < num_x; i+=j, k++)
-    data[k] = _cal_average_data(&data[offset + i], num_x, num_y);
+//  for(i = 0, k = 0; i < num_x; i+=j, k++)
+//    data[k] = _cal_average_data(&data[offset + i], num_x, num_y);
+  for (i = 0; i < num_x; i += j)
+        data[i + offset] = _cal_average_data(&data[offset + i], num_x, num_y);
 }
 
 void _cal_min_iterate(U16 *data, int num_x, int num_y, int channel)
@@ -452,6 +480,7 @@ int average_quicksort(unsigned short *input, int left, int right, int number, in
   for(i = left, number-=right; i < number; i++)  
     result += data[i];
   result /= (number-left);
+  result = (int)(result + 0.5f);
   return result;
 }
 //============================
@@ -1248,7 +1277,7 @@ void _cal_construct_dark16(U16 *data, U32 *shad, int next_data, int next_shad, i
 {
   U16 *last_data = data + next_data*num;
   while(data < last_data) {
-	*shad += (*data - dark_target)*gain_base/(*shad >> 16);
+      *shad += ((*data - dark_target)*gain_base / (*shad >> 16) + 0.5f);
     data += next_data;
     shad += next_shad;
   }
@@ -1416,7 +1445,7 @@ int cal_dark_shading(CALIBRATION_CAP_T_ *cap, CALIBRATION_SET_T_ *set)
   U16 *buf, *shad_data;
   U32 gain, gain_base, *dark_buf, dark_shift, dark_digit;
   U8 SIDE_K[2]={0, 0};
-  U16 one_channel_cal = 2; //0:Color, 1:R, 2:G, 3:B
+  U16 one_channel_cal = 0; //0:Color, 1:R, 2:G, 3:B
   U16 dark_target[2][3];
 
 
@@ -1490,7 +1519,7 @@ int cal_dark_shading(CALIBRATION_CAP_T_ *cap, CALIBRATION_SET_T_ *set)
 #endif
 
 	for(j = 0; j < color_loop; j++) {
-		_cal_construct_dark16(buf, &dark_buf[j*dot], 1, 1, dot, gain_base, dark_target[i][j]);
+        _cal_construct_dark16(buf, &dark_buf[j*dot], color_loop, 1, dot, gain_base, dark_target[i][j]);
 	}
 
 	//Save shading profile
@@ -1583,21 +1612,26 @@ int cal_dark_shading(CALIBRATION_CAP_T_ *cap, CALIBRATION_SET_T_ *set)
 
 __inline void _cal_construct_white16(U16 *data, U16 *data2, U32 *shad, int next_data, int next_shad, int num, U32 gain_base, U16 white_target, U16 dark_target)
 {
-  U32 white_gain, white, dark;
+  U32 white_gain, white_gain_last, white, dark;
   U16 *last_data = data + next_data*num;
 
   while(data < last_data) {
     white = *data;
 	dark = *data2;
 
-	if(white > dark) {
-		white_gain = (white_target - dark_target) * gain_base / (white - dark);
-		if(white_gain >= 0xffff)
-			white_gain = 0xffff;
+    if (white > dark) {
+            white_gain = ((white_target - dark_target) * gain_base / (white - dark) + 0.5f);
+            if (white_gain >= 0xffff) {
+                //white_gain = 2 * gain_base;
+                //white_gain = white_gain_last;
+                white_gain = gain_base;
+                //white_gain = 0xffff;
+            }
 	}
 	else {
 		white_gain = 1 * gain_base;
 	}
+    //white_gain_last = white_gain;
 
 	*shad = 0;
     *shad = (*shad & 0xffff) + (white_gain << 16);
@@ -2142,9 +2176,22 @@ if(bCalibrationMode) {
 		//GetSystemTime(&lt);
 		//printf("AFE gain time cost %.3f s\n", (double)time_spend(&ct, &lt)/10000000);
 		lt = clock();
-		printf("AFE gain time cost %.3f s\n", (double)(lt - ct)/1000);
+//		printf("AFE gain time cost %.3f s\n", (double)(lt - ct)/1000);
 	#endif
 
+        //AFE offset 2nd
+        if (!cal_AFE_offset(&K_Cap, &K_Set))
+            goto NG;
+
+#ifdef Show_Time_Cost
+        ct = lt;
+        //GetSystemTime(&lt);
+        //printf("AFE offset time cost %.3f s\n", (double)time_spend(&st1, &lt)/10000000);
+        lt = clock();
+        printf("AFE offset 2nd time cost %.3f s\n", (double)(lt - ct) / 1000);
+#endif
+
+        //////
 	//exposure balance
         if(!cal_exposure_balance(&K_Cap, &K_Set)){
             nRet = RETSCAN_ERRORPARAMETER;

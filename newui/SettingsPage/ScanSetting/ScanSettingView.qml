@@ -37,8 +37,6 @@ Item {
     property alias radioButton_autoCropDeskew_on: radioButton_autoCropDeskew_on
     //    property alias radioButton_autoCropDeskew_off: radioButton_autoCropDeskew_off
 
-    property alias item_skipBlankPage: item_skipBlankPage
-    property alias radioButton_skipBlankPage_on: radioButton_skipBlankPage_on
     //    property alias radioButton_skipBlankPage_off: radioButton_skipBlankPage_off
 
     property alias item_autoColorDetection: item_autoColorDetection
@@ -139,36 +137,6 @@ Item {
                 }
 
                 ScanSettingBackground {
-                    id:item_skipBlankPage
-                    width: 220
-                    height: 75
-                    visible: !decodeMode
-                    text: qsTr("ResStr_Skip_Blank_Page")
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    Row{
-                        anchors.centerIn: parent
-                        spacing: 10
-                        JKRadioButton {
-                            id: radioButton_skipBlankPage_on
-                            width: 90
-                            height: 20
-                            text: qsTr("ResStr_On")
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-
-                        JKRadioButton {
-                            id: radioButton_skipBlankPage_off
-                            width: 90
-                            height: 20
-                            text: qsTr("ResStr_Off")
-                            checked: !radioButton_skipBlankPage_on.checked
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-                }
-
-                ScanSettingBackground {
                     id: item_autoColorDetection
                     width: 220
                     height: 75
@@ -227,6 +195,34 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
+                }
+
+                ScanSettingBackground {
+                    id: item_multiFeedDetection
+                    width: 220
+                    height: 75
+                    text: qsTr("ResStr_DocScan_multifeed")
+                    Row {
+                        spacing: 10
+                        JKRadioButton {
+                            id: radioButton_multiFeedDetection_on
+                            width: 90
+                            height: 20
+                            text: qsTr("ResStr_On")
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        JKRadioButton {
+                            id: radioButton_multiFeedDetection_off
+                            width: 90
+                            height: 20
+                            text: qsTr("ResStr_Off")
+                            anchors.verticalCenter: parent.verticalCenter
+                            checked: !radioButton_multiFeedDetection_on.checked
+                        }
+                        anchors.centerIn: parent
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
 
@@ -354,35 +350,6 @@ Item {
                         id: spin_gamma
                         anchors.fill: parent
                         anchors.topMargin: 5
-                    }
-                }
-
-                ScanSettingBackground {
-                    id: item_multiFeedDetection
-                    width: 220
-                    height: 75
-                    text: qsTr("ResStr_DocScan_multifeed")
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    Row{
-                        anchors.centerIn: parent
-                        spacing: 10
-                        JKRadioButton {
-                            id: radioButton_multiFeedDetection_on
-                            width: 90
-                            height: 20
-                            text: qsTr("ResStr_On")
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-
-                        JKRadioButton {
-                            id: radioButton_multiFeedDetection_off
-                            width: 90
-                            height: 20
-                            text: qsTr("ResStr_Off")
-                            checked: !radioButton_multiFeedDetection_on.checked
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
                     }
                 }
             }

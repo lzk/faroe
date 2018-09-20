@@ -16,14 +16,16 @@
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Decode">条码识别</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Separation">文档分隔</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_ScanTo">扫描到</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_About">关于</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Exit">退出</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Setting_Title">设置</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_CopyRight">Copyright © (2018)</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_Company">Unisplendour Corporation Limited.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Company">Wireless Scanner</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_AllRight">All Rights Reserved.</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_Faore_USBDevice">USB Device </sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Faore_USBDevice">USB 设备 </sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Connected">已连接</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Connect">连接</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_search_dev">搜索中，请稍候。。。</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_search_dev">搜索中，请稍候...</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Cancel">取消</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Warning">警告</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_OK">确定</sys:String>
@@ -53,8 +55,8 @@
     <sys:String xml:space="preserve" x:Key="ResStr_File_Path_and_name_too_long">你输入的文件路径和文件名称总长度太长或者无效，请重新输入！</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_app_setting">应用程序设置：</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_app_type">程序：</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Viewer">Windows Photo Viewer</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Paint">Paint</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Viewer">Windows 照片查看器</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Paint">小画家</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_AP_Others">其它应用程序</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_email_setting">邮件设置：</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Attachment_File_Type">附件类型：</sys:String>
@@ -72,7 +74,7 @@
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_password1">密码</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_targetPath">目标路径：</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_targetPath1">目标路径</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_specify_incorrect">{0}格式错误，请检查{1}并重新输入.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_specify_incorrect">{0}格式错误，请检查{1}并重新输入。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_cloud_setting">云盘设置：</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Cloud_Type">云盘类型：</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Reset">切换用户</sys:String>
@@ -89,7 +91,7 @@
     <sys:String xml:space="preserve" x:Key="ResStr_EverNote_List">印象笔记列表</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Upload">上传</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Folder">文件夹</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_Invalid_xxx">无效的{0}.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Invalid_xxx">无效的{0}。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Folder_Name">文件夹名称不能为空。请输入1到32个字符。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Network_Disconnected">您的电脑没有连接网络，请检查您的设置。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Evernote_Tile_could_not_be_empty">印象笔记的标题不能为空！</sys:String>
@@ -103,6 +105,7 @@
     <sys:String xml:space="preserve" x:Key="ResStr_Folder_Not_Exist">文件夹{0}不存在，请重试！</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Faore_dropbox_fail">连接Dropbox服务器失败！</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Connect_OneDrive_Fail">连接OneDrive服务器失败！</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_OneDrive_Folder_Fail">访问OneDrive文件夹或者文件失败!</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Connect_googleDrive_Fail">连接Goole Drive服务器失败！</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Network_fail">网络未连接，请检查您的设置。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_File_exist_Do_You_overwrite">您上传的文件已经存在，是否覆盖？</sys:String>
@@ -127,9 +130,9 @@
     <sys:String xml:space="preserve" x:Key="ResStr_QRCode">二维码</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_BarCode">条形码 </sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_All">所有</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Output_Result">输出结果</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Output_Result">输出结果：</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Document_Separation">文档分隔</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_File_Name1">文件名称。</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_File_Name1">文件名称</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting4">扫描设置</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting1">扫描设置(AC 电源)</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_scan_setting2">扫描设置(USB总线电源)</sys:String>
@@ -205,7 +208,7 @@
     <sys:String xml:space="preserve" x:Key="ResStr_Gateway">网关</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Apply">应用</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_">输入的IP地址不正确，请重新输入。</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation">子网掩码不争取， 请重新输入。</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation">子网掩码不正确， 请重新输入。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_">网关地址不正确，请重新输入。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_1__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_">输入的IP地址和子网掩码不正确，请重新输入</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_0__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_">输入的IP地址和子网掩码不正确，请重新输入</sys:String>
@@ -230,13 +233,13 @@
     <sys:String xml:space="preserve" x:Key="ResStr_JPEG_JPEG">JPEG</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_PDF_PDF">PDF</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_SSID_2">SSID</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_Conn_list">连接设备:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Conn_list">连接设备</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_ScanType_Setting">当前的一键扫描参数只能到"WEB配置工具"去设置！</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Do_you_want_to_clear">您想清空这个计数值吗？</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DoCalibration_Completed">校正完成，请重新启动设备。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Doing_Calibration">校正中，请稍候…</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_">有效范围是0到4，请检查并重试.</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_">有效范围是0到60，请检查并重试.</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_">有效范围是0到4，请检查并重试。</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_">有效范围是1到60，请检查并重试。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Select_All">全选</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_To_Print">到打印机</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_To_Email">到邮件</sys:String>
@@ -307,7 +310,7 @@
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_GetInfo_Fail">无法从设备获取状态，请稍候或者重启设备。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Reset_Access">复位访问标志</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Edit_Quick_SCan_Setting">编辑快捷扫描设置</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Note_Title1">笔记标题。请输入1到32个字符。</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Note_Title1">笔记标题。请输入1到32个字符</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Default_Path1">默认存储路径。请输入1到255个字符。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Scanning">扫描中…</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Uploading">上传中…</sys:String>
@@ -324,11 +327,11 @@
     <sys:String xml:space="preserve" x:Key="ResStr_Specify_File_Path_not_exist">您输入的路径不存在，请重新输入!</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Device_disconnected">设备未连接，应用不能设置成功!</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Device_Not_Ready">设备没有准备好，请检查您的电脑设置，或者开启设备电源或者将设备插入电脑</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bank">移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;Deposit Book or Card&#13;&#10;&#09;扫描区域大小: &#09;长纸&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！.&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;扫描区域大小:&#09;自动&#13;&#10;&#09;自动色彩侦测: &#09;&#09;关闭</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bankds">移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;存折或者卡片&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！.&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;自动色彩侦测: &#09;&#09;关闭</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bus">USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;扫描区域大小: &#09;&#09;长纸&#13;&#10;&#09;多页取纸侦测: &#09;&#09;开启&#13;&#10;&#09;去空白页: &#09;&#09;开启&#13;&#10;&#09;自动色彩侦测:&#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;扫描区域大小: &#09;&#09;自动&#13;&#10;&#09;多页取纸侦测:&#09;&#09;关闭&#13;&#10;&#09;去空白页: &#09;&#09;关闭&#13;&#10;&#09;自动色彩侦测:&#09;&#09;关闭&#13;&#10;</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bank">移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;存折或者卡片&#13;&#10;&#09;扫描区域大小: &#09;长纸&#13;&#10;&#09;自动色彩侦测: &#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;扫描区域大小:&#09;自动&#13;&#10;&#09;自动色彩侦测:&#09;关闭</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bankds">移动电源供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;存折或者卡片&#13;&#10;&#09;自动色彩侦测: &#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;纸张类型: &#09;普通&#13;&#10;&#09;自动色彩侦测:&#09;关闭</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bus">USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;扫描区域大小: &#09;&#09;长纸&#13;&#10;&#09;多页取纸侦测: &#09;&#09;开启&#13;&#10;&#09;自动色彩侦测:&#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;扫描区域大小: &#09;&#09;自动&#13;&#10;&#09;多页取纸侦测:&#09;&#09;关闭&#13;&#10;&#09;自动色彩侦测:&#09;&#09;关闭&#13;&#10;</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Busd">USB供电模式不支持以下设置。&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测: &#09;&#09;关闭&#13;&#10;</sys:String>
-    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Buss">USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测:&#09;&#09;开启&#13;&#10;&#09;去空白页: &#09;&#09;开启&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测:&#09;&#09;关闭&#13;&#10;&#09;去空白页: &#09;&#09;关闭&#13;&#10;&#09;自动色彩侦测:&#09;&#09;关闭&#13;&#10;</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Buss">USB供电模式不支持以下设置。&#13;&#10;&#09;扫描模式: &#09;&#09;双面&#13;&#10;&#09;纸张类型: &#09;&#09;存折或者卡片&#13;&#10;&#09;多页取纸侦测:&#09;&#09;开启&#13;&#10;&#09;自动色彩侦测: &#09;&#09;开启&#13;&#10;如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！&#13;&#10;&#09;扫描模式: &#09;&#09;单面&#13;&#10;&#09;纸张类型: &#09;&#09;普通&#13;&#10;&#09;多页取纸侦测:&#09;&#09;关闭&#13;&#10;&#09;自动色彩侦测:&#09;&#09;关闭&#13;&#10;</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_Power_Bus_Wifi">由于USB总线供电方式不支持WIFI扫描，所以当前扫描工作将被取消。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_IE_verion">您电脑上安装的IE版本过低，登录页面可能会出现错误！</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_DocScan_calibration_fail">校正失败！</sys:String>
@@ -348,4 +351,8 @@
     <sys:String xml:space="preserve" x:Key="ResStr_Unable_to_preview">无法预览</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_Setting_Successfully_">设置完成，请重启设置以应用设置。</sys:String>
     <sys:String xml:space="preserve" x:Key="ResStr_The_valid_range_is_from__6_to_6__please_confirm_and_enter_again_">有效范围是-6到6，请检查并重新输入。</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Upload_File_Error">上传文件出现错误:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_OneDrive_Error">OneDrive 报告了一下错误:</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Upload_File_Not_Exist">上传的文件不存在!</sys:String>
+    <sys:String xml:space="preserve" x:Key="ResStr_Send_Mail_Error">请检查&#13;&#10;1.您的Outlook程序是否正确安装并能正常运行?&#13;&#10;2.您的Outlook是否已经设置成功?&#13;&#10;3.您的邮箱发送地址是否正确?&#13;&#10;4.您的邮件的附件是否太大?</sys:String>
 </ResourceDictionary>

@@ -70,12 +70,12 @@ JKDialog{
         decodeMode: mode === 1
         item_adfMode.enabled: powerMode !== JKEnums.PowerMode_usbBusPower
         item_colorMode.enabled: !radioButton_autoColorDetection_on.checked
-        item_skipBlankPage.enabled:
+//        item_skipBlankPage.enabled:
 //                                    comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
-                                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
-                                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
+//                                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+//                                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
 //                                    && radioButton_autoCropDeskew_on.checked
-                                    && powerMode !== JKEnums.PowerMode_usbBusPower
+//                                    && powerMode !== JKEnums.PowerMode_usbBusPower
         item_autoColorDetection.enabled:
 //                                      comboBox_scanAreaSize.currentText !== constPaperSizeMap.longPage
                                          (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
@@ -91,9 +91,9 @@ JKDialog{
 //        item_autoCropDeskew.enabled: comboBox_scanAreaSize.currentIndex < 2
 //                                     && !radioButton_skipBlankPage_on.checked
         radioButton_autoCropDeskew_on.checked:
-                                        radioButton_skipBlankPage_on.checked
-                                        || radioButton_autoColorDetection_on.checked
-                                        || item_skipBlankPage.enabled
+//                                        radioButton_skipBlankPage_on.checked
+                                        radioButton_autoColorDetection_on.checked
+//                                        || item_skipBlankPage.enabled
 //                                    (comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
 //                                    || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed)
 //                                    && powerMode !== JKEnums.PowerMode_usbBusPower
@@ -150,18 +150,18 @@ JKDialog{
                 radioButton_multiFeedDetection_on.checked = false
             }
         }
-        property bool lastSkipBlank: false
-        function updateRadio_skipBlank(){
-            if(comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
-              || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed
-                    ){
-                radioButton_skipBlankPage_on.checked = lastSkipBlank
-            }else{
+//        property bool lastSkipBlank: false
+//        function updateRadio_skipBlank(){
+//            if(comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
+//              || comboBox_scanAreaSize.currentText === constPaperSizeMap.autoNoMultiFeed
+//                    ){
+//                radioButton_skipBlankPage_on.checked = lastSkipBlank
+//            }else{
 //                if(radioButton_skipBlankPage_on.checked)
-                    lastSkipBlank = radioButton_skipBlankPage_on.checked
-                radioButton_skipBlankPage_on.checked = false
-            }
-        }
+//                    lastSkipBlank = radioButton_skipBlankPage_on.checked
+//                radioButton_skipBlankPage_on.checked = false
+//            }
+//        }
         property bool lastAutoColorDetection: false
         function updateRadio_autoColorDetection(){
             if((comboBox_scanAreaSize.currentText === constPaperSizeMap.auto
@@ -231,7 +231,7 @@ JKDialog{
             scanSettingView.updateComboxModel_dpi()
             scanSettingView.updateComboxModel_mediaType()
             scanSettingView.updateRadio_multiFeed()
-            scanSettingView.updateRadio_skipBlank()
+//            scanSettingView.updateRadio_skipBlank()
             scanSettingView.updateRadio_autoColorDetection()
 
         }
@@ -243,7 +243,7 @@ JKDialog{
         setting.multiFeed = scanSettingView.radioButton_multiFeedDetection_on.checked
         setting.autoCropAndDeskew = scanSettingView.radioButton_autoCropDeskew_on.checked
         setting.autoColorDetection = scanSettingView.radioButton_autoColorDetection_on.checked
-        setting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
+//        setting.skipBlankPage = scanSettingView.radioButton_skipBlankPage_on.checked
         setting.dpi = scanSettingView.comboBox_dpi.currentIndex
         setting.mediaType = scanSettingView.comboBox_mediaType.currentIndex
         setting.scanAreaSize = scanSettingView.comboBox_scanAreaSize.currentIndex
@@ -261,7 +261,7 @@ JKDialog{
         scanSettingView.radioButton_multiFeedDetection_on.checked = scanSetting.multiFeed
 //        scanSettingView.radioButton_autoCropDeskew_on.checked = scanSetting.autoCropAndDeskew
         scanSettingView.radioButton_autoColorDetection_on.checked = scanSetting.autoColorDetection
-        scanSettingView.radioButton_skipBlankPage_on.checked = scanSetting.skipBlankPage
+//        scanSettingView.radioButton_skipBlankPage_on.checked = scanSetting.skipBlankPage
 
         scanSettingView.comboBox_dpi.currentIndex = scanSetting.dpi
         scanSettingView.comboBox_mediaType.currentIndex = scanSetting.mediaType

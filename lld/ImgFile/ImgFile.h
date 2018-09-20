@@ -62,7 +62,8 @@ enum{
 
 
 #define IMG_A4_300_DOT_X	2480
-#define IMG_A4_300_DOT_Y	3512
+#define IMG_A4_300_DOT_Y	3511
+////
 #define IMG_A4_300_ORG_X		(IMG_300_DOT_X - IMG_A4_300_DOT_X)/2
 
 

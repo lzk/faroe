@@ -7,2225 +7,2631 @@
 <target>Print</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scan</source>
 <target>Scan</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Setting</source>
 <target>Settings...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Setting_Title</source>
 <target>Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Ready</source>
 <target>Ready</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Busy</source>
 <target>Busy</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Sleep</source>
 <target>Sleep</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Warning</source>
 <target>Warning</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Error</source>
 <target>Error</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Offline</source>
 <target>Offline</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Printing</source>
 <target>Printing</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanning</source>
 <target>Scanning...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Calibrating</source>
 <target>Calibrating...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Uploading</source>
 <target>Uploading...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Paper_Finished</source>
-<target>Paper %1 finished.</target>
+<target>Paper {0} finished.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Cancelling</source>
 <target>Canceling...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Residence_Booklet</source>
 <target>Residence Booklet</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Marriage_Certificate</source>
 <target>Marriage Certificate</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Passport</source>
 <target>Passport</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Real_Estate_License</source>
 <target>Property Ownership Certificate</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Driving_license</source>
 <target>Driving License</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Diploma</source>
 <target>Diploma</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Student_ID_card</source>
 <target>Student ID Card</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Birth_Certificate</source>
 <target>Birth Certificate</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Bank_SocialSecurity_Card</source>
 <target>Bank Card/Social Security Card</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_ID_Card</source>
 <target>ID Card</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Default</source>
 <target>Default</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_OK</source>
 <target>OK</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Back</source>
 <target>Return</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Delete</source>
 <target>Delete</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Cancel</source>
 <target>Cancel</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_B5</source>
 <target>B5</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DPI</source>
 <target>Resolution</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DPI1</source>
 <target>Resolution : </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Type</source>
 <target>Media Type</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanned_image_size</source>
 <target>Scanned image size: </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Color_Mode</source>
 <target>Color Mode</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Color_Mode1</source>
 <target>Color Mode : </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Color</source>
 <target>Color</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Grayscale</source>
 <target>Grayscale</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scan_Size</source>
 <target>Scan Area Size</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_A4_210_297mm_</source>
 <target>A4(210 x 297mm)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_A5_148_x_210mm_</source>
 <target>A5(148 x 210mm)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_B5_182_x_257mm_</source>
 <target>B5(182 x 257mm)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Letter_8_5_x_11</source>
 <target>Letter(8.5 x 11")</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_A6_105_x_148mm_</source>
 <target>A6(105 x 148mm)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_4_x_6_</source>
 <target>4 x 6"</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Contrast</source>
 <target>Contrast</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Brightness</source>
 <target>Brightness</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Printer_Wi_Fi</source>
 <target>Wi-Fi</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Soft_AP</source>
 <target>Soft AP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Device</source>
 <target>Device Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_TCP_IP</source>
 <target>TCP/IP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_About</source>
 <target>About</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_IP_Type</source>
 <target>IP Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DHCP</source>
 <target>DHCP/Auto IP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Static</source>
 <target>Static</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_IP_Address</source>
 <target>IP Address</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Gateway</source>
 <target>Gateway</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Submask</source>
 <target>Submask</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Apply</source>
 <target>Apply</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Calibration</source>
 <target>Calibration</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_WLAN_Network</source>
 <target>WLAN Network</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Protected_by_WPA2</source>
 <target>Protected by WPA2</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Protected_by_WEP</source>
 <target>Protected by WEP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Protected_by_Mixed_Mode_PSK</source>
 <target>Protected by Mixed Mode PSK</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Manual_Wi_Fi</source>
 <target>Manual Wi-Fi...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Password_</source>
 <target>Password:</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Password</source>
 <target>Password</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Display_Password</source>
 <target>Display Password</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_WEP_KeyID</source>
 <target>WEP KeyID</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_SSID</source>
 <target>SSID</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_SSID_</source>
 <target>SSID:</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Encryption</source>
 <target>Encryption</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Encryption_</source>
 <target>Encryption:</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_No_Security</source>
 <target>No Security</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_WEP</source>
 <target>WEP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_WPA2_PSK_AES</source>
 <target>WPA2-PSK-AES</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Mixed_Mode_PSK</source>
 <target>Mixed Mode PSK</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Connect</source>
 <target>Connect</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Find_and_join_the_Wi_Fi</source>
 <target>Find and join the Wi-Fi</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Enter_SSID_and_security_type_</source>
 <target>Enter SSID and Encryption.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Power_Save_Time</source>
 <target>Power Save Time :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_1_60_Minute</source>
 <target>(1-60 Minutes)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_0_4_Hour</source>
 <target>(0-4 Hours)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_SSID_2</source>
 <target>SSID</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Conn_list</source>
-<target>Connected:</target>
+<target>Connected</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Operation_cannot_be_carried_out_due_to_insufficient_memory_or_hard_disk_space_Please_try_again_after_freeing_memory_or_hard_disk_space_</source>
 <target>There is insufficient memory or disk space to complete the operation. Please free up some memory or disk space, then try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_valid_range_is_0_100__please_confirm_and_enter_again_</source>
 <target>The valid range is 0 to 100, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanning_image_has_been_changed__please_confirm_whether_save_it_or_not_</source>
 <target>The scanned image has been changed, do you want to save the changes?</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_</source>
 <target>The entered IP Address is incorrect, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_</source>
 <target>Invalid Gateway address. Please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation</source>
 <target>Invalid Submask. Please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_</source>
 <target>The valid range is 1 to 60, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_</source>
 <target>The valid range is 0 to 4, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_valid_range_is_from__6_to_6__please_confirm_and_enter_again_</source>
 <target>The valid range is from -6 to 6, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_1__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_</source>
 <target>The combination of IP address and subnet mask is invalid. All of the bits in the host address portion of the IP address are set to 1. Please enter a valid combination of IP address and subnet mask.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_The_combination_of_IP_address_and_subnet_mask_is_invalid__All_of_the_bits_in_the_host_address_portion_of_the_IP_address_are_set_to_0__Please_enter_a_valid_combination_of_IP_address_and_subnet_mask_</source>
 <target>The combination of IP address and subnet mask is invalid. All of the bits in the host address portion of the IP address are set to 0. Please enter a valid combination of IP address and subnet mask.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Setting_Successfully_</source>
 <target>Configuration completed! Please restart device to apply settings.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Setting_Completed</source>
 <target>Configuration completed!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Setting_Fail</source>
 <target>Configuration failed. Please check your setting and device, then try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_SoftAP</source>
 <target>Soft AP :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_Dropbox_UserChanged</source>
 <target>The login user has been changed, the current folder is not exist, please login again!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_PUshScan_PC</source>
 <target>Scan to PC</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_PUshScan_UD</source>
 <target>Scan to USB Disk</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_PUshScan_SMB</source>
 <target>Scan to SMB</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_PUshScan_FTP</source>
 <target>Scan to FTP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Msg_1</source>
 <target>Configuration completed. Restart the device to apply changes.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Msg_2</source>
 <target>The Password must be 5 or 13 ASCII characters or 10 or 26 hex characters, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Msg_3</source>
 <target>The Password must be 8 to 63 ASCII characters or 64 hex characters, please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Msg_9</source>
 <target>The SSID must be 1 to 32 characters long. Please check and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Exit</source>
 <target>Exit</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Unable_to_preview</source>
 <target>Unable to preview</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Yes</source>
 <target>Yes</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_No</source>
 <target>No</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_QRCode</source>
 <target>QR Code</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_BarCode</source>
 <target>Bar Code</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_All</source>
 <target>All</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Border_Color</source>
 <target>Border Color</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Preview</source>
 <target>Scan To Preview</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Quick_Preview</source>
 <target>Quick Scan Preview</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Close</source>
 <target>Close</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Open</source>
 <target>Open</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Return</source>
 <target>Return</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Prompt</source>
 <target>Information</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Email</source>
 <target>Email</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Address</source>
 <target>Address</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Are_you_sure_to_delete_the_selected_picture</source>
 <target>Do you want to delete the selected image?</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Connected</source>
 <target>Connected</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan</source>
 <target>DocScan Air</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_CopyRight</source>
 <target>Copyright (C) (2018)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Company</source>
-<target>Unisplendour Corporation Limited.</target>
+<target>Corporation Limited.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_AllRight</source>
 <target>All Rights Reserved.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_USBDevice</source>
 <target>USB Device </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Email_Format_Error</source>
 <target>The E-mail address format is incorrect, Please check you E-mail address and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_On</source>
 <target>On</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Off</source>
 <target>Off</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Image_file_not_found</source>
 <target>Image file cannot be found.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_TCP_IPv4</source>
 <target>TCP/IPv4</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Standard</source>
 <target>Standard</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Fine</source>
 <target>Fine</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_SuperFine</source>
 <target>Super Fine</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_HighestQuality</source>
 <target>Highest Quality</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_upload_wait</source>
 <target>Uploading, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Dropbox_File_Viewer</source>
 <target>Dropbox File Viewer</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Upload</source>
 <target>Upload</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Folder_Name</source>
 <target>Folder Name :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Auth_Dropbox</source>
 <target>Authenticate with Dropbox</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Saving_pic_PDF</source>
 <target>Saving, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Fail_save_pdf</source>
 <target>Fail to save pdf file. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_send_mail_fail</source>
 <target>Send Email failed. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_send_mail_ok</source>
 <target>Send Email completed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_save_file_ok</source>
 <target>Save files completed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Fail_save</source>
 <target>Fail to save files. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_upload_ok</source>
 <target>Upload completed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_upload_fail</source>
 <target>Upload failed. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_server_addr</source>
 <target>Server Address :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_AP_Viewer</source>
 <target>Windows Photo Viewer</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_AP_Paint</source>
 <target>Paint</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_AP_Others</source>
 <target>Other Applications</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_username</source>
 <target>User Name :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_password</source>
 <target>Password :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_targetPath</source>
 <target>Target Path :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_print_pic_wait</source>
 <target>Printing, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_print_fail</source>
 <target>Print failed. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_print_ok</source>
 <target>Print completed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_setting</source>
 <target>Scan Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_pushscan_setting</source>
 <target>Push Scan Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_setting1</source>
 <target>Scan Settings(AC Power)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_setting2</source>
 <target>Scan Settings(USB Bus Power)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_setting3</source>
 <target>Scan Settings(Power Bank)</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_ScanSize_Auto</source>
 <target>Auto</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Mediatype_Info</source>
 <target>Please switch to the Card mode on the machine!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_ScanSize_AutoNo</source>
 <target>Auto(No Multi-feed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_setting4</source>
 <target>Scan Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_qr_setting</source>
 <target>QRcode settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_quick</source>
 <target>Quick</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_quick_match</source>
 <target>Quick Scan List :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_ADF</source>
 <target>ADF Mode</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_ADF1</source>
 <target>ADF Mode : </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_2side</source>
 <target>Two Side</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_1side</source>
 <target>One Side</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_multifeed</source>
 <target>Multi Feed Detection</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_fileformat</source>
 <target>File Format</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_autocrop</source>
 <target>Auto Crop&amp;Deskew</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Scan_Print</source>
 <target>Scan To Print</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Scan_File</source>
 <target>Scan To File</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Scan_App</source>
 <target>Scan To Application</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Scan_Email</source>
 <target>Scan To Email</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Scan_FTP</source>
 <target>Scan To FTP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Scan_Cloud</source>
 <target>Scan To Cloud</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_app_setting</source>
 <target>Application Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_app_type</source>
 <target>Programs :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_cloud_setting</source>
 <target>Cloud Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_email_setting</source>
 <target>Email Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_file_setting</source>
 <target>File Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_ftp_setting</source>
 <target>FTP Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_print_setting</source>
 <target>Print Settings :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_search_dev</source>
 <target>Searching, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_open_p_fail</source>
 <target>Open program failed, </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_conn_fail</source>
 <target>Scanning connection failed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_net_scanner_busy</source>
 <target>The Device is currently in use. Confirm that the device is available and try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_GetInfo_Fail</source>
 <target>Could not read Status from device. Please wait for a while, then try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_paper_jam</source>
 <target>Paper jam!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_cover_open</source>
 <target>Cover is opened!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Pick_Roller_Home</source>
 <target>ADF pick roller not home!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_paper_not_ready</source>
 <target>Paper is not ready!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_adf_not_ready</source>
 <target>ADF is not ready!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Cover_Open</source>
 <target>Cover (ADF) is opened!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_home_not_ready</source>
 <target>Home is not ready!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_multifeed_error</source>
 <target>Multi-feed error!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_fail</source>
 <target>Scan failed</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_scan_all_blank</source>
 <target>Scan Images are all blank!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_calibration_fail</source>
 <target>Calibration failed!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_memory_full</source>
 <target>Device Memory is full!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Transfer_Error</source>
 <target>The Device transfering has some error!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_not_on_line</source>
 <target>The computer is not on line!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_not_initial</source>
 <target>The device is not initialized, all the parameter are not right, please reset the device registers!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Bankbook</source>
 <target>Deposit Book</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_IE_verion</source>
 <target>The Internet Explorer verion which is installed on your computer is too low, the login page will not execute well!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Type_Normal</source>
 <target>Normal</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Calibration</source>
 <target>Calibration:</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_SleepMode</source>
 <target>Sleep Mode:</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_AutoSleep</source>
 <target>Auto Sleep</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_AP_Name</source>
 <target>AP Name :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_AP_Path</source>
 <target>AP Path :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Legal_8_5_x_14</source>
 <target>Legal(8.5 x 14")</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Saving_pic_TIFF</source>
 <target>Saving, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Device_Disconnected</source>
 <target>The device is disconnected, the scanning will be canceled!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Network_fail</source>
 <target>The Network is not connected, please check your setting.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Are_you_sure_to_delete_the_quick_scan</source>
 <target>Are you sure to delete the Quick Scan Setting?</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Card</source>
 <target>Card</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_disconnet</source>
 <target>Disconnected</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_LongPage_</source>
 <target>Long Page</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Application_Support_Two_Pages</source>
 <target>Scan To Application only supports opening two pages at most.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanning_nofile_selected</source>
 <target>Please select one file at least, then try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_You_do_not_have_permission</source>
 <target>You do not have permission to save to the selected folder.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Do_you_want_to_exit</source>
 <target>Do you want to exit the DocScan Air?</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_the_machine_could_not_be_connected</source>
 <target>This device could not be connected!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Not_Find_Printer</source>
 <target>Not find printer!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Select_Pictures_to_process</source>
 <target>Please select one or more pictures to process!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Do_You_Want_to_Delete_All_Images</source>
 <target>Do you want to leave this page, if you exit, the all images will be delete?</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanning_is_canceled_on_machine</source>
 <target>The scan job has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Initial_Evernote_and_Get_Evernote_fail</source>
 <target>Initial Evernote and get EverNote list fail!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Evernote_attachment_files_could_not_more_than_60</source>
 <target>The ever note attachment files could not more than 60!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Images_files_Size_too_large</source>
 <target>Total image files size are too large, could not upload to EverNote server!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Connect_to_Evernote_server_fail</source>
 <target>Connect to EverNote server fail, please confirm you computer setting and your specify user name and password!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Get_EverNote_List_error</source>
 <target>Get Ever Note List Error!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Evernote_Tile_could_not_be_empty</source>
 <target>The Ever Note Title could not be empty!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Evernote_Title_could_not_be_all_space</source>
 <target>The Ever Note Title characters could not be all space!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Upload_files_fail</source>
 <target>Upload files fail, </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_could_not_be_empty</source>
-<target>The %1 could not be empty!</target>
+<target>The {0} could not be empty!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_specify_incorrect</source>
-<target>The %1 format is incorrect, Please check your %1 and enter again.</target>
+<target>The {0} format is incorrect, Please check your {0} and enter again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Device_disconnected</source>
 <target>Device is diconnected, could not Apply setting!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_File_Path_and_name_too_long</source>
 <target>Your Specify File Path + File Name is too long or not valid, please specify again!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Invalid_xxx</source>
-<target>Invalid value in %1.</target>
+<target>Invalid value in {0}.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Specify_File_Path_not_exist</source>
 <target>Your Specify File Path does not exist, please specify again!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Default_Save_Path_could_not_be_empty</source>
 <target>The Default Save Path could not be empty!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Folder_Name_exist</source>
 <target>The folder Name already exists!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Folder_New_Wait</source>
 <target>Updating files and folders, please wait for a moment!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Connect_OneDrive_Fail</source>
 <target>Connect to OneDrive server failed!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Connect_googleDrive_Fail</source>
 <target>Connect to Google Drive server failed!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Folder_Not_Exist</source>
-<target>The folder %1 does not exist, please double check and try again!</target>
+<target>The folder {0} does not exist, please double check and try again!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_File_exist_Do_You_overwrite</source>
 <target>The some upload files already exist. Do you want to overwrite?</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Update_File_fail</source>
-<target>Upload %1 failed!</target>
+<target>Upload {0} failed!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Not_Find_Outlook</source>
 <target>Could not find the outlook, please check you computer!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_File_Path_and_Name_too_long</source>
 <target>You specify the file path and file name is too long, please specify again </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Server_Address_Target_Path_too_long</source>
 <target>Your specify the Server Address and Target Path are too long!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Printer_Not_Ready</source>
 <target>Printer is not ready!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Printer_Not_Found</source>
 <target>Printer could not be found!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Quick_Scan_Exist</source>
 <target>Quick Scan item name already exists, please change to another name.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Decoding</source>
 <target>Decoding, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Doing_Calibration</source>
 <target>Doing Calibration, please wait...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DoCalibration_Completed</source>
 <target>Calibration completed!  Please restart your device.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_To_Application</source>
 <target>To Application</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Browse</source>
 <target>Browse...</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_EverNote_Viewer</source>
 <target>EverNote Viewer</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Note_Title</source>
 <target>Note Title :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Note_Title1</source>
 <target>Note Title. Please specify within a range of 1 to 32 characters</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Note_Content</source>
 <target>Note Content :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Default_Path</source>
 <target>Default save path :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Default_Path1</source>
 <target>Default save path. Please specify within a range of 1 to 255 characters</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_OneDrive_Viewer</source>
 <target>OneDrive File Viewer</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_To_FTP</source>
 <target>To FTP</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanning_files_not_exist</source>
 <target>The scanning files have been removed or deleted from current folder, please try to scan again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Add_Quick_SCan_Setting</source>
 <target>Add Quick Scan Setting</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Edit_Quick_SCan_Setting</source>
 <target>Edit Quick Scan Setting</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Name</source>
 <target>Name :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Type</source>
 <target>Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Info</source>
 <target>Information</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Decode</source>
 <target>Decode</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Separation</source>
 <target>Separation</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_ScanTo</source>
 <target>Scan To</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_QRBar_Code_Decode</source>
 <target>QRCode/Barcode Decode</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Code_Type</source>
 <target>Code Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Output_Result</source>
 <target>Output Result :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Document_Separation</source>
 <target>Document Separation</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Save_File_Type</source>
 <target>Save File Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_File_Path</source>
 <target>File Path :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_File_Path1</source>
 <target>File Path</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Cloud_Type</source>
 <target>Cloud Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Reset</source>
 <target>Switch Login User</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Email_Attachment_File_Type</source>
 <target>Email Attachment File Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Reset_Access</source>
 <target>Reset access token in cache :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Attachment_File_Type</source>
 <target>Attachment File Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Recipient</source>
 <target>Recipient :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Recipient1</source>
 <target>Recipient</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Subject</source>
 <target>Subject :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_File_Name</source>
 <target>File Name :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_File_Name1</source>
 <target>File Name</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_File_Path_And_Name</source>
 <target>File Name and File Path</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Name1</source>
 <target>Name</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_server_addr1</source>
 <target>Server Address</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_username1</source>
 <target>User Name</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_password1</source>
 <target>Password</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_targetPath1</source>
 <target>Target Path</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Printer_Name</source>
 <target>Printer Name :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_WLAN</source>
 <target>WLAN</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Select_All</source>
 <target>Select All</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_To_Print</source>
 <target>To Print</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_To_Email</source>
 <target>To Email</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_To_File</source>
 <target>To File</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_To_Cloud</source>
 <target>To Cloud</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Folder</source>
 <target>Folder</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_QuickScanSettings</source>
 <target>Quick Scan Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DecodeSettings</source>
 <target>Decode/Separation Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_ScanToSettings</source>
 <target>Scan To Settings</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_dropbox_fail</source>
 <target>Connect to Dropbox server fail!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Faore_dropbox_uplaod_fail</source>
 <target>Upload files to Dropbox Server fail!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Folder_Name1</source>
 <target>Folder Name </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Folder_Name</source>
 <target>The Folder Name could not be empty. Please specify within a range of 1 to 32 characters.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Output_Result</source>
 <target>Output Result</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Find_Printer_Error</source>
 <target>Could not find the printer. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_EverNote_List</source>
 <target>Ever Note List: </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Upload_success</source>
 <target>Upload success!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Device_Not_Ready</source>
 <target>The Device is not ready! Please check your computer setting or power on and plug in your device.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Power_Bank</source>
 <target>The scan job could not be continued, because the Power Bank mode does not support the following settings.&#13;&#10;&#09;Media Type: &#09;Deposit Book or Card&#13;&#10;&#09;Scan Size: &#09;Long Page Mode&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;Media Type: &#09;Normal&#13;&#10;&#09;Scan Size: &#09;Auto&#13;&#10;&#09;Auto Color Detection: &#09;Off</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Power_Bankds</source>
 <target>The scan job could not be continued, because the Power Bank mode does not support the following settings.&#13;&#10;&#09;Media Type: &#09;Deposit Book or Card&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;Media Type: &#09;Normal&#13;&#10;&#09;Auto Color Detection: &#09;Off</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Power_Bus</source>
-<target>The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;ADF Mode: &#09;&#09;Two Side&#13;&#10;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Scan Size: &#09;&#09;Long Page Mode&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;&#09;Skip Blank Page: &#09;&#09;On&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;ADF Mode: &#09;&#09;One Side&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Scan Size: &#09;&#09;Auto&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;&#09;Skip Blank Page: &#09;&#09;Off&#13;&#10;&#09;Auto Color Detection: &#09;Off&#13;&#10;</target>
+<target>The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;ADF Mode: &#09;&#09;Two Side&#13;&#10;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Scan Size: &#09;&#09;Long Page Mode&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;ADF Mode: &#09;&#09;One Side&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Scan Size: &#09;&#09;Auto&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;&#09;Auto Color Detection: &#09;Off&#13;&#10;</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Power_Busd</source>
 <target>The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Power_Buss</source>
-<target>The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;ADF Mode: &#09;&#09;Two Side&#13;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;&#09;Skip Blank Page: &#09;&#09;On&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;ADF Mode: &#09;&#09;One Side&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;&#09;Skip Blank Page: &#09;&#09;Off&#13;&#10;&#09;Auto Color Detection: &#09;Off&#13;&#10;</target>
+<target>The scan job could not be continued, because the USB Bus power mode does not support the following settings.&#13;&#10;&#09;ADF Mode: &#09;&#09;Two Side&#13;&#09;Media Type: &#09;&#09;Deposit Book or Card&#13;&#10;&#09;Multi Feed Detection: &#09;On&#13;&#10;&#09;Auto Color Detection: &#09;On&#13;&#10;If you select 'Yes', the scan job will be continued, but the following settings will be changed.&#13;&#10;If you select 'No', the scan job will be canceled!&#13;&#10;&#09;ADF Mode: &#09;&#09;One Side&#13;&#10;&#09;Media Type: &#09;&#09;Normal&#13;&#10;&#09;Multi Feed Detection: &#09;Off&#13;&#10;&#09;Auto Color Detection: &#09;Off&#13;&#10;</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Power_Bus_Wifi</source>
 <target>The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Gamma</source>
 <target>Gamma</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Skip_Blank_Page</source>
 <target>Skip Blank Page</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Auto_Color_Detect</source>
 <target>Auto Color Detection</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Auth_Google</source>
 <target>Authenticate with Google Drive</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_GoogleDrive_Viewer</source>
 <target>Google Drive File Viewer</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Create_Folder_fail</source>
-<target>Create Folder: %1 fail!</target>
+<target>Create Folder: {0} fail!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Fail_not_enough</source>
 <target>There is insufficient memory or disk space to complete the operation.Please free up some memory or disk space, then try again. </target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Clear</source>
 <target>Clear</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Fail_not_enough_canceled</source>
 <target>There is insufficient memory or disk space to complete the scanning. The scan job has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Roller_Count</source>
 <target>Retard Roller Count :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Life_Count</source>
 <target>Life Count</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Sleep_Time</source>
 <target>Sleep Time</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_AutoOff_Time</source>
 <target>Auto-Off Time</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_ACM_Count</source>
 <target>ACM Count :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scan_Count</source>
 <target>Scan Count :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Clear_Error</source>
 <target>The Device is not connected, please check you device and setting, then try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Calibration_Port_error</source>
 <target>Calibration only supports USB connection.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Calibration_Power_error</source>
 <target>Calibration only supports AC Power.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Network_Disconnected</source>
 <target>The Network of your computer is disconnected, please check your setting.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Connect_to_Google_server_fail</source>
 <target>Connect to Google Drive server fail, please confirm you computer setting and your specify user name and password!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Push_Scan_Type</source>
 <target>Push Scan Type :</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Google_Folder_Deleted</source>
 <target>The Default Path you selected has been deleted!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_ScanType_Setting</source>
 <target>This Push Scan Type Parameters must be used 'EWS' to setting!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_could_not_be_all_space</source>
-<target>The %1 cannot be all space!</target>
+<target>The {0} cannot be all space!</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Paint_Support_Two_Pages</source>
 <target>The Application Paint only supports opening two pages at most on the same time.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Scanning_is_canceled_Last</source>
 <target>The last scan job was canceled. Please clear the ADF of any remaining paper originals, and try again.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DoCalibration_Canceled</source>
 <target>The Calibration has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_DocScan_Open_Fail</source>
 <target>The saving files could be opened on current user mode, please check the files or use another application to open.</target>
 </phrase>
 
- 
+
+    
 <phrase>
 <source>ResStr_Do_you_want_to_clear</source>
 <target>Do you want to clear this count?</target>
 </phrase>
 
- 
+
+    
+<phrase>
+<source>ResStr_Upload_File_Error</source>
+<target>Uploading files error:</target>
+</phrase>
+
+
+    
+<phrase>
+<source>ResStr_OneDrive_Error</source>
+<target>OneDrive reported the following error:</target>
+</phrase>
+
+
+    
+<phrase>
+<source>ResStr_Upload_File_Not_Exist</source>
+<target>Uplading file is not exist!</target>
+</phrase>
+
+
+    
+<phrase>
+<source>ResStr_OneDrive_Folder_Fail</source>
+<target>Access OneDrive item fail!</target>
+</phrase>
+
+
+    
+<phrase>
+<source>ResStr_Send_Mail_Error</source>
+<target>Please double check&#13;&#10;1.Is your Outlook installed successfully and run normally?&#13;&#10;2.Is your Outlook setting successful?&#13;&#10;3.Is your sending email address right?&#13;&#10;4.Are your email attachment files too large?</target>
+</phrase>
+
+
+
 </QPH>

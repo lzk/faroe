@@ -495,7 +495,8 @@ Scanner::Setting DeviceManager::parseUiScannerSetting(const QString& obj)
     setting.format = SETTING_IMG_FORMAT_JPG;
 
     setting.bColorDetect = jsonScanSetting.value("autoColorDetection").toBool();
-    setting.bSkipBlankPage = jsonScanSetting.value("skipBlankPage").toBool();
+//    setting.bSkipBlankPage = jsonScanSetting.value("skipBlankPage").toBool();
+    setting.bSkipBlankPage = false;
     setting.gammaValue = jsonScanSetting.value("gamma").toInt();
     setting.type = jsonScanSetting.value("mediaType").toInt();
     return setting;

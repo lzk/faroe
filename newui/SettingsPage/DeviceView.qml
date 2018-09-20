@@ -72,6 +72,8 @@ Item {
                                 from: 1
                                 to:60
                                 value: 0
+                                maximumLength: 2
+                                tooltip.text: text >= 1 ?"": qsTr("ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_")
                             }
                         }
                         JKText {
@@ -111,6 +113,7 @@ Item {
                                 slider.visible: false
                                 to :4
                                 value :0
+                                tooltip.text:  text !== "" ?"": qsTr("ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_")
                             }
                         }
                         JKText {
@@ -253,8 +256,11 @@ Item {
             height: 60
             JKTextButton {
                 id: button_apply
-                enabled:((Math.floor(spin_saveTime.value) !== setting.saveTime)
-                         ||(Math.floor(spin_offTime.value) !== setting.offTime))
+                enabled:(spin_saveTime.text !== ""
+                          && spin_offTime.text !== ""
+                          &&(((Math.floor(Number.fromLocaleString(Qt.locale(), spin_saveTime.text)) !== setting.saveTime)
+                          && (Math.floor(Number.fromLocaleString(Qt.locale(), spin_saveTime.text)) !== 0))
+                         ||(Math.floor(Number.fromLocaleString(Qt.locale(), spin_offTime.text)) !== setting.offTime)))
                 text: qsTr("ResStr_Apply")
                 width: 150
                 height: 35

@@ -7,11 +7,15 @@ Item {
     width: 190
     height: 65
     property alias slider: slider
+    property alias input: input
+    property alias text: input.text
     property alias value: slider.value
     property alias from: doubleValidator.bottom
     property alias to: doubleValidator.top
     property alias stepSize: slider.stepSize
     property alias decimals: doubleValidator.decimals
+    property alias maximumLength: input.maximumLength
+    property alias tooltip: tooltip
 
     DoubleValidator {
         id:doubleValidator
@@ -90,6 +94,18 @@ Item {
                 onClicked: slider.increase()
                 enabled: root.value !== root.to
             }
+
+            Rectangle{
+                anchors.fill: input
+                anchors.topMargin: -5
+                anchors.bottomMargin: -5
+                anchors.leftMargin: 10
+                anchors.rightMargin: 10
+                color: "white"
+                border.color: tooltip.visible ?"red":"transparent"
+                border.width: 2
+            }
+
             TextInput{
                 id:input
                 width: parent.width - 60
@@ -125,15 +141,25 @@ Item {
                 }
 
                 onEditingFinished: {
-                    console.log("editing finished")
+                    console.log("editing finished:",text)
                     root.value = Number.fromLocaleString(Qt.locale(), text)
                     text = Qt.binding(function(){return root.value})
 
                 }
-//                onTextChanged: {
-//                    console.log("text changed:" ,text)
-//                    root.value = Number.fromLocaleString(Qt.locale(), text)
-//                }
+                onTextChanged: {
+                    console.log("text changed:" ,text)
+                    root.value = Number.fromLocaleString(Qt.locale(), text)
+                    console.log("value changed:" ,root.value)
+                }
+            }
+
+            ToolTip{
+                id:tooltip
+                visible: input.activeFocus && text !== ""
+                background: Rectangle{
+                    color: "#C7EECE"
+                }
+                closePolicy:Popup.NoAutoClose
             }
         }
 
