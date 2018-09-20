@@ -149,7 +149,7 @@ int UsbIO::resolveUrl(const char* url)
 //    if(!ok){
 //        return -1;
 //    }
-    strcpy(serial ,QUrlQuery(QUrl(url)).queryItemValue("address").toLatin1().data());
+    strcpy(serial ,QUrlQuery(QUrl(url)).queryItemValue("address").toUtf8().data());
 
     vid = -1;
     pid = -1;

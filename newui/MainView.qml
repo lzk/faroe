@@ -643,7 +643,7 @@ Item {
         })
     }
 
-    function endPhase(cmd ,result){
+    function endPhase(cmd ,result ,data){
         console.log("end phase:" ,cmd)
 
         switch(cmd){
@@ -903,8 +903,9 @@ Item {
             case JKEnums.CommandPhase_processing:
                 processPhase(cmd ,result ,resultType)
                 break
+
             case JKEnums.CommandPhase_complelte:
-                endPhase(cmd ,result ,resultType)
+                endPhase(cmd  ,result ,data ,resultType)
                 break
             default:
                 break

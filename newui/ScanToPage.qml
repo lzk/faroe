@@ -244,7 +244,7 @@ ScanToPageLayout {
                 var setting ={}
                 setting.cloudTypeText = scanData.scanToParameter.cloudTypeText
                 setting.callback = toCloud
-                setting.okButtonText = qsTr("ResStr_DocScan_Upload")
+                setting.okButtonText = 1 //qsTr("ResStr_DocScan_Upload")
                 setCmdExtra(DeviceStruct.CMD_Cloud_getFileList ,setting)
             }
         }

@@ -8,6 +8,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QImage>
+#include <QDateTime>
 ImageFunctions::ImageFunctions(QObject* parent)
     : QObject(parent)
       ,m_cancel(false)
@@ -40,7 +41,8 @@ void ImageFunctions::cancel(bool ccl)
 int ImageFunctions_Separation::preFunction(const QString& para)
 {
     separation_data.clear();
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    current_sd = NULL;
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QString filePath = jsonObj.value("filePath").toString();
     if(!filePath.isEmpty() && !QDir(filePath).exists()){
         return JKEnums::ImageCommandResult_error_invalidFilePath;
@@ -58,21 +60,34 @@ int ImageFunctions_Separation::function(const QStringList& fileList ,const QStri
             return JKEnums::ImageCommandResult_error_cancel;
         }
         str = DecodeManager().decodeOneD(filename);
-        found = false;
-        for(int i = 0 ;i < separation_data.count() ;i++){
-            struct Separation_data sd = separation_data[i];
-            if(sd.barcodeString == str){
-                found = true;
+        if(str.isEmpty()){
+            if(!current_sd){
+                struct Separation_data sd;
+                sd.barcodeString = str;
                 sd.fileList << filename;
-                separation_data[i] = sd;
-                break;
+                separation_data << sd;
+                current_sd = &separation_data.last();
+            }else{
+                current_sd->fileList << filename;
             }
-        }
-        if(!found){
-            struct Separation_data sd;
-            sd.barcodeString = str;
-            sd.fileList << filename;
-            separation_data << sd;
+        }else{
+            found = false;
+            for(int i = 0 ;i < separation_data.count() ;i++){
+                struct Separation_data* sd = &separation_data[i];
+                if(sd->barcodeString == str){
+                    found = true;
+                    sd->fileList << filename;
+                    current_sd = sd;
+                    break;
+                }
+            }
+            if(!found){
+                struct Separation_data sd;
+                sd.barcodeString = str;
+                sd.fileList << filename;
+                separation_data << sd;
+                current_sd = &separation_data.last();
+            }
         }
     }
     return JKEnums::CommandResult_NoError;
@@ -81,20 +96,28 @@ int ImageFunctions_Separation::function(const QStringList& fileList ,const QStri
 #include "../platform/platform.h"
 int ImageFunctions_Separation::postFunction(const QString& para)
 {
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     int fileType = jsonObj.value("fileType").toInt(0);
     QString filePath = jsonObj.value("filePath").toString();
     QString tmpFile = filePath + "/tmp.tif";
     QString fullFileName;
     int i=0 ,j=0;
+    QString tmp_filename;
+    tmp_filename = filePath + "/img" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss");
     foreach (struct Separation_data sd, separation_data) {
         if(m_cancel){
             return JKEnums::ImageCommandResult_error_cancel;
         }
-        fullFileName = filePath + QString().sprintf("/separation_%d.pdf" ,i);
-        if(QFile::exists(fullFileName))
-            QFile::remove(fullFileName);
+        if(sd.fileList.length() <= 0)
+            continue;
+        fullFileName = tmp_filename + QString().sprintf("%03dA#" ,i);
+        if(sd.barcodeString.isEmpty()){
+            fullFileName += "0";
+        }else{
+            fullFileName += sd.barcodeString;
+        }
         if(fileType == JKEnums::SeparationFileType_PDF){
+            fullFileName += ".pdf";
             saveMultiPagePdfImageInit(fullFileName);
             j = 0;
             foreach (QString filename, sd.fileList) {
@@ -103,9 +126,7 @@ int ImageFunctions_Separation::postFunction(const QString& para)
             }
             saveMultiPagePdfImageRelease();
         }else{
-            fullFileName = filePath + QString().sprintf("/separation_%d.tif" ,i);
-            if(QFile::exists(fullFileName))
-                QFile::remove(fullFileName);
+            fullFileName += ".tif";
             foreach (QString filename, sd.fileList) {
                 if(QImage(filename).save(tmpFile ,"tiff")){
                     saveMultiPageTiffImage(tmpFile ,fullFileName);
@@ -114,7 +135,6 @@ int ImageFunctions_Separation::postFunction(const QString& para)
             }
         }
         i++;
-        qDebug()<<"decode text:" << sd.barcodeString;
     }
     return JKEnums::CommandResult_NoError;
 }
@@ -129,7 +149,7 @@ int ImageFunctions_Decode::preFunction(const QString&)
 int ImageFunctions_Decode::function(const QStringList& fileList ,const QString& para)
 {
     ImageFunctions::function(fileList ,para);
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     int decodeType = jsonObj.value("codeType").toInt(0);
     struct DMDecodeResult dr;
     foreach (QString filename, fileList) {
@@ -161,14 +181,14 @@ int ImageFunctions_Decode::postFunction(const QString& para)
     if(m_cancel){
         return JKEnums::ImageCommandResult_error_cancel;
     }
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QString fileName = jsonObj.value("fileName").toString();
     QString tmppath = getTempPath();
     fileName = tmppath + "/" + fileName;
     QFileInfo info(fileName);
     if(info.suffix() != "html")
         fileName += ".html";
-    FILE* file = fopen(fileName.toLatin1().constData() ,"w");
+    FILE* file = fopen(fileName.toUtf8().constData() ,"w");
     if(file == NULL)
         return JKEnums::ImageCommandResult_error_unknown;
     const char* cFileName;
@@ -190,7 +210,7 @@ int ImageFunctions_Decode::postFunction(const QString& para)
     fprintf(file ,"<th> Contents  	 </th>\n");
     fprintf(file ,"</tr>\n");
     foreach (struct DMDecodeResult dr, decode_data) {
-        cFileName = QFileInfo(dr.fileName).fileName().toLatin1().constData();
+        cFileName = QFileInfo(dr.fileName).fileName().toUtf8().constData();
         fprintf(file ,"<tr>\n");
         fprintf(file ,"<td rowspan=\"%d\">%s</td>\n"
                              ,dr.result.count() ,cFileName);
@@ -226,7 +246,6 @@ int ImageFunctions_Decode::postFunction(const QString& para)
                 if(!firstLine){
                     fprintf(file ,"<tr>\n");
                 }
-                qDebug()<<"decode text:"<<result.text;
 
                 if(result.fileName.isEmpty()){
                     fprintf(file ,"<td>Null</td>\n");
@@ -245,12 +264,12 @@ int ImageFunctions_Decode::postFunction(const QString& para)
                             height = 100;
                         }
                     }
-                    fprintf(file ,"<td><img src=\"%s\" height=\"%d\" width=\"%d\"></td>\n"
-                                         ,QFileInfo(result.fileName).fileName().toLatin1().constData() ,height ,width);
+                    fprintf(file ,"<td><img src=\"%s\" width=\"%d\" height=\"%d\"></td>\n"
+                                         ,QFileInfo(result.fileName).fileName().toUtf8().constData() ,width ,height);
                 }
 
                 if(!result.text.isEmpty()){
-                    fprintf(file ,"<td>%s</td>\n" ,result.format.toLatin1().constData());
+                    fprintf(file ,"<td>%s</td>\n" ,result.format.toUtf8().constData());
                     bool isurl = false;
                     QString url = result.text.trimmed();
                     if(!url.contains(" ")){
@@ -295,7 +314,7 @@ int ImageFunctions_Decode::postFunction(const QString& para)
     fprintf(file ,"</body>\n");
     fprintf(file ,"</html>\n");
     fclose(file);
-    system((QString("open ") + fileName).toLatin1().constData());
+    system((QString("open ") + fileName).toUtf8().constData());
     return JKEnums::CommandResult_NoError;
 }
 
@@ -305,7 +324,7 @@ int ImageFunctions_Decode::postFunction(const QString& para)
 int ImageFunctions_ToPrint::function(const QStringList& fileList ,const QString& para)
 {
     ImageFunctions::function(fileList ,para);
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QString printerName = jsonObj.value("printerName").toString();
     qDebug()<<"printer name:"<<printerName<<"\tfile list:"<<fileList;
 
@@ -346,7 +365,7 @@ int ImageFunctions_ToEmail::postFunction(const QString& para)
 {
     if(m_fileList.isEmpty())
         return -1;
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     int fileType = jsonObj.value("fileType").toInt(0);
     QString subject =  jsonObj.value("subject").toString();
     QString recipient =  jsonObj.value("recipient").toString();
@@ -374,14 +393,15 @@ int ImageFunctions_ToEmail::postFunction(const QString& para)
     return JKEnums::CommandResult_NoError;
 }
 
-ImageFunctions_ToFile::ImageFunctions_ToFile(bool quickscan)
-    :isQuickScan(quickscan)
+ImageFunctions_ToFile::ImageFunctions_ToFile(bool quickscan ,QObject* parent)
+    : ImageFunctions(parent)
+    ,isQuickScan(quickscan)
 {
 }
 
 int ImageFunctions_ToFile::preFunction(const QString& para)
 {
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
 //    if(isQuickScan){
 //        QString filePath = jsonObj.value("filePath").toString();
 //        if(!QDir(filePath).exists()){
@@ -507,7 +527,7 @@ int ImageFunctions_ToApplication::postFunction(const QString& para)
 {
     if(m_fileList.isEmpty())
         return -1;
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
 //    int fileType = jsonObj.value("fileType").toInt(0);
 //    QString fileName;
 //    QString filePath;
@@ -527,7 +547,7 @@ int ImageFunctions_ToApplication::postFunction(const QString& para)
 
 int ImageFunctions_ToCloud::preFunction(const QString& para)
 {
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
     if(!cloudTypeText.compare("iCloud")){
         QString str;
@@ -541,7 +561,7 @@ int ImageFunctions_ToCloud::preFunction(const QString& para)
 int ImageFunctions_ToCloud::function(const QStringList& fileList,const QString& para)
 {
     ImageFunctions::function(fileList ,para);
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QString cloudTypeText = jsonObj.value("cloudTypeText").toString();
     if(!cloudTypeText.compare("iCloud")){
         foreach (QString fileName, fileList) {
@@ -559,23 +579,28 @@ int ImageFunctions_ToCloud::function(const QStringList& fileList,const QString& 
 #include <QThread>
 #include <QCoreApplication>
 #include <QUrl>
-#include <Qtftp/QFtp>
-ImageFunctions_ToFtp::ImageFunctions_ToFtp()
-    :
-      error(false)
-    ,ftp(NULL)
+ImageFunctions_ToFtp::ImageFunctions_ToFtp(QObject* parent)
+    : ImageFunctions(parent)
+     ,error(false)
+    ,timeout(false)
+    ,ftp(&m_ftp)
 {
+    connect(&timer ,&QTimer::timeout ,[=](){if(!done)timeout = true;});
+
+    ftp->setTransferMode(QFtp::Active);
+
+    connect(ftp ,&QFtp::done ,[=](bool error){this->error = error;done=true;});
+//    connect(ftp ,&QFtp::done ,this ,&ImageFunctions_ToFtp::ftpDone);
+//    connect(ftp ,&QFtp::commandFinished ,[=](int ,bool error){this->error = error;done=true;});
 }
 ImageFunctions_ToFtp::~ImageFunctions_ToFtp()
 {
-    if(ftp)
-        delete ftp;
 }
 
 
 int ImageFunctions_ToFtp::preFunction(const QString& para)
 {
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QString serverAddress = jsonObj.value("serverAddress").toString();
     QString userName = jsonObj.value("userName").toString();
     QString password = jsonObj.value("password").toString();
@@ -595,49 +620,45 @@ int ImageFunctions_ToFtp::preFunction(const QString& para)
     ftpUrl.setPassword(password);
     ftpUrl.setPath(targetPath);
 
-    if(ftp){
-        ftp->deleteLater();
-    }
-    ftp = new QFtp();
-//    connect(ftp ,&QFtp::done ,this ,&ImageFunctions_ToFtp::ftpDone);
-    QObject::connect(ftp ,&QFtp::done ,[=](bool error){this->error = error;done=true;});
-
-    int error;
-    error = waitForCmd(CMD_connect);
-    if(error)
-        return error;
-    error = waitForCmd(CMD_login);
-    if(error)
-        return error;
-    error = waitForCmd(CMD_mkdir);
-    error = waitForCmd(CMD_cd);
-    return error;
+    int ret = JKEnums::CommandResult_NoError;
+    ret = waitForCmd(CMD_connect);
+    if(ret)
+        return ret;
+    ret = waitForCmd(CMD_login);
+    if(ret)
+        return ret;
+    ret = waitForCmd(CMD_mkdir);
+    ret = waitForCmd(CMD_cd);
+    return ret;
 }
 
 int ImageFunctions_ToFtp::function(const QStringList& fileList,const QString& para)
 {
     ImageFunctions::function(fileList ,para);
-    int error;
+    int error = JKEnums::CommandResult_NoError;
     foreach (QString fileName, fileList) {
-        error = waitForCmd(CMD_put ,fileName ,150);
-        if(error)
+        error = waitForCmd(CMD_put ,fileName ,15);
+        if(error != JKEnums::CommandResult_NoError){
+            LOG_PARA("ftp command error:%d" ,error);
             break;
+        }
     }
     return error;
 }
 
 int ImageFunctions_ToFtp::postFunction(const QString&)
 {
-    if(ftp){
-        delete ftp;
-        ftp = NULL;
-    }
+    ftp->close();
     return JKEnums::CommandResult_NoError;
 }
 
+#include <QTimer>
 int ImageFunctions_ToFtp::waitForCmd(int cmd ,const QString& para ,int time)
 {
+    int ret = JKEnums::CommandResult_NoError;
     QFile* file = NULL;
+    done = false;
+    timeout = false;
     switch (cmd) {
     case CMD_connect:
         LOG_NOPARA("connect host:" + ftpUrl.host());
@@ -645,7 +666,7 @@ int ImageFunctions_ToFtp::waitForCmd(int cmd ,const QString& para ,int time)
 //        ftp->connectToHost(ftpUrl.host() ,ftpUrl.port());
         break;
     case CMD_login:
-        ftp->login(QUrl::fromPercentEncoding(ftpUrl.userName().toLatin1()), ftpUrl.password());
+        ftp->login(QUrl::fromPercentEncoding(ftpUrl.userName().toUtf8()), ftpUrl.password());
         break;
     case CMD_cd:
         ftp->cd(ftpUrl.path());
@@ -658,43 +679,68 @@ int ImageFunctions_ToFtp::waitForCmd(int cmd ,const QString& para ,int time)
         QString remoteFileName = QFileInfo(fileName).fileName();
         file = new QFile(fileName);
         file->setParent(ftp);
-        ftp->put(file ,remoteFileName);
+        if(file->open(QIODevice::ReadOnly)){
+            ftp->put(file ,remoteFileName);
+        }
+//        if(file->open(QIODevice::ReadOnly)){
+//            QByteArray data = file->readAll();
+//            ftp->put(data ,remoteFileName);
+//            file->close();
+//        }
+
     }
         break;
     default:
         return JKEnums::ImageCommandResult_error_unknown;
     }
-    done = false;
     LOG_PARA("ftp command:%d" ,cmd);
-    for(int i = 0 ;i < time ;i++){
+//    QTimer::singleShot(time * 100 ,[=](){if(!done)timeout = true;});
+    timer.start(time * 1000);
+    while (1) {
         if(m_cancel){
-            return JKEnums::ImageCommandResult_error_cancel;
+            ret = JKEnums::ImageCommandResult_error_cancel;
+            break;
         }
         QCoreApplication::processEvents();
+        if(timeout){
+            ret = JKEnums::ImageCommandResult_error_ftpTimeout;
+            break;
+        }
         if(done){
+            if(file){
+                if(file->isOpen())
+                    file->close();
+                delete file;
+                file = NULL;
+            }
             if(error){
                 switch (cmd) {
                 case CMD_connect:
-                    return JKEnums::ImageCommandResult_error_ftpConnect;
+                    ret = JKEnums::ImageCommandResult_error_ftpConnect;
+                    break;
                 case CMD_login:
-                    return JKEnums::ImageCommandResult_error_ftpLogin;
+                    ret = JKEnums::ImageCommandResult_error_ftpLogin;
+                    break;
                 case CMD_cd:
-                    return JKEnums::ImageCommandResult_error_ftpCd;
+                    ret = JKEnums::ImageCommandResult_error_ftpCd;
+                    break;
                 case CMD_put:
-                    if(file)
-                        file->deleteLater();
-                    return JKEnums::ImageCommandResult_error_ftpPut;
+                    ret = JKEnums::ImageCommandResult_error_ftpPut;
+                    break;
                 case CMD_mkdir:
                 default:
-                    return JKEnums::CommandResult_NoError;
+                    ret = JKEnums::CommandResult_NoError;
+                    break;
                 }
             }else{
-                return JKEnums::CommandResult_NoError;
+                ret = JKEnums::CommandResult_NoError;
             }
+            break;
         }
-        QThread::msleep(100);
     }
-    return JKEnums::ImageCommandResult_error_ftpTimeout;
+    timer.stop();
+    ftp->abort();
+    return ret;
 }
 
 //void ImageFunctions_ToFtp::ftpDone(bool error){

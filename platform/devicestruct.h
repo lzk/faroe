@@ -13,50 +13,50 @@ class DeviceStruct : public QObject {
 
 public:
     enum CmdType{
-        CMD_PRINT,
-        CMD_SCAN,
-        CMD_setWifi,
-        CMD_getWifiInfo,
-        CMD_setPassword,
-        CMD_confirmPassword,
-        CMD_setSaveTime,
-        CMD_getSaveTime,
-        CMD_setOffTime,
-        CMD_getOffTime,
-        CMD_getIpv4,
-        CMD_setIpv4,
-        CMD_getSoftap,
-        CMD_setSoftap,
-        CMD_getDeviceSetting,
-        CMD_setDeviceSetting,
+        CMD_PRINT,              //0
+        CMD_SCAN,              //1
+        CMD_setWifi,              //2
+        CMD_getWifiInfo,              //3
+        CMD_setPassword,              //4
+        CMD_confirmPassword,              //5
+        CMD_setSaveTime,              //6
+        CMD_getSaveTime,              //7
+        CMD_setOffTime,              //8
+        CMD_getOffTime,              //9
+        CMD_getIpv4,              //10
+        CMD_setIpv4,              //11
+        CMD_getSoftap,              //12
+        CMD_setSoftap,              //13
+        CMD_getDeviceSetting,              //14
+        CMD_setDeviceSetting,              //15
 
-        CMD_MAX,
-        CMD_ScanTo,
-        CMD_ScanTo_ToPrint,
-        CMD_ScanTo_ToFile,
-        CMD_ScanTo_ToApplication,
-        CMD_ScanTo_ToEmail,
-        CMD_ScanTo_ToFTP,
-        CMD_ScanTo_ToCloud,
-        CMD_QuickScan,
-        CMD_QuickScan_ToPrint,
-        CMD_QuickScan_ToFile,
-        CMD_QuickScan_ToApplication,
-        CMD_QuickScan_ToEmail,
-        CMD_QuickScan_ToFTP,
-        CMD_QuickScan_ToCloud,
-        CMD_DecodeScan,
-        CMD_SeperationScan,
+        CMD_MAX,              //16
+        CMD_ScanTo,              //17
+        CMD_ScanTo_ToPrint,              //18
+        CMD_ScanTo_ToFile,              //19
+        CMD_ScanTo_ToApplication,              //20
+        CMD_ScanTo_ToEmail,              //21
+        CMD_ScanTo_ToFTP,              //22
+        CMD_ScanTo_ToCloud,              //23
+        CMD_QuickScan,              //24
+        CMD_QuickScan_ToPrint,              //25
+        CMD_QuickScan_ToFile,              //26
+        CMD_QuickScan_ToApplication,              //27
+        CMD_QuickScan_ToEmail,              //28
+        CMD_QuickScan_ToFTP,              //29
+        CMD_QuickScan_ToCloud,              //30
+        CMD_DecodeScan,             //31
+        CMD_SeperationScan,             //32
 
-        CMD_getPowerSupply,
-        CMD_setPowerSaveTime,
-        CMD_clearRollerCount,
-        CMD_clearACMCount,
-        CMD_doCalibration,
-        CMD_Cloud_isLogin,
-        CMD_Cloud_getFileList,
-        CMD_Cloud_upload,
-        CMD_Cloud_isExist,
+        CMD_getPowerSupply,             //33
+        CMD_setPowerSaveTime,             //34
+        CMD_clearRollerCount,             //35
+        CMD_clearACMCount,             //36
+        CMD_doCalibration,             //37
+        CMD_Cloud_isLogin,             //38
+        CMD_Cloud_getFileList,             //39
+        CMD_Cloud_upload,             //40
+        CMD_Cloud_isExist,             //41
     };
 
     enum StatusType{

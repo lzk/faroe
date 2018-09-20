@@ -12,7 +12,7 @@ JKDialog {
     signal accepted(var para)
     property var setting: {
         var tmp = JSData.defaultCloudSettings()
-        tmp.okButtonText = qsTr("ResStr_OK")
+        tmp.okButtonText = 0 //qsTr("ResStr_OK")
         tmp.fileList = [{
                             "imageUrl":"qrc:/Images/Folder-icon.png"
                             ,"fileName": "folder"
@@ -131,7 +131,7 @@ JKDialog {
                 width: 100
                 height: 35
                 anchors.centerIn: parent
-                text:setting.okButtonText
+                text:setting.okButtonText === 0 ?qsTr("ResStr_OK") :qsTr("ResStr_DocScan_Upload")
             }
         }
     }

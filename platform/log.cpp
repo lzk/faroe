@@ -34,20 +34,20 @@ void init_log()
     int ret;
     str = str.sprintf("echo \"----------------VOP %s------------------\" > " ,vop_version);
     str += realLogFile;
-    ret = system(str.toLatin1());
+    ret = system(str.toUtf8());
 
 //    str = "";
     str = "chmod 666 " + realLogFile + " 2>>" + realLogFile;
-    ret = system(str.toLatin1());
+    ret = system(str.toUtf8());
     str = "rm " + log_file + " 2>>" + realLogFile;
-    ret = system(str.toLatin1());
+    ret = system(str.toUtf8());
     str = "ln -s " + realLogFile + " " + log_file + " 2>>" + realLogFile;
-    ret = system(str.toLatin1());
+    ret = system(str.toUtf8());
     str = "uname -a >> " + realLogFile;
-    ret = system(str.toLatin1());
+    ret = system(str.toUtf8());
 #ifdef Q_OS_LINUX
     str = "cat /etc/issue >> " +realLogFile;
-    ret = system(str.toLatin1());
+    ret = system(str.toUtf8());
 #endif
 #endif
 }

@@ -214,7 +214,7 @@ Item {
             setting.cloudTypeText = root.setting.cloudTypeText
             setting.filePath = textInput41.text
             setting.callback = accepted
-            setting.okButtonText = qsTr("ResStr_OK")
+            setting.okButtonText = 0 //qsTr("ResStr_OK")
             setCmdExtra(DeviceStruct.CMD_Cloud_getFileList ,setting)
         }
     }

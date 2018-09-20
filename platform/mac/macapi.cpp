@@ -15,7 +15,6 @@ static QPainter* painter = NULL;
 void saveMultiPagePdfImageInit(const QString& fileName)
 {
     printer = new QPrinter;
-    LOG_NOPARA("printer:" + printer->printerName());
     printer->setPageSize(QPrinter::A4); //设置纸张大小为A4
     printer->setOutputFormat(QPrinter::PdfFormat); //设置输出格式为pdf
     printer->setOutputFileName(fileName);  //设置输出路径

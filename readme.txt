@@ -1,7 +1,7 @@
 1—qtftp
 1. git clone qtftp.git
 2. Open qtftp/qtftp.pro 
-3. shadow build dir: ../build/Release
+3. shadow build dir: build/Release
 4. build release
 5. Close project
 
@@ -11,7 +11,7 @@
    shadow build dir: ../build/debug
    qmake (default)
    make (default)
-   cp ../../mac/toemail faroeVOP.app/Contents/Resources
+   cp -rf ../../mac/Resources/* faroeVOP.app/Contents/Resources
    macdeployqt faroeVOP.app -qmldir=${QTDIR}/qml
 
 
@@ -27,10 +27,10 @@ Xcode build
 2. Config 
    1.iCloud Mac develop/distribute
    2.signing add other code signing Flags  “-—deep”
-   3.copy mac/faroeVOP.icns to Resource
-   4.copy mac/toemail to Resource
-   5.add script
+   3.add script
 /Volumes/work/software/Qt/latest/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt/latest/clang_64/qml
+   4.add script
+mkdir -p ${CODESIGNING_FOLDER_PATH}/Contents/Resources/ && cp -rf Resources/* ${CODESIGNING_FOLDER_PATH}/Contents/Resources/
    
 
 

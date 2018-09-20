@@ -23,7 +23,7 @@ QString AppQt::getStillTempFilename(int side)
 const char* AppQt::getTempFilename(int side)
 {
     QString tmppath = getStillTempFilename(side);
-    return tmppath.toLatin1().constData();//
+    return tmppath.toUtf8().constData();//
 }
 
 bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
@@ -53,7 +53,7 @@ bool AppQt::saveScanImage(Scanner::Setting* setting ,Scanner::Para_Extra* para)
         }
     }
     QString scanFileName = getStillTempFilename(para->dup);
-    err = saveJpgFile(scanFileName.toLatin1().constData() ,para);
+    err = saveJpgFile(scanFileName.toUtf8().constData() ,para);
     if(err){
         LOG_NOPARA("save jpg fail");
         return false;
@@ -132,7 +132,7 @@ int AppQt::setBrightnessAndContrast(const QString& fileName ,int brightness ,int
     qDebug()<<"image format:"<<image.format();
     switch (image.format()) {
     case QImage::Format_ARGB32:
-    case QImage::QImage::Format_RGB32:
+    case QImage::Format_RGB32:
         for(int y = 0 ;y < height ;y++){
             pixel = line;
             for(int x = 0 ;x < width ;x++){
@@ -154,7 +154,7 @@ int AppQt::setBrightnessAndContrast(const QString& fileName ,int brightness ,int
             line += bytesPerLine;
         }
         break;
-    case QImage::QImage::Format_RGB888:
+    case QImage::Format_RGB888:
         for(int y = 0 ;y < height ;y++){
             pixel = line;
             for(int x = 0 ;x < width ;x++){

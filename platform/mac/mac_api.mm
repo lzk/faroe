@@ -72,7 +72,7 @@ bool iCloudCheckLogin(QString& para)
     }else{
         NSLog(@"iCloud is  sign out");
     }
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     jsonObj.insert("isLogin" ,isLogin);
     para = QString(QJsonDocument(jsonObj).toJson());
     return isLogin;
@@ -90,7 +90,7 @@ bool iCloudGetFileList(QString& para)
         return false;
     }
     
-    QJsonObject jsonObj = QJsonDocument::fromJson(para.toLatin1()).object();
+    QJsonObject jsonObj = QJsonDocument::fromJson(para.toUtf8()).object();
     QJsonArray jarray;
     NSMetadataItem *item;
     NSString *fileName;

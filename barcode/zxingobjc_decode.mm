@@ -17,11 +17,11 @@ static NSMutableArray* OCdecode(const uchar* bytes ,int pixelsWidth ,int pixelsH
     NSError *error;
     NSMutableArray* results = [NSMutableArray array];
 //    @autoreleasepool {
-        
+
         ZXRGBLuminanceSource* source = [[ZXRGBLuminanceSource alloc] initWithWidth:pixelsWidth height:pixelsHight pixels:((int*) bytes) pixelsLen:pixelsWidth*pixelsHight];
         ZXHybridBinarizer *binarizer = [[ZXHybridBinarizer alloc] initWithSource: source];
         ZXBinaryBitmap *bitmap = [[ZXBinaryBitmap alloc] initWithBinarizer:binarizer];
-        
+
         ZXDecodeHints *hints = [ZXDecodeHints hints];
         hints.tryHarder = true;
         if(!decodeMulti){
@@ -145,9 +145,13 @@ QList<DMResult> zxing_decode(const QImage& image ,int decodeMode ,bool decodeMul
             reader = [[ZXMultiFormatReader alloc] init];
             break;
         }
-        int pixelsWidth = image.width();
-        int pixelsHight = image.height();
-        const uchar* bytes = image.constBits();
+        QImage aaa = image;
+        if(image.depth() != 32){
+            aaa = image.convertToFormat(QImage::Format_RGB32);
+        }
+        int pixelsWidth = aaa.width();
+        int pixelsHight = aaa.height();
+        const uchar* bytes = aaa.constBits();
         results = [OCdecode(bytes ,pixelsWidth ,pixelsHight ,reader ,decodeMulti) mutableCopy];
     }
     QList<DMResult> resultList;

@@ -10,7 +10,6 @@
 
 #include "../platform/devicemanager.h"
 #include "ImageViewer/imagemodel.h"
-#include "../imageManager/imagemanager.h"
 using namespace JK;
 #include "../platform/devicestruct.h"
 #include "../newui/jkenums.h"
@@ -27,44 +26,13 @@ JKInterface::JKInterface(QObject *parent)
     worker->moveToThread(&thread);
     connect(&thread ,SIGNAL(finished()) ,worker ,SLOT(deleteLater()));
 
-//    deviceManager = new DeviceManager(this);
-//    deviceManager->moveToThread(&thread);
-//    connect(&thread ,SIGNAL(finished()) ,deviceManager ,SLOT(deleteLater()));
-
-//    connect(this ,SIGNAL(searchDeviceList()) ,deviceManager ,SLOT(searchDeviceList()));
-//    connect(this ,SIGNAL(connectDevice(int)) ,deviceManager ,SLOT(connectDevice(int)));
-//    connect(deviceManager ,SIGNAL(searchComplete()) ,this , SIGNAL(searchComplete()));
-//    connect(deviceManager ,&DeviceManager::updateDeviceList ,this ,&JKInterface::updateDeviceList);
-//    connect(deviceManager ,&DeviceManager::deviceConnected ,this ,&JKInterface::deviceConnected);
-//    connect(deviceManager ,&DeviceManager::updateDeviceStatus ,this ,&JKInterface::updateDeviceStatus);
-
-//    connect(this ,&JKInterface::cmdToDevice ,deviceManager ,&DeviceManager::cmdToDevice);
-//    connect(deviceManager ,&DeviceManager::cmdResult ,this , &JKInterface::deviceCmdResult);
-//    connect(deviceManager ,&DeviceManager::scanedImage ,this ,&JKInterface::scanedImage);
-//    connect(deviceManager ,&DeviceManager::progressChanged ,this ,&JKInterface::progressChanged);
-//    connect(this ,&JKInterface::init ,deviceManager ,&DeviceManager::init);
-
-//    imageManager = new ImageManager;
-//    imageManager->moveToThread(&thread_decode);
-//    connect(&thread_decode ,SIGNAL(finished()) ,imageManager ,SLOT(deleteLater()));
-//    connect(this ,&JKInterface::imagesCmd ,imageManager ,&ImageManager::imagesCmd);
-//    connect(this ,&JKInterface::imagesCmdStart ,imageManager ,&ImageManager::imagesCmdStart);
-//    connect(this ,&JKInterface::imagesCmdEnd ,imageManager ,&ImageManager::imagesCmdEnd);
-//    connect(imageManager ,&ImageManager::imagesCommandResult ,this ,&JKInterface::imagesCmdResult);
-//    connect(this ,&JKInterface::init ,imageManager ,&ImageManager::init);
-//    connect(this ,&JKInterface::cmdExtra ,imageManager ,&ImageManager::cmdExtra);
-//    connect(imageManager ,&ImageManager::cmdExtraResult ,this ,&JKInterface::cmdExtraResult);
-
     thread.start();
-//    thread_decode.start();
 }
 
 JKInterface::~JKInterface()
 {
     thread.quit();
     thread.wait();
-//    thread_decode.quit();
-//    thread_decode.wait();
     this->scanData = NULL;
 }
 void JKInterface::setScanDataHandle(QObject *scanData)
@@ -126,7 +94,7 @@ void JKInterface::setCmd(int cmd ,const QString& data,QStringList fileList)
     switch (cmd) {
     //quick scan and decode sepearation check first.
     case DeviceStruct::CMD_QuickScan_ToFile:{
-        QJsonObject jsonObj = QJsonDocument::fromJson(data.toLatin1()).object();
+        QJsonObject jsonObj = QJsonDocument::fromJson(data.toUtf8()).object();
         QString filePath = jsonObj.value("filePath").toString();
         if(!QDir(filePath).exists()){
             emit cmdResultToUi(cmd ,data ,JKEnums::ImageCommandResult_error_invalidFilePath);
@@ -149,7 +117,7 @@ void JKInterface::setCmd(int cmd ,const QString& data,QStringList fileList)
         break;
     case DeviceStruct::CMD_QuickScan_ToPrint:
     {
-        QJsonObject jsonObj = QJsonDocument::fromJson(data.toLatin1()).object();
+        QJsonObject jsonObj = QJsonDocument::fromJson(data.toUtf8()).object();
         QString printerName = jsonObj.value("printerName").toString();
         foreach (QPrinterInfo pi, QPrinterInfo::availablePrinters()) {
             if(!printerName.compare(pi.description())){
