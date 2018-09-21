@@ -21,7 +21,7 @@
     <message>
         <location filename="../About.qml" line="44"/>
         <source>ResStr_Company</source>
-        <translation>Unisplendour Corporation Limited.</translation>
+        <translation>Wireless Scanner</translation>
     </message>
     <message>
         <location filename="../About.qml" line="49"/>
@@ -282,7 +282,7 @@
         <location filename="../MainView.qml" line="281"/>
         <location filename="../MainView.qml" line="284"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>%1不能为空！</translation>
+        <translation>{0}不能为空！</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="260"/>
@@ -290,7 +290,7 @@
         <location filename="../MainView.qml" line="284"/>
         <location filename="../MainView.qml" line="292"/>
         <source>ResStr_File_Name1</source>
-        <translation>文件名称。</translation>
+        <translation>文件名称</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="266"/>
@@ -298,7 +298,7 @@
         <location filename="../MainView.qml" line="287"/>
         <location filename="../MainView.qml" line="292"/>
         <source>ResStr_Invalid_xxx</source>
-        <translation>无效的%1.</translation>
+        <translation>无效的{0}。</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="272"/>
@@ -374,13 +374,13 @@
         <location filename="../MainView.qml" line="502"/>
         <source>ResStr_DocScan_Power_Bank</source>
         <translation>移动电源供电模式不支持以下设置。
-	纸张类型: 	Deposit Book or Card
+	纸张类型: 	存折或者卡片
 	扫描区域大小: 	长纸
-	自动色彩侦测: 		开启
-如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！.
+	自动色彩侦测: 	开启
+如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！
 	纸张类型: 	普通
 	扫描区域大小:	自动
-	自动色彩侦测: 		关闭</translation>
+	自动色彩侦测:	关闭</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="514"/>
@@ -390,14 +390,12 @@
 	纸张类型: 		存折或者卡片
 	扫描区域大小: 		长纸
 	多页取纸侦测: 		开启
-	去空白页: 		开启
 	自动色彩侦测:		开启
 如果你选择“是”，扫描将继续进行，但是以下设置将会被更改。如果你选择“否”，扫描将会被取消！
 	扫描模式: 		单面
 	纸张类型: 		普通
 	扫描区域大小: 		自动
 	多页取纸侦测:		关闭
-	去空白页: 		关闭
 	自动色彩侦测:		关闭
 </translation>
     </message>
@@ -611,7 +609,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="124"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>%1不能为空！</translation>
+        <translation>{0}不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="124"/>
@@ -622,7 +620,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="127"/>
         <source>ResStr_could_not_be_all_space</source>
-        <translation>%1不能全部为空格！</translation>
+        <translation>{0}不能全部为空格！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="146"/>
@@ -651,7 +649,7 @@
     <message>
         <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="94"/>
         <source>ResStr_DocScan_Output_Result</source>
-        <translation>输出结果</translation>
+        <translation>输出结果：</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="127"/>
@@ -1159,7 +1157,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToEmailView.qml" line="106"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>%1不能为空！</translation>
+        <translation>{0}不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToEmailView.qml" line="106"/>
@@ -1200,7 +1198,7 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="137"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="142"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>%1不能为空！</translation>
+        <translation>{0}不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="127"/>
@@ -1228,7 +1226,7 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="147"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="152"/>
         <source>ResStr_specify_incorrect</source>
-        <translation>%1格式错误，请检查{1}并重新输入.</translation>
+        <translation>{0}格式错误，请检查{1}并重新输入。</translation>
     </message>
 </context>
 <context>
@@ -1263,7 +1261,7 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="133"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="139"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>%1不能为空！</translation>
+        <translation>{0}不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="129"/>
@@ -1279,12 +1277,12 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="139"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="157"/>
         <source>ResStr_File_Name1</source>
-        <translation>文件名称。</translation>
+        <translation>文件名称</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="157"/>
         <source>ResStr_Invalid_xxx</source>
-        <translation>无效的%1.</translation>
+        <translation>无效的{0}。</translation>
     </message>
 </context>
 <context>
@@ -1368,7 +1366,7 @@
     <message>
         <location filename="../ScanPage/ScanningDialog.qml" line="120"/>
         <source>ResStr_Paper_Finished</source>
-        <translation>第%1张完成。</translation>
+        <translation>第{0}张完成。</translation>
     </message>
 </context>
 <context>
@@ -1376,7 +1374,7 @@
     <message>
         <location filename="../SearchDevicePage.qml" line="74"/>
         <source>ResStr_Faore_USBDevice</source>
-        <translation>USB Device </translation>
+        <translation>USB 设备 </translation>
     </message>
     <message>
         <location filename="../SearchDevicePage.qml" line="83"/>
@@ -1391,7 +1389,7 @@
     <message>
         <location filename="../SearchDevicePage.qml" line="146"/>
         <source>ResStr_DocScan_search_dev</source>
-        <translation>搜索中，请稍候。。。</translation>
+        <translation>搜索中，请稍候...</translation>
     </message>
 </context>
 <context>
@@ -1497,7 +1495,7 @@
         <location filename="../SettingsPage/TcpipView.qml" line="127"/>
         <location filename="../SettingsPage/TcpipView.qml" line="202"/>
         <source>ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation</source>
-        <translation>子网掩码不争取， 请重新输入。</translation>
+        <translation>子网掩码不正确， 请重新输入。</translation>
     </message>
     <message>
         <location filename="../SettingsPage/TcpipView.qml" line="146"/>

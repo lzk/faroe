@@ -62,6 +62,7 @@ ScanPageLayout {
         adfMode:currentQuickScanSetting.scanSetting.adfMode
         colorMode: currentQuickScanSetting.scanSetting.colorMode
         dpi:currentQuickScanSetting.scanSetting.dpi
+        name:currentQuickScanSetting.name
     }
 
     onVisibleChanged: {

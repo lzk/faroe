@@ -20,7 +20,7 @@ Window {
 
         RectangularGlow{
             anchors.fill: parent
-            glowRadius: 10
+            glowRadius: 5
             spread: 0.2
             color: "#FF858484"
             cornerRadius: glowRadius

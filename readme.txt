@@ -29,6 +29,7 @@ Xcode build
    2.signing add other code signing Flags  “-—deep”
    3.add script
 /Volumes/work/software/Qt/latest/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Volumes/work/software/Qt/latest/clang_64/qml
+/Users/aimee/Qt5.9.6/latest/clang_64/bin/macdeployqt ${CODESIGNING_FOLDER_PATH} -qmldir=/Users/aimee/Qt5.9.6/latest/clang_64/qml
    4.add script
 mkdir -p ${CODESIGNING_FOLDER_PATH}/Contents/Resources/ && cp -rf Resources/* ${CODESIGNING_FOLDER_PATH}/Contents/Resources/
    

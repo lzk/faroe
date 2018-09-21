@@ -20,6 +20,7 @@ JKAbstractButton {
     property int dpi: 0
     property var sid: constScanIds.scanToPrint
     property var constScanIds: JSData.constScanIds()
+    property var name:constScanIds.scanToPrint
     function getSidText(sid){
         switch(sid){
         case constScanIds.scanToPrint:          return qsTr("ResStr_DocScan_Scan_Print")
@@ -74,7 +75,7 @@ JKAbstractButton {
             source: getQuickScanSource(sid)
         }
         Text{
-            text:index + ". " + getSidText(sid)
+            text:index + ". " + name
             anchors.horizontalCenter: parent.horizontalCenter
             font.pointSize: 20
             font.bold: true

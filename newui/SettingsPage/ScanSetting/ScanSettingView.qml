@@ -112,6 +112,7 @@ Item {
                     width: 220
                     height: 80
                     text: qsTr("ResStr_Type")
+                    parent: decodeMode ?column1 :column
                     anchors.horizontalCenter: parent.horizontalCenter
                     JKComboBox {
                         id: comboBox_mediaType
