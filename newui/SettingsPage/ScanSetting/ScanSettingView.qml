@@ -85,6 +85,7 @@ Item {
                             width: 90
                             height: 20
                             text: qsTr("ResStr_DocScan_1side")
+                            font.pointSize: 14
                             checked: !radioButton_twoSide.checked
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -132,6 +133,7 @@ Item {
                         id: comboBox_scanAreaSize
                         width: 180
                         height: 24
+                        font.pointSize: 13
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -309,6 +311,7 @@ Item {
                             id: spin_contrast
                             width:parent.width
                             height: 55
+                            maximumLength: 3
                         }
                     }
                 }
@@ -337,6 +340,7 @@ Item {
                             id: spin_brightness
                             width:parent.width
                             height: 55
+                            maximumLength: 3
                         }
                     }
                 }

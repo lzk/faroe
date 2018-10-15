@@ -200,5 +200,6 @@
         <file>Images/Folder-icon.png</file>
         <file>translations/qt_en.qm</file>
         <file>translations/qt_zh_CN.qm</file>
+        <file>Images/icon-20@2x.png</file>
     </qresource>
 </RCC>

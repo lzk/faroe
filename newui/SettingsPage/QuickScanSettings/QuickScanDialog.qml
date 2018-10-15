@@ -18,7 +18,7 @@ JKParaDialog{
         text.text:
         switch(mode){
         case 0:
-            return setting ?setting.sid :"";
+            return setting ?setting.name :"";
         case 1:
             return qsTr("ResStr_DocScan_Add_Quick_SCan_Setting");
         case 2:

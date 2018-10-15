@@ -117,7 +117,7 @@ function constFileDialogSaveFileType(){
 }
 
 function constQrcodeCodeType(){
-    return ["QR Code" ,"Bar Code" ,"All"]
+    return [qsTr("ResStr_QRCode") ,qsTr("ResStr_BarCode"),qsTr("ResStr_All")]
 }
 function constQrcodeFileType(){
     return ["PDF" ,"TIFF"]
@@ -176,7 +176,7 @@ function newQuickScanObject() {
 function defaultQuickScanSetting_toPrint() {
     var ob = newQuickScanObject()
     ob.printerName = ""
-    ob.name = ob.sid
+    ob.name = qsTr("ResStr_DocScan_Scan_Print")
     return ob
 }
 
@@ -186,7 +186,7 @@ function defaultQuickScanSetting_toFile() {
     ob.fileType = 0
     ob.fileName = "ScanPictures"
     ob.filePath = defaultFilePath()
-    ob.name = ob.sid
+    ob.name = qsTr("ResStr_DocScan_Scan_File")
     return ob
 }
 
@@ -206,7 +206,7 @@ function defaultQuickScanSetting_toApplication() {
     ob.fileName = "Preview.app"
     ob.filePath = "/Application"
     ob.fullFileName = "/Applications/Preview.app"
-    ob.name = ob.sid
+    ob.name = qsTr("ResStr_DocScan_Scan_App")
     return ob
 }
 
@@ -224,7 +224,7 @@ function defaultQuickScanSetting_toEmail() {
     ob.fileType = 0
     ob.recipient = ""
     ob.subject = "Scan Pictures"
-    ob.name = ob.sid
+    ob.name = qsTr("ResStr_DocScan_Scan_Email")
     return ob
 }
 
@@ -241,7 +241,7 @@ function defaultQuickScanSetting_toFTP() {
     var ob = defaultFTPSettings()
     ob.sid = "Scan To FTP"
     ob.scanSetting = defaultScanSetting()
-    ob.name = ob.sid
+    ob.name = qsTr("ResStr_DocScan_Scan_FTP")
     return ob
 }
 
@@ -262,7 +262,7 @@ function defaultQuickScanSetting_toCloud() {
     ob.noteAccessToken = ""
     ob.noteTitle = ""
     ob.noteContent = ""
-    ob.name = ob.sid
+    ob.name = qsTr("ResStr_DocScan_Scan_Cloud")
     return ob
 }
 

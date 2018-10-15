@@ -26,8 +26,8 @@ FocusScope {
 
             GroupBox {
                 id: groupBox
-                width: 400
-                height: 162
+                width: 442
+                height: 179
                 font.bold: true
                 font.pixelSize: 12
                 spacing: 0
@@ -49,6 +49,8 @@ FocusScope {
 
                         JKText {
                             id: text1
+                            width: 159
+                            height: 15
                             text: qsTr("ResStr_DocScan_scan_setting")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -56,8 +58,8 @@ FocusScope {
 
                         Item {
                             id: item_btnSettings_decode
-                            width: 100
-                            height: 35
+                            width: 200
+                            height: 30
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -70,6 +72,8 @@ FocusScope {
 
                         JKText {
                             id: text2
+                            width: 159
+                            height: 15
                             text: qsTr("ResStr_DocScan_Code_Type")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -91,6 +95,7 @@ FocusScope {
 
                         JKText {
                             id: text3
+                            width: 159
                             text: qsTr("ResStr_DocScan_Output_Result")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -98,8 +103,12 @@ FocusScope {
 
                         JKTextInput {
                             id: textInput_fileName
+                            x: 160
                             width: 200
                             height: 30
+                            input.font.pixelSize: 12
+                            anchors.verticalCenterOffset: -5
+                            anchors.rightMargin: 0
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
                             focus: true
@@ -116,8 +125,10 @@ FocusScope {
 
             GroupBox {
                 id: groupBox1
-                width: 400
-                height: 227
+                y: -6
+                width: 442
+                height: 240
+                anchors.verticalCenterOffset: 9
                 font.bold: true
                 font.pixelSize: 12
                 spacing: 0
@@ -139,6 +150,8 @@ FocusScope {
 
                         JKText {
                             id: text4
+                            width: 159
+                            height: 15
                             text: qsTr("ResStr_DocScan_scan_setting")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -146,7 +159,8 @@ FocusScope {
 
                         Item {
                             id: item_btnSettings_separation
-                            width: 100
+                            x: 160
+                            width: 200
                             height: 35
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
@@ -160,6 +174,8 @@ FocusScope {
 
                         JKText {
                             id: text5
+                            width: 159
+                            height: 15
                             text: qsTr("ResStr_DocScan_Save_File_Type")
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 12
@@ -191,6 +207,7 @@ FocusScope {
                             readOnly: true
                             width: 200
                             height: 30
+                            input.font.pixelSize: 12
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -202,7 +219,7 @@ FocusScope {
                             id: button_browser
                             text: qsTr("ResStr_DocScan_Browse")
                             width: 100
-                            height: 35
+                            height: 30
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -230,17 +247,23 @@ FocusScope {
     }
 
     JKTextButton{
+        width: 200
         parent: item_btnSettings_decode
         anchors.fill: parent
         text: qsTr("ResStr_Setting")
+        anchors.leftMargin: 0
         onClicked: {
             openScanSettingDialog(decodeSetting.scanSetting ,1)
         }
     }
     JKTextButton{
+        x: 0
+        width: 200
+        height: 30
         parent: item_btnSettings_separation
         anchors.fill: parent
         text: qsTr("ResStr_Setting")
+        anchors.leftMargin: 0
         onClicked: {
             openScanSettingDialog(separationSetting.scanSetting ,2)
         }

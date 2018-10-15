@@ -73,8 +73,8 @@ Item {
             anchors.rightMargin: 10
             visible: !item1.visible
             JKTextButton{
-                text: "-"
-                fontSize: 20
+                text: "—"
+                fontSize: 15
                 width: 30
                 height: 30
                 anchors.verticalCenter: parent.verticalCenter
@@ -85,7 +85,7 @@ Item {
             }
             JKTextButton{
                 text: "+"
-                fontSize: 20
+                fontSize: 22
                 width: 30
                 height: 30
                 anchors.verticalCenter: parent.verticalCenter

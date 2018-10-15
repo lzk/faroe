@@ -188,6 +188,7 @@ JKDialog{
     }
 
     JKTextButton{
+        id:btn_OK
         parent: scanSettingView.item_btnOK
         anchors.fill: parent
         text: qsTr("ResStr_OK")
@@ -290,6 +291,7 @@ JKDialog{
         update()
         jkInterface.setCmd(DeviceStruct.CMD_getPowerSupply)
         refresh.visible = true
+        btn_OK.forceActiveFocus()
     }
     Connections{
         target: jkInterface

@@ -20,7 +20,7 @@ JKDialog {
 
         JKText{
             font.pixelSize: pixelSize
-            text: qsTr("ResStr_DocScan") + " 0.1.2"
+            text: qsTr("ResStr_DocScan") + " 0.1.3"
             color: textColor
             anchors.centerIn: parent
         }

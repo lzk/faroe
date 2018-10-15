@@ -38,7 +38,7 @@ Item {
             Layout.minimumHeight: 32
             Layout.maximumWidth: 32
             Layout.minimumWidth: 32
-            source: "qrc:/Images/VOPicon.png"
+            source: "qrc:/Images/icon-20@2x.png"
             MouseArea{
                 anchors.fill: parent
                 onClicked: about()

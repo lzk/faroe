@@ -118,16 +118,23 @@ ComboBox {
         width: control.width
         implicitHeight: contentItem.implicitHeight
         padding: 1
-        clip: true
-        contentItem: ListView {
-            id:listview
-            clip: false
-            implicitHeight: contentHeight
-            model: control.popup.visible ? control.delegateModel : null
-//            currentIndex: control.highlightedIndex
+//        clip: true
+        contentItem:
+            ScrollView{
+                clip: true
+                ScrollBar.vertical.policy: height + parent.padding * 2 < listview.contentHeight ?ScrollBar.AlwaysOn :ScrollBar.AlwaysOff
+                ListView {
+                id:listview
+//                height: contentHeight
+                model: control.popup.visible ? control.delegateModel : null
+    //            currentIndex: control.highlightedIndex
 
-//            ScrollIndicator.vertical: ScrollIndicator { }
-        }
+    //            ScrollIndicator.vertical: ScrollIndicator {
+    //            }
+
+                }
+            }
+
 
         background: Rectangle {
             border.color: "darkgray"

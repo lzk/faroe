@@ -9,24 +9,21 @@
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="28"/>
+        <location filename="../About.qml" line="23"/>
         <source>ResStr_DocScan</source>
         <translation>文件云助手</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="39"/>
         <source>ResStr_CopyRight</source>
-        <translation>Copyright © (2018)</translation>
+        <translation type="vanished">Copyright © (2018)</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="44"/>
         <source>ResStr_Company</source>
-        <translation>Wireless Scanner</translation>
+        <translation type="vanished">Wireless Scanner</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="49"/>
         <source>ResStr_AllRight</source>
-        <translation>All Rights Reserved.</translation>
+        <translation type="vanished">All Rights Reserved.</translation>
     </message>
 </context>
 <context>
@@ -111,59 +108,69 @@
         <translation>睡眠时间</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="79"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="76"/>
+        <source>ResStr_The_valid_range_is_1_60__please_confirm_and_enter_again_</source>
+        <translation>有效范围是1到60，请检查并重试。</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage/DeviceView.qml" line="81"/>
         <source>ResStr_1_60_Minute</source>
         <translation>1-60分钟</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="98"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="100"/>
         <source>ResStr_AutoOff_Time</source>
         <translation>自动关机时间</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="118"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="116"/>
+        <source>ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_</source>
+        <translation>有效范围是0到4，请检查并重试。</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage/DeviceView.qml" line="121"/>
         <source>ResStr_0_4_Hour</source>
         <translation>0-4小时</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="137"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="140"/>
         <source>ResStr_Life_Count</source>
         <translation>寿命计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="149"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="152"/>
         <source>ResStr_Roller_Count</source>
         <translation>分页滚轮计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="169"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="206"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="172"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="209"/>
         <source>ResStr_Clear</source>
         <translation>清空</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="186"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="189"/>
         <source>ResStr_ACM_Count</source>
         <translation>进纸滚轮计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="223"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="226"/>
         <source>ResStr_Scan_Count</source>
         <translation>扫描计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="258"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="264"/>
         <source>ResStr_Apply</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="270"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="276"/>
         <source>ResStr_Calibration</source>
         <translation>校正</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="351"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="364"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="357"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="370"/>
         <source>ResStr_Do_you_want_to_clear</source>
         <translation>您想清空这个计数值吗？</translation>
     </message>
@@ -636,49 +643,49 @@
         <translation>二维码/条形码 识别</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="52"/>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="142"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="54"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="155"/>
         <source>ResStr_DocScan_scan_setting</source>
         <translation>扫描设置：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="73"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="77"/>
         <source>ResStr_DocScan_Code_Type</source>
         <translation>条码类型：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="94"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="99"/>
         <source>ResStr_DocScan_Output_Result</source>
         <translation>输出结果：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="127"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="138"/>
         <source>ResStr_DocScan_Document_Separation</source>
         <translation>文档分隔</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="163"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="179"/>
         <source>ResStr_DocScan_Save_File_Type</source>
         <translation>存储文件类型：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="184"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="200"/>
         <source>ResStr_DocScan_File_Path</source>
         <translation>文件路径：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="203"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="220"/>
         <source>ResStr_DocScan_Browse</source>
         <translation>浏览…</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="221"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="238"/>
         <source>Save As</source>
         <translation>保存到</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="235"/>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="243"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="253"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="265"/>
         <source>ResStr_Setting</source>
         <translation>设置…</translation>
     </message>
@@ -686,67 +693,67 @@
 <context>
     <name>QuickScanButton</name>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="25"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="26"/>
         <source>ResStr_DocScan_Scan_Print</source>
         <translation>扫描到打印机</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="26"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="27"/>
         <source>ResStr_DocScan_Scan_File</source>
         <translation>扫描到文档</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="27"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="28"/>
         <source>ResStr_DocScan_Scan_App</source>
         <translation>扫描到应用程序</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="28"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="29"/>
         <source>ResStr_DocScan_Scan_Email</source>
         <translation>扫描到邮件</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="29"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="30"/>
         <source>ResStr_DocScan_Scan_FTP</source>
         <translation>扫描到FTP</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="30"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="31"/>
         <source>ResStr_DocScan_Scan_Cloud</source>
         <translation>扫描到云盘</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="91"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="92"/>
         <source>ResStr_DocScan_ADF1</source>
         <translation>扫描模式：</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="97"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="98"/>
         <source>ResStr_DocScan_2side</source>
         <translation>双面</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="97"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="98"/>
         <source>ResStr_DocScan_1side</source>
         <translation>单面</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="102"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="103"/>
         <source>ResStr_DPI1</source>
         <translation>分辨率：</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="112"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="113"/>
         <source>ResStr_Color_Mode1</source>
         <translation>色彩模式：</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="117"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="118"/>
         <source>ResStr_Color</source>
         <translation>彩色</translation>
     </message>
     <message>
-        <location filename="../ScanPage/QuickScanButton.qml" line="117"/>
+        <location filename="../ScanPage/QuickScanButton.qml" line="118"/>
         <source>ResStr_Grayscale</source>
         <translation>灰阶</translation>
     </message>
@@ -825,34 +832,28 @@
         <translation>您确认要删除这个快捷扫描设置吗？</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings.qml" line="233"/>
         <source>ResStr_DocScan_Scan_Print</source>
-        <translation>扫描到打印机</translation>
+        <translation type="vanished">扫描到打印机</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings.qml" line="234"/>
         <source>ResStr_DocScan_Scan_File</source>
-        <translation>扫描到文档</translation>
+        <translation type="vanished">扫描到文档</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings.qml" line="235"/>
         <source>ResStr_DocScan_Scan_App</source>
-        <translation>扫描到应用程序</translation>
+        <translation type="vanished">扫描到应用程序</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings.qml" line="236"/>
         <source>ResStr_DocScan_Scan_Email</source>
-        <translation>扫描到邮件</translation>
+        <translation type="vanished">扫描到邮件</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings.qml" line="237"/>
         <source>ResStr_DocScan_Scan_FTP</source>
-        <translation>扫描到FTP</translation>
+        <translation type="vanished">扫描到FTP</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings.qml" line="238"/>
         <source>ResStr_DocScan_Scan_Cloud</source>
-        <translation>扫描到云盘</translation>
+        <translation type="vanished">扫描到云盘</translation>
     </message>
 </context>
 <context>
@@ -887,6 +888,51 @@
         <source>ResStr_LongPage_</source>
         <translation>长纸</translation>
     </message>
+    <message>
+        <location filename="../ScanData.js" line="120"/>
+        <source>ResStr_QRCode</source>
+        <translation>二维码</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="120"/>
+        <source>ResStr_BarCode</source>
+        <translation>条形码 </translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="120"/>
+        <source>ResStr_All</source>
+        <translation>所有</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="179"/>
+        <source>ResStr_DocScan_Scan_Print</source>
+        <translation type="unfinished">扫描到打印机</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="189"/>
+        <source>ResStr_DocScan_Scan_File</source>
+        <translation type="unfinished">扫描到文档</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="209"/>
+        <source>ResStr_DocScan_Scan_App</source>
+        <translation type="unfinished">扫描到应用程序</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="227"/>
+        <source>ResStr_DocScan_Scan_Email</source>
+        <translation type="unfinished">扫描到邮件</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="244"/>
+        <source>ResStr_DocScan_Scan_FTP</source>
+        <translation type="unfinished">扫描到FTP</translation>
+    </message>
+    <message>
+        <location filename="../ScanData.js" line="265"/>
+        <source>ResStr_DocScan_Scan_Cloud</source>
+        <translation type="unfinished">扫描到云盘</translation>
+    </message>
 </context>
 <context>
     <name>ScanPage</name>
@@ -896,22 +942,22 @@
         <translation>离线</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="115"/>
+        <location filename="../ScanPage.qml" line="116"/>
         <source>ResStr_DocScan_Decode</source>
         <translation>条码识别</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="127"/>
+        <location filename="../ScanPage.qml" line="128"/>
         <source>ResStr_DocScan_Separation</source>
         <translation>文档分隔</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="139"/>
+        <location filename="../ScanPage.qml" line="140"/>
         <source>ResStr_DocScan_ScanTo</source>
         <translation>扫描到</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="151"/>
+        <location filename="../ScanPage.qml" line="152"/>
         <source>ResStr_Setting_Title</source>
         <translation>设置</translation>
     </message>
@@ -981,27 +1027,27 @@
 <context>
     <name>ScanSettingView</name>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="71"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="69"/>
         <source>ResStr_DocScan_ADF</source>
         <translation>扫描模式</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="81"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="79"/>
         <source>ResStr_DocScan_2side</source>
         <translation>双面</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="89"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="87"/>
         <source>ResStr_DocScan_1side</source>
         <translation>单面</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="101"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="100"/>
         <source>ResStr_DPI</source>
         <translation>分辨率</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="116"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="115"/>
         <source>ResStr_Type</source>
         <translation>纸张类型</translation>
     </message>
@@ -1011,58 +1057,55 @@
         <translation>扫描区域大小</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="146"/>
         <source>ResStr_Skip_Blank_Page</source>
-        <translation>去空白页</translation>
+        <translation type="vanished">去空白页</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="156"/>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="186"/>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="217"/>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="374"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="157"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="188"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="214"/>
         <source>ResStr_On</source>
         <translation>开启</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="164"/>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="194"/>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="225"/>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="382"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="165"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="196"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="222"/>
         <source>ResStr_Off</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="176"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="147"/>
         <source>ResStr_Auto_Color_Detect</source>
         <translation>自动色彩侦测</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="206"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="177"/>
         <source>ResStr_DocScan_autocrop</source>
         <translation>自动裁剪</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="244"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="243"/>
         <source>ResStr_Color_Mode</source>
         <translation>色彩模式</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="294"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="293"/>
         <source>ResStr_Contrast</source>
         <translation>对比度</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="323"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="322"/>
         <source>ResStr_Brightness</source>
         <translation>亮度</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="351"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="350"/>
         <source>ResStr_Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="364"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="207"/>
         <source>ResStr_DocScan_multifeed</source>
         <translation>重张侦测</translation>
     </message>

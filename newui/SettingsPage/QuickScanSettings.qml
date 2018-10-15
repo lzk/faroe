@@ -36,7 +36,7 @@ Item {
 
             Rectangle {
                 id: item_listView
-                width: 300
+                width: 295
                 height: 315
                 border.color: "gray"
             }
@@ -200,6 +200,10 @@ Item {
 
     ListView{
         id:listview
+        x: 0
+        width: 288
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
         parent: item_listView
         anchors.fill: parent
         anchors.margins: 1
@@ -209,7 +213,8 @@ Item {
         focus: true
         delegate: JKAbstractButton {
             id:delegate
-            width: ListView.view.width
+            width: ListView.view.width - 2
+            x:1
             height: 18
             Rectangle {
                 anchors.fill: parent
@@ -229,15 +234,16 @@ Item {
     property int mode: 0
     property var constScanIds: JSData.constScanIds()
     function getSidText(name){
-        switch(name){
-        case constScanIds.scanToPrint:          return qsTr("ResStr_DocScan_Scan_Print")
-        case constScanIds.scanToFile:           return qsTr("ResStr_DocScan_Scan_File")
-        case constScanIds.scanToApplication:    return qsTr("ResStr_DocScan_Scan_App")
-        case constScanIds.scanToEmail:          return qsTr("ResStr_DocScan_Scan_Email")
-        case constScanIds.scanToFTP:            return qsTr("ResStr_DocScan_Scan_FTP")
-        case constScanIds.scanToCloud:          return qsTr("ResStr_DocScan_Scan_Cloud")
-        default:                                return name
-        }
+//        switch(name){
+//        case constScanIds.scanToPrint:          return qsTr("ResStr_DocScan_Scan_Print")
+//        case constScanIds.scanToFile:           return qsTr("ResStr_DocScan_Scan_File")
+//        case constScanIds.scanToApplication:    return qsTr("ResStr_DocScan_Scan_App")
+//        case constScanIds.scanToEmail:          return qsTr("ResStr_DocScan_Scan_Email")
+//        case constScanIds.scanToFTP:            return qsTr("ResStr_DocScan_Scan_FTP")
+//        case constScanIds.scanToCloud:          return qsTr("ResStr_DocScan_Scan_Cloud")
+//        default:                                return name
+//        }
+        return name
     }
 
     Component.onCompleted: {
