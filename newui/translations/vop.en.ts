@@ -123,54 +123,54 @@
         <translation>Auto-Off Time</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="116"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="117"/>
         <source>ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_</source>
         <translation>The valid range is 0 to 4, please check and enter again.</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="121"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="122"/>
         <source>ResStr_0_4_Hour</source>
         <translation>(0-4 Hours)</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="140"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="141"/>
         <source>ResStr_Life_Count</source>
         <translation>Life Count</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="152"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="153"/>
         <source>ResStr_Roller_Count</source>
         <translation>Retard Roller Count :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="172"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="209"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="173"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="210"/>
         <source>ResStr_Clear</source>
         <translation>Clear</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="189"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="190"/>
         <source>ResStr_ACM_Count</source>
         <translation>ACM Count :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="226"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="227"/>
         <source>ResStr_Scan_Count</source>
         <translation>Scan Count :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="264"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="265"/>
         <source>ResStr_Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="276"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="277"/>
         <source>ResStr_Calibration</source>
         <translation>Calibration</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="357"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="370"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="358"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="371"/>
         <source>ResStr_Do_you_want_to_clear</source>
         <translation>Do you want to clear this count?</translation>
     </message>
@@ -292,12 +292,14 @@
         <translation>The %1 could not be empty!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="260"/>
-        <location filename="../MainView.qml" line="266"/>
         <location filename="../MainView.qml" line="284"/>
         <location filename="../MainView.qml" line="292"/>
         <source>ResStr_File_Name1</source>
         <translation>File Name</translation>
+    </message>
+    <message>
+        <source>ResStr_The_Output_Result_cannot_be_empty</source>
+        <translation type="obsolete">The Output Result cannot be empty!</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="266"/>
@@ -534,6 +536,12 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Scan failed</translation>
     </message>
     <message>
+        <location filename="../MainView.qml" line="260"/>
+        <location filename="../MainView.qml" line="266"/>
+        <source>ResStr_Output_Result</source>
+        <translation>Output Result</translation>
+    </message>
+    <message>
         <location filename="../MainView.qml" line="766"/>
         <source>Scan to Email completed</source>
         <translation>Scan to Email completed</translation>
@@ -642,54 +650,54 @@ If you select &apos;No&apos;, the scan job will be canceled!
 <context>
     <name>QRCodeBarcodeView</name>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="37"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="38"/>
         <source>ResStr_DocScan_QRBar_Code_Decode</source>
         <translation>QRCode/Barcode Decode</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="54"/>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="155"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="55"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="156"/>
         <source>ResStr_DocScan_scan_setting</source>
         <translation>Scan Settings :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="77"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="78"/>
         <source>ResStr_DocScan_Code_Type</source>
         <translation>Code Type :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="99"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="100"/>
         <source>ResStr_DocScan_Output_Result</source>
         <translation>Output Result :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="138"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="139"/>
         <source>ResStr_DocScan_Document_Separation</source>
         <translation>Document Separation</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="179"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="180"/>
         <source>ResStr_DocScan_Save_File_Type</source>
         <translation>Save File Type :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="200"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="201"/>
         <source>ResStr_DocScan_File_Path</source>
         <translation>File Path :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="220"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="221"/>
         <source>ResStr_DocScan_Browse</source>
         <translation>Browse...</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="238"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="239"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="253"/>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="265"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="254"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="266"/>
         <source>ResStr_Setting</source>
         <translation>Settings...</translation>
     </message>
@@ -910,32 +918,32 @@ If you select &apos;No&apos;, the scan job will be canceled!
     <message>
         <location filename="../ScanData.js" line="179"/>
         <source>ResStr_DocScan_Scan_Print</source>
-        <translation type="unfinished">Scan To Print</translation>
+        <translation>Scan To Print</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="189"/>
         <source>ResStr_DocScan_Scan_File</source>
-        <translation type="unfinished">Scan To File</translation>
+        <translation>Scan To File</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="209"/>
         <source>ResStr_DocScan_Scan_App</source>
-        <translation type="unfinished">Scan To Application</translation>
+        <translation>Scan To Application</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="227"/>
         <source>ResStr_DocScan_Scan_Email</source>
-        <translation type="unfinished">Scan To Email</translation>
+        <translation>Scan To Email</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="244"/>
         <source>ResStr_DocScan_Scan_FTP</source>
-        <translation type="unfinished">Scan To FTP</translation>
+        <translation>Scan To FTP</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="265"/>
         <source>ResStr_DocScan_Scan_Cloud</source>
-        <translation type="unfinished">Scan To Cloud</translation>
+        <translation>Scan To Cloud</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1031,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Default</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingDialog.qml" line="193"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingDialog.qml" line="194"/>
         <source>ResStr_OK</source>
         <translation>OK</translation>
     </message>
@@ -1099,12 +1107,12 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Contrast</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="322"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="323"/>
         <source>ResStr_Brightness</source>
         <translation>Brightness</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="350"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="352"/>
         <source>ResStr_Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -1442,37 +1450,57 @@ If you select &apos;No&apos;, the scan job will be canceled!
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../SettingsPage.qml" line="84"/>
+        <source>ResStr_The_Output_Result_cannot_be_empty</source>
+        <translation type="vanished">The Output Result cannot be empty!</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage.qml" line="81"/>
+        <location filename="../SettingsPage.qml" line="150"/>
+        <source>ResStr_could_not_be_empty</source>
+        <translation>The %1 could not be empty!</translation>
+    </message>
+    <message>
+        <source>ResStr_File_Name1</source>
+        <translation type="vanished">File Name</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage.qml" line="81"/>
+        <location filename="../SettingsPage.qml" line="150"/>
+        <source>ResStr_Output_Result</source>
+        <translation>Output Result</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage.qml" line="91"/>
         <source>ResStr_QuickScanSettings</source>
         <translation>Quick Scan Settings</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="90"/>
+        <location filename="../SettingsPage.qml" line="97"/>
         <source>ResStr_DecodeSettings</source>
         <translation>Decode/Separation Settings</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="96"/>
+        <location filename="../SettingsPage.qml" line="103"/>
         <source>ResStr_ScanToSettings</source>
         <translation>Scan To Settings</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="102"/>
+        <location filename="../SettingsPage.qml" line="109"/>
         <source>ResStr_Printer_Wi_Fi</source>
         <translation>Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="107"/>
+        <location filename="../SettingsPage.qml" line="114"/>
         <source>ResStr_TCP_IPv4</source>
         <translation>TCP/IPv4</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="112"/>
+        <location filename="../SettingsPage.qml" line="119"/>
         <source>ResStr_Soft_AP</source>
         <translation>Soft AP</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="117"/>
+        <location filename="../SettingsPage.qml" line="124"/>
         <source>ResStr_Device</source>
         <translation>Device Settings</translation>
     </message>

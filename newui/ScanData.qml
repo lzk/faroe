@@ -31,6 +31,7 @@ QtObject {
         if(verifyStorageQuickScanSetting(tmp.quickScanSettings)){
             JSApi.deepCopy(tmp.quickScanSettings ,quickScanSettings)
             quickScanSettings = quickScanSettings
+//            console.log("settings is:" ,JSON.stringify(quickScanSettings))
 //            quickScanSettings = tmp.quickScanSettings
         }
         if(tmp.scanToParameter){
@@ -72,10 +73,10 @@ QtObject {
             return false
         if(array.length < constQuickScanSids.length)
             return false
-        for(var i in constQuickScanSids){
-            if(!containName(constQuickScanSids[i] ,array))
-                return false
-        }
+//        for(var i in constQuickScanSids){
+//            if(!containName(constQuickScanSids[i] ,array))
+//                return false
+//        }
         return true
     }
 

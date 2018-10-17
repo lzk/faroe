@@ -85,6 +85,7 @@ Item {
             break
         }
         settingLoader.setSource(source ,{"setting":setting})
+//        settingLoader.item.init()
     }
 
     function ok(){

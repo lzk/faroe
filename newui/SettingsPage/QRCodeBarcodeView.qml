@@ -11,6 +11,7 @@ FocusScope {
     id: item1
     width: 495
     height: 460
+    property alias textInput_fileName: textInput_fileName
 
     ColumnLayout {
         anchors.fill: parent
@@ -284,7 +285,11 @@ FocusScope {
     Component.onDestruction: {
 //        console.log("qrcode on Destruction")
         decodeSetting.codeType = comboBox_codeType.currentIndex
-        decodeSetting.fileName = textInput_fileName.text
+        console.log("filename is :" ,decodeSetting.fileName)
+        if(textInput_fileName.text !== "")
+        {
+            decodeSetting.fileName = textInput_fileName.text
+        }
         separationSetting.fileType = comboBox_saveFileType.currentIndex
         separationSetting.filePath = textInput_filePath.text
     }

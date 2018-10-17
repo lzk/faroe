@@ -23,6 +23,7 @@ public:
     void installImageModel(ImageModel* imageModel){this->imageModel=imageModel;}
 public:
     Q_INVOKABLE QStringList getPrinterName();
+    Q_INVOKABLE QString getDefaultPrinterName();
     Q_INVOKABLE void cancelScan();
     Q_INVOKABLE void cancelSearch();
     Q_INVOKABLE void cancelImageHandle();

@@ -75,6 +75,13 @@ SettingsLayout {
                 }
             }
             onClicked:{
+                if(ListView.view.currentIndex=== 1){
+                    var item = loader.item
+                    if(item.textInput_fileName.text === ""){
+                        warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
+                        return
+                    }
+                }
                 ListView.view.currentIndex = index
                 delegate.forceActiveFocus()
             }
@@ -137,6 +144,13 @@ SettingsLayout {
     Connections{
         target: button_back
         onClicked:{
+            if(listView.currentIndex=== 1){
+                var item = loader.item
+                if(item.textInput_fileName.text === ""){
+                    warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
+                    return
+                }
+            }
             root.StackView.view.pop()
         }
     }

@@ -113,7 +113,7 @@ Item {
                                 slider.visible: false
                                 to :4
                                 value :0
-                                maximumLength: 2
+                                maximumLength: 1
                                 tooltip.text:  text !== "" ?"": qsTr("ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_")
                             }
                         }
