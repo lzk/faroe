@@ -715,6 +715,19 @@ void DeviceManager::uiParseSoftap(QJsonObject& obj ,Setter::struct_softAp para)
     obj.insert("ssid",QJsonValue(ssid));
     obj.insert("password",QJsonValue(password));
     obj.insert("wifiEnable",QJsonValue(para.wifiEnable));
+
+    QJsonArray jarray;
+    for(int i = 0;i < 10 ;i++){
+        QString ssid(para.aplist[i].ssid);
+        if(ssid.isEmpty()){
+            break;
+        }
+        jarray << QJsonObject {
+        {"ssid",ssid}
+        ,{"connected" ,para.aplist[i].connected}
+        };
+    }
+    obj.insert("apList",QJsonValue(jarray));
 //    return QString(QJsonDocument(obj).toJson());
 }
 

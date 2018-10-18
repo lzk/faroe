@@ -32,11 +32,19 @@ public:
     }
         struct_wifiInfo;
 
+    typedef struct
+    {
+        char ssid[33];
+        unsigned char connected;
+    }
+        struct_softaplist;
+
     typedef struct{
         bool enable;
         bool wifiEnable;
         char ssid[32];
         char password[64];
+        struct_softaplist aplist[10];
     }
         struct_softAp;
     typedef struct{

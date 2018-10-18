@@ -8,6 +8,13 @@ SettingsLayout {
     width: 750
     height: 533
 
+//    onActiveFocusChanged: {
+//        console.log("focus:" ,activeFocus)
+//        if(activeFocus){
+//            button_back.focus = true
+//        }
+//    }
+
     JKImageButton {
         id: button_back
         parent:root.item_back
@@ -15,6 +22,8 @@ SettingsLayout {
         source_disable: "qrc:/Images/back_disable.png"
         source_normal: "qrc:/Images/back_normal.png"
         source_press: "qrc:/Images/back_press.png"
+//        KeyNavigation.tab: listView
+//        focus: true
     }
 
     ListView {
@@ -23,8 +32,8 @@ SettingsLayout {
         anchors.fill: parent
         snapMode:ListView.SnapOneItem
         interactive :false
-        focus:true
-        KeyNavigation.right: loader.item
+//        KeyNavigation.right: loader.item
+//        KeyNavigation.tab: loader.item
 //        Keys.onPressed: {
 //            switch(event.key){
 //            case Qt.Key_Up:
@@ -42,6 +51,13 @@ SettingsLayout {
             id:delegate
             width: ListView.view.width
             height: ListView.view.height / 7
+            JKDashRectange{
+                id:dashRectange
+                anchors.fill: delegate
+                anchors.margins: -1
+                radius: 0
+                visible: delegate.activeFocus
+            }
             Image {
                 anchors.fill: parent
                 source: delegate.ListView.isCurrentItem ?imageSource:"qrc:/Images/setting_img_disable.png"
@@ -126,9 +142,9 @@ SettingsLayout {
         parent:root.item_view
         source: listView.model.get(listView.currentIndex).url
     }
-    Component.onCompleted: {
-        listView.forceActiveFocus()
-    }
+//    Component.onCompleted: {
+//        listView.forceActiveFocus()
+//    }
 
     Component.onDestruction: {
         loader.source = ""

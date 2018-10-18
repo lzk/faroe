@@ -306,6 +306,16 @@ int Setter::getSoftAp(void* data)
             memcpy(softap->password ,para.pwd ,64);
         }
     }
+    {
+        cmdst_softaplist_get para;
+        err = setterApi->cmd(CMD_CODE_getSoftApList ,&para ,sizeof(para));
+        if(!err){
+            for(int i = 0 ;i < NUM_OF_SOFTAPLIST ;i++){
+                memcpy(softap->aplist[i].ssid ,para.aplist[i].ssid ,33);
+                softap->aplist[i].connected = para.aplist[i].connected;
+            }
+        }
+    }
     return err;
 }
 

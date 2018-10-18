@@ -29,4 +29,10 @@ JKButton{
         color: root.state === "pressed" ?"lightgray" :"transparent"
     }
 
+    JKDashRectange{
+        anchors.fill: parent
+        anchors.margins: 3
+        visible: root.activeFocus
+    }
+
 }

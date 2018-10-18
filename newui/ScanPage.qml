@@ -11,6 +11,15 @@ ScanPageLayout {
     width: 750
     height: 533
 
+//    onActiveFocusChanged: {
+//        if(activeFocus){
+//            if(button_left.enabled)
+//                button_left.focus = true
+//            else
+//                button_search.focus = true
+//        }
+//    }
+
     Row{
         parent: item_search
         anchors.horizontalCenter: parent.horizontalCenter
@@ -24,6 +33,8 @@ ScanPageLayout {
             height: 38
             anchors.verticalCenter: parent.verticalCenter
             onClicked: root.StackView.view.push("SearchDevicePage.qml")
+
+//            KeyNavigation.tab: button_quickScan
         }
         Text {
             text: scanData.deviceStatus ?scanData.currentDevice.match(/^usb+/i) ?"USB" :scanData.currentDevice :qsTr("ResStr_disconnet")
@@ -63,6 +74,8 @@ ScanPageLayout {
         colorMode: currentQuickScanSetting.scanSetting.colorMode
         dpi:currentQuickScanSetting.scanSetting.dpi
         name:currentQuickScanSetting.name
+
+//        KeyNavigation.tab: button_right
     }
 
     onVisibleChanged: {
@@ -89,6 +102,8 @@ ScanPageLayout {
         onClicked: {
             currentIndex --
         }
+        KeyNavigation.tab: button_search
+        focus: true
     }
     JKImageButton{
         id:button_right
@@ -101,6 +116,8 @@ ScanPageLayout {
         onClicked: {
             currentIndex ++
         }
+
+//        KeyNavigation.tab: button_decode
     }
 
     JKFunctionButton{
@@ -114,6 +131,8 @@ ScanPageLayout {
         source_normal: "qrc:/Images/Main_btn_decode.png"
         source_press: "qrc:/Images/Main_btn_decode.png"
         jktext.text:qsTr("ResStr_DocScan_Decode")
+
+//        KeyNavigation.tab: button_separation
     }
     JKFunctionButton{
         id:button_separation
@@ -126,6 +145,8 @@ ScanPageLayout {
         source_normal: "qrc:/Images/main_btn_separation.png"
         source_press: "qrc:/Images/main_btn_separation.png"
         jktext.text:qsTr("ResStr_DocScan_Separation")
+
+//        KeyNavigation.tab: button_scanto
     }
     JKFunctionButton{
         id:button_scanto
@@ -138,6 +159,8 @@ ScanPageLayout {
         source_normal: "qrc:/Images/main_btn_scanto.png"
         source_press: "qrc:/Images/main_btn_scanto.png"
         jktext.text:qsTr("ResStr_DocScan_ScanTo")
+
+//        KeyNavigation.tab: button_settings
     }
     JKFunctionButton{
         id:button_settings

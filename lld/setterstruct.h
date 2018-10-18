@@ -161,6 +161,18 @@ typedef struct cmdst_aplist_get
 }
     cmdst_aplist_get;
 
+struct cmdst_softapList
+{
+    char ssid[33];
+    UINT8 connected;
+};
+#define NUM_OF_SOFTAPLIST 10
+typedef struct cmdst_softaplist_get
+{
+    struct cmdst_softapList  aplist[NUM_OF_SOFTAPLIST];
+}
+    cmdst_softaplist_get;
+
 typedef struct cmdst_passwd
 {
     char passwd[32];

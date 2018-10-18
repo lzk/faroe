@@ -33,6 +33,8 @@ JKParaDialog{
             anchors.topMargin: 30
             anchors.leftMargin: 70
             anchors.rightMargin: 70
+            focus: true
+            KeyNavigation.tab: btn_ok
         }
 
         Item{
@@ -57,6 +59,7 @@ JKParaDialog{
     signal accepted
     property var setting: JSData.defaultFTPSettings()
     JKTextButton{
+        id:btn_ok
         parent: item_btnOK
         anchors.fill: parent
         text: qsTr("ResStr_OK")
@@ -67,5 +70,6 @@ JKParaDialog{
                 root.accepted()
             }
         }
+        KeyNavigation.tab: settingLoader
     }
 }

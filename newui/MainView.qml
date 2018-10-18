@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import "component"
@@ -15,6 +15,9 @@ Item {
     signal minimized
     signal closed
     signal move(real dx ,real dy)
+
+//    focus: true
+//    KeyNavigation.tab: image
 
     Image {
         id: image_background
@@ -39,6 +42,20 @@ Item {
             Layout.maximumWidth: 32
             Layout.minimumWidth: 32
             source: "qrc:/Images/icon-20@2x.png"
+
+//            KeyNavigation.tab: button_minimize
+            activeFocusOnTab: true
+            Keys.onEnterPressed: about()
+            Keys.onReturnPressed: about()
+
+            JKDashRectange{
+                id:dashRectange
+                anchors.fill: parent
+                anchors.margins: -2
+                radius: 0
+                visible: image.activeFocus
+            }
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: about()
@@ -55,12 +72,14 @@ Item {
         Row{
             JKToolButton{
                 id: button_minimize
+//                KeyNavigation.tab: button_close
                 JKPath_minimize{
                     anchors.fill: parent
                 }
             }
             JKToolButton{
                 id: button_close
+//                KeyNavigation.tab: stackview
                 JKPath_close{
                     anchors.fill: parent
                 }
@@ -78,9 +97,14 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.topMargin: 30
+//        activeFocusOnTab: true
+//        KeyNavigation.tab: image
         initialItem: ScanPage{
-
+            id:scanpage
         }
+//        onActiveFocusChanged: {
+//            currentItem.focus = activeFocus
+//        }
     }
 
     MouseArea{

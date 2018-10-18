@@ -1,8 +1,14 @@
 import QtQuick 2.0
 import "../../component"
-Item {
+FocusScope {
     width: 477
     height: 309
+
+    onActiveFocusChanged:{
+        if(activeFocus){
+            textInput_serverAddress.focus = true
+        }
+    }
 
     Column{
         anchors.fill: parent
@@ -21,13 +27,14 @@ Item {
             }
 
             JKTextInput {
-                id: textInput1
+                id: textInput_serverAddress
                 focus:true
                 width: 250
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 maximumLength: 255
+                KeyNavigation.tab: textInput_userName
             }
         }
         Item {
@@ -45,12 +52,13 @@ Item {
             }
 
             JKTextInput {
-                id: textInput2
+                id: textInput_userName
                 width: 250
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 maximumLength: 30
+                KeyNavigation.tab: textInput_password
             }
         }
         Item {
@@ -68,13 +76,14 @@ Item {
             }
 
             JKTextInput {
-                id: textInput3
+                id: textInput_password
                 width: 250
                 height: 30
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 maximumLength: 32
                 echoMode:TextInput.Password
+                KeyNavigation.tab: textInput_targetPath
             }
         }
         Item {
@@ -92,7 +101,7 @@ Item {
             }
 
             JKTextInput {
-                id: textInput4
+                id: textInput_targetPath
                 width: 250
                 height: 30
                 anchors.right: parent.right
@@ -109,49 +118,49 @@ Item {
     }
 
     function init(){
-        textInput1.text = setting.serverAddress
-        textInput1.cursorPosition = 0
-        textInput2.text = setting.userName
-        textInput2.cursorPosition = 0
-        textInput3.text = setting.password
-        textInput3.cursorPosition = 0
-        textInput4.text = setting.targetPath
-        textInput4.cursorPosition = 0
+        textInput_serverAddress.text = setting.serverAddress
+        textInput_serverAddress.cursorPosition = 0
+        textInput_userName.text = setting.userName
+        textInput_userName.cursorPosition = 0
+        textInput_password.text = setting.password
+        textInput_password.cursorPosition = 0
+        textInput_targetPath.text = setting.targetPath
+        textInput_targetPath.cursorPosition = 0
     }
     function ok(){
-        var serverAddress = textInput1.text
-        var userName = textInput2.text
-        var password = textInput3.text
-        var targetPath = textInput4.text
+        var serverAddress = textInput_serverAddress.text
+        var userName = textInput_userName.text
+        var password = textInput_password.text
+        var targetPath = textInput_targetPath.text
         if(serverAddress === ""){
             warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_server_addr1")))
-            textInput1.forceActiveFocus()
-//            textInput1.focus = true
+            textInput_serverAddress.forceActiveFocus()
+//            textInput_serverAddress.focus = true
             return false
         }else if(userName === ""){
             warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_username1")))
-            textInput2.forceActiveFocus()
-//            textInput2.focus = true
+            textInput_userName.forceActiveFocus()
+//            textInput_userName.focus = true
             return false
         }else if(password === ""){
             warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_password1")))
-            textInput3.forceActiveFocus()
-//            textInput3.focus = true
+            textInput_password.forceActiveFocus()
+//            textInput_password.focus = true
             return false
         }else if(targetPath === ""){
             warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_DocScan_targetPath1")))
-            textInput4.forceActiveFocus()
-//            textInput4.focus = true
+            textInput_targetPath.forceActiveFocus()
+//            textInput_targetPath.focus = true
             return false
         }else if(!serverAddress.match(/ftp:\/\/[^\s]+$/i)){
             warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_DocScan_server_addr1")))
-            textInput1.forceActiveFocus()
-//            textInput1.focus = true
+            textInput_serverAddress.forceActiveFocus()
+//            textInput_serverAddress.focus = true
             return false
         }else if(!targetPath.match(/\/[^\\\?\s\*:<>|\"]*$/)){
             warningWithImage(qsTr("ResStr_specify_incorrect").arg(qsTr("ResStr_DocScan_targetPath1")))
-            textInput4.forceActiveFocus()
-//            textInput4.focus = true
+            textInput_targetPath.forceActiveFocus()
+//            textInput_targetPath.focus = true
             return false
         }
         setting.serverAddress = serverAddress

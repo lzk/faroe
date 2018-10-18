@@ -123,54 +123,54 @@
         <translation>Auto-Off Time</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="116"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="117"/>
         <source>ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_</source>
         <translation>The valid range is 0 to 4, please check and enter again.</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="121"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="122"/>
         <source>ResStr_0_4_Hour</source>
         <translation>(0-4 Hours)</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="140"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="141"/>
         <source>ResStr_Life_Count</source>
         <translation>Life Count</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="152"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="153"/>
         <source>ResStr_Roller_Count</source>
         <translation>Retard Roller Count :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="172"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="209"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="173"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="210"/>
         <source>ResStr_Clear</source>
         <translation>Clear</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="189"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="190"/>
         <source>ResStr_ACM_Count</source>
         <translation>ACM Count :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="226"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="227"/>
         <source>ResStr_Scan_Count</source>
         <translation>Scan Count :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="264"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="265"/>
         <source>ResStr_Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="276"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="277"/>
         <source>ResStr_Calibration</source>
         <translation>Calibration</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="357"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="370"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="358"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="371"/>
         <source>ResStr_Do_you_want_to_clear</source>
         <translation>Do you want to clear this count?</translation>
     </message>
@@ -1023,7 +1023,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Default</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingDialog.qml" line="193"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingDialog.qml" line="194"/>
         <source>ResStr_OK</source>
         <translation>OK</translation>
     </message>
@@ -1099,12 +1099,12 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Contrast</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="322"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="323"/>
         <source>ResStr_Brightness</source>
         <translation>Brightness</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="350"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="352"/>
         <source>ResStr_Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -1495,12 +1495,17 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/SoftapView.qml" line="140"/>
+        <location filename="../SettingsPage/SoftapView.qml" line="139"/>
+        <source>ResStr_Conn_list</source>
+        <translation>Connected:</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage/SoftapView.qml" line="162"/>
         <source>ResStr_Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/SoftapView.qml" line="153"/>
+        <location filename="../SettingsPage/SoftapView.qml" line="175"/>
         <source>ResStr_Msg_9</source>
         <translation>The SSID must be 1 to 32 characters long. Please check and enter again.</translation>
     </message>

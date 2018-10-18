@@ -123,54 +123,54 @@
         <translation>自动关机时间</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="116"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="117"/>
         <source>ResStr_The_valid_range_is_0_4__please_confirm_and_enter_again_</source>
         <translation>有效范围是0到4，请检查并重试。</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="121"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="122"/>
         <source>ResStr_0_4_Hour</source>
         <translation>0-4小时</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="140"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="141"/>
         <source>ResStr_Life_Count</source>
         <translation>寿命计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="152"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="153"/>
         <source>ResStr_Roller_Count</source>
         <translation>分页滚轮计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="172"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="209"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="173"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="210"/>
         <source>ResStr_Clear</source>
         <translation>清空</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="189"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="190"/>
         <source>ResStr_ACM_Count</source>
         <translation>进纸滚轮计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="226"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="227"/>
         <source>ResStr_Scan_Count</source>
         <translation>扫描计数</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="264"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="265"/>
         <source>ResStr_Apply</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="276"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="277"/>
         <source>ResStr_Calibration</source>
         <translation>校正</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/DeviceView.qml" line="357"/>
-        <location filename="../SettingsPage/DeviceView.qml" line="370"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="358"/>
+        <location filename="../SettingsPage/DeviceView.qml" line="371"/>
         <source>ResStr_Do_you_want_to_clear</source>
         <translation>您想清空这个计数值吗？</translation>
     </message>
@@ -1019,7 +1019,7 @@
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingDialog.qml" line="193"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingDialog.qml" line="194"/>
         <source>ResStr_OK</source>
         <translation>确定</translation>
     </message>
@@ -1095,12 +1095,12 @@
         <translation>对比度</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="322"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="323"/>
         <source>ResStr_Brightness</source>
         <translation>亮度</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="350"/>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="352"/>
         <source>ResStr_Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -1491,12 +1491,17 @@
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/SoftapView.qml" line="140"/>
+        <location filename="../SettingsPage/SoftapView.qml" line="139"/>
+        <source>ResStr_Conn_list</source>
+        <translation>连接设备:</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage/SoftapView.qml" line="162"/>
         <source>ResStr_Apply</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/SoftapView.qml" line="153"/>
+        <location filename="../SettingsPage/SoftapView.qml" line="175"/>
         <source>ResStr_Msg_9</source>
         <translation>SSID只能输入1到32个字符，请检查并重新输入。</translation>
     </message>

@@ -54,6 +54,7 @@ static int cmdParser(int& cmd ,int& direct ,int& data_buffer_size)
     case CMD_CODE_getWifiStatus:        direct = 0; data_buffer_size = 1; break;//1
     case CMD_CODE_get_softAp:           direct = 0; data_buffer_size = 180; break;//180
     case CMD_CODE_set_softAp:           direct = 1; data_buffer_size = 180; break;//180
+    case CMD_CODE_getSoftApList:           direct = 0; data_buffer_size = 340; break;//340
 
     case CMD_CODE_getPsaveTime:         direct = 0; data_buffer_size = 1;  break;//1
     case CMD_CODE_setPsaveTime:         direct = 1; data_buffer_size = 1;  break;//1
