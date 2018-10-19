@@ -489,7 +489,8 @@ Scanner::Setting DeviceManager::parseUiScannerSetting(const QString& obj)
     setting.brightness = jsonScanSetting.value("brightness").toInt(50);
     setting.ADFMode = jsonScanSetting.value("adfMode").toBool()? SETTING_SCAN_AB_SIDE : SETTING_SCAN_A_SIDE;
     setting.MultiFeed = jsonScanSetting.value("multiFeed").toBool();
-    setting.AutoCrop = jsonScanSetting.value("autoCropAndDeskew").toBool();
+//    setting.AutoCrop = jsonScanSetting.value("autoCropAndDeskew").toBool();
+    setting.AutoCrop = true;
     setting.onepage = false;//SETTING_SCAN_PAGE;
     setting.source = SETTING_SCAN_ADF;
     setting.format = SETTING_IMG_FORMAT_JPG;

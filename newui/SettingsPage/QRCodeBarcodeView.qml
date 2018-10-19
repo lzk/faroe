@@ -286,9 +286,9 @@ FocusScope {
 //        console.log("qrcode on Destruction")
         decodeSetting.codeType = comboBox_codeType.currentIndex
         console.log("filename is :" ,decodeSetting.fileName)
-        if(textInput_fileName.text !== "")
+        if(textInput_fileName.text.trim() !== "")
         {
-            decodeSetting.fileName = textInput_fileName.text
+            decodeSetting.fileName = textInput_fileName.text.trim()
         }
         separationSetting.fileType = comboBox_saveFileType.currentIndex
         separationSetting.filePath = textInput_filePath.text

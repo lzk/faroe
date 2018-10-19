@@ -1324,7 +1324,7 @@
         
 <phrase>
 <source>ResStr_Select_Pictures_to_process</source>
-<target>请知道选择一个图片操作！</target>
+<target>请至少选择一个图片操作！</target>
 </phrase>
         
 <phrase>

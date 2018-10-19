@@ -197,6 +197,44 @@
     </message>
 </context>
 <context>
+    <name>ImageFunctions_Decode</name>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="201"/>
+        <source>ResStr_RESULT__Result</source>
+        <translation>Result:</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="205"/>
+        <source>ResStr_File_Name1</source>
+        <translation>File Name</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="206"/>
+        <source>ResStr_BITMAP_Source</source>
+        <translation>Source Bitmap</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="207"/>
+        <source>ResStr_BITMAP_Decode</source>
+        <translation>Decode Bitmap</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="208"/>
+        <source>ResStr_TYPE_Code</source>
+        <translation>Code Type</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="209"/>
+        <source>ResStr_TYPE_Result</source>
+        <translation>Result Type</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="210"/>
+        <source>ResStr_CONTENTS_Contents</source>
+        <translation>Contents</translation>
+    </message>
+</context>
+<context>
     <name>ImagePreviewDialog</name>
     <message>
         <location filename="../ImageViewer/ImagePreviewDialog.qml" line="16"/>
@@ -318,69 +356,69 @@
         <translation>File Path</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="344"/>
-        <location filename="../MainView.qml" line="823"/>
+        <location filename="../MainView.qml" line="349"/>
+        <location filename="../MainView.qml" line="828"/>
         <source>ICloud not login ,please login iCloud on MAC System Settings.</source>
         <translation>ICloud not login ,please login iCloud on MAC System Settings.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="350"/>
+        <location filename="../MainView.qml" line="355"/>
         <source>The file is exist ,replace it?</source>
         <translation>The file is exist ,replace it?</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="457"/>
-        <location filename="../MainView.qml" line="495"/>
+        <location filename="../MainView.qml" line="462"/>
+        <location filename="../MainView.qml" line="500"/>
         <source>ResStr_Scanning_is_canceled_on_machine</source>
         <translation>The scan job has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="466"/>
+        <location filename="../MainView.qml" line="471"/>
         <source>ResStr_DocScan_Device_Not_Ready</source>
         <translation>The Device is not ready! Please check your computer setting or power on and plug in your device.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="470"/>
+        <location filename="../MainView.qml" line="475"/>
         <source>ResStr_DocScan_net_scanner_busy</source>
         <translation>The Device is currently in use. Confirm that the device is available and try again.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="473"/>
+        <location filename="../MainView.qml" line="478"/>
         <source>ResStr_DocScan_paper_jam</source>
         <translation>Paper jam!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="476"/>
+        <location filename="../MainView.qml" line="481"/>
         <source>ResStr_DocScan_cover_open</source>
         <translation>Cover is opened!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="479"/>
+        <location filename="../MainView.qml" line="484"/>
         <source>ResStr_DocScan_paper_not_ready</source>
         <translation>Paper is not ready!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="483"/>
+        <location filename="../MainView.qml" line="488"/>
         <source>ResStr_DocScan_adf_not_ready</source>
         <translation>ADF is not ready!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="486"/>
+        <location filename="../MainView.qml" line="491"/>
         <source>ResStr_DocScan_Cover_Open</source>
         <translation>Cover (ADF) is opened!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="489"/>
+        <location filename="../MainView.qml" line="494"/>
         <source>ResStr_DocScan_home_not_ready</source>
         <translation>Home is not ready!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="492"/>
+        <location filename="../MainView.qml" line="497"/>
         <source>ResStr_DocScan_multifeed_error</source>
         <translation>Multi-feed error!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="502"/>
+        <location filename="../MainView.qml" line="507"/>
         <source>ResStr_DocScan_Power_Bank</source>
         <translation>The scan job could not be continued, because the Power Bank mode does not support the following settings.
 	Media Type: 	Deposit Book or Card
@@ -393,7 +431,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
 	Auto Color Detection: 	Off</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="514"/>
+        <location filename="../MainView.qml" line="519"/>
         <source>ResStr_DocScan_Power_Bus</source>
         <translation>The scan job could not be continued, because the USB Bus power mode does not support the following settings.
 	ADF Mode: 		Two Side
@@ -413,125 +451,125 @@ If you select &apos;No&apos;, the scan job will be canceled!
 </translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="520"/>
+        <location filename="../MainView.qml" line="525"/>
         <source>ResStr_DocScan_Power_Bus_Wifi</source>
         <translation>The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="525"/>
+        <location filename="../MainView.qml" line="530"/>
         <source>ResStr_DocScan_memory_full</source>
         <translation>Device Memory is full!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="529"/>
+        <location filename="../MainView.qml" line="534"/>
         <source>ResStr_DocScan_Transfer_Error</source>
         <translation>The Device transfering has some error!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="536"/>
+        <location filename="../MainView.qml" line="541"/>
         <source>ResStr_DocScan_Device_Disconnected</source>
         <translation>The device is disconnected, the scanning will be canceled!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="539"/>
+        <location filename="../MainView.qml" line="544"/>
         <source>ResStr_DocScan_scan_all_blank</source>
         <translation>Scan Images are all blank!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="542"/>
+        <location filename="../MainView.qml" line="547"/>
         <source>ResStr_Scanning_is_canceled_Last</source>
         <translation>The last scan job was canceled. Please clear the ADF of any remaining paper originals, and try again.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="578"/>
+        <location filename="../MainView.qml" line="583"/>
         <source>ResStr_Calibrating</source>
         <translation>Calibrating...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="607"/>
+        <location filename="../MainView.qml" line="612"/>
         <source>processing</source>
         <translation>processing</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="614"/>
+        <location filename="../MainView.qml" line="619"/>
         <source>ResStr_DocScan_upload_wait</source>
         <translation>Uploading, please wait...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="618"/>
+        <location filename="../MainView.qml" line="623"/>
         <source>ResStr_DocScan_print_pic_wait</source>
         <translation>Printing, please wait...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="622"/>
-        <location filename="../MainView.qml" line="626"/>
+        <location filename="../MainView.qml" line="627"/>
+        <location filename="../MainView.qml" line="631"/>
         <source>ResStr_DocScan_Saving_pic_TIFF</source>
         <translation>Saving…</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="634"/>
+        <location filename="../MainView.qml" line="639"/>
         <source>ResStr_DocScan_Decoding</source>
         <translation>Decoding, please wait...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="667"/>
-        <location filename="../MainView.qml" line="687"/>
+        <location filename="../MainView.qml" line="672"/>
+        <location filename="../MainView.qml" line="692"/>
         <source>ResStr_Setting_Successfully_</source>
         <translation>Configuration completed! Please restart device to apply settings.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="670"/>
+        <location filename="../MainView.qml" line="675"/>
         <source>Wi-Fi not enabled ,please enable first</source>
         <translation>Wi-Fi not enabled ,please enable first</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="673"/>
-        <location filename="../MainView.qml" line="690"/>
+        <location filename="../MainView.qml" line="678"/>
+        <location filename="../MainView.qml" line="695"/>
         <source>ResStr_Setting_Fail</source>
         <translation>Configuration failed. Please check your setting and device, then try again.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="700"/>
+        <location filename="../MainView.qml" line="705"/>
         <source>ResStr_Not_Find_Printer</source>
         <translation>Not find printer!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="708"/>
-        <location filename="../MainView.qml" line="740"/>
-        <location filename="../MainView.qml" line="762"/>
-        <location filename="../MainView.qml" line="803"/>
-        <location filename="../MainView.qml" line="836"/>
+        <location filename="../MainView.qml" line="713"/>
+        <location filename="../MainView.qml" line="745"/>
+        <location filename="../MainView.qml" line="767"/>
+        <location filename="../MainView.qml" line="808"/>
+        <location filename="../MainView.qml" line="841"/>
         <source>ResStr_Quick_Preview</source>
         <translation>Quick Scan Preview</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="712"/>
+        <location filename="../MainView.qml" line="717"/>
         <source>ResStr_DocScan_print_ok</source>
         <translation>Print completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="728"/>
+        <location filename="../MainView.qml" line="733"/>
         <source>ResStr_DocScan_Fail_save</source>
         <translation>Fail to save files. </translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="731"/>
+        <location filename="../MainView.qml" line="736"/>
         <source>ResStr_Specify_File_Path_not_exist</source>
         <translation>Your Specify File Path does not exist, please specify again!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="744"/>
+        <location filename="../MainView.qml" line="749"/>
         <source>ResStr_DocScan_save_file_ok</source>
         <translation>Save files completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="719"/>
-        <location filename="../MainView.qml" line="751"/>
-        <location filename="../MainView.qml" line="773"/>
-        <location filename="../MainView.qml" line="814"/>
-        <location filename="../MainView.qml" line="847"/>
-        <location filename="../MainView.qml" line="876"/>
-        <location filename="../MainView.qml" line="887"/>
+        <location filename="../MainView.qml" line="724"/>
+        <location filename="../MainView.qml" line="756"/>
+        <location filename="../MainView.qml" line="778"/>
+        <location filename="../MainView.qml" line="819"/>
+        <location filename="../MainView.qml" line="852"/>
+        <location filename="../MainView.qml" line="881"/>
+        <location filename="../MainView.qml" line="892"/>
         <source>ResStr_DocScan_scan_fail</source>
         <translation>Scan failed</translation>
     </message>
@@ -542,50 +580,50 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Output Result</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="766"/>
+        <location filename="../MainView.qml" line="771"/>
         <source>Scan to Email completed</source>
         <translation>Scan to Email completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="782"/>
+        <location filename="../MainView.qml" line="787"/>
         <source>Time out.Unable to connet to the remote server.</source>
         <translation>Time out.Unable to connet to the remote server.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="785"/>
+        <location filename="../MainView.qml" line="790"/>
         <source>Upload failed.Unable to connet to the remote server.</source>
         <translation>Upload failed.Unable to connet to the remote server.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="788"/>
+        <location filename="../MainView.qml" line="793"/>
         <source>Upload failed.The remote server returned an error:(530) Not logged in.</source>
         <translation>Upload failed.The remote server returned an error:(530) Not logged in.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="792"/>
+        <location filename="../MainView.qml" line="797"/>
         <source>Upload failed.The remote server returned an error:(553) File name not allowed.</source>
         <translation>Upload failed.The remote server returned an error:(553) File name not allowed.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="798"/>
-        <location filename="../MainView.qml" line="807"/>
-        <location filename="../MainView.qml" line="831"/>
-        <location filename="../MainView.qml" line="840"/>
+        <location filename="../MainView.qml" line="803"/>
+        <location filename="../MainView.qml" line="812"/>
+        <location filename="../MainView.qml" line="836"/>
+        <location filename="../MainView.qml" line="845"/>
         <source>ResStr_DocScan_upload_ok</source>
         <translation>Upload completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="826"/>
+        <location filename="../MainView.qml" line="831"/>
         <source>ICloud upload fail.</source>
         <translation>ICloud upload fail.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="855"/>
+        <location filename="../MainView.qml" line="860"/>
         <source>ResStr_DoCalibration_Completed</source>
         <translation>Calibration completed!  Please restart your device.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="860"/>
+        <location filename="../MainView.qml" line="865"/>
         <source>ResStr_DocScan_calibration_fail</source>
         <translation>Calibration failed!</translation>
     </message>

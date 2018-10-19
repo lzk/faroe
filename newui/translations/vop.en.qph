@@ -1393,7 +1393,35 @@
 <target>Searching, please wait...</target>
 </phrase>
 
-
+<phrase>
+<source>ResStr_RESULT_Result</source>
+<target>Result:</target>
+</phrase>
+                
+<phrase>
+<source>ResStr_BITMAP_Source</source>
+<target>Source Bitmap</target>
+</phrase>
+        
+<phrase>
+<source>ResStr_BITMAP_Decode</source>
+<target>Decode Bitmap</target>
+</phrase>
+        
+<phrase>
+<source>ResStr_TYPE_Code</source>
+<target>Code Type</target>
+</phrase>
+        
+<phrase>
+<source>ResStr_TYPE_Result</source>
+<target>Result Type</target>
+</phrase>
+        
+<phrase>
+<source>ResStr_CONTENTS_Contents</source>
+<target>Contents</target>
+</phrase>
     
 <phrase>
 <source>ResStr_DocScan_open_p_fail</source>

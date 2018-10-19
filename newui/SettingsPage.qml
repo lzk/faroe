@@ -77,7 +77,7 @@ SettingsLayout {
             onClicked:{
                 if(ListView.view.currentIndex=== 1){
                     var item = loader.item
-                    if(item.textInput_fileName.text === ""){
+                    if(item.textInput_fileName.text.trim() === ""){
                         warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
                         return
                     }
@@ -146,7 +146,7 @@ SettingsLayout {
         onClicked:{
             if(listView.currentIndex=== 1){
                 var item = loader.item
-                if(item.textInput_fileName.text === ""){
+                if(item.textInput_fileName.text.trim() === ""){
                     warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
                     return
                 }

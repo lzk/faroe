@@ -128,7 +128,7 @@ void ImageModel::addImage(const ImageItem& ip)
 {
     beginInsertRows(QModelIndex() ,rowCount() ,rowCount());
 //    m_list << ip;
-    m_list.push_front(ip);
+    m_list.push_back(ip);
     endInsertRows();
 }
 

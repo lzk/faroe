@@ -198,16 +198,16 @@ int ImageFunctions_Decode::postFunction(const QString& para)
     fprintf(file ,"<html> <head> <meta charset=\"UTF-8\">  <title>QRCode/Barcode Detection Result</title> </head>\n");
     fprintf(file ,"<style> table { font-family: \"Microsoft YaHei\"; font-size:12px } </style>\n");
     fprintf(file ,"<body>\n");
-    fprintf(file ,"<H3>Result:</H3>\n");
+    fprintf(file ,"<H3>%s:</H3>\n",QT_TR_NOOP("ResStr_RESULT_Result"));
 
     fprintf(file ,"<table border=\"1\" cellspacing=\"0\" vspace=\"0\" hspace=\"0\" cellpadding=\"10\">\n");
     fprintf(file ,"<tr>\n");
-    fprintf(file ,"<th> File Name	     </th>\n");
-    fprintf(file ,"<th> Source Bitmap	     </th>\n");
-    fprintf(file ,"<th> Decode Bitmap	     </th>\n");
-    fprintf(file ,"<th> Code Type	 </th>\n");
-    fprintf(file ,"<th> Result Type	 </th>\n");
-    fprintf(file ,"<th> Contents  	 </th>\n");
+    fprintf(file ,"<th> %s	     </th>\n",QT_TR_NOOP("ResStr_File_Name1"));
+    fprintf(file ,"<th> %s	     </th>\n",QT_TR_NOOP("ResStr_BITMAP_Source"));
+    fprintf(file ,"<th> %s	     </th>\n",QT_TR_NOOP("ResStr_BITMAP_Decode"));
+    fprintf(file ,"<th> %s	 </th>\n",QT_TR_NOOP("ResStr_TYPE_Code"));
+    fprintf(file ,"<th> %s	 </th>\n",QT_TR_NOOP("ResStr_TYPE_Result"));
+    fprintf(file ,"<th> %s  	 </th>\n",QT_TR_NOOP("ResStr_CONTENTS_Contents"));
     fprintf(file ,"</tr>\n");
     foreach (struct DMDecodeResult dr, decode_data) {
         cFileName = QFileInfo(dr.fileName).fileName().toUtf8().constData();
