@@ -291,7 +291,7 @@ JKDialog{
         update()
         jkInterface.setCmd(DeviceStruct.CMD_getPowerSupply)
         refresh.visible = true
-        btn_OK.forceActiveFocus()
+//        btn_OK.forceActiveFocus()
     }
     Connections{
         target: jkInterface

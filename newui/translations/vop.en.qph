@@ -102,7 +102,7 @@
     
 <phrase>
 <source>ResStr_Paper_Finished</source>
-<target>Paper {0} finished.</target>
+<target>Paper %1 finished.</target>
 </phrase>
 
 
@@ -1736,6 +1736,10 @@
 <target>Get Ever Note List Error!</target>
 </phrase>
 
+<phrase>
+<source>ResStr_The_Output_Result_cannot_be_empty</source>
+<target>The Output Result cannot be empty!</target>
+</phrase>
 
     
 <phrase>
@@ -1761,14 +1765,14 @@
     
 <phrase>
 <source>ResStr_could_not_be_empty</source>
-<target>The {0} could not be empty!</target>
+<target>The %1 could not be empty!</target>
 </phrase>
 
 
     
 <phrase>
 <source>ResStr_specify_incorrect</source>
-<target>The {0} format is incorrect, Please check your {0} and enter again.</target>
+<target>The %1 format is incorrect, Please check your %1 and enter again.</target>
 </phrase>
 
 
@@ -1789,7 +1793,7 @@
     
 <phrase>
 <source>ResStr_Invalid_xxx</source>
-<target>Invalid value in {0}.</target>
+<target>Invalid value in %1.</target>
 </phrase>
 
 
@@ -1838,7 +1842,7 @@
     
 <phrase>
 <source>ResStr_Folder_Not_Exist</source>
-<target>The folder {0} does not exist, please double check and try again!</target>
+<target>The folder %1 does not exist, please double check and try again!</target>
 </phrase>
 
 
@@ -1852,7 +1856,7 @@
     
 <phrase>
 <source>ResStr_Update_File_fail</source>
-<target>Upload {0} failed!</target>
+<target>Upload %1 failed!</target>
 </phrase>
 
 
@@ -2433,7 +2437,7 @@
     
 <phrase>
 <source>ResStr_Create_Folder_fail</source>
-<target>Create Folder: {0} fail!</target>
+<target>Create Folder: %1 fail!</target>
 </phrase>
 
 
@@ -2559,7 +2563,7 @@
     
 <phrase>
 <source>ResStr_could_not_be_all_space</source>
-<target>The {0} cannot be all space!</target>
+<target>The %1 cannot be all space!</target>
 </phrase>
 
 

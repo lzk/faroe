@@ -300,7 +300,7 @@ Component{
                         }
                     }
                     Row{
-                        visible: model.modelData.encryption % 5 === 1
+                        visible: (model.modelData.encryption % 128) % 5 === 1
                         anchors.horizontalCenter: parent.horizontalCenter
                         height: 30
                         spacing: 2

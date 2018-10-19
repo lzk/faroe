@@ -3,12 +3,13 @@ import "../../component"
 FocusScope {
     width: 477
     height: 309
+    KeyNavigation.tab: textInput_serverAddress
 
-    onActiveFocusChanged:{
-        if(activeFocus){
-            textInput_serverAddress.focus = true
-        }
-    }
+//    onActiveFocusChanged:{
+//        if(activeFocus){
+//            textInput_serverAddress.focus = true
+//        }
+//    }
 
     Column{
         anchors.fill: parent
@@ -28,7 +29,6 @@ FocusScope {
 
             JKTextInput {
                 id: textInput_serverAddress
-                focus:true
                 width: 250
                 height: 30
                 anchors.right: parent.right
@@ -107,6 +107,7 @@ FocusScope {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 maximumLength: 255
+                KeyNavigation.tab: textInput_serverAddress
             }
         }
     }
@@ -126,6 +127,8 @@ FocusScope {
         textInput_password.cursorPosition = 0
         textInput_targetPath.text = setting.targetPath
         textInput_targetPath.cursorPosition = 0
+
+        textInput_serverAddress.forceActiveFocus()
     }
     function ok(){
         var serverAddress = textInput_serverAddress.text

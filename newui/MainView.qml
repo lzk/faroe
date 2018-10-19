@@ -281,13 +281,13 @@ Item {
             setting.scanSetting.mediaType = 0
             if(setting.fileName === ""){
 //                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Html File Name")))
-                warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_File_Name1")))
+                warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
                 return
 //            }else if(!setting.fileName.match(/^[0-9a-zA-Z\-_.]{1,250}.html$/)){
-            }else if(!setting.fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]{1,250}.html$/)
+            }else if(!setting.fileName.match(/^[^\/\\\?\*:<>|\"\(\)\[\]]{1,250}$/)
                      || !setting.fileName.match(/^[\x20-\x7e]*$/)){
 //                warningWithImage(qsTr("Invalid %1!").arg(qsTr("Html File Name")))
-                warningWithImage(qsTr("ResStr_Invalid_xxx").arg(qsTr("ResStr_File_Name1")))
+                warningWithImage(qsTr("ResStr_Invalid_xxx").arg(qsTr("ResStr_Output_Result")))
                 return
             }
             break
@@ -317,6 +317,11 @@ Item {
                 return
             }
             break
+           case DeviceStruct.CMD_QuickScan_ToPrint:
+               if(setting.printerName === ""){
+                    setting.printerName = jkInterface.getDefaultPrinterName()
+               }
+               break
         }
 
         setCmd(cmd ,setting)

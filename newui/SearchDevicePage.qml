@@ -37,7 +37,6 @@ Item {
                 border.color: "black"
                 opacity:0.3
             }
-//            activeFocusOnTab: false
 
             ListView{
                 id:listview
@@ -56,7 +55,6 @@ Item {
                     id:wrapper
                     height:76
                     width: ListView.view.width
-//                    activeFocusOnTab: ListView.isCurrentItem
                     dashRectange.z: 2
                     property var currentDevice : JSON.parse(modelData)
                     Rectangle{
@@ -95,8 +93,6 @@ Item {
                         hoverEnabled: true
                         onClicked: wrapper.ListView.view.currentIndex = index
                     }
-//                    onFocusChanged:
-//                        activeFocusOnTab = focus
                 }
             }
         }
@@ -130,12 +126,13 @@ Item {
     Connections{
         target: jkInterface
         onSearchComplete:{
-            closeRefreshDialog()
-            if(listview.count >= 0)
+            if(canceling || listview.count <= 0)
+                closeRefreshDialog()
+            else
                 connectToDevice(0)
         }
         onDeviceConnectCompleted:{
-            button_connect.enabled = true
+            closeRefreshDialog()
         }
     }
 
@@ -144,17 +141,19 @@ Item {
     property var dialog
     function openRefreshDialog(){
         dialog = openDialog("component/JKMessageBox_refresh.qml" ,{"message.text":qsTr("ResStr_DocScan_search_dev")} ,function(dialog){
-            dialog.cancelClick.connect(jkInterface.cancelSearch)
+            dialog.cancelClick.connect(cancelSearch)
         })
     }
 
     function closeRefreshDialog(){
         dialog.close()
         button_refresh.enabled = true
+        button_connect.enabled = true
     }
     
     function refresh(){
         button_refresh.enabled = false
+        canceling = false
         scanData.model_deviceList = null
         jkInterface.searchDeviceList()
         openRefreshDialog()
@@ -163,8 +162,15 @@ Item {
     function connectToDevice(index){
         if(index < 0)
             return
+        button_connect.enabled = false
+        button_refresh.enabled = false
         jkInterface.cancelSearch()
         jkInterface.connectDevice(index)
-        button_connect.enabled = false
+    }
+
+    property bool canceling:false
+    function cancelSearch(){
+        canceling = true
+        jkInterface.cancelSearch()
     }
 }

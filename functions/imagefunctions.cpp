@@ -482,7 +482,7 @@ int ImageFunctions_ToFile::function(const QStringList& fileList ,const QString& 
     qDebug()<<"pre file name:" <<preFileName;
 
     QString tmpFile = getTempPath() + "/tmp.tif";
-    QString fileName_ = isQuickScan ?"_" :"";
+    QString fileName_ = "_";//isQuickScan ?"_" :"";
     for (int i = 0 ;i < fileList.length() ;i++){
         if(m_cancel){
             return JKEnums::ImageCommandResult_error_cancel;

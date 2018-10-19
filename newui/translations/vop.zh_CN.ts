@@ -289,15 +289,17 @@
         <location filename="../MainView.qml" line="281"/>
         <location filename="../MainView.qml" line="284"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>{0}不能为空！</translation>
+        <translation>%1不能为空！</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="260"/>
-        <location filename="../MainView.qml" line="266"/>
         <location filename="../MainView.qml" line="284"/>
         <location filename="../MainView.qml" line="292"/>
         <source>ResStr_File_Name1</source>
         <translation>文件名称</translation>
+    </message>
+    <message>
+        <source>ResStr_The_Output_Result_cannot_be_empty</source>
+        <translation type="obsolete">输出结果不能为空！</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="266"/>
@@ -305,7 +307,7 @@
         <location filename="../MainView.qml" line="287"/>
         <location filename="../MainView.qml" line="292"/>
         <source>ResStr_Invalid_xxx</source>
-        <translation>无效的{0}。</translation>
+        <translation>无效的%1。</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="272"/>
@@ -530,6 +532,12 @@
         <translation>扫描失败</translation>
     </message>
     <message>
+        <location filename="../MainView.qml" line="260"/>
+        <location filename="../MainView.qml" line="266"/>
+        <source>ResStr_Output_Result</source>
+        <translation>输出结果</translation>
+    </message>
+    <message>
         <location filename="../MainView.qml" line="766"/>
         <source>Scan to Email completed</source>
         <translation>扫描到Email完成</translation>
@@ -616,7 +624,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="124"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>{0}不能为空！</translation>
+        <translation>%1不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="124"/>
@@ -627,7 +635,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="127"/>
         <source>ResStr_could_not_be_all_space</source>
-        <translation>{0}不能全部为空格！</translation>
+        <translation>%1不能全部为空格！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/NewQuickScanView.qml" line="146"/>
@@ -638,54 +646,54 @@
 <context>
     <name>QRCodeBarcodeView</name>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="37"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="38"/>
         <source>ResStr_DocScan_QRBar_Code_Decode</source>
         <translation>二维码/条形码 识别</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="54"/>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="155"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="55"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="156"/>
         <source>ResStr_DocScan_scan_setting</source>
         <translation>扫描设置：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="77"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="78"/>
         <source>ResStr_DocScan_Code_Type</source>
         <translation>条码类型：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="99"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="100"/>
         <source>ResStr_DocScan_Output_Result</source>
         <translation>输出结果：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="138"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="139"/>
         <source>ResStr_DocScan_Document_Separation</source>
         <translation>文档分隔</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="179"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="180"/>
         <source>ResStr_DocScan_Save_File_Type</source>
         <translation>存储文件类型：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="200"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="201"/>
         <source>ResStr_DocScan_File_Path</source>
         <translation>文件路径：</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="220"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="221"/>
         <source>ResStr_DocScan_Browse</source>
         <translation>浏览…</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="238"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="239"/>
         <source>Save As</source>
         <translation>保存到</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="253"/>
-        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="265"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="254"/>
+        <location filename="../SettingsPage/QRCodeBarcodeView.qml" line="266"/>
         <source>ResStr_Setting</source>
         <translation>设置…</translation>
     </message>
@@ -896,7 +904,7 @@
     <message>
         <location filename="../ScanData.js" line="120"/>
         <source>ResStr_BarCode</source>
-        <translation>条形码 </translation>
+        <translation>条形码</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="120"/>
@@ -906,32 +914,32 @@
     <message>
         <location filename="../ScanData.js" line="179"/>
         <source>ResStr_DocScan_Scan_Print</source>
-        <translation type="unfinished">扫描到打印机</translation>
+        <translation>扫描到打印机</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="189"/>
         <source>ResStr_DocScan_Scan_File</source>
-        <translation type="unfinished">扫描到文档</translation>
+        <translation>扫描到文档</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="209"/>
         <source>ResStr_DocScan_Scan_App</source>
-        <translation type="unfinished">扫描到应用程序</translation>
+        <translation>扫描到应用程序</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="227"/>
         <source>ResStr_DocScan_Scan_Email</source>
-        <translation type="unfinished">扫描到邮件</translation>
+        <translation>扫描到邮件</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="244"/>
         <source>ResStr_DocScan_Scan_FTP</source>
-        <translation type="unfinished">扫描到FTP</translation>
+        <translation>扫描到FTP</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="265"/>
         <source>ResStr_DocScan_Scan_Cloud</source>
-        <translation type="unfinished">扫描到云盘</translation>
+        <translation>扫描到云盘</translation>
     </message>
 </context>
 <context>
@@ -1200,7 +1208,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToEmailView.qml" line="106"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>{0}不能为空！</translation>
+        <translation>%1不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToEmailView.qml" line="106"/>
@@ -1241,7 +1249,7 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="137"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="142"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>{0}不能为空！</translation>
+        <translation>%1不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="127"/>
@@ -1269,7 +1277,7 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="147"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="152"/>
         <source>ResStr_specify_incorrect</source>
-        <translation>{0}格式错误，请检查{1}并重新输入。</translation>
+        <translation>%1格式错误，请检查%1并重新输入。</translation>
     </message>
 </context>
 <context>
@@ -1304,7 +1312,7 @@
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="133"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="139"/>
         <source>ResStr_could_not_be_empty</source>
-        <translation>{0}不能为空！</translation>
+        <translation>%1不能为空！</translation>
     </message>
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="129"/>
@@ -1325,7 +1333,7 @@
     <message>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFileView.qml" line="157"/>
         <source>ResStr_Invalid_xxx</source>
-        <translation>无效的{0}。</translation>
+        <translation>无效的%1。</translation>
     </message>
 </context>
 <context>
@@ -1409,7 +1417,7 @@
     <message>
         <location filename="../ScanPage/ScanningDialog.qml" line="120"/>
         <source>ResStr_Paper_Finished</source>
-        <translation>第{0}张完成。</translation>
+        <translation>第%1张完成。</translation>
     </message>
 </context>
 <context>
@@ -1438,37 +1446,57 @@
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../SettingsPage.qml" line="84"/>
+        <source>ResStr_The_Output_Result_cannot_be_empty</source>
+        <translation type="vanished">输出结果不能为空！</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage.qml" line="81"/>
+        <location filename="../SettingsPage.qml" line="150"/>
+        <source>ResStr_could_not_be_empty</source>
+        <translation>%1不能为空！</translation>
+    </message>
+    <message>
+        <source>ResStr_File_Name1</source>
+        <translation type="vanished">文件名称</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage.qml" line="81"/>
+        <location filename="../SettingsPage.qml" line="150"/>
+        <source>ResStr_Output_Result</source>
+        <translation>输出结果</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage.qml" line="91"/>
         <source>ResStr_QuickScanSettings</source>
         <translation>快捷扫描设置</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="90"/>
+        <location filename="../SettingsPage.qml" line="97"/>
         <source>ResStr_DecodeSettings</source>
         <translation>条码识别/文档分隔设置</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="96"/>
+        <location filename="../SettingsPage.qml" line="103"/>
         <source>ResStr_ScanToSettings</source>
         <translation>扫描设置</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="102"/>
+        <location filename="../SettingsPage.qml" line="109"/>
         <source>ResStr_Printer_Wi_Fi</source>
         <translation>Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="107"/>
+        <location filename="../SettingsPage.qml" line="114"/>
         <source>ResStr_TCP_IPv4</source>
         <translation>TCP/IPv4</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="112"/>
+        <location filename="../SettingsPage.qml" line="119"/>
         <source>ResStr_Soft_AP</source>
         <translation>Soft AP</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="117"/>
+        <location filename="../SettingsPage.qml" line="124"/>
         <source>ResStr_Device</source>
         <translation>设备设置</translation>
     </message>

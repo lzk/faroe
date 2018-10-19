@@ -54,7 +54,20 @@ QStringList JKInterface::getPrinterName()
     return sl;
 //    return QPrinterInfo::availablePrinterNames();
 }
-
+QString JKInterface::getDefaultPrinterName()
+{
+    QList<QPrinterInfo> pis = QPrinterInfo::availablePrinters();
+    if(pis.isEmpty())
+        return QString();
+    QString defaultPrinter = pis.first().description();
+    foreach (QPrinterInfo pi, pis) {
+        if(pi.isDefault()){
+            defaultPrinter = pi.description();
+            break;
+        }
+    }
+    return defaultPrinter;
+}
 void JKInterface::updateDeviceList(QStringList deviceList)
 {
     if(!qobject_cast<QObject*>(scanData))

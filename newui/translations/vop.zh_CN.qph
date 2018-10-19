@@ -319,7 +319,7 @@
         
 <phrase>
 <source>ResStr_could_not_be_empty</source>
-<target>{0}不能为空！</target>
+<target>%1不能为空！</target>
 </phrase>
         
 <phrase>
@@ -369,7 +369,7 @@
         
 <phrase>
 <source>ResStr_specify_incorrect</source>
-<target>{0}格式错误，请检查{1}并重新输入。</target>
+<target>%1格式错误，请检查%1并重新输入。</target>
 </phrase>
         
 <phrase>
@@ -454,7 +454,7 @@
         
 <phrase>
 <source>ResStr_Invalid_xxx</source>
-<target>无效的{0}。</target>
+<target>无效的%1。</target>
 </phrase>
         
 <phrase>
@@ -465,6 +465,11 @@
 <phrase>
 <source>ResStr_DocScan_Network_Disconnected</source>
 <target>您的电脑没有连接网络，请检查您的设置。</target>
+</phrase>
+
+<phrase>
+<source>ResStr_The_Output_Result_cannot_be_empty</source>
+<target>输出结果不能为空！</target>
 </phrase>
         
 <phrase>
@@ -509,7 +514,7 @@
         
 <phrase>
 <source>ResStr_Folder_Not_Exist</source>
-<target>文件夹{0}不存在，请重试！</target>
+<target>文件夹%1不存在，请重试！</target>
 </phrase>
         
 <phrase>
@@ -544,12 +549,12 @@
         
 <phrase>
 <source>ResStr_Update_File_fail</source>
-<target>上传文件{0}失败！</target>
+<target>上传文件%1失败！</target>
 </phrase>
         
 <phrase>
 <source>ResStr_Create_Folder_fail</source>
-<target>创建文件夹{0}失败！</target>
+<target>创建文件夹%1失败！</target>
 </phrase>
         
 <phrase>
@@ -594,7 +599,7 @@
         
 <phrase>
 <source>ResStr_could_not_be_all_space</source>
-<target>{0}不能全部为空格！</target>
+<target>%1不能全部为空格！</target>
 </phrase>
         
 <phrase>
@@ -1569,7 +1574,7 @@
         
 <phrase>
 <source>ResStr_Paper_Finished</source>
-<target>第{0}张完成。</target>
+<target>第%1张完成。</target>
 </phrase>
         
 <phrase>

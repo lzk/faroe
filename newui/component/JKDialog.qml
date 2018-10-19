@@ -17,6 +17,8 @@ Window {
         anchors.fill: parent
         anchors.margins: 10
         visible: window.visible
+        focus:true
+        Keys.onEscapePressed: jKToolbar.close()
 
         RectangularGlow{
             anchors.fill: parent

@@ -195,7 +195,9 @@ Item {
         source_normal: "qrc:/Images/quick scan_btn_setting.png"
         source_press: "qrc:/Images/quick scan_btnf_setting.png"
         source_disable: "qrc:/Images/quick scan_btn_setting.png"
-        onClicked: openQuickScanDialogWithPara(root.settings[listview.currentIndex] ,0)
+        onClicked: {
+            openQuickScanDialogWithPara(root.settings[listview.currentIndex] ,0)
+        }
     }
 
     ListView{

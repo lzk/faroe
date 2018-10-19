@@ -51,13 +51,13 @@ SettingsLayout {
             id:delegate
             width: ListView.view.width
             height: ListView.view.height / 7
-            JKDashRectange{
-                id:dashRectange
-                anchors.fill: delegate
-                anchors.margins: -1
-                radius: 0
-                visible: delegate.activeFocus
-            }
+//            JKDashRectange{
+//                id:dashRectange
+//                anchors.fill: delegate
+//                anchors.margins: -1
+//                radius: 0
+//                visible: delegate.activeFocus
+//            }
             Image {
                 anchors.fill: parent
                 source: delegate.ListView.isCurrentItem ?imageSource:"qrc:/Images/setting_img_disable.png"
@@ -91,6 +91,13 @@ SettingsLayout {
                 }
             }
             onClicked:{
+                if(ListView.view.currentIndex=== 1){
+                    var item = loader.item
+                    if(item.textInput_fileName.text === ""){
+                        warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
+                        return
+                    }
+                }
                 ListView.view.currentIndex = index
                 delegate.forceActiveFocus()
             }
@@ -153,6 +160,13 @@ SettingsLayout {
     Connections{
         target: button_back
         onClicked:{
+            if(listView.currentIndex=== 1){
+                var item = loader.item
+                if(item.textInput_fileName.text === ""){
+                    warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
+                    return
+                }
+            }
             root.StackView.view.pop()
         }
     }

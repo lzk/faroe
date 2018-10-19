@@ -288,7 +288,7 @@ Item {
 
                 ScanSettingBackground {
                     width: 220
-                    height: 120
+                    height: 130
                     visible: !decodeMode
                     text: qsTr("ResStr_Contrast")
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -310,7 +310,7 @@ Item {
                         SpinView{
                             id: spin_contrast
                             width:parent.width
-                            height: 55
+                            height: 65
                             maximumLength: 3
                         }
                     }
@@ -318,7 +318,7 @@ Item {
 
                 ScanSettingBackground {
                     width: 220
-                    height: 120
+                    height: 130
                     visible: !decodeMode
                     text: qsTr("ResStr_Brightness")
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -339,7 +339,7 @@ Item {
                         SpinView{
                             id: spin_brightness
                             width:parent.width
-                            height: 55
+                            height: 65
                             maximumLength: 3
                         }
                     }
