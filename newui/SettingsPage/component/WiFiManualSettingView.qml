@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import "../../component"
 import QtQuick.Controls 2.2
-Item{
+FocusScope{
     id:root
     signal returnClicked
     signal connectClicked(var setting)
@@ -62,6 +62,8 @@ Item{
                     validator: RegExpValidator{
                         regExp: /[^\s]{0,32}/
                     }
+                    KeyNavigation.tab: textInput_password
+                    focus:root.focus
                 }
             }
 
@@ -89,6 +91,7 @@ Item{
                                                           :/^(?:.{8,63}|[0-9a-fA-F]{64})$/
                     }
                     echoMode:checkbox_input.checked ?TextInput.Normal :TextInput.Password
+                    KeyNavigation.tab: textInput_ssid
                 }
             }
 

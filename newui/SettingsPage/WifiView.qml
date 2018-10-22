@@ -128,6 +128,7 @@ Item {
                                         break
                                     }
                                     column2.visible = false
+                                    pitem_manual.forceActiveFocus()
                                 }
                             }
                         }
