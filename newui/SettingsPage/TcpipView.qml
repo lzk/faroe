@@ -100,6 +100,8 @@ Item {
                             }
                         }
                     }
+                    KeyNavigation.tab: textInput_submask
+                    focus:radiobutton_static.checked
                 }
             }
 
@@ -133,6 +135,7 @@ Item {
                         }
                     }
                 }
+                KeyNavigation.tab: textInput_gateway
             }
 
             Row {
@@ -164,6 +167,7 @@ Item {
                             }
                         }
                     }
+                    KeyNavigation.tab: textInput_ipAddress
                 }
             }
         }

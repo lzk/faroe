@@ -13,18 +13,6 @@
         <source>ResStr_DocScan</source>
         <translation>DocScan Air</translation>
     </message>
-    <message>
-        <source>ResStr_CopyRight</source>
-        <translation type="vanished">Copyright (C) (2018)</translation>
-    </message>
-    <message>
-        <source>ResStr_Company</source>
-        <translation type="vanished">Unisplendour Corporation Limited.</translation>
-    </message>
-    <message>
-        <source>ResStr_AllRight</source>
-        <translation type="vanished">All Rights Reserved.</translation>
-    </message>
 </context>
 <context>
     <name>AppSelectDialog</name>
@@ -183,9 +171,47 @@
         <translation>To FTP</translation>
     </message>
     <message>
-        <location filename="../ScanToPage/FTPDialog.qml" line="62"/>
+        <location filename="../ScanToPage/FTPDialog.qml" line="65"/>
         <source>ResStr_OK</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>HtmlString</name>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="180"/>
+        <source>ResStr_RESULT_Result</source>
+        <translation>Result:</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="181"/>
+        <source>ResStr_File_Name1</source>
+        <translation>File Name</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="182"/>
+        <source>ResStr_BITMAP_Source</source>
+        <translation>Source Bitmap</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="183"/>
+        <source>ResStr_BITMAP_Decode</source>
+        <translation>Decode Bitmap</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="184"/>
+        <source>ResStr_TYPE_Code</source>
+        <translation>Code Type</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="185"/>
+        <source>ResStr_TYPE_Result</source>
+        <translation>Result Type</translation>
+    </message>
+    <message>
+        <location filename="../../functions/imagefunctions.cpp" line="186"/>
+        <source>ResStr_CONTENTS_Contents</source>
+        <translation>Contents</translation>
     </message>
 </context>
 <context>
@@ -194,44 +220,6 @@
         <location filename="../ImageViewer/ImageDelegateModel.qml" line="108"/>
         <source>ResStr_Are_you_sure_to_delete_the_selected_picture</source>
         <translation>Do you want to delete the selected image?</translation>
-    </message>
-</context>
-<context>
-    <name>ImageFunctions_Decode</name>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="201"/>
-        <source>ResStr_RESULT__Result</source>
-        <translation>Result:</translation>
-    </message>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="205"/>
-        <source>ResStr_File_Name1</source>
-        <translation>File Name</translation>
-    </message>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="206"/>
-        <source>ResStr_BITMAP_Source</source>
-        <translation>Source Bitmap</translation>
-    </message>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="207"/>
-        <source>ResStr_BITMAP_Decode</source>
-        <translation>Decode Bitmap</translation>
-    </message>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="208"/>
-        <source>ResStr_TYPE_Code</source>
-        <translation>Code Type</translation>
-    </message>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="209"/>
-        <source>ResStr_TYPE_Result</source>
-        <translation>Result Type</translation>
-    </message>
-    <message>
-        <location filename="../../functions/imagefunctions.cpp" line="210"/>
-        <source>ResStr_CONTENTS_Contents</source>
-        <translation>Contents</translation>
     </message>
 </context>
 <context>
@@ -297,128 +285,130 @@
 <context>
     <name>MainView</name>
     <message>
-        <location filename="../MainView.qml" line="50"/>
+        <location filename="../MainView.qml" line="67"/>
         <source>ResStr_DocScan</source>
         <translation>DocScan Air</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="107"/>
+        <location filename="../MainView.qml" line="131"/>
         <source>ResStr_Do_you_want_to_exit</source>
         <translation>Do you want to exit the DocScan Air?</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="174"/>
+        <location filename="../MainView.qml" line="198"/>
         <source>ResStr_DocScan_Info</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="184"/>
+        <location filename="../MainView.qml" line="208"/>
         <source>ResStr_Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="234"/>
+        <location filename="../MainView.qml" line="258"/>
         <source>ResStr_DocScan_scan_conn_fail</source>
         <translation>Scanning connection failed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="260"/>
-        <location filename="../MainView.qml" line="272"/>
-        <location filename="../MainView.qml" line="281"/>
         <location filename="../MainView.qml" line="284"/>
+        <location filename="../MainView.qml" line="296"/>
+        <location filename="../MainView.qml" line="305"/>
+        <location filename="../MainView.qml" line="308"/>
         <source>ResStr_could_not_be_empty</source>
         <translation>The %1 could not be empty!</translation>
     </message>
     <message>
         <location filename="../MainView.qml" line="284"/>
-        <location filename="../MainView.qml" line="292"/>
-        <source>ResStr_File_Name1</source>
-        <translation>File Name</translation>
+        <location filename="../MainView.qml" line="290"/>
+        <source>ResStr_Output_Result</source>
+        <translation>Output Result</translation>
     </message>
     <message>
-        <source>ResStr_The_Output_Result_cannot_be_empty</source>
-        <translation type="obsolete">The Output Result cannot be empty!</translation>
-    </message>
-    <message>
-        <location filename="../MainView.qml" line="266"/>
-        <location filename="../MainView.qml" line="275"/>
-        <location filename="../MainView.qml" line="287"/>
-        <location filename="../MainView.qml" line="292"/>
+        <location filename="../MainView.qml" line="290"/>
+        <location filename="../MainView.qml" line="299"/>
+        <location filename="../MainView.qml" line="311"/>
+        <location filename="../MainView.qml" line="316"/>
         <source>ResStr_Invalid_xxx</source>
         <translation>Invalid value in %1.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="272"/>
-        <location filename="../MainView.qml" line="275"/>
-        <location filename="../MainView.qml" line="281"/>
-        <location filename="../MainView.qml" line="287"/>
+        <location filename="../MainView.qml" line="296"/>
+        <location filename="../MainView.qml" line="299"/>
+        <location filename="../MainView.qml" line="305"/>
+        <location filename="../MainView.qml" line="311"/>
         <source>ResStr_DocScan_File_Path1</source>
         <translation>File Path</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="349"/>
-        <location filename="../MainView.qml" line="828"/>
+        <location filename="../MainView.qml" line="308"/>
+        <location filename="../MainView.qml" line="316"/>
+        <source>ResStr_File_Name1</source>
+        <translation>File Name</translation>
+    </message>
+    <message>
+        <location filename="../MainView.qml" line="373"/>
+        <location filename="../MainView.qml" line="852"/>
         <source>ICloud not login ,please login iCloud on MAC System Settings.</source>
         <translation>ICloud not login ,please login iCloud on MAC System Settings.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="355"/>
+        <location filename="../MainView.qml" line="379"/>
         <source>The file is exist ,replace it?</source>
         <translation>The file is exist ,replace it?</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="462"/>
-        <location filename="../MainView.qml" line="500"/>
+        <location filename="../MainView.qml" line="486"/>
+        <location filename="../MainView.qml" line="524"/>
         <source>ResStr_Scanning_is_canceled_on_machine</source>
         <translation>The scan job has been canceled. Please clear the ADF of any remaining paper originals before proceeding with any additional scans.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="471"/>
+        <location filename="../MainView.qml" line="495"/>
         <source>ResStr_DocScan_Device_Not_Ready</source>
         <translation>The Device is not ready! Please check your computer setting or power on and plug in your device.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="475"/>
+        <location filename="../MainView.qml" line="499"/>
         <source>ResStr_DocScan_net_scanner_busy</source>
         <translation>The Device is currently in use. Confirm that the device is available and try again.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="478"/>
+        <location filename="../MainView.qml" line="502"/>
         <source>ResStr_DocScan_paper_jam</source>
         <translation>Paper jam!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="481"/>
+        <location filename="../MainView.qml" line="505"/>
         <source>ResStr_DocScan_cover_open</source>
         <translation>Cover is opened!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="484"/>
+        <location filename="../MainView.qml" line="508"/>
         <source>ResStr_DocScan_paper_not_ready</source>
         <translation>Paper is not ready!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="488"/>
+        <location filename="../MainView.qml" line="512"/>
         <source>ResStr_DocScan_adf_not_ready</source>
         <translation>ADF is not ready!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="491"/>
+        <location filename="../MainView.qml" line="515"/>
         <source>ResStr_DocScan_Cover_Open</source>
         <translation>Cover (ADF) is opened!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="494"/>
+        <location filename="../MainView.qml" line="518"/>
         <source>ResStr_DocScan_home_not_ready</source>
         <translation>Home is not ready!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="497"/>
+        <location filename="../MainView.qml" line="521"/>
         <source>ResStr_DocScan_multifeed_error</source>
         <translation>Multi-feed error!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="507"/>
+        <location filename="../MainView.qml" line="531"/>
         <source>ResStr_DocScan_Power_Bank</source>
         <translation>The scan job could not be continued, because the Power Bank mode does not support the following settings.
 	Media Type: 	Deposit Book or Card
@@ -431,7 +421,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
 	Auto Color Detection: 	Off</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="519"/>
+        <location filename="../MainView.qml" line="543"/>
         <source>ResStr_DocScan_Power_Bus</source>
         <translation>The scan job could not be continued, because the USB Bus power mode does not support the following settings.
 	ADF Mode: 		Two Side
@@ -451,179 +441,173 @@ If you select &apos;No&apos;, the scan job will be canceled!
 </translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="525"/>
+        <location filename="../MainView.qml" line="549"/>
         <source>ResStr_DocScan_Power_Bus_Wifi</source>
         <translation>The scan job could not be continued, because the USB Bus power mode do not support WIFI scanning.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="530"/>
+        <location filename="../MainView.qml" line="554"/>
         <source>ResStr_DocScan_memory_full</source>
         <translation>Device Memory is full!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="534"/>
+        <location filename="../MainView.qml" line="558"/>
         <source>ResStr_DocScan_Transfer_Error</source>
         <translation>The Device transfering has some error!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="541"/>
+        <location filename="../MainView.qml" line="565"/>
         <source>ResStr_DocScan_Device_Disconnected</source>
         <translation>The device is disconnected, the scanning will be canceled!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="544"/>
+        <location filename="../MainView.qml" line="568"/>
         <source>ResStr_DocScan_scan_all_blank</source>
         <translation>Scan Images are all blank!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="547"/>
+        <location filename="../MainView.qml" line="571"/>
         <source>ResStr_Scanning_is_canceled_Last</source>
         <translation>The last scan job was canceled. Please clear the ADF of any remaining paper originals, and try again.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="583"/>
+        <location filename="../MainView.qml" line="607"/>
         <source>ResStr_Calibrating</source>
         <translation>Calibrating...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="612"/>
+        <location filename="../MainView.qml" line="636"/>
         <source>processing</source>
         <translation>processing</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="619"/>
+        <location filename="../MainView.qml" line="643"/>
         <source>ResStr_DocScan_upload_wait</source>
         <translation>Uploading, please wait...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="623"/>
+        <location filename="../MainView.qml" line="647"/>
         <source>ResStr_DocScan_print_pic_wait</source>
         <translation>Printing, please wait...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="627"/>
-        <location filename="../MainView.qml" line="631"/>
+        <location filename="../MainView.qml" line="651"/>
+        <location filename="../MainView.qml" line="655"/>
         <source>ResStr_DocScan_Saving_pic_TIFF</source>
         <translation>Saving…</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="639"/>
+        <location filename="../MainView.qml" line="663"/>
         <source>ResStr_DocScan_Decoding</source>
         <translation>Decoding, please wait...</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="672"/>
-        <location filename="../MainView.qml" line="692"/>
+        <location filename="../MainView.qml" line="696"/>
+        <location filename="../MainView.qml" line="716"/>
         <source>ResStr_Setting_Successfully_</source>
         <translation>Configuration completed! Please restart device to apply settings.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="675"/>
+        <location filename="../MainView.qml" line="699"/>
         <source>Wi-Fi not enabled ,please enable first</source>
         <translation>Wi-Fi not enabled ,please enable first</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="678"/>
-        <location filename="../MainView.qml" line="695"/>
+        <location filename="../MainView.qml" line="702"/>
+        <location filename="../MainView.qml" line="719"/>
         <source>ResStr_Setting_Fail</source>
         <translation>Configuration failed. Please check your setting and device, then try again.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="705"/>
+        <location filename="../MainView.qml" line="729"/>
         <source>ResStr_Not_Find_Printer</source>
         <translation>Not find printer!</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="713"/>
-        <location filename="../MainView.qml" line="745"/>
-        <location filename="../MainView.qml" line="767"/>
-        <location filename="../MainView.qml" line="808"/>
-        <location filename="../MainView.qml" line="841"/>
+        <location filename="../MainView.qml" line="737"/>
+        <location filename="../MainView.qml" line="769"/>
+        <location filename="../MainView.qml" line="791"/>
+        <location filename="../MainView.qml" line="832"/>
+        <location filename="../MainView.qml" line="865"/>
         <source>ResStr_Quick_Preview</source>
         <translation>Quick Scan Preview</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="717"/>
+        <location filename="../MainView.qml" line="741"/>
         <source>ResStr_DocScan_print_ok</source>
         <translation>Print completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="733"/>
-        <source>ResStr_DocScan_Fail_save</source>
-        <translation>Fail to save files. </translation>
-    </message>
-    <message>
-        <location filename="../MainView.qml" line="736"/>
-        <source>ResStr_Specify_File_Path_not_exist</source>
-        <translation>Your Specify File Path does not exist, please specify again!</translation>
-    </message>
-    <message>
-        <location filename="../MainView.qml" line="749"/>
-        <source>ResStr_DocScan_save_file_ok</source>
-        <translation>Save files completed</translation>
-    </message>
-    <message>
-        <location filename="../MainView.qml" line="724"/>
-        <location filename="../MainView.qml" line="756"/>
-        <location filename="../MainView.qml" line="778"/>
-        <location filename="../MainView.qml" line="819"/>
-        <location filename="../MainView.qml" line="852"/>
-        <location filename="../MainView.qml" line="881"/>
-        <location filename="../MainView.qml" line="892"/>
+        <location filename="../MainView.qml" line="748"/>
+        <location filename="../MainView.qml" line="780"/>
+        <location filename="../MainView.qml" line="802"/>
+        <location filename="../MainView.qml" line="843"/>
+        <location filename="../MainView.qml" line="876"/>
+        <location filename="../MainView.qml" line="905"/>
+        <location filename="../MainView.qml" line="916"/>
         <source>ResStr_DocScan_scan_fail</source>
         <translation>Scan failed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="260"/>
-        <location filename="../MainView.qml" line="266"/>
-        <source>ResStr_Output_Result</source>
-        <translation>Output Result</translation>
+        <location filename="../MainView.qml" line="757"/>
+        <source>ResStr_DocScan_Fail_save</source>
+        <translation>Fail to save files. </translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="771"/>
+        <location filename="../MainView.qml" line="760"/>
+        <source>ResStr_Specify_File_Path_not_exist</source>
+        <translation>Your Specify File Path does not exist, please specify again!</translation>
+    </message>
+    <message>
+        <location filename="../MainView.qml" line="773"/>
+        <source>ResStr_DocScan_save_file_ok</source>
+        <translation>Save files completed</translation>
+    </message>
+    <message>
+        <location filename="../MainView.qml" line="795"/>
         <source>Scan to Email completed</source>
         <translation>Scan to Email completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="787"/>
+        <location filename="../MainView.qml" line="811"/>
         <source>Time out.Unable to connet to the remote server.</source>
         <translation>Time out.Unable to connet to the remote server.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="790"/>
+        <location filename="../MainView.qml" line="814"/>
         <source>Upload failed.Unable to connet to the remote server.</source>
         <translation>Upload failed.Unable to connet to the remote server.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="793"/>
+        <location filename="../MainView.qml" line="817"/>
         <source>Upload failed.The remote server returned an error:(530) Not logged in.</source>
         <translation>Upload failed.The remote server returned an error:(530) Not logged in.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="797"/>
+        <location filename="../MainView.qml" line="821"/>
         <source>Upload failed.The remote server returned an error:(553) File name not allowed.</source>
         <translation>Upload failed.The remote server returned an error:(553) File name not allowed.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="803"/>
-        <location filename="../MainView.qml" line="812"/>
+        <location filename="../MainView.qml" line="827"/>
         <location filename="../MainView.qml" line="836"/>
-        <location filename="../MainView.qml" line="845"/>
+        <location filename="../MainView.qml" line="860"/>
+        <location filename="../MainView.qml" line="869"/>
         <source>ResStr_DocScan_upload_ok</source>
         <translation>Upload completed</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="831"/>
+        <location filename="../MainView.qml" line="855"/>
         <source>ICloud upload fail.</source>
         <translation>ICloud upload fail.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="860"/>
+        <location filename="../MainView.qml" line="884"/>
         <source>ResStr_DoCalibration_Completed</source>
         <translation>Calibration completed!  Please restart your device.</translation>
     </message>
     <message>
-        <location filename="../MainView.qml" line="865"/>
+        <location filename="../MainView.qml" line="889"/>
         <source>ResStr_DocScan_calibration_fail</source>
         <translation>Calibration failed!</translation>
     </message>
@@ -881,30 +865,6 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <source>ResStr_Are_you_sure_to_delete_the_quick_scan</source>
         <translation>Are you sure to delete the Quick Scan Setting?</translation>
     </message>
-    <message>
-        <source>ResStr_DocScan_Scan_Print</source>
-        <translation type="vanished">Scan To Print</translation>
-    </message>
-    <message>
-        <source>ResStr_DocScan_Scan_File</source>
-        <translation type="vanished">Scan To File</translation>
-    </message>
-    <message>
-        <source>ResStr_DocScan_Scan_App</source>
-        <translation type="vanished">Scan To Application</translation>
-    </message>
-    <message>
-        <source>ResStr_DocScan_Scan_Email</source>
-        <translation type="vanished">Scan To Email</translation>
-    </message>
-    <message>
-        <source>ResStr_DocScan_Scan_FTP</source>
-        <translation type="vanished">Scan To FTP</translation>
-    </message>
-    <message>
-        <source>ResStr_DocScan_Scan_Cloud</source>
-        <translation type="vanished">Scan To Cloud</translation>
-    </message>
 </context>
 <context>
     <name>ScanData</name>
@@ -987,27 +947,27 @@ If you select &apos;No&apos;, the scan job will be canceled!
 <context>
     <name>ScanPage</name>
     <message>
-        <location filename="../ScanPage.qml" line="29"/>
+        <location filename="../ScanPage.qml" line="40"/>
         <source>ResStr_disconnet</source>
         <translation>Disconnected</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="116"/>
+        <location filename="../ScanPage.qml" line="133"/>
         <source>ResStr_DocScan_Decode</source>
         <translation>Decode</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="128"/>
+        <location filename="../ScanPage.qml" line="147"/>
         <source>ResStr_DocScan_Separation</source>
         <translation>Separation</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="140"/>
+        <location filename="../ScanPage.qml" line="161"/>
         <source>ResStr_DocScan_ScanTo</source>
         <translation>Scan To</translation>
     </message>
     <message>
-        <location filename="../ScanPage.qml" line="152"/>
+        <location filename="../ScanPage.qml" line="175"/>
         <source>ResStr_Setting_Title</source>
         <translation>Settings</translation>
     </message>
@@ -1107,8 +1067,9 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Scan Area Size</translation>
     </message>
     <message>
-        <source>ResStr_Skip_Blank_Page</source>
-        <translation type="vanished">Skip Blank Page</translation>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="147"/>
+        <source>ResStr_Auto_Color_Detect</source>
+        <translation>Auto Color Detection</translation>
     </message>
     <message>
         <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="157"/>
@@ -1125,14 +1086,14 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Off</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="147"/>
-        <source>ResStr_Auto_Color_Detect</source>
-        <translation>Auto Color Detection</translation>
-    </message>
-    <message>
         <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="177"/>
         <source>ResStr_DocScan_autocrop</source>
         <translation>Auto Crop&amp;Deskew</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="207"/>
+        <source>ResStr_DocScan_multifeed</source>
+        <translation>Multi Feed Detection</translation>
     </message>
     <message>
         <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="243"/>
@@ -1153,11 +1114,6 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="352"/>
         <source>ResStr_Gamma</source>
         <translation>Gamma</translation>
-    </message>
-    <message>
-        <location filename="../SettingsPage/ScanSetting/ScanSettingView.qml" line="207"/>
-        <source>ResStr_DocScan_multifeed</source>
-        <translation>Multi Feed Detection</translation>
     </message>
 </context>
 <context>
@@ -1225,10 +1181,6 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <source>ResStr_DocScan_Browse</source>
         <translation>Browse...</translation>
     </message>
-    <message>
-        <source>ResStr_OK</source>
-        <translation type="vanished">OK</translation>
-    </message>
 </context>
 <context>
     <name>ScanToEmailView</name>
@@ -1266,58 +1218,58 @@ If you select &apos;No&apos;, the scan job will be canceled!
 <context>
     <name>ScanToFTPView</name>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="16"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="23"/>
         <source>ResStr_DocScan_server_addr</source>
         <translation>Server Address :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="40"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="47"/>
         <source>ResStr_DocScan_username</source>
         <translation>User Name :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="63"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="71"/>
         <source>ResStr_Password_</source>
         <translation>Password:</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="87"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="96"/>
         <source>ResStr_DocScan_targetPath</source>
         <translation>Target Path :</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="127"/>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="132"/>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="137"/>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="142"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="139"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="144"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="149"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="154"/>
         <source>ResStr_could_not_be_empty</source>
         <translation>The %1 could not be empty!</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="127"/>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="147"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="139"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="159"/>
         <source>ResStr_DocScan_server_addr1</source>
         <translation>Server Address</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="132"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="144"/>
         <source>ResStr_DocScan_username1</source>
         <translation>User Name</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="137"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="149"/>
         <source>ResStr_DocScan_password1</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="142"/>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="152"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="154"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="164"/>
         <source>ResStr_DocScan_targetPath1</source>
         <translation>Target Path</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="147"/>
-        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="152"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="159"/>
+        <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="164"/>
         <source>ResStr_specify_incorrect</source>
         <translation>The %1 format is incorrect, Please check your %1 and enter again.</translation>
     </message>
@@ -1421,10 +1373,6 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Save As</translation>
     </message>
     <message>
-        <source>ResStr_DocScan_Upload</source>
-        <translation type="vanished">Upload</translation>
-    </message>
-    <message>
         <location filename="../ScanToPage.qml" line="274"/>
         <source>ResStr_Do_You_Want_to_Delete_All_Images</source>
         <translation>Do you want to leave this page, if you exit, the all images will be delete?</translation>
@@ -1465,22 +1413,22 @@ If you select &apos;No&apos;, the scan job will be canceled!
 <context>
     <name>SearchDevicePage</name>
     <message>
-        <location filename="../SearchDevicePage.qml" line="74"/>
+        <location filename="../SearchDevicePage.qml" line="72"/>
         <source>ResStr_Faore_USBDevice</source>
         <translation>USB Device </translation>
     </message>
     <message>
-        <location filename="../SearchDevicePage.qml" line="83"/>
+        <location filename="../SearchDevicePage.qml" line="81"/>
         <source>ResStr_Connected</source>
         <translation>Connected</translation>
     </message>
     <message>
-        <location filename="../SearchDevicePage.qml" line="108"/>
+        <location filename="../SearchDevicePage.qml" line="104"/>
         <source>ResStr_Connect</source>
         <translation>Connect</translation>
     </message>
     <message>
-        <location filename="../SearchDevicePage.qml" line="146"/>
+        <location filename="../SearchDevicePage.qml" line="143"/>
         <source>ResStr_DocScan_search_dev</source>
         <translation>Searching, please wait...</translation>
     </message>
@@ -1488,57 +1436,49 @@ If you select &apos;No&apos;, the scan job will be canceled!
 <context>
     <name>SettingsPage</name>
     <message>
-        <source>ResStr_The_Output_Result_cannot_be_empty</source>
-        <translation type="vanished">The Output Result cannot be empty!</translation>
-    </message>
-    <message>
-        <location filename="../SettingsPage.qml" line="81"/>
-        <location filename="../SettingsPage.qml" line="150"/>
+        <location filename="../SettingsPage.qml" line="97"/>
+        <location filename="../SettingsPage.qml" line="166"/>
         <source>ResStr_could_not_be_empty</source>
         <translation>The %1 could not be empty!</translation>
     </message>
     <message>
-        <source>ResStr_File_Name1</source>
-        <translation type="vanished">File Name</translation>
-    </message>
-    <message>
-        <location filename="../SettingsPage.qml" line="81"/>
-        <location filename="../SettingsPage.qml" line="150"/>
+        <location filename="../SettingsPage.qml" line="97"/>
+        <location filename="../SettingsPage.qml" line="166"/>
         <source>ResStr_Output_Result</source>
         <translation>Output Result</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="91"/>
+        <location filename="../SettingsPage.qml" line="107"/>
         <source>ResStr_QuickScanSettings</source>
         <translation>Quick Scan Settings</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="97"/>
+        <location filename="../SettingsPage.qml" line="113"/>
         <source>ResStr_DecodeSettings</source>
         <translation>Decode/Separation Settings</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="103"/>
+        <location filename="../SettingsPage.qml" line="119"/>
         <source>ResStr_ScanToSettings</source>
         <translation>Scan To Settings</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="109"/>
+        <location filename="../SettingsPage.qml" line="125"/>
         <source>ResStr_Printer_Wi_Fi</source>
         <translation>Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="114"/>
+        <location filename="../SettingsPage.qml" line="130"/>
         <source>ResStr_TCP_IPv4</source>
         <translation>TCP/IPv4</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="119"/>
+        <location filename="../SettingsPage.qml" line="135"/>
         <source>ResStr_Soft_AP</source>
         <translation>Soft AP</translation>
     </message>
     <message>
-        <location filename="../SettingsPage.qml" line="124"/>
+        <location filename="../SettingsPage.qml" line="140"/>
         <source>ResStr_Device</source>
         <translation>Device Settings</translation>
     </message>
@@ -1561,12 +1501,17 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/SoftapView.qml" line="140"/>
+        <location filename="../SettingsPage/SoftapView.qml" line="139"/>
+        <source>ResStr_Conn_list</source>
+        <translation>Connected:</translation>
+    </message>
+    <message>
+        <location filename="../SettingsPage/SoftapView.qml" line="162"/>
         <source>ResStr_Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/SoftapView.qml" line="153"/>
+        <location filename="../SettingsPage/SoftapView.qml" line="175"/>
         <source>ResStr_Msg_9</source>
         <translation>The SSID must be 1 to 32 characters long. Please check and enter again.</translation>
     </message>
@@ -1595,34 +1540,34 @@ If you select &apos;No&apos;, the scan job will be canceled!
     </message>
     <message>
         <location filename="../SettingsPage/TcpipView.qml" line="95"/>
-        <location filename="../SettingsPage/TcpipView.qml" line="196"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="200"/>
         <source>ResStr_The_entered_IP_address__is_wrong__please_confirm_and_enter_again_</source>
         <translation>The entered IP Address is incorrect, please check and enter again.</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/TcpipView.qml" line="114"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="116"/>
         <source>ResStr_Submask</source>
         <translation>Submask</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/TcpipView.qml" line="127"/>
-        <location filename="../SettingsPage/TcpipView.qml" line="202"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="129"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="206"/>
         <source>ResStr_The_subnet_mask_input_error__please_input_again_after_confirmation</source>
         <translation>Invalid Submask. Please check and enter again.</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/TcpipView.qml" line="146"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="149"/>
         <source>ResStr_Gateway</source>
         <translation>Gateway</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/TcpipView.qml" line="159"/>
-        <location filename="../SettingsPage/TcpipView.qml" line="208"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="162"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="212"/>
         <source>ResStr_The_entered_Gateway_is_wrong__please_confirm_and_enter_again_</source>
         <translation>Invalid Gateway address. Please check and enter again.</translation>
     </message>
     <message>
-        <location filename="../SettingsPage/TcpipView.qml" line="180"/>
+        <location filename="../SettingsPage/TcpipView.qml" line="184"/>
         <source>ResStr_Apply</source>
         <translation>Apply</translation>
     </message>

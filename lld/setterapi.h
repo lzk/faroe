@@ -38,6 +38,7 @@ typedef enum _CMD_CODE{
     CMD_CODE_getWifiStatus,
     CMD_CODE_get_softAp = CODE(_LS_WIFICMD) + 0x10,
     CMD_CODE_set_softAp,
+    CMD_CODE_getSoftApList = CODE(_LS_WIFICMD) + 0x17,
     CMD_CODE_setWifiInfo_noRead = CODE(_LS_WIFICMD) + 0xff,//self defined
 
     CMD_CODE_getPsaveTime = CODE(_LS_PRNCMD),

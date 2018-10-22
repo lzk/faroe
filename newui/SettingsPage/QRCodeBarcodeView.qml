@@ -285,8 +285,9 @@ FocusScope {
     Component.onDestruction: {
 //        console.log("qrcode on Destruction")
         decodeSetting.codeType = comboBox_codeType.currentIndex
-        console.log("filename is :" ,decodeSetting.fileName)
-        if(textInput_fileName.text.trim() !== "")
+
+//        console.log("filename is :" ,decodeSetting.fileName)
+        if(textInput_fileName.text !== "")
         {
             decodeSetting.fileName = textInput_fileName.text.trim()
         }

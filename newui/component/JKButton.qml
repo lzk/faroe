@@ -7,6 +7,11 @@ Button{
     id: root
     property alias container: container
 
+    Keys.onEnterPressed: clicked()
+    Keys.onReturnPressed: clicked()
+    activeFocusOnTab: true
+    focusPolicy:Qt.TabFocus
+
     background:Item{}
 
     contentItem:

@@ -126,6 +126,28 @@ Item {
                     }
                 }
             }
+
+            Row {
+                id: item6
+                height: 60
+                width: parent.width
+                enabled: false
+                opacity: enabled || !root.enabled ?1 :0.3
+                JKText {
+                    id: text5
+                    width: 100
+                    text: qsTr("ResStr_Conn_list")
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 12
+                }
+
+                JKTextInput {
+                    id: textInput_connected
+                    width: 275
+                    height: 30
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
         }
 
         Item{
@@ -174,6 +196,7 @@ Item {
         ,"ssid":""
         ,"password":""
         ,"powerSupply":JKEnums.PowerMode_unknown
+        ,"apList":[]
     }
     Component.onCompleted: {
         setSetterCmd(DeviceStruct.CMD_getSoftap ,setting)
@@ -193,10 +216,13 @@ Item {
                         textInput_ssid.text = setting.ssid
                         textInput_ssid.cursorPosition = 0
                         textInput_password.text = ""//setting.password
+                        textInput_connected.text = setting.apList.length > 0 ?setting.apList[0].ssid :""
+
                     }else{
                         checkbox.checked = false
                         textInput_ssid.text = ""
                         textInput_password.text = ""
+                        textInput_connected.text = ""
                     }
                 }else{
                     console.log("fail")

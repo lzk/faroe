@@ -2,6 +2,7 @@
 #include <QImage>
 #include <QFileInfo>
 #include "../platform/log.h"
+#include <QPainter>
 extern QList<DMResult> zxing_decode(const QImage& image ,int decodeMode ,bool decodeMulti);
 DecodeManager::DecodeManager(QObject *parent) : QObject(parent)
     ,m_cancel(false)
@@ -25,6 +26,21 @@ struct DMDecodeResult DecodeManager::decode(const QString& fileName ,int decodeM
 
     QFileInfo fileInfo(fileName);
     QString preFileName = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName();
+
+    if(!decodeMulti){//Separation
+        QImage result_image_h(image.width() ,image.height() ,QImage::Format_RGB32);
+        result_image_h.fill(Qt::white);
+        QPainter painter_h;
+        painter_h.begin(&result_image_h);
+
+        painter_h.drawImage(0,0,image.copy(0,0,image.width() ,image.height()/5));
+        painter_h.drawImage(0,image.height()*4/5,image.copy(0,image.height()*4/5,image.width() ,image.height()/5));
+        painter_h.end();
+
+        image = result_image_h;
+    }
+//    image.save("/tmp/haha.jpg" ,"jpg");
+
 
     QImage decodeImage;
     QList<DMResult> results;

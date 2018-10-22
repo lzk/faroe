@@ -120,7 +120,7 @@ DelegateModel{
                 })
             }
         }
-        onToggled: {
+        onClicked: {
             console.log("single")
             DelegateModel.inSelected = !DelegateModel.inSelected
         }

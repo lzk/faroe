@@ -176,6 +176,21 @@ int ImageFunctions_Decode::function(const QStringList& fileList ,const QString& 
 }
 
 #include <QRegularExpression>
+#include <QApplication>
+static const char *greeting_strings[] = {
+    QT_TRANSLATE_NOOP("HtmlString", "ResStr_RESULT_Result")
+    ,QT_TRANSLATE_NOOP("HtmlString", "ResStr_File_Name1")
+    ,QT_TRANSLATE_NOOP("HtmlString", "ResStr_BITMAP_Source")
+    ,QT_TRANSLATE_NOOP("HtmlString", "ResStr_BITMAP_Decode")
+    ,QT_TRANSLATE_NOOP("HtmlString", "ResStr_TYPE_Code")
+    ,QT_TRANSLATE_NOOP("HtmlString", "ResStr_TYPE_Result")
+    ,QT_TRANSLATE_NOOP("HtmlString", "ResStr_CONTENTS_Contents")
+};
+const char* getHtmlString(int type)
+{
+    return qApp->translate("HtmlString",
+           greeting_strings[type]).toUtf8().constData();
+}
 int ImageFunctions_Decode::postFunction(const QString& para)
 {
     if(m_cancel){
@@ -198,16 +213,16 @@ int ImageFunctions_Decode::postFunction(const QString& para)
     fprintf(file ,"<html> <head> <meta charset=\"UTF-8\">  <title>QRCode/Barcode Detection Result</title> </head>\n");
     fprintf(file ,"<style> table { font-family: \"Microsoft YaHei\"; font-size:12px } </style>\n");
     fprintf(file ,"<body>\n");
-    fprintf(file ,"<H3>%s:</H3>\n",QT_TR_NOOP("ResStr_RESULT_Result"));
+    fprintf(file ,"<H3>%s</H3>\n",getHtmlString(0));
 
     fprintf(file ,"<table border=\"1\" cellspacing=\"0\" vspace=\"0\" hspace=\"0\" cellpadding=\"10\">\n");
     fprintf(file ,"<tr>\n");
-    fprintf(file ,"<th> %s	     </th>\n",QT_TR_NOOP("ResStr_File_Name1"));
-    fprintf(file ,"<th> %s	     </th>\n",QT_TR_NOOP("ResStr_BITMAP_Source"));
-    fprintf(file ,"<th> %s	     </th>\n",QT_TR_NOOP("ResStr_BITMAP_Decode"));
-    fprintf(file ,"<th> %s	 </th>\n",QT_TR_NOOP("ResStr_TYPE_Code"));
-    fprintf(file ,"<th> %s	 </th>\n",QT_TR_NOOP("ResStr_TYPE_Result"));
-    fprintf(file ,"<th> %s  	 </th>\n",QT_TR_NOOP("ResStr_CONTENTS_Contents"));
+    fprintf(file ,"<th> %s	     </th>\n",getHtmlString(1));
+    fprintf(file ,"<th> %s	     </th>\n",getHtmlString(2));
+    fprintf(file ,"<th> %s	     </th>\n",getHtmlString(3));
+    fprintf(file ,"<th> %s	 </th>\n",getHtmlString(4));
+    fprintf(file ,"<th> %s	 </th>\n",getHtmlString(5));
+    fprintf(file ,"<th> %s  	 </th>\n",getHtmlString(6));
     fprintf(file ,"</tr>\n");
     foreach (struct DMDecodeResult dr, decode_data) {
         cFileName = QFileInfo(dr.fileName).fileName().toUtf8().constData();

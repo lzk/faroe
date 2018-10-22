@@ -24,5 +24,11 @@ JKButton{
             }
         }
     }
+
+    JKDashRectange{
+        anchors.fill: parent
+        anchors.margins: -2
+        visible: root.activeFocus
+    }
 }
 
