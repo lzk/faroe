@@ -210,7 +210,8 @@ static IOUSBInterfaceInterface_version **getUSBInterfaceInterface(io_service_t u
     }
 
     res = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOUSBInterfaceInterfaceID_version), (LPVOID*)(&intf));
-    IODestroyPlugInInterface(plugInInterface);			// done with this
+//    IODestroyPlugInInterface(plugInInterface);            // done with this
+    (*plugInInterface)->Release(plugInInterface);
 
     if (res || !intf)
     {
@@ -396,7 +397,8 @@ static IOUSBDeviceInterface_version **getUSBDevice(io_object_t usbDevice)
     }
 
     res = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOUSBDeviceInterfaceID_version), (LPVOID*)&dev);
-    IODestroyPlugInInterface(plugInInterface);			// done with this
+//    IODestroyPlugInInterface(plugInInterface);            // done with this
+    (*plugInInterface)->Release(plugInInterface);
 
     if (res || !dev)
     {

@@ -84,6 +84,7 @@ int devHandler(IOUSBDeviceInterface_version** dev,void* pData)
 {
     UsbIO* io = (UsbIO*)pData;
     io->setDev(dev);
+    return 0;
 }
 
 int UsbIO::open(int)
@@ -92,6 +93,7 @@ int UsbIO::open(int)
 //    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
     usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
     if(!dev){
+        LOG_PARA("can not get usb device address:" ,address);
         return -2;
     }
     struct_deviceInterface di;
@@ -172,11 +174,19 @@ bool UsbIO::isConnected()
     if(vid == -1 || pid == -1 || address == -1)
         return false;
     bool connected = true;
-    dev = NULL;
-    usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
-//    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
-    if(!dev){
-        connected = false;
+//    dev = NULL;
+//    usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
+////    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
+//    if(!dev){
+//        connected = false;
+//    }
+    int tmp_address;
+    connected = false;
+    if(dev){
+        tmp_address = usb_getAddress(dev);
+        if(tmp_address == address){
+            connected = true;
+        }
     }
     return connected;
 }
