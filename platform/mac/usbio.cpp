@@ -93,7 +93,7 @@ int UsbIO::open(int)
 //    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
     usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
     if(!dev){
-        LOG_PARA("can not get usb device address:" ,address);
+        LOG_PARA("can not get usb device address:%d" ,address);
         return -2;
     }
     struct_deviceInterface di;
@@ -162,7 +162,9 @@ int UsbIO::resolveUrl(const char* url)
             address = usb_getAddress(dev);
             vid = products_list[i].vid;
             pid = products_list[i].pid;
-            LOG_PARA("Found device VID 0x%04X (%d), PID 0x%04X (%d), release %s", vid, vid, pid, pid, serial);
+            LOG_PARA("Found device VID 0x%04X (%d), PID 0x%04X (%d), release %s ,address %d", vid, vid, pid, pid, serial ,address);
+            (*dev)->Release(dev);
+            dev = NULL;
             return 0;
         }
     }
@@ -174,19 +176,21 @@ bool UsbIO::isConnected()
     if(vid == -1 || pid == -1 || address == -1)
         return false;
     bool connected = true;
-//    dev = NULL;
-//    usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
-////    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
-//    if(!dev){
-//        connected = false;
-//    }
-    int tmp_address;
-    connected = false;
-    if(dev){
-        tmp_address = usb_getAddress(dev);
-        if(tmp_address == address){
-            connected = true;
-        }
+    usb_getDeviceWithAddress(vid ,pid ,address ,devHandler ,this);
+//    usb_getDeviceWithSerial(USB_VID ,USB_PID ,serial ,devHandler ,this);
+    if(!dev){
+        connected = false;
+    }else{
+        (*dev)->Release(dev);
+        dev = NULL;
     }
+//    int tmp_address;
+//    connected = false;
+//    if(dev){
+//        tmp_address = usb_getAddress(dev);
+//        if(tmp_address == address){
+//            connected = true;
+//        }
+//    }
     return connected;
 }

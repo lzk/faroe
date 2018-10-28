@@ -126,14 +126,13 @@ Item {
     Connections{
         target: jkInterface
         onSearchComplete:{
-            if(canceling || listview.count <= 0)
-                closeRefreshDialog()
-            else
+            closeRefreshDialog()
+            if(listview.count > 0)
                 connectToDevice(0)
         }
-        onDeviceConnectCompleted:{
-            closeRefreshDialog()
-        }
+//        onDeviceConnectCompleted:{
+//            closeRefreshDialog()
+//        }
     }
 
     Component.onCompleted: refresh()
@@ -148,24 +147,28 @@ Item {
     function closeRefreshDialog(){
         dialog.close()
         button_refresh.enabled = true
-        button_connect.enabled = true
+//        button_connect.enabled = true
     }
     
     function refresh(){
+        openRefreshDialog()
         button_refresh.enabled = false
         canceling = false
         scanData.model_deviceList = null
         jkInterface.searchDeviceList()
-        openRefreshDialog()
     }
 
     function connectToDevice(index){
         if(index < 0)
             return
         button_connect.enabled = false
-        button_refresh.enabled = false
+//        button_refresh.enabled = false
         jkInterface.cancelSearch()
-        jkInterface.connectDevice(index)
+        var device = JSON.parse(scanData.model_deviceList[index])
+        scanData.currentDevice = device.name
+        jkInterface.init(scanData.currentDevice)
+//        jkInterface.connectDevice(index)
+        button_connect.enabled = true
     }
 
     property bool canceling:false
