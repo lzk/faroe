@@ -9,7 +9,7 @@ JKDialog {
     signal cancelClick
     toolbar{
         color: "#FF67A1CF"
-        enableClose: false
+//        enableClose: false
     }
     JKMessageBoxLayout{
         id:messagebox

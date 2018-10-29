@@ -8,6 +8,7 @@ Item {
     property alias allSelected: model.selectedAll
 //    property alias model: gridView.model
     property alias selectList: model.selectList
+    property alias gridView: gridView
 
     Item{
 //    ScrollView{
@@ -55,10 +56,12 @@ Item {
     function moveDown(){
         gridView.moveCurrentIndexDown()
         gridView.moveCurrentIndexDown()
+        console.log("moveCurrentIndexDown :",gridView.currentIndex)
     }
 
     function moveup(){
         gridView.moveCurrentIndexUp()
         gridView.moveCurrentIndexUp()
+        console.log("moveCurrentIndexUp :",gridView.currentIndex)
     }
 }

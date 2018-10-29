@@ -347,15 +347,25 @@ int Setter::getIpV4(void* data)
         return DeviceStruct::ERR_invalid_data;
     struct_ipv4* ip = (struct_ipv4*)data;
     int err;
-    net_info_st para;
-    err = setterApi->cmd(CMD_CODE_getv4 ,&para ,sizeof(para));
-    if(!err){
-        ip->mode = para.IPMode;
-        ip->addressMode = para.IPAddressMode;
-        for(int i = 0 ;i < 4 ;i++){
-            ip->address[i] = para.IPAddress[i];
-            ip->gatewayAddress[i] = para.GatewayAddress[i];
-            ip->subnetMask[i] = para.SubnetMask[i];
+    {
+        cmdst_wifi_get para;
+        err = setterApi->cmd(CMD_CODE_getWifiInfo ,&para ,sizeof(para));
+        if(!err){
+            ip->wifiEnable = para.wifiEnable & 1 == 1;
+        }else
+            return err;
+    }
+    {
+        net_info_st para;
+        err = setterApi->cmd(CMD_CODE_getv4 ,&para ,sizeof(para));
+        if(!err){
+            ip->mode = para.IPMode;
+            ip->addressMode = para.IPAddressMode;
+            for(int i = 0 ;i < 4 ;i++){
+                ip->address[i] = para.IPAddress[i];
+                ip->gatewayAddress[i] = para.GatewayAddress[i];
+                ip->subnetMask[i] = para.SubnetMask[i];
+            }
         }
     }
     return err;

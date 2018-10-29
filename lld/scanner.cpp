@@ -910,7 +910,10 @@ int Scanner::adfScan(void *data)
         if(!result){
             switch (sc_powerData.mode) {
             case 2:
-                if(setting->type > 0 ||parameters.nColPixelNumOrig > 15000)
+                if(setting->type > 0
+                        ||parameters.nColPixelNumOrig > 15000
+                        ||setting->bColorDetect
+                        ||setting->MultiFeed)
                     result = RETSCAN_ERROR_POWER1;
                 break;
             case 3:

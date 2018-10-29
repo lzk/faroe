@@ -57,6 +57,7 @@ Item {
                         regExp: /^[a-zA-Z0-9_.@]*$/
                     }
                 }
+                KeyNavigation.tab: textInput3
 
             }
         }
@@ -83,6 +84,7 @@ Item {
                 input{
                     maximumLength:255
                 }
+                KeyNavigation.tab: textInput2
             }
         }
     }
@@ -98,6 +100,8 @@ Item {
         textInput2.cursorPosition = 0
         textInput3.text = setting.subject
         textInput3.cursorPosition = 0
+
+        textInput2.forceActiveFocus()
     }
     function ok(){
         var regExp = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.([a-zA-Z0-9]{1,}\.)*[a-zA-Z]{2,}$/

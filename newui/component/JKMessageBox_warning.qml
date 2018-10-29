@@ -35,7 +35,7 @@ JKDialog {
             anchors.top: parent.top
             width: 100
             height: 30
-            text: "OK"
+            text: qsTr("ResStr_OK")
             onClicked:{
 //                root.accepted()
                 root.close()

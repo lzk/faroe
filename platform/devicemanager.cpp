@@ -670,6 +670,8 @@ void DeviceManager::uiParseIpv4(QJsonObject& obj ,Setter::struct_ipv4 para)
     obj.insert("mode",QJsonValue(para.mode));
     obj.insert("subnetMask",QJsonValue(subnetMask));
 
+    obj.insert("wifiEnable",QJsonValue(para.wifiEnable));
+
 //    return QString(QJsonDocument(obj).toJson());
 }
 

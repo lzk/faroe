@@ -7,6 +7,7 @@ QtObject {
     id:root    
 
     property var constQuickScanSids:JSData.constQuickScanSid()
+    property var constQuickScanNames: JSData.constQuickScanName()
     property var quickScanSettings:JSData.defaultQuickScanSettings()
     property var scanToParameter:JSData.defaultScanToSetting()
     property var decodeSetting:JSData.defaultDecodeSetting()

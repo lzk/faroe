@@ -116,12 +116,13 @@ ComboBox {
     popup: Popup {
         y: control.height - 1
         width: control.width
-        implicitHeight: contentItem.implicitHeight
+//        implicitHeight: contentItem.implicitHeight
         padding: 1
 //        clip: true
         contentItem:
             ScrollView{
                 clip: true
+//                implicitHeight: contentItem.implicitHeight
                 ScrollBar.vertical.policy: height + parent.padding * 2 < listview.contentHeight ?ScrollBar.AlwaysOn :ScrollBar.AlwaysOff
                 ListView {
                 id:listview

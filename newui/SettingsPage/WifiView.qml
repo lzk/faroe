@@ -32,10 +32,11 @@ Item {
         anchors.fill: parent
         anchors.topMargin: 10
         anchors.bottomMargin: 10
-        anchors.leftMargin: 10
+        anchors.leftMargin: 5
 //        anchors.rightMargin: 20
         clip: true
         contentHeight: item.height
+        ScrollBar.vertical.policy: (height + 20 < listview.contentHeight)&&column2.visible===true ?ScrollBar.AlwaysOn :ScrollBar.AlwaysOff
 
         Item{
             id:item
@@ -76,6 +77,7 @@ Item {
                         height: 6
                         width: parent.width
                         anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 5
                     }
                 }
 
@@ -108,7 +110,7 @@ Item {
                                 height: 35
                                 text: qsTr("ResStr_Manual_Wi_Fi")
                                 anchors.right: parent.right
-                                anchors.rightMargin: 5
+//                                anchors.rightMargin: 5
                                 onClicked: {
                                     pitem_manual.textInput_password.text = wifiSetting.password
                                     pitem_manual.textInput_ssid.text = wifiSetting.ssid
@@ -257,6 +259,7 @@ Component{
                         enabled:model.modelData.encryption % 5 !== 0
                         opacity: enabled ?1 :0.3
                         JKText{
+                            x:10
                             text: qsTr("ResStr_Password")
                             font.pixelSize: 12
                             anchors.verticalCenter: parent.verticalCenter

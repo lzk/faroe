@@ -154,6 +154,17 @@ function constQuickScanSid(){
 //            ,"Scan To Email" ,"Scan To FTP" ,"Scan To Cloud"]
 }
 
+function constQuickScanName(){
+    return [
+                qsTr("ResStr_DocScan_Scan_Print"),
+                qsTr("ResStr_DocScan_Scan_File"),
+                qsTr("ResStr_DocScan_Scan_App"),
+                qsTr("ResStr_DocScan_Scan_Email"),
+                qsTr("ResStr_DocScan_Scan_FTP"),
+                qsTr("ResStr_DocScan_Scan_Cloud")
+            ]
+}
+
 function defaultQuickScanSettings(){
     return [
             defaultQuickScanSetting_toPrint(),

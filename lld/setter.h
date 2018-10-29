@@ -50,6 +50,7 @@ public:
     typedef struct{
         int mode;
         int addressMode;
+        bool wifiEnable;
         unsigned char address[4];
         unsigned char subnetMask[4];
         unsigned char gatewayAddress[4];

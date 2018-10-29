@@ -69,6 +69,7 @@ Item {
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20
                                 slider.visible: false
+                                input.validator: RegExpValidator { regExp: /([0-9])|([1-5]\d)|(60)/ }
                                 from: 1
                                 to:60
                                 value: 0

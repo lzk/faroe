@@ -30,6 +30,7 @@ ScanToPageLayout {
         parent:item_down
         width: 50
         height: 50
+        enabled: imageViewer.gridView.count > 8 && (imageViewer.gridView.count - imageViewer.gridView.currentIndex) > 4 ? true : false
         source_disable: "qrc:/Images/down_disable.png"
         source_normal: "qrc:/Images/down_normal.png"
         source_press: "qrc:/Images/down_press.png"
@@ -39,6 +40,7 @@ ScanToPageLayout {
         parent:item_up
         width: 50
         height: 50
+        enabled: imageViewer.gridView.count > 8 && imageViewer.gridView.currentIndex !== 0 ? true : false
         source_disable: "qrc:/Images/up_disable.png"
         source_normal: "qrc:/Images/up_normal.png"
         source_press: "qrc:/Images/up_press.png"

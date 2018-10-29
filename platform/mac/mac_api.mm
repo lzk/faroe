@@ -56,6 +56,23 @@ void openApplication(const QString& appName ,const QStringList& fileList)
                                     arguments:a];
 }
 
+#import <ifaddrs.h>
+#import <net/if.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
+bool checkWifiStatus()
+{
+    NSCountedSet * cset = [[NSCountedSet alloc] init];
+        struct ifaddrs *interfaces;
+        if( ! getifaddrs(&interfaces) ) {
+            for( struct ifaddrs *interface = interfaces; interface; interface = interface->ifa_next) {
+                if ( (interface->ifa_flags & IFF_UP) == IFF_UP ) {
+                    [cset addObject:[NSString stringWithUTF8String:interface->ifa_name]];
+                }
+            }
+        }
+        return [cset countForObject:@"awdl0"] > 1 ? YES : NO;
+}
+
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>

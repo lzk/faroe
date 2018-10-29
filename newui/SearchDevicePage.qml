@@ -136,7 +136,20 @@ Item {
         }
     }
 
-    Component.onCompleted: refresh()
+    Component.onCompleted:{
+        if(jkInterface.getWifiStatus())
+        {
+            refresh()
+        }
+        else
+        {
+            warning({"message.text":qsTr("ResStr_DocScan_not_on_line")
+                    ,"showImage": true
+                    ,"width": 520
+                    ,"height": 200})
+        }
+
+    }
 
     property var dialog
     function openRefreshDialog(){

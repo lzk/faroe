@@ -95,17 +95,19 @@ Item {
         id:comboBox
         parent: item_comboxBox
         anchors.fill: parent
-        model:scanData.constQuickScanSids
+        model:scanData.constQuickScanNames
         onActivated:{
             if(settings[index] === undefined){
-                settings[index] = scanData.createQuickScanSetting(currentText)
+                var sid = scanData.constQuickScanSids[currentIndex]
+                settings[index] = scanData.createQuickScanSetting(sid)
             }
         }
     }
 
     function init(){
         if(mode === 1){
-            settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
+            var sid = scanData.constQuickScanSids[comboBox.currentIndex]
+            settings[comboBox.currentIndex] = scanData.createQuickScanSetting(sid)
         }else{
             textInput.text = setting.name
             textInput.cursorPosition = 0
@@ -133,7 +135,8 @@ Item {
         }
 
         if(settings[comboBox.currentIndex] === undefined){
-            settings[comboBox.currentIndex] = scanData.createQuickScanSetting(comboBox.currentText)
+            var sid = scanData.constQuickScanSids[comboBox.currentIndex]
+            settings[comboBox.currentIndex] = scanData.createQuickScanSetting(sid)
         }
         settings[comboBox.currentIndex].name = text
         var verify = true

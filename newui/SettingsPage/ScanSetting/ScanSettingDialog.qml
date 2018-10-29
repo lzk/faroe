@@ -131,9 +131,13 @@ JKDialog{
                 comboBox_scanAreaSize.model = (powerMode === JKEnums.PowerMode_usbBusPower
                                                 || powerMode === JKEnums.PowerMode_PowerBank
                                                || mode !== 0) ?constPaperSize_noLongPage :constPaperSize
+                if(mode === 1)
+                    comboBox_scanAreaSize.popup.height = 180
             }else{
                 index = 0
                 comboBox_scanAreaSize.model = constPaperSize_onlyAuto
+                if(mode === 1)
+                    comboBox_scanAreaSize.popup.height = 45
             }
             comboBox_scanAreaSize.currentIndex = index
         }

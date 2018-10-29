@@ -33,7 +33,7 @@ Item {
 
         Slider {
             id: slider
-            width: 154
+            width: 168
             height: 15
             from: root.from
             to: root.to

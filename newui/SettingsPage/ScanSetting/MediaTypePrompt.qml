@@ -41,6 +41,7 @@ JKDialog {
                         width: 226
                         height: 147
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
                         source: "qrc:/Images/switch.png"
                     }
 

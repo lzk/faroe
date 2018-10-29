@@ -195,7 +195,7 @@ FocusScope{
                 JKTextButton{
                     width: root.width / 2 - 20
                     height: parent.height
-                    text: qsTr("ResStr_Connected")
+                    text: qsTr("ResStr_Connect")
                     onClicked: {
                         if(!textInput_ssid.text.match(/^[\x20-\x7e]{1,32}$/)){
                             warningWithImage(qsTr("ResStr_Msg_9"))

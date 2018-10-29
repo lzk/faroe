@@ -3,7 +3,7 @@ TEMPLATE = app
 QT += qml quick printsupport
 CONFIG += c++11
 
-TARGET = faroeVOP
+TARGET = "DocScan Air"
 VERSION = 0.0.15
 
 #UI_HEADERS_DIR = ../build

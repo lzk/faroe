@@ -9,7 +9,7 @@ Item {
     id: root
     width: 495
     height: 460
-    enabled: scanData.deviceStatus && setting.powerSupply !== JKEnums.PowerMode_usbBusPower
+    enabled: scanData.deviceStatus && setting.wifiEnable && setting.powerSupply !== JKEnums.PowerMode_usbBusPower
     opacity: enabled ?1 :0.3
 
     ColumnLayout {

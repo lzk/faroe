@@ -59,6 +59,7 @@ Item {
             MouseArea{
                 anchors.fill: parent
                 onClicked: about()
+                cursorShape: Qt.PointingHandCursor
             }
         }
 
@@ -278,7 +279,7 @@ Item {
             setting.scanSetting.adfMode = false
             setting.scanSetting.dpi = 2
             setting.scanSetting.colorMode = true
-            setting.scanSetting.mediaType = 0
+//            setting.scanSetting.mediaType = 0
             if(setting.fileName === ""){
 //                warningWithImage(qsTr("The %1 cannot be empty!").arg(qsTr("Html File Name")))
                 warningWithImage(qsTr("ResStr_could_not_be_empty").arg(qsTr("ResStr_Output_Result")))
@@ -528,11 +529,23 @@ Item {
             para1.powerMode = JKEnums.PowerMode_PowerBank
             para1.cmd = cmd
             para1.setting = data
-            informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Bank")
-                                        ,"message.horizontalAlignment":Text.AlignLeft
-                                        ,"para":JSON.stringify(para1)
-                                        ,"height":380
-                                        },callbackScan )
+            switch(cmd){
+            case DeviceStruct.CMD_DecodeScan:
+            case DeviceStruct.CMD_SeperationScan:
+                informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Bankds")
+                                            ,"message.horizontalAlignment":Text.AlignLeft
+                                            ,"para":JSON.stringify(para1)
+                                            ,"height":380
+                                            },callbackScan )
+                break;
+            default:
+                informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Bank")
+                                            ,"message.horizontalAlignment":Text.AlignLeft
+                                            ,"para":JSON.stringify(para1)
+                                            ,"height":380
+                                            },callbackScan )
+                break;
+            }
             break
         case DeviceStruct.ERR_RETSCAN_ERROR_POWER2:
             if(scanData.currentDevice.match(/^usb+/i)){
@@ -540,11 +553,29 @@ Item {
                 para.powerMode = JKEnums.PowerMode_usbBusPower
                 para.cmd = cmd
                 para.setting = data
-                informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Bus")
-                                            ,"message.horizontalAlignment":Text.AlignLeft
-                                            ,"para":JSON.stringify(para)
-                                            ,"height":480
-                                            },callbackScan )
+                switch(cmd){
+                case DeviceStruct.CMD_DecodeScan:
+                    informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Busd")
+                                                ,"message.horizontalAlignment":Text.AlignLeft
+                                                ,"para":JSON.stringify(para)
+                                                ,"height":480
+                                                },callbackScan )
+                    break;
+                case DeviceStruct.CMD_SeperationScan:
+                    informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Buss")
+                                                ,"message.horizontalAlignment":Text.AlignLeft
+                                                ,"para":JSON.stringify(para)
+                                                ,"height":480
+                                                },callbackScan )
+                    break;
+                default:
+                    informationWithProperty({"message.text":qsTr("ResStr_DocScan_Power_Bus")
+                                                ,"message.horizontalAlignment":Text.AlignLeft
+                                                ,"para":JSON.stringify(para)
+                                                ,"height":480
+                                                },callbackScan )
+                    break;
+                }
             }else{
                 errorWithImage(qsTr("ResStr_DocScan_Power_Bus_Wifi"))
             }

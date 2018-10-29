@@ -143,12 +143,12 @@
 
 <phrase>
 <source>Time out.Unable to connet to the remote server.</source>
-<target>Time out.Unable to connet to the remote server.</target>
+<target>Time out.Unable to connect to the remote server.</target>
 </phrase>
 
 <phrase>
 <source>Upload failed.Unable to connet to the remote server.</source>
-<target>Upload failed.Unable to connet to the remote server.</target>
+<target>Upload failed.Unable to connect to the remote server.</target>
 </phrase>
 
 <phrase>
