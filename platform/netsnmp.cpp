@@ -33,8 +33,8 @@ void snmpSearchDevices(addDeviceHandler handler,void* pData)
         }
     }
 
-    qDebug()<<"search: ipv6";
-    findAgentV6(handler ,pData);
+//    qDebug()<<"search: ipv6";
+//    findAgentV6(handler ,pData);
 }
 
 

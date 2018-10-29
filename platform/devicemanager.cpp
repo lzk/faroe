@@ -45,18 +45,26 @@ void DeviceManager::watchDevice()
     }
     if(device){
         QString currentDeviceUrl = device->getCurrentUrl();
-        if(currentDeviceUrl.startsWith("usb://")){
-            if(!currentDeviceName.startsWith("USB") || !currentDeviceUrl.contains(currentDeviceName)){
-                device->resolveUrl(url.toUtf8().constData());
-            }
-        }else{
-            if(!currentDeviceUrl.contains(currentDeviceName)){
-                if(!QHostAddress(currentDeviceName).isNull()){
+        if(!currentDeviceUrl.contains(currentDeviceName)){//new device url
+//            qDebug()<<"change to watching currentDeviceName:"<<currentDeviceName;
+            if(currentDeviceName.startsWith("USB")){
+                if(currentDeviceUrl.startsWith("usb://")){//usb -> usb
+                    device->resolveUrl(url.toUtf8().constData());
+                }else{//usb -> net
+                    delete device;
+                    device = NULL;
+                }
+            }else{
+                if(currentDeviceUrl.startsWith("usb://")){//net -> usb
+                    delete device;
+                    device = NULL;
+                }else{//net -> net
                     device->resolveUrl(url.toUtf8().constData());
                 }
             }
         }
-    }else{
+    }
+    if(!device){
         if(currentDeviceName.startsWith("USB")){
             device = new Device(url.toUtf8().data() ,&usbIO ,(PlatformApp*)&platformApp);
         }else if(!QHostAddress(currentDeviceName).isNull()){
@@ -129,6 +137,7 @@ void DeviceManager::addDeviceInfo(DeviceInfo* deviceInfo ,int count)
     for(int i = 0 ;i < count ;i++){
         jsonObj.insert("type" ,deviceInfo[i].type);
         jsonObj.insert("address" ,deviceInfo[i].address);
+        jsonObj.insert("name" ,deviceInfo[i].name);
         str = QString(QJsonDocument(jsonObj).toJson());
         if(!m_deviceList.contains(deviceInfo[i].address)){
             if(!currentDeviceName.compare(deviceInfo[i].name)){
