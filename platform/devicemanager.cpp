@@ -158,7 +158,7 @@ void DeviceManager::searchDeviceList()
     cancelSearch = 0;
     deviceList.clear();
     m_deviceList.clear();
-    Device::searchDevices(addDevice ,this);
+    int result = Device::searchDevices(addDevice ,this);
 //    QString currentDevice = jkInterface->getCurrentDevice();
 //    int index = 0;
 //    for (int i = 0; i < deviceList.count() ;i++) {
@@ -172,7 +172,7 @@ void DeviceManager::searchDeviceList()
 //    }
 //    if(index != 0)
 //        deviceList.move(index ,0);
-    emit searchComplete();
+    emit searchComplete(result);
 }
 
 void DeviceManager::cancelSearchDeviceList()

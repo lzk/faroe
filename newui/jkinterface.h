@@ -22,7 +22,6 @@ public:
     QString getCurrentDevice();
     void installImageModel(ImageModel* imageModel){this->imageModel=imageModel;}
 public:
-    Q_INVOKABLE bool getWifiStatus();
     Q_INVOKABLE QStringList getPrinterName();
     Q_INVOKABLE QString getDefaultPrinterName();
     Q_INVOKABLE void cancelScan();
@@ -41,7 +40,7 @@ public:
     Q_INVOKABLE bool isIpv4(const QString& ip);
 signals:
     void searchDeviceList();
-    void searchComplete();
+    void searchComplete(int result);
     void connectDevice(int);
 
     void progressChanged(int progress ,int page);

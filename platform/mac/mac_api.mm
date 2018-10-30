@@ -59,7 +59,7 @@ void openApplication(const QString& appName ,const QStringList& fileList)
 #import <ifaddrs.h>
 #import <net/if.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
-bool checkWifiStatus()
+bool checkNetWorkStatus()
 {
     NSCountedSet * cset = [[NSCountedSet alloc] init];
         struct ifaddrs *interfaces;
@@ -70,7 +70,7 @@ bool checkWifiStatus()
                 }
             }
         }
-        return [cset countForObject:@"awdl0"] > 1 ? YES : NO;
+        return [cset countForObject:@"awdl0"] > 1 || [cset countForObject:@"en0"] > 1 ? YES : NO;
 }
 
 #include <QJsonObject>

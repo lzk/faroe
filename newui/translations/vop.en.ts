@@ -426,7 +426,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
     <message>
         <location filename="../MainView.qml" line="542"/>
         <source>ResStr_DocScan_Power_Bank</source>
-        <translation type="unfinished">The scan job could not be continued, because the Power Bank mode does not support the following settings.
+        <translation>The scan job could not be continued, because the Power Bank mode does not support the following settings.
                       Media Type:                        Deposit Book or Card
                       Scan Size:                           Long Page Mode
                       Auto Color Detection:           On
@@ -933,7 +933,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
     <message>
         <location filename="../ScanData.js" line="26"/>
         <source>ResStr_DocScan_ScanSize_AutoNo</source>
-        <translation>Auto(No Multi-feed</translation>
+        <translation>Auto(No Multi-feed)</translation>
     </message>
     <message>
         <location filename="../ScanData.js" line="33"/>
@@ -1319,7 +1319,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="159"/>
         <location filename="../SettingsPage/QuickScanSettings/ScanToFTPView.qml" line="164"/>
         <source>ResStr_specify_incorrect</source>
-        <translation>The %1 format is incorrect, Please check your %1 and enter again.</translation>
+        <translation>The %1 format is incorrect, please check your %1 and enter again.</translation>
     </message>
 </context>
 <context>
@@ -1423,7 +1423,7 @@ If you select &apos;No&apos;, the scan job will be canceled!
     <message>
         <location filename="../ScanToPage.qml" line="276"/>
         <source>ResStr_Do_You_Want_to_Delete_All_Images</source>
-        <translation>Do you want to leave this page, if you exit, the all images will be delete?</translation>
+        <translation>Do you want to leave this page, if you exit, the all images will be deleted?</translation>
     </message>
     <message>
         <location filename="../ScanToPage.qml" line="281"/>

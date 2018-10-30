@@ -127,6 +127,13 @@ Item {
         target: jkInterface
         onSearchComplete:{
             closeRefreshDialog()
+            if(result){
+                warning({"message.text":qsTr("ResStr_DocScan_not_on_line")
+                        ,"showImage": true
+                        ,"width": 520
+                        ,"height": 200})
+            }
+
             if(listview.count > 0)
                 connectToDevice(0)
         }
@@ -136,17 +143,7 @@ Item {
     }
 
     Component.onCompleted:{
-        if(jkInterface.getWifiStatus())
-        {
-            refresh()
-        }
-        else
-        {
-            warning({"message.text":qsTr("ResStr_DocScan_not_on_line")
-                    ,"showImage": true
-                    ,"width": 520
-                    ,"height": 200})
-        }
+        refresh()
 
     }
 

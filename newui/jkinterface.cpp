@@ -40,14 +40,6 @@ void JKInterface::setScanDataHandle(QObject *scanData)
     this->scanData = scanData;
 }
 
-bool checkWifiStatus();
-bool JKInterface::getWifiStatus()
-{
-    bool isEnabled = false;
-    isEnabled = checkWifiStatus();
-    return isEnabled;
-}
-
 QStringList JKInterface::getPrinterName()
 {
     QStringList sl;

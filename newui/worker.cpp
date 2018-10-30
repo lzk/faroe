@@ -34,7 +34,7 @@ Worker::Worker(QObject *parent)
 
     connect(jkInterface ,SIGNAL(searchDeviceList()) ,deviceManager ,SLOT(searchDeviceList()));
     connect(jkInterface ,SIGNAL(connectDevice(int)) ,deviceManager ,SLOT(connectDevice(int)));
-    connect(deviceManager ,SIGNAL(searchComplete()) ,jkInterface , SIGNAL(searchComplete()));
+    connect(deviceManager ,SIGNAL(searchComplete(int)) ,jkInterface , SIGNAL(searchComplete(int)));
     connect(deviceManager ,&DeviceManager::updateDeviceList ,jkInterface ,&JKInterface::updateDeviceList);
     connect(deviceManager ,&DeviceManager::deviceConnected ,jkInterface ,&JKInterface::deviceConnected);
     connect(deviceManager ,&DeviceManager::updateDeviceStatus ,jkInterface ,&JKInterface::updateDeviceStatus);

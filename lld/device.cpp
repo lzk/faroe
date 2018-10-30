@@ -52,11 +52,18 @@ void Device::searchUsbDevices(addDeviceHandler handler,void* pData)
     qDebug()<<"searching USB ...";
     usbSearchDevices(handler ,pData);
 }
-void Device::searchDevices(addDeviceHandler handler,void* pData)
+
+bool checkNetWorkStatus();
+int Device::searchDevices(addDeviceHandler handler,void* pData)
 {
     qDebug()<<"searching ...";
     usbSearchDevices(handler ,pData);
-    snmpSearchDevices(handler ,pData);
+    int result = -1;
+    if(checkNetWorkStatus()){
+        snmpSearchDevices(handler ,pData);
+        result = 0;
+    }
+    return result;
 }
 #endif
 void snmpCancelSearch();

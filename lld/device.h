@@ -89,7 +89,7 @@ public:
     Scanner* getScanner();
 
     static void searchUsbDevices(addDeviceHandler handler,void* pData);
-    static void searchDevices(addDeviceHandler handler,void* pData);
+    static int searchDevices(addDeviceHandler handler,void* pData);
     static void cancelSearch();
 private:   
     DeviceIO* deviceIO;

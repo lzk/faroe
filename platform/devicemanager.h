@@ -41,7 +41,7 @@ signals:
     void updateDeviceList(QStringList);
     void scanResult(int);
     void cmdResult(int cmd ,int err ,QString);
-    void searchComplete();
+    void searchComplete(int result);
     void deviceConnected(QString);
     void updateDeviceStatus(bool);
     void scanedImage(QString ,QSize);
