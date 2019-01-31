@@ -11,7 +11,7 @@
    shadow build dir: ../build/debug
    qmake (default)
    make (default)
-   cp -rf ../../mac/Resources/* faroeVOP.app/Contents/Resources
+   cp -rf ../../mac/Resources/* “DocScan Air”.app/Contents/Resources
    macdeployqt faroeVOP.app -qmldir=${QTDIR}/qml
 
 
